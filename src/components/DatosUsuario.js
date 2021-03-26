@@ -1,6 +1,4 @@
 import { Link, useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { usuarioPorId } from '../state/usuarios';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -8,6 +6,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import { getUsuarioPorId } from '../services/usuarios';
+import { Alert } from '@material-ui/lab';
+import { getDataFromBackend, usuariosFijos } from '../constants/constants';
 
 const useStyles = makeStyles({
   root: {
@@ -18,11 +20,34 @@ const useStyles = makeStyles({
 export default function DatosUsuario() {
   const { id } = useParams();
   const classes = useStyles();
-  const usuario = useRecoilValue(usuarioPorId(id));
 
-  return (
-    <>
-      <Card className={classes.root}>
+  const [usuario, setUsuario] = useState(null);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    async function fetchUsuario() {
+      try {
+        const usuario = await getUsuarioPorId(id);
+        setUsuario(usuario);
+      } catch (err) {
+        setHasError(true);
+      }
+    }
+    if (getDataFromBackend) {
+      fetchUsuario();
+    } else {
+      const elUsuario = usuariosFijos.find((usu) => usu.id === Number(id));
+      if (elUsuario) {
+        setUsuario(elUsuario);
+      } else {
+        setHasError(true);
+      }
+    }
+  }, [id]);
+
+  const usuarioRendering = () => {
+    return [
+      <Card className={classes.root} key="datosUsuario">
         <CardActionArea>
           <CardMedia
             component="img"
@@ -41,10 +66,31 @@ export default function DatosUsuario() {
             </Typography>
           </CardContent>
         </CardActionArea>
-      </Card>
-      <Button color="primary" component={Link} to="/">
+      </Card>,
+      <Button color="primary" component={Link} to="/" key="botonVolver">
         Volver
-      </Button>
-    </>
-  );
+      </Button>,
+    ];
+  };
+
+  const errorRendering = () => {
+    return (
+      <Alert severity="warning">
+        No pudimos cargar el usuario. ¿Levantaste la API?{' '}
+        <span role="img" aria-label="thinking">
+          🤔
+        </span>
+      </Alert>
+    );
+  };
+
+  const loadingRendering = () => {
+    return <Alert severity="info">Cargando usuarie ...</Alert>;
+  };
+
+  return hasError
+    ? errorRendering()
+    : usuario == null
+    ? loadingRendering()
+    : usuarioRendering();
 }
