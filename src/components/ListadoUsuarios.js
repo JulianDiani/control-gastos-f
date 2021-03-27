@@ -18,7 +18,8 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { getTodosLosUsuarios } from '../services/usuarios';
-import { getDataFromBackend, usuariosFijos } from '../constants/constants';
+import { getTodosLosUsuarios as getTodosLosUsuarios_fake } from '../services/usuarios-fake';
+import { getDataFromBackend } from '../constants/constants';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -45,18 +46,17 @@ export default function ListadoUsuarios() {
 
   useEffect(() => {
     async function fetchUsuarios() {
+      const getFunction = getDataFromBackend
+        ? getTodosLosUsuarios
+        : getTodosLosUsuarios_fake;
       try {
-        const usuarios = await getTodosLosUsuarios();
+        const usuarios = await getFunction();
         setUsuarios(usuarios);
       } catch (err) {
         setHasError(true);
       }
     }
-    if (getDataFromBackend) {
-      fetchUsuarios();
-    } else {
-      setUsuarios(usuariosFijos);
-    }
+    fetchUsuarios();
   }, []);
 
   const usuariosRendering = () => {

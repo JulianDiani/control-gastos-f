@@ -7,8 +7,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
 import { useEffect, useState } from 'react';
-import { getUsuarioPorId } from '../services/usuarios';
 import { Alert } from '@material-ui/lab';
+import { getUsuarioPorId } from '../services/usuarios';
+import { getUsuarioPorId as getUsuarioPorId_fake } from '../services/usuarios-fake';
 import { getDataFromBackend, usuariosFijos } from '../constants/constants';
 
 const useStyles = makeStyles({
@@ -27,22 +28,16 @@ export default function DatosUsuario() {
   useEffect(() => {
     async function fetchUsuario() {
       try {
-        const usuario = await getUsuarioPorId(id);
+        const getFunction = getDataFromBackend
+          ? getUsuarioPorId
+          : getUsuarioPorId_fake;
+        const usuario = await getFunction(id);
         setUsuario(usuario);
       } catch (err) {
         setHasError(true);
       }
     }
-    if (getDataFromBackend) {
-      fetchUsuario();
-    } else {
-      const elUsuario = usuariosFijos.find((usu) => usu.id === Number(id));
-      if (elUsuario) {
-        setUsuario(elUsuario);
-      } else {
-        setHasError(true);
-      }
-    }
+    fetchUsuario();
   }, [id]);
 
   const usuarioRendering = () => {

@@ -10,6 +10,13 @@ const useStyles = makeStyles(() => ({
   root: {
     marginTop: '50px',
   },
+  fixedHeader: {
+    marginBottom: '40px',
+    fontSize: '30px',
+    color: 'DarkRed',
+    backgroundColor: 'Khaki',
+    textAlign: 'center',
+  },
 }));
 
 export default function App() {
@@ -17,6 +24,9 @@ export default function App() {
 
   return (
     <Container maxWidth="xl" className={classes.root}>
+      <div className={classes.fixedHeader}>
+        Este es un texto fijo, va por afuera de las rutas.
+      </div>
       <Router>
         <Switch>
           <Route path="/recoil/usuarios/:id">
