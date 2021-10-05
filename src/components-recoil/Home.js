@@ -2,12 +2,16 @@ import {
   Button,
   Card,
   CardContent,
+  CircularProgress,
   Grid,
   makeStyles,
   Typography,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import ListadoUsuarios from './ListadoUsuarios';
-import ProTip from './ProTip';
+import ProTip from '../components/ProTip';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -20,9 +24,22 @@ function EjemploApi() {
 
   return (
     <Card className={classes.card}>
-      <CardContent>
-        <ListadoUsuarios />
-      </CardContent>
+      <Suspense fallback={<CircularProgress />}>
+        <ErrorBoundary
+          fallback={
+            <Alert severity="warning">
+              No pudimos cargar los usuarios. ¿Levantaste la API?{' '}
+              <span role="img" aria-label="thinking">
+                🤔
+              </span>
+            </Alert>
+          }
+        >
+          <CardContent>
+            <ListadoUsuarios />
+          </CardContent>
+        </ErrorBoundary>
+      </Suspense>
     </Card>
   );
 }
@@ -48,7 +65,7 @@ export default function Home() {
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Repositorio semilla React - Material UI
+        Repositorio semilla React - Recoil - Material UI
       </Typography>
       <EjemploApi />
       <ClonarProyecto />
