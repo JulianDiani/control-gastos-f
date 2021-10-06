@@ -1,9 +1,9 @@
 import React from 'react';
-import List from '@mui/material/List';
-import logo from '../assets/logoUnahur.png'
+import List from '@material-ui/core/List';
+import logo from '../assets/logoUnahur.png';
 import { Home, Info, Help, AssignmentInd } from '@material-ui/icons';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core';
 
 const sideBarOptions = [

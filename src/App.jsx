@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import NavBar from './components/NavBar';
-import { MisProyectos } from './components/MisProyectos';
 import { DatosGenerales } from './components/DatosGenerales';
 
 export default function App() {

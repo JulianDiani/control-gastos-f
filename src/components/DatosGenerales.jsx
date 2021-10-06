@@ -1,6 +1,5 @@
 import React from 'react';
 import { Footer } from './Footer';
-import { proyectoPrueba } from '../constants/constants';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
