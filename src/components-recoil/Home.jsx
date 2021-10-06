@@ -10,8 +10,6 @@ import {
 import { Alert } from '@material-ui/lab';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import ListadoUsuarios from './ListadoUsuarios';
-import ProTip from './ProTip';
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -36,7 +34,6 @@ function EjemploApi() {
           }
         >
           <CardContent>
-            <ListadoUsuarios />
           </CardContent>
         </ErrorBoundary>
       </Suspense>
@@ -47,7 +44,6 @@ function EjemploApi() {
 function ClonarProyecto() {
   return (
     <>
-      <ProTip />
       <Grid container justify="center">
         <Button
           variant="contained"
