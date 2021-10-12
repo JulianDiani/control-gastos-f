@@ -45,7 +45,7 @@ export const proyectoPrueba = {
   tipo: 'Proyecto',
   organismo: 'QIDW',
   lineaFinanciamiento: 'FGH',
-  anio: 2020,
+  año: 2020,
   unidadAcademica: 'Departamento de Saraza',
   areaTematica: 'Ciencias de la Saraza',
   subsidio: 403323.0,

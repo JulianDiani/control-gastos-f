@@ -5,72 +5,85 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import List from '@material-ui/core/List';
+import { proyectoPrueba } from '../constants/constants';
 
 export const DatosGenerales = () => {
-    const $ = useStyles();
+  const $ = useStyles();
+  const data = proyectoPrueba; 
+  
+  //Como poner en bold el campo 'Titulo' ?? fontWeight: "bold" no me funciono...
+  //Mejor practica usar Typographic o directamente el ListITemText con el atributo primary ??
+  const DatosList = () => {
+    return (
+      <List>
+        <ListItem  className={$.item} button>
+          <ListItemText>
+              <Typography>Titulo:</Typography>
+          </ListItemText>
+          <ListItemText primary={data.titulo} />
+        </ListItem>
+        <ListItem  button>
+          <ListItemText primary={'Tipo: ' + data.tipo} sx={{ ml: 2 }} />
+        </ListItem>
+        <ListItem  button>
+          <ListItemText primary={'Organismo: ' + data.organismo} sx={{ ml: 2 }} />
+        </ListItem>
+        <ListItem  button>
+          <ListItemText primary={'Linea de financiamiento: ' + data.lineaFinanciamiento} sx={{ ml: 2 }} />
+        </ListItem>
+        <ListItem  button>
+          <ListItemText primary={'Año de convocatoria: ' + data.lineaFinanciamiento} sx={{ ml: 2 }} />
+        </ListItem>
+      </List>
+    );
+  };
 
-    return <>
-        <div clasNane={$.root}>
-            <h1>Datos Generales</h1>
-            <Divider />
-            <br />
-            <div className={$.root}>
-                <Card className={$.card}>
-                <CardContent className={$}>
-                <Typography>
-                El sistema modular de inglés se inició en el año 2002 cuando
-                existía la carrera de Licenciatura en el Idioma Inglés, formando
-                parte de la Unidad Académica de ciencias de la Educación; luego
-                para cumplir con la constitución, art. 124, fue responsabilidad de
-                la universidad, proporcionar a los egresados de todas las carreras
-                el conocimiento de un idioma extranjero. De ésta manera se
-                incorporaron módulos de inglés a toda la población estudiantil. En
-                la actualidad, la universidad cuenta con 5000 alumnos
-                matriculados1 ; dieciocho carrereas que corresponden a 5 unidades
-                académicas y 3500 egresados2 a los cuales hay que capacitarlos en
-                el idioma inglés en tan solo 3 aulas con capacidad para 20
-                personas y dos laboratorios para 30 personas, dentro del edificio
-                donde funciona el sistema modular de Inglés; motivo por el cual se
-                han visto obligados a utilizar aulas de otras unidades académicas,
-                en otras edificaciones, en los horarios que éstas no se encuentren
-                ocupadas recibiendo clases
-                </Typography>
-                </CardContent>
-                </Card>
-                <Card className={$.card}>
-                <CardContent>
-                    <Typography>
-                    El sistema modular de inglés se inició en el año 2002 cuando
-                    existía la carrera de Licenciatura en el Idioma Inglés, formando
-                    parte de la Unidad Académica de ciencias de la Educación; luego
-                    para cumplir con la constitución, art. 124, fue responsabilidad de
-                    la universidad, proporcionar a los egresados de todas las carreras
-                    el conocimiento de un idioma extranjero. De ésta manera se
-                    incorporaron módulos de inglés a toda la población estudiantil. En
-                    la actualidad, la universidad cuenta con 5000 alumnos
-                    matriculados1 ; dieciocho carrereas que corresponden a 5 unidades
-                    académicas y 3500 egresados2 a los cuales hay que capacitarlos en
-                    el idioma inglés en tan solo 3 aulas con capacidad para 20
-                    personas y dos laboratorios para 30 personas, dentro del edificio
-                    donde funciona el sistema modular de Inglés; motivo por el cual se
-                    han visto obligados a utilizar aulas de otras unidades académicas,
-                    en otras edificaciones, en los horarios que éstas no se encuentren
-                    ocupadas recibiendo clases
-                    </Typography>
-                </CardContent>
-                </Card>
-            </div>
-            <Footer />
+  return (
+    <>
+      <div clasName={$.root}>
+        <h1>Datos Generales</h1>
+        <Divider className={$.divider} />
+
+        <div className={$.root}>
+          <Card className={$.card}>
+            <CardContent className={$}>
+              <DatosList/> 
+            </CardContent>
+          </Card>
+          <Card className={$.card}>
+            <CardContent>
+              <List>
+                <ListItem  button>
+                  <ListItemText primary={'text'} sx={{ ml: 2 }} />
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
         </div>
+        <Footer />
+      </div>
     </>
-}
+  );
+};
 
 const useStyles = makeStyles({
-    root: {
-      height: '100%',
+  root: {
+    height: '100%',
+    display: 'flex',
+  },
+  card: {
+    width: '50%',
+  },
+  divider: {
+    marginBottom: '2rem',
+  },
+  item:{
       display: 'flex',
-    },
-    card: {
-        width: '50%'
-    }
-  });
+  },
+  key:{
+    fontWeight: 'bolder'
+  }
+});

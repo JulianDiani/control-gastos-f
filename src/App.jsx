@@ -11,7 +11,7 @@ export default function App() {
   return (
     <Container maxWidth="xl" className={$.root}>
       <Router>
-      <NavBar />
+      <NavBar listaAMostrar = {["Datos Generales"]}/>
       <div className={$.container}>
         <Header />
           <div className={$.content}>
