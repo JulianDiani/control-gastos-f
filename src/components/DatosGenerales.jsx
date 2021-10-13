@@ -1,41 +1,98 @@
 import React from 'react';
 import { Footer } from './Footer';
+import { proyectoPrueba } from '../constants/constants';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
-import { proyectoPrueba } from '../constants/constants';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export const DatosGenerales = () => {
   const $ = useStyles();
-  const data = proyectoPrueba; 
-  
-  //Como poner en bold el campo 'Titulo' ?? fontWeight: "bold" no me funciono...
-  //Mejor practica usar Typographic o directamente el ListITemText con el atributo primary ??
+  const data = proyectoPrueba;
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const DatosList = () => {
     return (
       <List>
-        <ListItem  className={$.item} button>
-          <ListItemText>
-              <Typography>Titulo:</Typography>
-          </ListItemText>
-          <ListItemText primary={data.titulo} />
+        <ListItem className={$.item} button>
+          <ListItemText primary={'Titulo: ' + data.titulo} sx={{ ml: 1 }} />
         </ListItem>
-        <ListItem  button>
-          <ListItemText primary={'Tipo: ' + data.tipo} sx={{ ml: 2 }} />
+        <ListItem button>
+          <ListItemText primary={'Tipo: ' + data.tipo} sx={{ ml: 1 }} />
         </ListItem>
-        <ListItem  button>
-          <ListItemText primary={'Organismo: ' + data.organismo} sx={{ ml: 2 }} />
+        <ListItem button>
+          <ListItemText
+            primary={'Organismo: ' + data.organismo}
+            sx={{ ml: 2 }}
+          />
         </ListItem>
-        <ListItem  button>
-          <ListItemText primary={'Linea de financiamiento: ' + data.lineaFinanciamiento} sx={{ ml: 2 }} />
+        <ListItem button>
+          <ListItemText
+            primary={'Linea de financiamiento: ' + data.lineaFinanciamiento}
+            sx={{ ml: 2 }}
+          />
         </ListItem>
-        <ListItem  button>
-          <ListItemText primary={'Año de convocatoria: ' + data.lineaFinanciamiento} sx={{ ml: 2 }} />
+        <ListItem button>
+          <ListItemText
+            primary={'Año de convocatoria: ' + data.año}
+            sx={{ ml: 2 }}
+          />
+        </ListItem>
+        <ListItem button>
+          <ListItemText
+            primary={'Unidad Academica: ' + data.unidadAcademica}
+            sx={{ ml: 2 }}
+          />
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary={'Area: ' + data.areaTematica} sx={{ ml: 2 }} />
+        </ListItem>
+        <ListItem button>
+          <ListItemText primary={'Subsidio: ' + data.subsidio} sx={{ ml: 2 }} />
+        </ListItem>
+        <ListItem button>
+          <ListItemText
+            primary={'Fecha Inicio: ' + data.fechaInicio}
+            sx={{ ml: 2 }}
+          />
+        </ListItem>
+        <ListItem button>
+          <ListItemText
+            primary={'Fecha Fin: ' + data.fechaFin}
+            sx={{ ml: 2 }}
+          />
+        </ListItem>
+        <ListItem className={$.dropDown} button>
+          <ListItemText  primary={'Integrantes'} />
+          <ExpandMoreIcon onClick={handleClick} sx={{ml:1}}/>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            className={$.menuItem}
+          >
+            {data.integrantes.map((a) => (
+              <MenuItem onClick={handleClose} key={a}>
+                {a}
+              </MenuItem>
+            ))}
+          </Menu>
         </ListItem>
       </List>
     );
@@ -49,16 +106,17 @@ export const DatosGenerales = () => {
 
         <div className={$.root}>
           <Card className={$.card}>
-            <CardContent className={$}>
-              <DatosList/> 
+            <CardContent>
+              <DatosList />
             </CardContent>
           </Card>
           <Card className={$.card}>
             <CardContent>
               <List>
-                <ListItem  button>
-                  <ListItemText primary={'text'} sx={{ ml: 2 }} />
-                </ListItem>
+                <Typography className={$.title}>Resumen:</Typography>
+                <Typography paragraph={true} className={$.parrafo}>
+                  {data.resumen}
+                </Typography>
               </List>
             </CardContent>
           </Card>
@@ -76,14 +134,31 @@ const useStyles = makeStyles({
   },
   card: {
     width: '50%',
+    margin: '1rem',
   },
   divider: {
     marginBottom: '2rem',
   },
-  item:{
-      display: 'flex',
+  item: {
+    display: 'flex',
   },
-  key:{
-    fontWeight: 'bolder'
+  key: {
+    fontWeight: 'bolder',
+  },
+  parrafo: {
+    padding: '3rem',
+    fontSize: '16px',
+    textAlign: 'justify',
+  },
+  title: {
+    fontWeight: 'bold',
+    marginLeft: '3rem',
+  },
+  dropDown: {
+    marginRight: '1rem',
+    width: '10rem',
+  },
+  menuItem: {
+    marginLeft: '1rem'
   }
 });
