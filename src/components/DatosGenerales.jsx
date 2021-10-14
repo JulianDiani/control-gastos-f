@@ -1,6 +1,5 @@
 import React from 'react';
 import { Footer } from './Footer';
-import { proyectoPrueba } from '../constants/constants';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -12,11 +11,31 @@ import List from '@material-ui/core/List';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { getProyecto } from '../services/proyectos.js';
+import { useState, useEffect } from 'react';
+import Alert from '@material-ui/lab/Alert';
 
 export const DatosGenerales = () => {
   const $ = useStyles();
-  const data = proyectoPrueba;
-  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const [proyecto, setProyecto] = useState(null);
+  const [hasError, setHasError] = useState(false); //Usando el hasError no me funcionaba - cambie el ternario por proyecto ? rendering() : loadingRendering() para que valide que no sea null proyecto
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  //useEffect para traer la proyecto del proyecto de la api.
+  useEffect(() => {
+    async function fetchUsuarios() {
+      const getFunction = getProyecto;
+      try {
+        const proyecto = await getFunction();
+        setProyecto(proyecto);
+      } catch (err) {
+        setHasError(true);
+        console.log('ERROR USE EFFECT : ' + err);
+      }
+    }
+    fetchUsuarios();
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,60 +45,70 @@ export const DatosGenerales = () => {
     setAnchorEl(null);
   };
 
+  const loadingRendering = () => {
+    return <Alert severity="info">Cargando...</Alert>;
+  };
+
   const DatosList = () => {
     return (
       <List>
         <ListItem className={$.item} button>
-          <ListItemText primary={'Titulo: ' + data.titulo} sx={{ ml: 1 }} />
+          <ListItemText primary={'Titulo: ' + proyecto.titulo} sx={{ ml: 1 }} />
         </ListItem>
         <ListItem button>
-          <ListItemText primary={'Tipo: ' + data.tipo} sx={{ ml: 1 }} />
+          <ListItemText primary={'Tipo: ' + proyecto.tipo} sx={{ ml: 1 }} />
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={'Organismo: ' + data.organismo}
+            primary={'Organismo: ' + proyecto.organismo}
             sx={{ ml: 2 }}
           />
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={'Linea de financiamiento: ' + data.lineaFinanciamiento}
+            primary={'Linea de financiamiento: ' + proyecto.lineaFinanciamiento}
             sx={{ ml: 2 }}
           />
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={'Año de convocatoria: ' + data.año}
+            primary={'Año de convocatoria: ' + proyecto.año}
             sx={{ ml: 2 }}
           />
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={'Unidad Academica: ' + data.unidadAcademica}
-            sx={{ ml: 2 }}
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary={'Area: ' + data.areaTematica} sx={{ ml: 2 }} />
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary={'Subsidio: ' + data.subsidio} sx={{ ml: 2 }} />
-        </ListItem>
-        <ListItem button>
-          <ListItemText
-            primary={'Fecha Inicio: ' + data.fechaInicio}
+            primary={'Unidad Academica: ' + proyecto.unidadAcademica}
             sx={{ ml: 2 }}
           />
         </ListItem>
         <ListItem button>
           <ListItemText
-            primary={'Fecha Fin: ' + data.fechaFin}
+            primary={'Area: ' + proyecto.areaTematica}
+            sx={{ ml: 2 }}
+          />
+        </ListItem>
+        <ListItem button>
+          <ListItemText
+            primary={'Subsidio: ' + proyecto.subsidio}
+            sx={{ ml: 2 }}
+          />
+        </ListItem>
+        <ListItem button>
+          <ListItemText
+            primary={'Fecha Inicio: ' + proyecto.fechaInicio}
+            sx={{ ml: 2 }}
+          />
+        </ListItem>
+        <ListItem button>
+          <ListItemText
+            primary={'Fecha Fin: ' + proyecto.fechaFin}
             sx={{ ml: 2 }}
           />
         </ListItem>
         <ListItem className={$.dropDown} button>
-          <ListItemText  primary={'Integrantes'} />
-          <ExpandMoreIcon onClick={handleClick} sx={{ml:1}}/>
+          <ListItemText primary={'Integrantes'} />
+          <ExpandMoreIcon onClick={handleClick} sx={{ ml: 1 }} />
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
@@ -87,7 +116,7 @@ export const DatosGenerales = () => {
             onClose={handleClose}
             className={$.menuItem}
           >
-            {data.integrantes.map((a) => (
+            {proyecto.integrantes.map((a) => (
               <MenuItem onClick={handleClose} key={a}>
                 {a}
               </MenuItem>
@@ -97,13 +126,9 @@ export const DatosGenerales = () => {
       </List>
     );
   };
-
-  return (
-    <>
-      <div clasName={$.root}>
-        <h1>Datos Generales</h1>
-        <Divider className={$.divider} />
-
+  const rendering = () => {
+    return (
+      <>
         <div className={$.root}>
           <Card className={$.card}>
             <CardContent>
@@ -115,12 +140,22 @@ export const DatosGenerales = () => {
               <List>
                 <Typography className={$.title}>Resumen:</Typography>
                 <Typography paragraph={true} className={$.parrafo}>
-                  {data.resumen}
+                  {proyecto.resumen}
                 </Typography>
               </List>
             </CardContent>
           </Card>
         </div>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <div clasName={$.root}>
+        <h1>Datos Generales</h1>
+        <Divider className={$.divider} />
+        {proyecto ? rendering() : loadingRendering()}
         <Footer />
       </div>
     </>
@@ -159,6 +194,6 @@ const useStyles = makeStyles({
     width: '10rem',
   },
   menuItem: {
-    marginLeft: '1rem'
-  }
+    marginLeft: '1rem',
+  },
 });
