@@ -5,30 +5,28 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import List from '@material-ui/core/List';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { getProyecto } from '../services/proyectos.js';
+import { getPresupuesto } from '../services/proyectos.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
-export const DatosGenerales = () => {
+export const Presupuesto = () => {
   const $ = useStyles();
-
-  const [proyecto, setProyecto] = useState(null);
+  const [presupuesto, setPresupuesto] = useState(null);
   const [hasError, setHasError] = useState(false); //Usando el hasError no me funcionaba - cambie el ternario por proyecto ? rendering() : loadingRendering() para que valide que no sea null proyecto
-  const [anchorEl, setAnchorEl] = useState(null);
 
-  //useEffect para traer la proyecto del proyecto de la api.
   useEffect(() => {
     async function fetchUsuarios() {
-      const getFunction = getProyecto;
+      const getFunction = getPresupuesto;
       try {
-        const proyecto = await getFunction();
-        setProyecto(proyecto);
+        const presupuesto = await getFunction();
+        setPresupuesto(presupuesto);
       } catch (err) {
         setHasError(true);
         console.log('ERROR USE EFFECT : ' + err);
@@ -37,112 +35,60 @@ export const DatosGenerales = () => {
     fetchUsuarios();
   }, []);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+  }
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+  ];
+
+  const BasicTable = () => {
+    return (
+      <TableContainer component={Paper}>
+        <Table className={$.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Dessert (100g serving)</TableCell>
+              <TableCell align="right">Calories</TableCell>
+              <TableCell align="right">Fat&nbsp;(g)</TableCell>
+              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.carbs}</TableCell>
+                <TableCell align="right">{row.protein}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
   };
 
   const loadingRendering = () => {
     return <Alert severity="info">Cargando...</Alert>;
   };
 
-  const DatosList = () => {
-    return (
-      <List>
-        <ListItem className={$.item} button>
-          <ListItemText primary={'Titulo: ' + proyecto.titulo} sx={{ ml: 1 }} />
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary={'Tipo: ' + proyecto.tipo} sx={{ ml: 1 }} />
-        </ListItem>
-        <ListItem button>
-          <ListItemText
-            primary={'Organismo: ' + proyecto.organismo}
-            sx={{ ml: 2 }}
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemText
-            primary={'Linea de financiamiento: ' + proyecto.lineaFinanciamiento}
-            sx={{ ml: 2 }}
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemText
-            primary={'Año de convocatoria: ' + proyecto.año}
-            sx={{ ml: 2 }}
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemText
-            primary={'Unidad Academica: ' + proyecto.unidadAcademica}
-            sx={{ ml: 2 }}
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemText
-            primary={'Area: ' + proyecto.areaTematica}
-            sx={{ ml: 2 }}
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemText
-            primary={'Subsidio: ' + proyecto.subsidio}
-            sx={{ ml: 2 }}
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemText
-            primary={'Fecha Inicio: ' + proyecto.fechaInicio}
-            sx={{ ml: 2 }}
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemText
-            primary={'Fecha Fin: ' + proyecto.fechaFin}
-            sx={{ ml: 2 }}
-          />
-        </ListItem>
-        <ListItem className={$.dropDown} button>
-          <ListItemText primary={'Integrantes'} />
-          <ExpandMoreIcon onClick={handleClick} sx={{ ml: 1 }} />
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            className={$.menuItem}
-          >
-            {proyecto.integrantes.map((a) => (
-              <MenuItem onClick={handleClose} key={a}>
-                {a}
-              </MenuItem>
-            ))}
-          </Menu>
-        </ListItem>
-      </List>
-    );
-  };
   const rendering = () => {
     return (
       <>
         <div className={$.root}>
           <Card className={$.card}>
             <CardContent>
-              <DatosList />
-            </CardContent>
-          </Card>
-          <Card className={$.card}>
-            <CardContent>
-              <List>
-                <Typography className={$.title}>Resumen:</Typography>
-                <Typography paragraph={true} className={$.parrafo}>
-                  {proyecto.resumen}
-                </Typography>
-              </List>
+              <BasicTable />
             </CardContent>
           </Card>
         </div>
@@ -153,9 +99,9 @@ export const DatosGenerales = () => {
   return (
     <>
       <div clasName={$.root}>
-        <h1>Datos Generales</h1>
+        <h1>Presupuesto</h1>
         <Divider className={$.divider} />
-        {proyecto ? rendering() : loadingRendering()}
+        {presupuesto ? rendering() : loadingRendering()}
         <Footer />
       </div>
     </>
@@ -163,6 +109,10 @@ export const DatosGenerales = () => {
 };
 
 const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+
   root: {
     height: '100%',
     display: 'flex',

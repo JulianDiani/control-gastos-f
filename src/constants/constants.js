@@ -73,3 +73,17 @@ export const proyectoPrueba = {
   la publicación del método se ha desarrollado una web con ayuda de la herramienta EPF
   Composer de Eclipse.`,
 };
+
+export const presupuestoPrueba = {
+  presupuesto: 'Asignacion Disponible',
+  fechaInicio: '18/09/2021',
+  fechaFin: '18/09/2022',
+  insumos: 71800,
+  bibliografia: 0,
+  gastosDePublicacion: 4500,
+  viajesYViaticos: 16500,
+  equipamiento: 27700,
+  serviciosTecnicos: 6850,
+  gastosDeAdministracion: 6368,
+  totales: 133718,
+};
