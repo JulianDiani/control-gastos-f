@@ -75,15 +75,28 @@ export const proyectoPrueba = {
 };
 
 export const presupuestoPrueba = {
-  presupuesto: 'Asignacion Disponible',
+  tipoPresupuesto: 'Asignacion Disponible',
   fechaInicio: '18/09/2021',
   fechaFin: '18/09/2022',
-  insumos: 71800,
+
+  insumos: 718000,
   bibliografia: 0,
   gastosDePublicacion: 4500,
   viajesYViaticos: 16500,
   equipamiento: 27700,
   serviciosTecnicos: 6850,
   gastosDeAdministracion: 6368,
-  totales: 133718,
+};
+
+export const gastosPrueba = {
+  tipoGasto: 'Rendiciones especificas',
+  fechaInicio: '18/09/2022',
+
+  insumos: 41569,
+  bibliografia: 0,
+  gastosDePublicacion: 0,
+  viajesYViaticos: 183235,
+  equipamiento: 19499,
+  serviciosTecnicos: 0,
+  gastosDeAdministracion: 0,
 };
