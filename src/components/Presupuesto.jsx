@@ -7,6 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import { getPresupuesto } from '../services/proyectos.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
+import Chart from './graphics/Chart';
 
 export const Presupuesto = () => {
   const $ = useStyles();
@@ -37,7 +38,7 @@ export const Presupuesto = () => {
         <div className={$.root}>
           <Card className={$.card}>
             <CardContent>
-              <div />
+              <Chart />
             </CardContent>
           </Card>
         </div>
