@@ -86,6 +86,7 @@ export const presupuestoPrueba = {
   equipamiento: 27700,
   serviciosTecnicos: 6850,
   gastosDeAdministracion: 6368,
+  totalPresupuesto: 100,
 };
 
 export const gastosPrueba = {
@@ -99,4 +100,5 @@ export const gastosPrueba = {
   equipamiento: 19499,
   serviciosTecnicos: 0,
   gastosDeAdministracion: 0,
+  totalGastos: 50,
 };
