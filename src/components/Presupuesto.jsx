@@ -7,7 +7,8 @@ import Divider from '@material-ui/core/Divider';
 import { getPresupuesto } from '../services/proyectos.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import TortaPrincial from './graphics/TortaPrincincipal';
+import TortaPrincialoughnut from './graphics/TortaPrincincipal';
+import CardMontos from './graphics/CardMontos';
 
 export const Presupuesto = () => {
   const $ = useStyles();
@@ -36,9 +37,10 @@ export const Presupuesto = () => {
     return (
       <>
         <div className={$.root}>
+          <CardMontos />
           <Card className={$.card}>
             <CardContent>
-              <TortaPrincial />
+              <TortaPrincialoughnut />
             </CardContent>
           </Card>
         </div>

@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import { getPresupuesto } from '../../services/proyectos.js';
-import { getGastos } from '../../services/gastos.js';
+import { getPresupuesto, getGastos } from '../../services/proyectos.js';
 
-const TortaPrincial = ({ totalGastos, totalPresupuesto }) => {
-  const [presupuesto, setPresupuesto] = useState(null);
-  const [gasto, setGastos] = useState(null);
-  const [hasError, setHasError] = useState(false); //Usando el hasError no me funcionaba - cambie el ternario por proyecto ? rendering() : loadingRendering() para que valide que no sea null proyecto
+const TortaPrincial = () => {
+  const [totalPresupuesto, setPresupuesto] = useState(null);
+  const [totalGastos, setGastos] = useState(null);
 
   useEffect(() => {
     const fetchPrespuesto = async () => {
       const getFunctionPresupuesto = getPresupuesto;
       const getFunctionGastos = getGastos;
+
       try {
-        const presupuesto = await getFunctionPresupuesto();
-        const gastos = await getFunctionGastos();
-        setPresupuesto(presupuesto);
-        setGastos(gastos);
+        const { totalPresupuesto } = await getFunctionPresupuesto();
+        const { totalGastos } = await getFunctionGastos();
+        setPresupuesto(totalPresupuesto);
+        setGastos(totalGastos);
       } catch (err) {
-        setHasError(true);
         console.log('ERROR USE EFFECT : ' + err);
       }
     };
@@ -37,13 +35,13 @@ const TortaPrincial = ({ totalGastos, totalPresupuesto }) => {
               'rgba(0, 255, 0, 0.5)',
               'rgba(255, 0, 0, 0.5)',
             ],
-            data: [`${totalGastos}`, `${totalPresupuesto}`, 25],
+            data: [totalGastos, totalPresupuesto, 25],
           },
         ],
       }}
       options={{
         legend: { display: false },
-        title: { display: true, text: `Estado actual en ` },
+        title: { display: true, text: `Estado actual del presupuesto` },
       }}
     />
   );
