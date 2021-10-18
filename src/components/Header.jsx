@@ -14,7 +14,6 @@ export default function Header() {
         <p>{usuarioPrueba.email}</p>
       </div> 
       <div className={$.greenBar}>
-        <p>Texto placeholder</p>
       </div> 
     </div>
   );

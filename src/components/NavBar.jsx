@@ -1,27 +1,21 @@
 import React from 'react';
 import List from '@material-ui/core/List';
 import logo from '../assets/logoUnahur.png';
-import { Home, Info, Help, AssignmentInd } from '@material-ui/icons';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
-const sideBarOptions = [
-  { text: 'Proyectos', icon: <Home /> },
-  { text: 'Proveedores', icon: <AssignmentInd /> },
-  { text: 'Normativas I+D', icon: <Info /> },
-  { text: 'Soporte', icon: <Help /> }
-]
 
-export default function NavBar() {
+export default function NavBar(props) {
   const $ = useStyles()
 
   return (
     <div className={$.navbar}>
       <img src={logo} className={$.logo} alt="Logo Universidad Nacional de Hurlingham"></img>
       <List className={$.list}>
-        {sideBarOptions.map(({text, icon}) => (
-          <ListItem  divider='true' className={$.option} button key={text}>
+        {props.sideBarOptions.map(({text, icon,path}) => (
+          <ListItem  divider='true' className={$.option} button = {true} key={text} component={Link} to={path}>
             {icon}
             <ListItemText primary={text} sx={{ ml: 2 }} />
           </ListItem>
