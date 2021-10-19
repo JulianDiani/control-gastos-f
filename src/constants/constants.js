@@ -73,3 +73,58 @@ export const proyectoPrueba = {
   la publicación del método se ha desarrollado una web con ayuda de la herramienta EPF
   Composer de Eclipse.`,
 };
+
+export const proyectosEnCurso = [
+  {
+    nombre: 'The Phantom Menace',
+    director: 'George Lucas',
+    fechaInicio: '08-07-1999',
+    porcentaje: '98%',
+  },
+  {
+    nombre: 'A New Hope',
+    director: 'George Lucas',
+    fechaInicio: '25-12-1977',
+    porcentaje: '52%',
+  },
+  {
+    nombre: 'The Force Awakens',
+    director: 'J.J. Abrahams',
+    fechaInicio: '17-12-2015',
+    porcentaje: '32%',
+  },
+  {
+    nombre: 'Rogue One',
+    director: 'Gareth Edwards',
+    fechaInicio: '15-12-2016',
+    porcentaje: '47%',
+  },
+];
+
+export const proyectosEnHistoria = [
+  {
+    nombre: 'Attack of the Clones',
+    director: 'George Lucas',
+    fechaInicio: '16-05-2002',
+    porcentaje: '100%',
+  },
+  {
+    nombre:
+      'It is a dark time for the Rebellion. Although the Death Star has been destroyed, Imperial troops have driven the Rebel forces from their hidden base and pursued them across the galaxy',
+    director: 'George Lucas',
+    fechaInicio: '25-12-1977',
+    porcentaje: '100%',
+  },
+  {
+    nombre: 'The Last Jedi',
+    director: 'Rian Johnson',
+    fechaInicio: '14-12-2017',
+    porcentaje: '100%',
+  },
+  {
+    nombre: 'Solo',
+    director: 'Ron Howard',
+    fechaInicio: '24-05-2018',
+    porcentaje: '100%',
+  },
+];

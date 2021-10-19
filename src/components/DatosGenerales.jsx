@@ -52,55 +52,55 @@ export const DatosGenerales = () => {
   const DatosList = () => {
     return (
       <List>
-        <ListItem className={$.item} button>
+        <ListItem className={$.item}>
           <ListItemText primary={'Titulo: ' + proyecto.titulo} sx={{ ml: 1 }} />
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <ListItemText primary={'Tipo: ' + proyecto.tipo} sx={{ ml: 1 }} />
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <ListItemText
             primary={'Organismo: ' + proyecto.organismo}
             sx={{ ml: 2 }}
           />
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <ListItemText
             primary={'Linea de financiamiento: ' + proyecto.lineaFinanciamiento}
             sx={{ ml: 2 }}
           />
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <ListItemText
             primary={'Año de convocatoria: ' + proyecto.año}
             sx={{ ml: 2 }}
           />
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <ListItemText
             primary={'Unidad Academica: ' + proyecto.unidadAcademica}
             sx={{ ml: 2 }}
           />
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <ListItemText
             primary={'Area: ' + proyecto.areaTematica}
             sx={{ ml: 2 }}
           />
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <ListItemText
             primary={'Subsidio: ' + proyecto.subsidio}
             sx={{ ml: 2 }}
           />
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <ListItemText
             primary={'Fecha Inicio: ' + proyecto.fechaInicio}
             sx={{ ml: 2 }}
           />
         </ListItem>
-        <ListItem button>
+        <ListItem>
           <ListItemText
             primary={'Fecha Fin: ' + proyecto.fechaFin}
             sx={{ ml: 2 }}

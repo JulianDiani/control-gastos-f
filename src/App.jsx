@@ -25,7 +25,7 @@ export default function App() {
         <Header />
           <div className={$.content}>
             <Switch>
-               {/*<Route path="/" component={MisProyectos} />*/}
+              <Route path="/" component={MisProyectos} />
               <Route path="/datos" component={DatosGenerales} />
             </Switch>
           </div>

@@ -4,10 +4,11 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { proyectosEnCurso } from '../constants/constants';
+import { proyectosEnHistoria } from '../constants/constants';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -19,52 +20,74 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
+
 const StyledTableRow = withStyles((theme) => ({
   root: {
     '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
+      backgroundColor: 'theme.palette.action.hover,'
+    },
+  },
+}))(TableRow);
+
+const StyledTableHead = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: '#5AA123'
+    },
+  },
+}))(TableRow);
+
+const StyledTableHeadTerminados = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: '#DCDCDC'
     },
   },
 }))(TableRow);
 
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 export const MisProyectos = () => {
     const $ = useStyles();
 
     return <>
+        <h2>En curso</h2>
         <TableContainer className={$.container} component={Paper}>
             <Table aria-label="customized table">
-                <TableHead >
-                <TableRow >
-                    <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-                    <StyledTableCell align="right">Calories</StyledTableCell>
-                    <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-                    <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-                    <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-                </TableRow>
-                </TableHead>
+                <StyledTableHead>
+                    <StyledTableCell className={ $.textColor }>Proyecto</StyledTableCell>
+                    <StyledTableCell align="center" className={ $.textColor }>Director</StyledTableCell>
+                    <StyledTableCell align="center" className={ $.textColor }>Fecha de Inicio</StyledTableCell>
+                    <StyledTableCell align="center" className={ $.textColor }>Porcentaje</StyledTableCell>
+                </StyledTableHead>
                 <TableBody>
-                {rows.map((row) => (
-                    <StyledTableRow key={row.name}>
-                    <StyledTableCell component="th" scope="row">
-                        {row.name}
-                    </StyledTableCell>
-                    <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                    <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                    <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                    <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                {proyectosEnCurso.map((proyectosEnCurso) => (
+                    <StyledTableRow key={proyectosEnCurso.nombre}>
+                    <StyledTableCell scope="row">{proyectosEnCurso.nombre}</StyledTableCell>
+                    <StyledTableCell align="center">{proyectosEnCurso.director}</StyledTableCell>
+                    <StyledTableCell align="center">{proyectosEnCurso.fechaInicio}</StyledTableCell>
+                    <StyledTableCell align="center">{proyectosEnCurso.porcentaje}</StyledTableCell>
+                    </StyledTableRow>
+                ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+        <br></br>
+        <h2>Historia</h2>
+        <TableContainer className={$.container} component={Paper}>
+            <Table aria-label="customized table">
+                <StyledTableHeadTerminados>
+                    <StyledTableCell className={ $.textColorHistoric }>Proyecto</StyledTableCell>
+                    <StyledTableCell align="center" className={ $.textColorHistoric }>Director</StyledTableCell>
+                    <StyledTableCell align="center" className={ $.textColorHistoric }>Fecha de Inicio</StyledTableCell>
+                    <StyledTableCell align="center" className={ $.textColorHistoric }>Porcentaje</StyledTableCell>
+                </StyledTableHeadTerminados>
+                <TableBody>
+                {proyectosEnHistoria.map((proyectosEnHistoria) => (
+                    <StyledTableRow key={proyectosEnHistoria.nombre}>
+                    <StyledTableCell scope="row" className={ $.tableCellContent }>{proyectosEnHistoria.nombre}</StyledTableCell>
+                    <StyledTableCell align="center">{proyectosEnHistoria.director}</StyledTableCell>
+                    <StyledTableCell align="center">{proyectosEnHistoria.fechaInicio}</StyledTableCell>
+                    <StyledTableCell align="center">{proyectosEnHistoria.porcentaje}</StyledTableCell>
                     </StyledTableRow>
                 ))}
                 </TableBody>
@@ -79,4 +102,14 @@ const useStyles = makeStyles({
         display: 'flex',
         width: '100%',
     },
+    textColor: {
+      color: 'white', 
+      fontWeight: 'bold'
+    },
+    textColorHistoric: {
+      fontWeight: 'bold'
+    },
+    tableCellContent: {
+      maxWidth: '10vw'
+    }
   });
