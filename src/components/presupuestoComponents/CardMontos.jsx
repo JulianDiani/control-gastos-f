@@ -1,21 +1,30 @@
-import React from 'react';
+import { React } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-export default function CardMontos() {
+export default function CardMontos({ presupuesto, gastos }) {
   const classes = useStyles();
+
+  console.log(presupuesto);
+
+  // let montoDisponible = presupuesto.totalPresupuesto - gastos.totalGastos;
+
+  const nivelDeEjecucion = Number(23 / 100).toLocaleString(undefined, {
+    style: 'percent',
+    minimumFractionDigits: 2,
+  });
 
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          Monto disponible:
+          Monto disponible: 33 {}
         </Typography>
 
         <Typography variant="body2" component="p">
-          Nivel de ejecución:
+          Nivel de ejecución: 45{}
         </Typography>
       </CardContent>
     </Card>

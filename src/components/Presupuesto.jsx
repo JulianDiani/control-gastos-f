@@ -4,29 +4,36 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import { getPresupuesto } from '../services/proyectos.js';
+import { getPresupuesto, getGastos } from '../services/proyectos.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import TortaPrincialoughnut from './graphics/TortaPrincincipal';
-import CardMontos from './graphics/CardMontos';
+import TortaPrincial from './presupuestoComponents/TortaPrincincipal';
+import CardMontos from './presupuestoComponents/CardMontos';
+import Tabla from './presupuestoComponents/Tabla';
+import Box from '@material-ui/core/Box';
 
 export const Presupuesto = () => {
   const $ = useStyles();
   const [presupuesto, setPresupuesto] = useState(null);
   const [hasError, setHasError] = useState(false); //Usando el hasError no me funcionaba - cambie el ternario por proyecto ? rendering() : loadingRendering() para que valide que no sea null proyecto
+  const [gastos, setGastos] = useState(null);
 
   useEffect(() => {
-    async function fetchUsuarios() {
-      const getFunction = getPresupuesto;
+    async function fetchPrespuesto() {
+      const getFunctionPresupuesto = getPresupuesto;
+      const getFunctionGastos = getGastos;
+
       try {
-        const presupuesto = await getFunction();
+        const presupuesto = await getFunctionPresupuesto();
         setPresupuesto(presupuesto);
+        const gastos = await getFunctionGastos();
+        setGastos(gastos);
       } catch (err) {
         setHasError(true);
         console.log('ERROR USE EFFECT : ' + err);
       }
     }
-    fetchUsuarios();
+    fetchPrespuesto();
   }, []);
 
   const loadingRendering = () => {
@@ -37,12 +44,15 @@ export const Presupuesto = () => {
     return (
       <>
         <div className={$.root}>
-          <CardMontos />
+          <CardMontos presupuesto={presupuesto} gastos={gastos} />
+
           <Card className={$.card}>
             <CardContent>
-              <TortaPrincialoughnut />
+              <TortaPrincial presupuesto={presupuesto} gastos={gastos} />
             </CardContent>
           </Card>
+
+          <Tabla presupuesto={presupuesto} gastos={gastos} />
         </div>
       </>
     );
