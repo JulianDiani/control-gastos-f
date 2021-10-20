@@ -4,29 +4,22 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import NavBar from './components/NavBar';
 import { DatosGenerales } from './components/DatosGenerales';
-import {MisProyectos} from './components/MisProyectos';
-import { AssignmentInd, Help, Home, Info } from '@material-ui/icons';
+import { MisProyectos } from './components/MisProyectos';
+
+
 
 export default function App() {
   const $ = useStyles();
-
-  const sideBarOptions = [
-    { text: 'Proyectos', icon: <Home />,path:"/datos" },
-    { text: 'Proveedores', icon: <AssignmentInd />,path:"/" },
-    { text: 'Normativas I+D', icon: <Info />,path:"/" },
-    { text: 'Soporte', icon: <Help />,path:"/" }
-  ]
-
   return (
     <Container maxWidth="xl" className={$.root}>
       <Router>
-      <NavBar sideBarOptions = {sideBarOptions}/>
-      <div className={$.container}>
-        <Header />
+        <NavBar/>
+        <div className={$.container}>
+          <Header />
           <div className={$.content}>
             <Switch>
-              <Route path="/" component={MisProyectos} />
-              <Route path="/datos" component={DatosGenerales} />
+              <Route path="/proyectos/" exact component={MisProyectos} />
+              <Route path="/proyectos/datos" exact component={DatosGenerales} />
             </Switch>
           </div>
         </div>
@@ -43,7 +36,7 @@ const useStyles = makeStyles(() => ({
     width: '100%',
   },
   container: {
-    display:'flex', 
+    display: 'flex',
     flexDirection: 'column',
   },
   content: {
@@ -52,6 +45,6 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    marginTop: '3vh'
-  }
+    marginTop: '3vh',
+  },
 }));
