@@ -22,14 +22,14 @@ export default function Header() {
 const useStyles = makeStyles(() => ({
   header: {
     height: '10vh',
-    width: '82vw'
+    width: '82vw',
   },
   logo: {
     height: '55px', 
     width: '216px'
   },
   whiteBar: {
-    backgroundColor: "white",
+    backgroundColor: "#fafafa",
     width: '82vw', 
     height: "5vh",
     display:' flex',

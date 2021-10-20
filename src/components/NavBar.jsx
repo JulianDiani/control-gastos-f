@@ -62,7 +62,6 @@ const useStyles = makeStyles(() => ({
   navbar: {
     width: '15vw',
     height: '100vh',
-    borderRight: '1px solid grey',
     boxShadow: '10px 0 5px -5px grey',
   },
   logo: {
