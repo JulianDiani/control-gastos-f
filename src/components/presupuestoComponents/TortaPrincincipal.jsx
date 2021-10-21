@@ -1,6 +1,7 @@
 import { Doughnut } from 'react-chartjs-2';
+import React from 'react';
 
-const TortaPrincial = ({ presupuesto, gastos }) => {
+const TortaPrincial = () => {
   const graficoTorta = (
     <Doughnut
       data={{

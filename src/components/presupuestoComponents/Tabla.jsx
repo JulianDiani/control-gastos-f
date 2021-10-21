@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react';
+import { React } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { getPresupuesto, getGastos } from '../../services/proyectos.js';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -30,26 +29,6 @@ const rows = [
 
 export default function BasicTable() {
   const classes = useStyles();
-  const [presupuesto, setPresupuesto] = useState(null);
-  const [gastos, setGastos] = useState(null);
-
-  useEffect(() => {
-    const fetchPrespuesto = async () => {
-      const getFunctionPresupuesto = getPresupuesto;
-      const getFunctionGastos = getGastos;
-
-      try {
-        const { presupuesto } = await getFunctionPresupuesto();
-        const { gastos } = await getFunctionGastos();
-
-        setPresupuesto(presupuesto);
-        setGastos(gastos);
-      } catch (err) {
-        console.log('ERROR USE EFFECT : ' + err);
-      }
-    };
-    fetchPrespuesto();
-  }, []);
 
   return (
     <TableContainer component={Paper}>
@@ -59,7 +38,7 @@ export default function BasicTable() {
             <TableCell>Presupuesto</TableCell>
             <TableCell align="right">Tipo</TableCell>
             <TableCell align="right">Insumos</TableCell>
-            <TableCell align="right">Bibliografia</TableCell>
+            <TableCell align="right"> texto</TableCell>
             <TableCell align="right">Viajes y viaticos</TableCell>
             <TableCell align="right">Equipamiento</TableCell>
             <TableCell align="right">Servicios tecnicos</TableCell>

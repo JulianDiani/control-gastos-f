@@ -10,7 +10,7 @@ import Alert from '@material-ui/lab/Alert';
 import TortaPrincial from './presupuestoComponents/TortaPrincincipal';
 import CardMontos from './presupuestoComponents/CardMontos';
 import Tabla from './presupuestoComponents/Tabla';
-import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 
 export const Presupuesto = () => {
   const $ = useStyles();
@@ -25,8 +25,8 @@ export const Presupuesto = () => {
 
       try {
         const presupuesto = await getFunctionPresupuesto();
-        setPresupuesto(presupuesto);
         const gastos = await getFunctionGastos();
+        setPresupuesto(presupuesto);
         setGastos(gastos);
       } catch (err) {
         setHasError(true);
@@ -40,19 +40,35 @@ export const Presupuesto = () => {
     return <Alert severity="info">Cargando...</Alert>;
   };
 
+  /**totalPresupuesto={presupuesto.totalPresupuesto}
+            totalGastos={gastos.totalGastos} */
+
   const rendering = () => {
     return (
       <>
         <div className={$.root}>
-          <CardMontos presupuesto={presupuesto} gastos={gastos} />
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="flex-start"
+            >
+              <CardMontos className={$.elementosPrincipales} />
+              <Card className={$.card}>
+                <CardContent>
+                  <TortaPrincial className={$.elementosPrincipales} />
+                </CardContent>
+              </Card>
+            </Grid>
 
-          <Card className={$.card}>
-            <CardContent>
-              <TortaPrincial presupuesto={presupuesto} gastos={gastos} />
-            </CardContent>
-          </Card>
-
-          <Tabla presupuesto={presupuesto} gastos={gastos} />
+            <Tabla />
+          </Grid>
         </div>
       </>
     );
@@ -73,6 +89,12 @@ export const Presupuesto = () => {
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+  },
+
+  elementosPrincipales: {
+    height: '50%',
+    width: '50%',
+    display: 'flex',
   },
 
   root: {
