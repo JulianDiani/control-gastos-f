@@ -4,33 +4,32 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-export default function CardMontos({
-  totalPresupuesto,
-  totalPtotalGastosresupuesto,
-}) {
+export default function CardMontos({ totalGastos, totalPresupuesto }) {
   const classes = useStyles();
 
-  // console.log(presupuesto.tipoPresupuesto);
+  {
+    totalGastos ? totalGastos : null;
+  }
+  {
+    totalPresupuesto ? totalPresupuesto : null;
+  }
 
-  // let montoDisponible = (p, g) => p - g;
-  //let montoDisponible = presupuestoTotal - gastosTotal;
-  console.log(totalPresupuesto);
-  // lo hago como let no como funcion, tiene alguna diferencia?
-
-  const nivelDeEjecucion = Number(23 / 100).toLocaleString(undefined, {
-    style: 'percent',
-    minimumFractionDigits: 2,
-  });
+  let montoDisponible = (p, g) => p - g;
+  let nivelDeEjecucion = (p, g) =>
+    Number(g / p).toLocaleString(undefined, {
+      style: 'percent',
+      minimumFractionDigits: 2,
+    });
 
   return (
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          Monto disponible: {}
+          Monto disponible: {montoDisponible(totalPresupuesto, totalGastos)};
         </Typography>
 
         <Typography variant="body2" component="p">
-          Nivel de ejecución: {}
+          Nivel de ejecución: {nivelDeEjecucion(totalPresupuesto, totalGastos)};
         </Typography>
       </CardContent>
     </Card>

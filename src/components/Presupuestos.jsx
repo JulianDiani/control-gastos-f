@@ -7,7 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import { getPresupuesto, getGastos } from '../services/presupuestos.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import TortaPrincipal from './TortaPrincipal'
+import TortaPrincipal from './TortaPrincipal';
 import CardMontos from './CardMontos';
 import Tabla from './Tabla';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +15,7 @@ import Grid from '@material-ui/core/Grid';
 export const Presupuestos = () => {
   const $ = useStyles();
   const [presupuesto, setPresupuesto] = useState(null);
-  const [hasError, setHasError] = useState(false); 
+  const [hasError, setHasError] = useState(false);
   const [gastos, setGastos] = useState(null);
 
   useEffect(() => {
@@ -40,9 +40,6 @@ export const Presupuestos = () => {
     return <Alert severity="info">Cargando...</Alert>;
   };
 
-  /**totalPresupuesto={presupuesto.totalPresupuesto}
-            totalGastos={gastos.totalGastos} */
-
   const rendering = () => {
     return (
       <>
@@ -59,10 +56,14 @@ export const Presupuestos = () => {
               justifyContent="center"
               alignItems="flex-start"
             >
-              <CardMontos className={$.elementosPrincipales} />
+              <CardMontos
+                className={$.elementosPrincipales}
+                totalPresupuesto={presupuesto.totalPresupuesto}
+                totalGastos={gastos.totalGastos}
+              />
               <Card className={$.card}>
                 <CardContent>
-                  <TortaPrincipal/>
+                  <TortaPrincipal presupuesto={presupuesto} gastos={gastos} />
                 </CardContent>
               </Card>
             </Grid>
@@ -79,7 +80,8 @@ export const Presupuestos = () => {
       <div clasName={$.root}>
         <h1>Presupuesto</h1>
         <Divider className={$.divider} />
-        {presupuesto ? rendering() : loadingRendering()}
+        {presupuesto && gastos ? rendering() : loadingRendering()}
+
         <Footer />
       </div>
     </>
