@@ -68,7 +68,7 @@ export const Presupuestos = () => {
               </Card>
             </Grid>
 
-            <Tabla />
+            <Tabla presupuesto={presupuesto} gastos={gastos} />
           </Grid>
         </div>
       </>

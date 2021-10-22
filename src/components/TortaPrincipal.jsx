@@ -48,7 +48,7 @@ export default function TortaPrincipal({ gastos, presupuesto }) {
         ],
       }}
       options={{
-        legend: { display: false },
+        legend: { display: true },
         title: { display: true, text: `Estado actual del presupuesto` },
       }}
     />
