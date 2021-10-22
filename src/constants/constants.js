@@ -128,24 +128,24 @@ export const proyectosEnHistoria = [
     porcentaje: '100%',
   },
 ];
-
+// tabla total de presupuesto
 export const presupuestoPrueba = {
-  tipoPresupuesto: 'Asignacion Disponible',
+  tipo: 'Total Presupuesto',
   fechaInicio: '18/09/2021',
   fechaFin: '18/09/2022',
 
   insumos: 500,
   bibliografia: 0,
   gastosDePublicacion: 40,
-  viajesYViaticos: 20,
+  viajesYViaticos: 220,
   equipamiento: 200,
   serviciosTecnicos: 100,
   gastosDeAdministracion: 40,
-  totalPresupuesto: 1000,
+  totalPresupuesto: 1200,
 };
-
+// tabla total de gastos
 export const gastosPrueba = {
-  tipoGasto: 'Rendiciones especificas',
+  tipo: 'Gastos totales',
   fechaInicio: '18/09/2022',
 
   insumos: 400,
@@ -156,4 +156,19 @@ export const gastosPrueba = {
   serviciosTecnicos: 0,
   gastosDeAdministracion: 0,
   totalGastos: 780,
+};
+
+// viene del back, es la resta entre presupuesto y gastos de cada rubro
+export const totalesPorRubro = {
+  tipo: 'Totales por rubro (P-G)',
+  fechaInicio: '18/09/2022',
+
+  insumos: 100,
+  bibliografia: 0,
+  gastosDePublicacion: 40,
+  viajesYViaticos: 40,
+  equipamiento: 0,
+  serviciosTecnicos: 100,
+  gastosDeAdministracion: 40,
+  totalPresupuestoActual: 420,
 };

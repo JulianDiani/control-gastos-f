@@ -25,11 +25,11 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          Monto disponible: {montoDisponible(totalPresupuesto, totalGastos)};
+          Monto disponible: {montoDisponible(totalPresupuesto, totalGastos)}
         </Typography>
 
         <Typography variant="body2" component="p">
-          Nivel de ejecución: {nivelDeEjecucion(totalPresupuesto, totalGastos)};
+          Nivel de ejecución: {nivelDeEjecucion(totalPresupuesto, totalGastos)}
         </Typography>
       </CardContent>
     </Card>
