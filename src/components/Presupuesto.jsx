@@ -40,8 +40,8 @@ export const Presupuesto = () => {
     return <Alert severity="info">Cargando...</Alert>;
   };
 
-  /**totalPresupuesto={presupuesto.totalPresupuesto}
-            totalGastos={gastos.totalGastos} */
+  const totalPresupuesto = presupuesto.totalPresupuesto;
+  const totalGastos = gastos.totalGastos;
 
   const rendering = () => {
     return (
@@ -59,7 +59,12 @@ export const Presupuesto = () => {
               justifyContent="center"
               alignItems="flex-start"
             >
-              <CardMontos className={$.elementosPrincipales} />
+              <CardMontos
+                className={$.elementosPrincipales}
+                totalPresupuesto={presupuesto.totalPresupuesto}
+                totalGastos={gastos.totalGastos}
+              />
+
               <Card className={$.card}>
                 <CardContent>
                   <TortaPrincial className={$.elementosPrincipales} />

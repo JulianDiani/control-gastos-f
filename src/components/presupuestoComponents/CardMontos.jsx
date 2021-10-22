@@ -4,10 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-export default function CardMontos({
-  totalPresupuesto,
-  totalPtotalGastosresupuesto,
-}) {
+export default function CardMontos({ totalPresupuesto, totalGastos }) {
   const classes = useStyles();
 
   // console.log(presupuesto.tipoPresupuesto);
@@ -26,11 +23,11 @@ export default function CardMontos({
     <Card className={classes.root}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          Monto disponible: {}
+          Monto disponible: {totalGastos}
         </Typography>
 
         <Typography variant="body2" component="p">
-          Nivel de ejecución: {}
+          Nivel de ejecución: {totalPresupuesto}
         </Typography>
       </CardContent>
     </Card>
