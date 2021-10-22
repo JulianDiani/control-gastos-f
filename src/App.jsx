@@ -5,7 +5,7 @@ import Header from './components/Header';
 import NavBar from './components/NavBar';
 import { DatosGenerales } from './components/DatosGenerales';
 import { MisProyectos } from './components/MisProyectos';
-
+import { Presupuestos } from './components/Presupuestos';
 
 
 export default function App() {
@@ -18,8 +18,10 @@ export default function App() {
           <Header />
           <div className={$.content}>
             <Switch>
-              <Route path="/proyectos/" exact component={MisProyectos} />
-              <Route path="/proyectos/datos" exact component={DatosGenerales} />
+              <Route path="/" exact component={MisProyectos} />
+              <Route path="/proyectos" exact component={DatosGenerales} />
+              <Route path="/proyectos/presupuestos" exact component={Presupuestos} />
+              
             </Switch>
           </div>
         </div>

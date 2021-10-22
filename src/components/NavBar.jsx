@@ -4,6 +4,8 @@ import logo from '../assets/logoUnahur.png';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { AssignmentInd, Help, Home, Info } from '@material-ui/icons';
@@ -14,14 +16,17 @@ export default function NavBar() {
   let navbar;
 
   const sideBarOptions = [
-    { text: 'Proyectos', icon: <Home />, path: '/proyectos' },
-    { text: 'Proveedores', icon: <AssignmentInd />, path: '/proveedores' },
+    { text: 'Proyectos', icon: <ShareIcon />, path: '/proyectos' },
     { text: 'Normativas I+D', icon: <Info />, path: '/normativas' },
     { text: 'Soporte', icon: <Help />, path: '/soporte' },
   ];
   const proyects = [
-    { text: 'Mis Proyectos', icon: <Home />, path: '/proyectos' },
-    { text: 'Datos Generales', icon: <Home />, path: '/proyectos/datos' },
+    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/' },
+    { text: 'Datos Generales', icon: <Home />, path: '/proyectos' },
+    { text: 'Presupuestos', icon: <MonetizationOnIcon />, path: '/proyectos/presupuestos' },
+    { text: 'Compras', icon: <Home />, path: '/proyectos/compras' },
+    { text: 'Subsidios', icon: <AssignmentInd />, path: '/proyectos/subsidios' },
+    { text: 'Proveedores', icon: <AssignmentInd />, path: '/proyectos/proveedores' },
   ];
   let location = useLocation();
 
