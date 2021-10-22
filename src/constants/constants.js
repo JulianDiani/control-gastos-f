@@ -128,3 +128,30 @@ export const proyectosEnHistoria = [
     porcentaje: '100%',
   },
 ];
+
+export const presupuestoPrueba = {
+  tipoPresupuesto: 'Asignacion Disponible',
+  fechaInicio: '18/09/2021',
+  fechaFin: '18/09/2022',
+  insumos: 718000,
+  bibliografia: 0,
+  gastosDePublicacion: 4500,
+  viajesYViaticos: 16500,
+  equipamiento: 27700,
+  serviciosTecnicos: 6850,
+  gastosDeAdministracion: 6368,
+  totalPresupuesto: 100000,
+};
+
+export const gastosPrueba = {
+  tipoGasto: 'Rendiciones especificas',
+  fechaInicio: '18/09/2022',
+  insumos: 41569,
+  bibliografia: 0,
+  gastosDePublicacion: 0,
+  viajesYViaticos: 183235,
+  equipamiento: 19499,
+  serviciosTecnicos: 0,
+  gastosDeAdministracion: 0,
+  totalGastos: 50,
+};
