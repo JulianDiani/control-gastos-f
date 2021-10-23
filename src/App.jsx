@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import { DatosGenerales } from './components/DatosGenerales';
 import { MisProyectos } from './components/MisProyectos';
 import { Presupuestos } from './components/Presupuestos';
+import { Compras } from './components/Compras';
 
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
               <Route path="/" exact component={MisProyectos} />
               <Route path="/proyectos" exact component={DatosGenerales} />
               <Route path="/proyectos/presupuestos" exact component={Presupuestos} />
+              <Route path="/proyectos/compras" exact component={Compras} />
               
             </Switch>
           </div>

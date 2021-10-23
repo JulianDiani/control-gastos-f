@@ -155,3 +155,46 @@ export const gastosPrueba = {
   gastosDeAdministracion: 0,
   totalGastos: 50,
 };
+
+export const compras = [
+  {
+    fecha: '2021-02-01',
+    rubro: 'Rubro',
+    subrubro: 'Subrubro',
+    numeroCompra: '10',
+    proveedor: 'Proveedor',
+    monto: 'monto',
+    estado: 'estado',
+    factura: 'factura',
+  },
+  {
+    fecha: '2021-02-01',
+    rubro: 'Rubro',
+    subrubro: 'Subrubro',
+    numeroCompra: '10',
+    proveedor: 'Proveedor',
+    monto: 'monto',
+    estado: 'estado',
+    factura: 'factura',
+  },
+  {
+    fecha: '2021-02-01',
+    rubro: 'Rubro',
+    subrubro: 'Subrubro',
+    numeroCompra: '10',
+    proveedor: 'Proveedor',
+    monto: 'monto',
+    estado: 'estado',
+    factura: 'factura',
+  },
+  {
+    fecha: '2021-02-01',
+    rubro: 'Rubro',
+    subrubro: 'Subrubro',
+    numeroCompra: '10',
+    proveedor: 'Proveedor',
+    monto: 'monto',
+    estado: 'estado',
+    factura: 'factura',
+  },
+];
