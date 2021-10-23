@@ -36,9 +36,40 @@ function createData(
     serviciosTecnicos,
     gastosDeAdministracion,
     total,
-    detalle: [
-      { tipo: 'tipo 1', bibliografia: 2, insumos: 3 },
-      { tipo: 'segundo tipo', bibliografia: 4, insumos: 1 },
+    detallePresupuesto: [
+      {
+        tipo: 'Presupuesto inicial',
+        insumos: 0,
+        bibliografia: 0,
+        gastosDePublicacion: 0,
+        viajesYViaticos: 0,
+        equipamiento: 0,
+        serviciosTecnicos: 0,
+        gastosDeAdministracion: 0,
+        total: 2000,
+      },
+      {
+        tipo: 'Reformulación ID',
+        insumos: 2,
+        bibliografia: 0,
+        gastosDePublicacion: 2,
+        viajesYViaticos: 2,
+        equipamiento: 0,
+        serviciosTecnicos: 2,
+        gastosDeAdministracion: 2,
+        total: 2,
+      },
+      {
+        tipo: 'Reformulación IR',
+        insumos: 1,
+        bibliografia: 4,
+        gastosDePublicacion: 2,
+        viajesYViaticos: 2,
+        equipamiento: 0,
+        serviciosTecnicos: 2,
+        gastosDeAdministracion: 2,
+        total: 2,
+      },
     ],
   };
 }
@@ -100,29 +131,35 @@ function Row(props) {
                 </TableHead>
 
                 <TableBody>
-                  {row.detalle.map((detalleRow) => (
-                    <TableRow key={detalleRow.tipo}>
+                  {row.detallePresupuesto.map((detallePresupuestoRow) => (
+                    <TableRow key={detallePresupuestoRow.tipo}>
                       <TableCell component="th" scope="row">
-                        {detalleRow.tipo}
+                        {detallePresupuestoRow.tipo}
                       </TableCell>
-                      <TableCell>{detalleRow.bibliografia}</TableCell>
-                      <TableCell align="right">{detalleRow.insumos}</TableCell>
-                      <TableCell align="right">
-                        {detalleRow.gastosDePublicacion}
+                      <TableCell>
+                        {detallePresupuestoRow.bibliografia}
                       </TableCell>
                       <TableCell align="right">
-                        {detalleRow.viajesYViaticos}
+                        {detallePresupuestoRow.insumos}
                       </TableCell>
                       <TableCell align="right">
-                        {detalleRow.equipamiento}
+                        {detallePresupuestoRow.gastosDePublicacion}
                       </TableCell>
                       <TableCell align="right">
-                        {detalleRow.serviciosTecnicos}
+                        {detallePresupuestoRow.viajesYViaticos}
                       </TableCell>
                       <TableCell align="right">
-                        {detalleRow.gastosDeAdministracion}
+                        {detallePresupuestoRow.equipamiento}
                       </TableCell>
-                      <TableCell align="right">{detalleRow.total}</TableCell>
+                      <TableCell align="right">
+                        {detallePresupuestoRow.serviciosTecnicos}
+                      </TableCell>
+                      <TableCell align="right">
+                        {detallePresupuestoRow.gastosDeAdministracion}
+                      </TableCell>
+                      <TableCell align="right">
+                        {detallePresupuestoRow.total}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -136,6 +173,7 @@ function Row(props) {
 }
 
 Row.propTypes = {
+  // Datos de la tabla
   row: PropTypes.shape({
     tipo: PropTypes.string.isRequired,
     insumos: PropTypes.number.isRequired,
@@ -145,11 +183,17 @@ Row.propTypes = {
     viajesYViaticos: PropTypes.number.isRequired,
     gastosDeAdministracion: PropTypes.number.isRequired,
 
-    detalle: PropTypes.arrayOf(
+    // Datos de subtabla
+
+    detallePresupuesto: PropTypes.arrayOf(
       PropTypes.shape({
         tipo: PropTypes.string.isRequired,
         insumos: PropTypes.number.isRequired,
+        gastosDePublicacion: PropTypes.number.isRequired,
         bibliografia: PropTypes.number.isRequired,
+        serviciosTecnicos: PropTypes.number.isRequired,
+        viajesYViaticos: PropTypes.number.isRequired,
+        gastosDeAdministracion: PropTypes.number.isRequired,
       })
     ).isRequired,
   }).isRequired,
@@ -199,6 +243,7 @@ const totalesPorRubro = {
   gastosDeAdministracion: 40,
   totalPresupuestoActual: 420,
 };
+
 ////////////////// FIN DE LA API ----------- ABAJO ESTA LA TABLA PRINCIPAL
 
 const rows = [
@@ -252,7 +297,7 @@ export default function CollapsibleTable() {
             <TableCell align="right">Equipamiento</TableCell>
             <TableCell align="right">Servicios Tecnicos</TableCell>
             <TableCell align="right">Gastos De Administración</TableCell>
-            <TableCell align="right">Total</TableCell>
+            <TableRow align="right">Total</TableRow>
           </TableRow>
         </TableHead>
         <TableBody>
