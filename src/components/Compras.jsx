@@ -9,6 +9,7 @@ import { getCompras } from '../services/compras.js';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
+import { Button, Grid } from '@material-ui/core';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -84,7 +85,7 @@ export const Compras = (props) => {
                     <StyledTableCell align="center">{compra.subrubro}</StyledTableCell>
                     <StyledTableCell align="center">{compra.numeroCompra}</StyledTableCell>
                     <StyledTableCell align="center">{compra.proveedor}</StyledTableCell>
-                    <StyledTableCell align="center">{compra.monto}</StyledTableCell>
+                    <StyledTableCell align="center">${compra.monto}</StyledTableCell>
                     <StyledTableCell align="center">{compra.estado}</StyledTableCell>
                     <StyledTableCell align="center">{compra.factura}</StyledTableCell>
                     </StyledTableRow>
@@ -100,7 +101,10 @@ export const Compras = (props) => {
     //MAIN Rendering
     return(
         <>
-        <h1>Compras Realizadas</h1>
+        <Grid className={$.header}>
+          <h1 className={$.title}>Compras Realizadas</h1>
+          <Button variant="contained" className={$.button}>Nueva Compra</Button>
+        </Grid>
         <Divider/>
         <br/>
         {compras? rendering() : loadingRendering}
@@ -109,8 +113,16 @@ export const Compras = (props) => {
 }
 const useStyles = makeStyles({
     container: {
-        display: 'flex',
         width: '100%',
+    },
+    header:{
+      display: 'flex',
+      justifyContent: 'space-between'
+    },
+    button:{
+      width: '10rem',
+      height: '2rem',
+      marginTop: '1.5rem'
     },
     textColor: {
       color: 'white', 
