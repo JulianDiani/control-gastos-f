@@ -1,7 +1,9 @@
 import { Doughnut } from 'react-chartjs-2';
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
 export default function TortaPrincipal({ gastos, presupuesto }) {
+  const classes = useStyles();
   {
     gastos ? gastos : null;
   }
@@ -10,6 +12,7 @@ export default function TortaPrincipal({ gastos, presupuesto }) {
   }
   const graficoTorta = (
     <Doughnut
+      className={classes.root}
       data={{
         labels: [
           'Disponible',
@@ -56,3 +59,7 @@ export default function TortaPrincipal({ gastos, presupuesto }) {
 
   return <div>{graficoTorta}</div>;
 }
+
+const useStyles = makeStyles({
+  root: {},
+});

@@ -44,12 +44,7 @@ export const Presupuestos = () => {
     return (
       <>
         <div className={$.root}>
-          <Grid
-            container
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-          >
+          <Grid container direction="column" alignItems="center">
             <Grid
               container
               direction="row"
@@ -57,13 +52,19 @@ export const Presupuestos = () => {
               alignItems="flex-start"
             >
               <CardMontos
-                className={$.elementosPrincipales}
+                item
+                xs={6}
+                className={$.cardMonto}
                 totalPresupuesto={presupuesto.totalPresupuesto}
                 totalGastos={gastos.totalGastos}
               />
-              <Card className={$.card}>
+              <Card className={$.card} item xs={6}>
                 <CardContent>
-                  <TortaPrincipal presupuesto={presupuesto} gastos={gastos} />
+                  <TortaPrincipal
+                    presupuesto={presupuesto}
+                    gastos={gastos}
+                    className={$.torta}
+                  />
                 </CardContent>
               </Card>
             </Grid>
@@ -93,12 +94,6 @@ const useStyles = makeStyles({
     minWidth: 650,
   },
 
-  elementosPrincipales: {
-    height: '50%',
-    width: '50%',
-    display: 'flex',
-  },
-
   root: {
     height: '100%',
     display: 'flex',
@@ -108,7 +103,7 @@ const useStyles = makeStyles({
     margin: '1rem',
   },
   divider: {
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
   item: {
     display: 'flex',

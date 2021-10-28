@@ -24,11 +24,19 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography variant="h5" component="h2">
-          Monto disponible: {montoDisponible(totalPresupuesto, totalGastos)}
+        <Typography
+          variant="h5"
+          component="h2"
+          className={classes.montoDisponible}
+        >
+          Monto disponible: $ {montoDisponible(totalPresupuesto, totalGastos)}
         </Typography>
 
-        <Typography variant="body2" component="p">
+        <Typography
+          variant="body2"
+          component="p"
+          className={classes.nivelDeEjecucion}
+        >
           Nivel de ejecución: {nivelDeEjecucion(totalPresupuesto, totalGastos)}
         </Typography>
       </CardContent>
@@ -38,8 +46,37 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    width: '400px',
+    height: '250px',
+    background: '#DEFAAE',
+    border: '4px solid rgba(96, 150, 0, 0.94)',
+    boxSizing: 'border-box',
+    borderRadius: '19px',
   },
+
+  montoDisponible: {
+    width: '312px',
+    height: '109px',
+
+    fontFamily: 'Cabin',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '40px',
+    lineHeight: '49px',
+    color: '#000000',
+  },
+
+  nivelDeEjecucion: {
+    width: '321px',
+    height: '109px',
+    fontFamily: 'Cabin',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '40px',
+    lineHeight: '49px',
+    color: '#000000',
+  },
+
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
