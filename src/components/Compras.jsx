@@ -4,12 +4,12 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-//import { compras } from '../constants/constants';
 import { getCompras } from '../services/compras.js';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid,Modal } from '@material-ui/core';
+import PopUp from './PopUp';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -45,6 +45,15 @@ export const Compras = (props) => {
     //States
     const [compras, setCompras] = useState(null);
     const [hasError, setHasError] = useState(null);
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     //API Call
     useEffect(() => {
@@ -96,14 +105,20 @@ export const Compras = (props) => {
         </>
         );
       }
-
+      
 
     //MAIN Rendering
     return(
         <>
         <Grid className={$.header}>
           <h1 className={$.title}>Compras Realizadas</h1>
-          <Button variant="contained" className={$.button}>Nueva Compra</Button>
+          <Button variant="contained" className={$.button} onClick={handleOpen}>Nueva Compra</Button>
+          <Modal
+                open={open}
+                onClose={handleClose}
+            >
+              <PopUp state={setOpen}/>
+            </Modal>
         </Grid>
         <Divider/>
         <br/>

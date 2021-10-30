@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { AssignmentInd, Help, Home, Info } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 export default function NavBar() {
   const $ = useStyles();
@@ -44,9 +45,9 @@ export default function NavBar() {
         alt="Logo Universidad Nacional de Hurlingham"
       ></img>
       <List className={$.list}>
-        {navbar.map(({ text, icon, path }) => (
+        {navbar.map(({ text, icon, path },index) => (
           <ListItem
-            divider="true"
+            divider= {index === navbar.length-1 ? false : true}
             className={$.option}
             button={true}
             key={text}
