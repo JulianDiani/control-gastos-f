@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './TortaPrincipal';
 import CardMontos from './CardMontos';
-import Tabla from './Tabla';
+import Tabla2 from './Tabla2';
 import Grid from '@material-ui/core/Grid';
 
 export const Presupuestos = () => {
@@ -69,7 +69,7 @@ export const Presupuestos = () => {
               </Card>
             </Grid>
 
-            <Tabla presupuesto={presupuesto} gastos={gastos} />
+            <Tabla2 presupuesto={presupuesto} gastos={gastos} />
           </Grid>
         </div>
       </>
