@@ -4,16 +4,31 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import NavBar from './components/NavBar';
 import { DatosGenerales } from './components/DatosGenerales';
+import { Presupuesto } from './components/Presupuesto';
 import { MisProyectos } from './components/MisProyectos';
-import { Presupuestos } from './components/Presupuestos';
-
+import {
+  AssignmentInd,
+  Help,
+  Home,
+  Info,
+  AttachMoney,
+} from '@material-ui/icons';
 
 export default function App() {
   const $ = useStyles();
+
+  const sideBarOptions = [
+    { text: 'Proyectos', icon: <Home />, path: '/datos' },
+    { text: 'Presupuesto', icon: <AttachMoney />, path: '/presupuesto' },
+    { text: 'Proveedores', icon: <AssignmentInd />, path: '/' },
+    { text: 'Normativas I+D', icon: <Info />, path: '/' },
+    { text: 'Soporte', icon: <Help />, path: '/' },
+  ];
+
   return (
     <Container maxWidth="xl" className={$.root}>
       <Router>
-        <NavBar/>
+        <NavBar sideBarOptions={sideBarOptions} />
         <div className={$.container}>
           <Header />
           <div className={$.content}>
