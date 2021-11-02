@@ -1,4 +1,4 @@
-import React from 'react';
+import { React } from 'react';
 import List from '@material-ui/core/List';
 import logo from '../assets/logoUnahur.png';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,19 +10,17 @@ import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { AssignmentInd, Help, Home, Info } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
-import zIndex from '@material-ui/core/styles/zIndex';
 
 export default function NavBar() {
   const $ = useStyles();
   let navbar;
 
   const sideBarOptions = [
-    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/proyectos' },
+    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/' },
     { text: 'Normativas I+D', icon: <Info />, path: '/normativas' },
     { text: 'Soporte', icon: <Help />, path: '/soporte' },
   ];
   const proyects = [
-    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/' },
     { text: 'Datos Generales', icon: <Home />, path: '/proyectos' },
     { text: 'Presupuestos', icon: <MonetizationOnIcon />, path: '/proyectos/presupuestos' },
     { text: 'Compras', icon: <Home />, path: '/proyectos/compras' },
@@ -39,11 +37,13 @@ export default function NavBar() {
   return (
     <Grid>
     <div className={$.navbar}>
-      <img
-        src={logo}
-        className={$.logo}
-        alt="Logo Universidad Nacional de Hurlingham"
-      ></img>
+      <Link to={'/'}>
+        <img
+          src={logo}
+          className={$.logo}
+          alt="Logo Universidad Nacional de Hurlingham"
+        />
+      </Link>
       <List className={$.list}>
         {navbar.map(({ text, icon, path },index) => (
           <ListItem

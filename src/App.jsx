@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import NavBar from './components/NavBar';
 import { DatosGenerales } from './components/DatosGenerales';
-import { Presupuesto } from './components/Presupuesto';
 import { MisProyectos } from './components/MisProyectos';
 import {
   AssignmentInd,

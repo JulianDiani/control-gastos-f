@@ -1,4 +1,4 @@
-import React from 'react';
+import { React }from 'react';
 import { Footer } from './Footer';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { proyectosEnCurso } from '../constants/constants';
 import { proyectosEnHistoria } from '../constants/constants';
+import { proyectoPrueba } from '../constants/constants';
+import { Link } from 'react-router-dom';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -60,6 +62,20 @@ export const MisProyectos = () => {
                     <StyledTableCell align="center" className={ $.textColor }>Porcentaje</StyledTableCell>
                 </StyledTableHead>
                 <TableBody>
+                  {/* Usando el proyecto de prueba */}
+                  <StyledTableRow key={proyectoPrueba.titulo}>
+                  <StyledTableCell 
+                  scope="row" 
+                  component={Link}
+                  to={'/proyectos'}
+                  >
+                    {proyectoPrueba.titulo}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">{proyectoPrueba.director}</StyledTableCell>
+                  <StyledTableCell align="center">{proyectoPrueba.fechaInicio}</StyledTableCell>
+                  <StyledTableCell align="center">{'50%'}</StyledTableCell>
+                </StyledTableRow>
+
                 {proyectosEnCurso.map((proyectosEnCurso) => (
                     <StyledTableRow key={proyectosEnCurso.nombre}>
                     <StyledTableCell scope="row">{proyectosEnCurso.nombre}</StyledTableCell>
