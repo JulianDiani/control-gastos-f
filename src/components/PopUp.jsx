@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
   modal: {
     position: 'absolute',
     backgroundColor: 'white',
-    width: '90rem',
-    height: '50rem',
+    width: '75vw',
+    height: '80vh',
     boxShadow: '0px 0px 5px 1px grey',
     padding: theme.spacing(2, 4, 3),
     top: '55%',
