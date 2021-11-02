@@ -33,9 +33,10 @@ export default function App() {
           <Header />
           <div className={$.content}>
             <Switch>
-              {/*<Route path="/" component={MisProyectos} />*/}
-              <Route path="/datos" component={DatosGenerales} />
-              <Route path="/presupuesto" component={Presupuesto} />
+              <Route path="/" exact component={MisProyectos} />
+              <Route path="/proyectos" exact component={DatosGenerales} />
+              <Route path="/proyectos/presupuestos" exact component={Presupuestos} />
+              
             </Switch>
           </div>
         </div>
