@@ -17,7 +17,7 @@ export default function NavBar() {
   let navbar;
 
   const sideBarOptions = [
-    { text: 'Proyectos', icon: <ShareIcon />, path: '/proyectos' },
+    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/proyectos' },
     { text: 'Normativas I+D', icon: <Info />, path: '/normativas' },
     { text: 'Soporte', icon: <Help />, path: '/soporte' },
   ];
@@ -67,8 +67,9 @@ export default function NavBar() {
 const useStyles = makeStyles(() => ({
   navbar: {
     width: '15vw',
-    height: '100vh',
+    height: '100%',
     boxShadow: '10px 0 5px -5px grey',
+    float: 'left'
   },
   logo: {
     height: '55px',

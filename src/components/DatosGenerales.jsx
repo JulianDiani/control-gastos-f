@@ -164,35 +164,36 @@ export const DatosGenerales = () => {
 const useStyles = makeStyles({
   root: {
     height: '100%',
-    display: 'flex',
+    display: 'flex'
   },
   card: {
     width: '50%',
     margin: '1rem',
+    maxHeight: '45rem'
   },
   divider: {
-    marginBottom: '2rem',
+    marginBottom: '2rem'
   },
   item: {
-    display: 'flex',
+    display: 'flex'
   },
   key: {
-    fontWeight: 'bolder',
+    fontWeight: 'bolder'
   },
   parrafo: {
     padding: '3rem',
     fontSize: '16px',
-    textAlign: 'justify',
+    textAlign: 'justify'
   },
   title: {
     fontWeight: 'bold',
-    marginLeft: '3rem',
+    marginLeft: '3rem'
   },
   dropDown: {
     marginRight: '1rem',
-    width: '10rem',
+    width: '10rem'
   },
   menuItem: {
-    marginLeft: '1rem',
+    marginLeft: '1rem'
   },
 });

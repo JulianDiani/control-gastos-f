@@ -42,6 +42,8 @@ const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
+    minHeight: '100vh',
+    height: '100%',
   },
   content: {
     paddingLeft: '2%',
