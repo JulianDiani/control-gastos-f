@@ -13,6 +13,8 @@ import {
   Info,
   AttachMoney,
 } from '@material-ui/icons';
+import { Presupuestos } from './components/Presupuestos';
+import { Compras } from './components/Compras';
 
 export default function App() {
   const $ = useStyles();
@@ -36,6 +38,7 @@ export default function App() {
               <Route path="/" exact component={MisProyectos} />
               <Route path="/proyectos" exact component={DatosGenerales} />
               <Route path="/proyectos/presupuestos" exact component={Presupuestos} />
+              <Route path="/proyectos/compras" exact component={Compras} />
               
             </Switch>
           </div>
@@ -55,6 +58,8 @@ const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
+    minHeight: '100vh',
+    height: '100%',
   },
   content: {
     paddingLeft: '2%',

@@ -10,13 +10,14 @@ import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { AssignmentInd, Help, Home, Info } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 export default function NavBar() {
   const $ = useStyles();
   let navbar;
 
   const sideBarOptions = [
-    { text: 'Proyectos', icon: <ShareIcon />, path: '/proyectos' },
+    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/proyectos' },
     { text: 'Normativas I+D', icon: <Info />, path: '/normativas' },
     { text: 'Soporte', icon: <Help />, path: '/soporte' },
   ];
@@ -44,9 +45,9 @@ export default function NavBar() {
         alt="Logo Universidad Nacional de Hurlingham"
       ></img>
       <List className={$.list}>
-        {navbar.map(({ text, icon, path }) => (
+        {navbar.map(({ text, icon, path },index) => (
           <ListItem
-            divider="true"
+            divider= {index === navbar.length-1 ? false : true}
             className={$.option}
             button={true}
             key={text}
@@ -66,8 +67,9 @@ export default function NavBar() {
 const useStyles = makeStyles(() => ({
   navbar: {
     width: '15vw',
-    height: '100vh',
+    height: '100%',
     boxShadow: '10px 0 5px -5px grey',
+    float: 'left'
   },
   logo: {
     height: '55px',

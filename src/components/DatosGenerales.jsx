@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState, useEffect } from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -12,7 +12,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { getProyecto } from '../services/proyectos.js';
-import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 
 export const DatosGenerales = () => {
@@ -165,35 +164,36 @@ export const DatosGenerales = () => {
 const useStyles = makeStyles({
   root: {
     height: '100%',
-    display: 'flex',
+    display: 'flex'
   },
   card: {
     width: '50%',
     margin: '1rem',
+    maxHeight: '45rem'
   },
   divider: {
-    marginBottom: '2rem',
+    marginBottom: '2rem'
   },
   item: {
-    display: 'flex',
+    display: 'flex'
   },
   key: {
-    fontWeight: 'bolder',
+    fontWeight: 'bolder'
   },
   parrafo: {
     padding: '3rem',
     fontSize: '16px',
-    textAlign: 'justify',
+    textAlign: 'justify'
   },
   title: {
     fontWeight: 'bold',
-    marginLeft: '3rem',
+    marginLeft: '3rem'
   },
   dropDown: {
     marginRight: '1rem',
-    width: '10rem',
+    width: '10rem'
   },
   menuItem: {
-    marginLeft: '1rem',
+    marginLeft: '1rem'
   },
 });
