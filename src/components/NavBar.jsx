@@ -21,6 +21,7 @@ export default function NavBar() {
     { text: 'Soporte', icon: <Help />, path: '/soporte' },
   ];
   const proyects = [
+    { text: 'Inicio', icon: <ShareIcon />, path: '/' },
     { text: 'Datos Generales', icon: <Home />, path: '/proyectos' },
     { text: 'Presupuestos', icon: <MonetizationOnIcon />, path: '/proyectos/presupuestos' },
     { text: 'Compras', icon: <Home />, path: '/proyectos/compras' },
