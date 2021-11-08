@@ -1,33 +1,33 @@
-import React from 'react';
+import { React } from 'react';
 import List from '@material-ui/core/List';
 import logo from '../assets/logoUnahur.png';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { AssignmentInd, Help, Home, Info } from '@material-ui/icons';
+import { Help, Home, Info, ShoppingCart, ImportContacts, Timeline, Contacts, Create } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
-import zIndex from '@material-ui/core/styles/zIndex';
 
 export default function NavBar() {
   const $ = useStyles();
   let navbar;
 
   const sideBarOptions = [
-    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/proyectos' },
+    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/' },
     { text: 'Normativas I+D', icon: <Info />, path: '/normativas' },
     { text: 'Soporte', icon: <Help />, path: '/soporte' },
   ];
   const proyects = [
-    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/' },
-    { text: 'Datos Generales', icon: <Home />, path: '/proyectos' },
-    { text: 'Presupuestos', icon: <MonetizationOnIcon />, path: '/proyectos/presupuestos' },
-    { text: 'Compras', icon: <Home />, path: '/proyectos/compras' },
-    { text: 'Subsidios', icon: <AssignmentInd />, path: '/proyectos/subsidios' },
-    { text: 'Proveedores', icon: <AssignmentInd />, path: '/proyectos/proveedores' },
+    { text: 'Inicio', icon: <Home />, path: '/' },
+    { text: 'Datos Generales', icon: <ImportContacts />, path: '/proyectos' },
+    { text: 'Presupuestos', icon: <Timeline />, path: '/proyectos/presupuestos' },
+    { text: 'Compras', icon: <ShoppingCart />, path: '/proyectos/compras' },
+    // { text: 'Subsidios', icon: <AssignmentInd />, path: '/proyectos/subsidios' },
+    { text: 'Crear nota', icon: <Create />, path: '/proyectos/nota' },
+    { text: 'Proveedores', icon: <Contacts />, path: '/proyectos/proveedores' },
+    { text: 'Normativas I+D', icon: <Info />, path: '/proyectos/normativas' },
   ];
   let location = useLocation();
 
@@ -39,11 +39,13 @@ export default function NavBar() {
   return (
     <Grid>
     <div className={$.navbar}>
-      <img
-        src={logo}
-        className={$.logo}
-        alt="Logo Universidad Nacional de Hurlingham"
-      ></img>
+      <Link to={'/'}>
+        <img
+          src={logo}
+          className={$.logo}
+          alt="Logo Universidad Nacional de Hurlingham"
+        />
+      </Link>
       <List className={$.list}>
         {navbar.map(({ text, icon, path },index) => (
           <ListItem
