@@ -14,6 +14,7 @@ import {
 } from '@material-ui/icons';
 import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
+import { Proveedores } from './components/Proveedores'
 
 export default function App() {
   const $ = useStyles();
@@ -21,7 +22,7 @@ export default function App() {
   const sideBarOptions = [
     { text: 'Proyectos', icon: <Home />, path: '/datos' },
     { text: 'Presupuesto', icon: <AttachMoney />, path: '/presupuesto' },
-    { text: 'Proveedores', icon: <AssignmentInd />, path: '/' },
+    { text: 'Proveedores', icon: <AssignmentInd />, path: '/proveedores' },
     { text: 'Normativas I+D', icon: <Info />, path: '/' },
     { text: 'Soporte', icon: <Help />, path: '/' },
   ];
@@ -38,7 +39,7 @@ export default function App() {
               <Route path="/proyectos" exact component={DatosGenerales} />
               <Route path="/proyectos/presupuestos" exact component={Presupuestos} />
               <Route path="/proyectos/compras" exact component={Compras} />
-              
+              <Route path="/proyectos/proveedores" exact component={Proveedores} />
             </Switch>
           </div>
         </div>

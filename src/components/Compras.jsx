@@ -9,7 +9,7 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
 import { Button, Grid,Modal } from '@material-ui/core';
-import PopUp from './PopUp';
+import PopUpCompras from './PopUpCompras';
 import { Footer } from './Footer';
 
 const StyledTableCell = withStyles((theme) => ({
@@ -74,7 +74,7 @@ export const Compras = (props) => {
   const loadingRendering = () => {
       return <Alert severity="info">Cargando...</Alert>;
     };
-    const rendering = () =>{
+    const rendering = () => {
       return(
       <>
       <TableContainer className={$.container}>
@@ -118,7 +118,7 @@ export const Compras = (props) => {
               open={open}
               onClose={handleClose}
           >
-            <PopUp state={setOpen}/>
+            <PopUpCompras state={setOpen}/>
           </Modal>
       </Grid>
       <Divider/>
@@ -130,14 +130,13 @@ export const Compras = (props) => {
 }
 const useStyles = makeStyles({
   container: {
-      width: '100%'
+    width: '100%'
   },
-  header:{
+  header: {
     display: 'flex',
     justifyContent: 'space-between'
   },
-  button:{
-    width: '10rem',
+  button: {
     height: '2rem',
     marginTop: '1.5rem'
   },

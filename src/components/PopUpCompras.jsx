@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PopUp(props) {
+export default function PopUpCompras(props) {
   const $ = useStyles();
 
   const submitForm = () => {
