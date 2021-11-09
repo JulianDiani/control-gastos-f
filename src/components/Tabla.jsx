@@ -61,13 +61,30 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Tabla({ presupuesto, reformulacion, gastos, totales }) {
+export default function Tabla({
+  presupuesto,
+  reformulacion,
+  gastos,
+  totales,
+  contratos,
+  rendicionesEspecificas,
+  pagoAProveedores,
+}) {
   const classes = useStyles();
   {
     presupuesto ? presupuesto : null;
   }
   {
     reformulacion ? reformulacion : null;
+  }
+  {
+    contratos ? contratos : null;
+  }
+  {
+    rendicionesEspecificas ? rendicionesEspecificas : null;
+  }
+  {
+    pagoAProveedores ? pagoAProveedores : null;
   }
   {
     gastos ? gastos : null;
@@ -99,6 +116,42 @@ export default function Tabla({ presupuesto, reformulacion, gastos, totales }) {
       reformulacion.serviciosTecnicos,
       reformulacion.gastosDeAdministracion,
       reformulacion.total
+    ),
+
+    createData(
+      pagoAProveedores.tipo,
+      pagoAProveedores.insumos,
+      pagoAProveedores.bibliografia,
+      pagoAProveedores.gastosDePublicacion,
+      pagoAProveedores.viajesYViaticos,
+      pagoAProveedores.equipamiento,
+      pagoAProveedores.serviciosTecnicos,
+      pagoAProveedores.gastosDeAdministracion,
+      pagoAProveedores.total
+    ),
+
+    createData(
+      rendicionesEspecificas.tipo,
+      rendicionesEspecificas.insumos,
+      rendicionesEspecificas.bibliografia,
+      rendicionesEspecificas.gastosDePublicacion,
+      rendicionesEspecificas.viajesYViaticos,
+      rendicionesEspecificas.equipamiento,
+      rendicionesEspecificas.serviciosTecnicos,
+      rendicionesEspecificas.gastosDeAdministracion,
+      rendicionesEspecificas.total
+    ),
+
+    createData(
+      contratos.tipo,
+      contratos.insumos,
+      contratos.bibliografia,
+      contratos.gastosDePublicacion,
+      contratos.viajesYViaticos,
+      contratos.equipamiento,
+      contratos.serviciosTecnicos,
+      contratos.gastosDeAdministracion,
+      contratos.total
     ),
 
     createData(
