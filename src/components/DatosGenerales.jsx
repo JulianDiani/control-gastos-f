@@ -106,7 +106,7 @@ export const DatosGenerales = () => {
           />
         </ListItem>
         <ListItem className={$.dropDown} button>
-          <ListItemText primary={'Integrantes'} />
+          <ListItemText primary={'Integrantes'} onClick={handleClick} />
           <ExpandMoreIcon onClick={handleClick} sx={{ ml: 1 }} />
           <Menu
             id="simple-menu"

@@ -11,6 +11,7 @@ import { proyectosEnCurso } from '../constants/constants';
 import { proyectosEnHistoria } from '../constants/constants';
 import { proyectoPrueba } from '../constants/constants';
 import { Link } from 'react-router-dom';
+import { CircularProgressWithValue } from './CircularProgressWithValue';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -73,15 +74,19 @@ export const MisProyectos = () => {
                   </StyledTableCell>
                   <StyledTableCell align="center">{proyectoPrueba.director}</StyledTableCell>
                   <StyledTableCell align="center">{proyectoPrueba.fechaInicio}</StyledTableCell>
-                  <StyledTableCell align="center">{'50%'}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <CircularProgressWithValue progreso={50} />
+                  </StyledTableCell>
                 </StyledTableRow>
 
                 {proyectosEnCurso.map((proyectosEnCurso) => (
                     <StyledTableRow key={proyectosEnCurso.nombre}>
-                    <StyledTableCell scope="row">{proyectosEnCurso.nombre}</StyledTableCell>
-                    <StyledTableCell align="center">{proyectosEnCurso.director}</StyledTableCell>
-                    <StyledTableCell align="center">{proyectosEnCurso.fechaInicio}</StyledTableCell>
-                    <StyledTableCell align="center">{proyectosEnCurso.porcentaje}</StyledTableCell>
+                      <StyledTableCell scope="row">{proyectosEnCurso.nombre}</StyledTableCell>
+                      <StyledTableCell align="center">{proyectosEnCurso.director}</StyledTableCell>
+                      <StyledTableCell align="center">{proyectosEnCurso.fechaInicio}</StyledTableCell>
+                      <StyledTableCell align="center">
+                        <CircularProgressWithValue progreso={proyectosEnCurso.porcentaje} />
+                      </StyledTableCell>
                     </StyledTableRow>
                 ))}
                 </TableBody>
@@ -103,7 +108,9 @@ export const MisProyectos = () => {
                     <StyledTableCell scope="row" className={ $.tableCellContent }>{proyectosEnHistoria.nombre}</StyledTableCell>
                     <StyledTableCell align="center">{proyectosEnHistoria.director}</StyledTableCell>
                     <StyledTableCell align="center">{proyectosEnHistoria.fechaInicio}</StyledTableCell>
-                    <StyledTableCell align="center">{proyectosEnHistoria.porcentaje}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      <CircularProgressWithValue progreso={proyectosEnHistoria.porcentaje} />
+                    </StyledTableCell>
                     </StyledTableRow>
                 ))}
                 </TableBody>
