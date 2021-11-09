@@ -9,6 +9,9 @@ import {
   getReformulacion,
   getGastos,
   getTotales,
+  getPagoAProv,
+  getRendEsp,
+  getContratos,
 } from '../services/presupuestos.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
@@ -24,6 +27,9 @@ export const Presupuestos = () => {
   const [presupuesto, setPresupuesto] = useState(null);
   const [reformulacion, setReformulacion] = useState(null);
 
+  const [pagoAProveedores, setPagoAProv] = useState(null);
+  const [rendicionesEspecificas, setRendEsp] = useState(null);
+  const [contratos, setContratos] = useState(null);
   const [gastos, setGastos] = useState(null);
 
   const [totales, setTotales] = useState(null);
@@ -33,20 +39,32 @@ export const Presupuestos = () => {
       const getFunctionPresupuesto = getPresupuesto;
       const getFunctionReformulacion = getReformulacion;
 
+      const getFunctionPagoAProv = getPagoAProv;
+      const getFunctionRendEsp = getRendEsp;
+      const getFunctionContratos = getContratos;
       const getFunctionGastos = getGastos;
+
       const getFunctionTotales = getTotales;
 
       try {
         const presupuesto = await getFunctionPresupuesto();
         const reformulacion = await getFunctionReformulacion();
 
+        const pagoAProveedores = await getFunctionPagoAProv();
+        const rendicionesEspecificas = await getFunctionRendEsp();
+        const contratos = await getFunctionContratos();
         const gastos = await getFunctionGastos();
+
         const totales = await getFunctionTotales();
 
         setPresupuesto(presupuesto);
         setReformulacion(reformulacion);
 
+        setPagoAProv(pagoAProveedores);
+        setRendEsp(rendicionesEspecificas);
+        setContratos(contratos);
         setGastos(gastos);
+
         setTotales(totales);
       } catch (err) {
         setHasError(true);
@@ -92,6 +110,9 @@ export const Presupuestos = () => {
             <Tabla
               presupuesto={presupuesto}
               reformulacion={reformulacion}
+              rendicionesEspecificas={rendicionesEspecificas}
+              pagoAProveedores={pagoAProveedores}
+              contratos={contratos}
               gastos={gastos}
               totales={totales}
             />
@@ -106,7 +127,13 @@ export const Presupuestos = () => {
       <div clasName={$.root}>
         <h1>Presupuesto</h1>
         <Divider className={$.divider} />
-        {presupuesto && gastos && reformulacion && totales
+        {presupuesto &&
+        gastos &&
+        reformulacion &&
+        totales &&
+        rendicionesEspecificas &&
+        pagoAProveedores &&
+        contratos
           ? rendering()
           : loadingRendering()}
         <Footer />

@@ -189,3 +189,45 @@ export const totalesPorRubro = {
   gastosDeAdministracion: 40,
   totalPresupuestoActual: 420,
 };
+
+export const pagoAProv = {
+  tipo: 'Pago a proveedores',
+  fechaInicio: '18/09/2022',
+
+  insumos: 2,
+  bibliografia: 0,
+  gastosDePublicacion: 2,
+  viajesYViaticos: 2,
+  equipamiento: 0,
+  serviciosTecnicos: 2,
+  gastosDeAdministracion: 2,
+  total: 2,
+};
+
+export const rendEsp = {
+  tipo: 'Rendiciones Especificas',
+  fechaInicio: '18/09/2022',
+
+  insumos: 3,
+  bibliografia: 0,
+  gastosDePublicacion: 3,
+  viajesYViaticos: 3,
+  equipamiento: 0,
+  serviciosTecnicos: 3,
+  gastosDeAdministracion: 3,
+  total: 3,
+};
+
+export const contratos = {
+  tipo: 'Contratos',
+  fechaInicio: '18/09/2022',
+
+  insumos: 4,
+  bibliografia: 0,
+  gastosDePublicacion: 4,
+  viajesYViaticos: 4,
+  equipamiento: 0,
+  serviciosTecnicos: 4,
+  gastosDeAdministracion: 4,
+  total: 4,
+};
