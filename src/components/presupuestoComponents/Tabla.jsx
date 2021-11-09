@@ -1,70 +1,220 @@
-import { React } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Asignacion Disponible', 159, 6.0, 24, 4.0),
-  createData('Reformulación IR', 237, 9.0, 37, 4.3),
-  createData('Reformulación ID', 262, 16.0, 24, 6.0),
-  createData('Subtotal presupuesto', 305, 3.7, 67, 4.3),
-  createData('Pago a proveedor', 356, 16.0, 49, 3.9),
-  createData('Rendiciones especificas', 356, 16.0, 49, 3.9),
-  createData('Rendiciones de caja chica', 356, 16.0, 49, 3.9),
-  createData('Reintegros', 356, 16.0, 49, 3.9),
-  createData('Contratos', 356, 16.0, 49, 3.9),
-  createData('Gastos administrativos', 356, 16.0, 49, 3.9),
-  createData('Subtotal gastos', 356, 16.0, 49, 3.9),
-  createData('Saldos totales', 356, 16.0, 49, 3.9),
+const columns = [
+  { id: 'tipo', label: 'Tipo', minWidth: 100 },
+  { id: 'insumos', label: 'Insumos', minWidth: 100 },
+  { id: 'bibliografia', label: 'Bibliografia', minWidth: 100 },
+  {
+    id: 'gastosDePublicacion',
+    label: 'Gastos De Publicacion',
+    minWidth: 100,
+  },
+  { id: 'viajesYViaticos', label: 'Viajes Y Viaticos', minWidth: 100 },
+  { id: 'equipamiento', label: 'Equipamiento', minWidth: 100 },
+  { id: 'serviciosTecnicos', label: 'Servicios Tecnicos', minWidth: 100 },
+  {
+    id: 'gastosDeAdministracion',
+    label: 'Gastos De Administración',
+    minWidth: 100,
+  },
+  { id: 'total', label: 'Total', minWidth: 100 },
 ];
 
-export default function BasicTable() {
-  const classes = useStyles();
-
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Presupuesto</TableCell>
-            <TableCell align="right">Tipo</TableCell>
-            <TableCell align="right">Insumos</TableCell>
-            <TableCell align="right"> texto</TableCell>
-            <TableCell align="right">Viajes y viaticos</TableCell>
-            <TableCell align="right">Equipamiento</TableCell>
-            <TableCell align="right">Servicios tecnicos</TableCell>
-            <TableCell align="right">Gastos de administracion</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+function createData(
+  tipo,
+  insumos,
+  bibliografia,
+  gastosDePublicacion,
+  viajesYViaticos,
+  equipamiento,
+  serviciosTecnicos,
+  gastosDeAdministracion,
+  total
+) {
+  return {
+    tipo,
+    insumos,
+    bibliografia,
+    gastosDePublicacion,
+    viajesYViaticos,
+    equipamiento,
+    serviciosTecnicos,
+    gastosDeAdministracion,
+    total,
+  };
 }
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
+  root: {
+    width: '100%',
+  },
+  container: {
+    maxHeight: 440,
   },
 });
+
+export default function Tabla({
+  presupuesto,
+  reformulacion,
+  gastos,
+  totales,
+  contratos,
+  rendicionesEspecificas,
+  pagoAProveedores,
+}) {
+  const classes = useStyles();
+  {
+    presupuesto ? presupuesto : null;
+  }
+  {
+    reformulacion ? reformulacion : null;
+  }
+  {
+    contratos ? contratos : null;
+  }
+  {
+    rendicionesEspecificas ? rendicionesEspecificas : null;
+  }
+  {
+    pagoAProveedores ? pagoAProveedores : null;
+  }
+  {
+    gastos ? gastos : null;
+  }
+  {
+    totales ? totales : null;
+  }
+
+  const rows = [
+    createData(
+      presupuesto.tipo,
+      presupuesto.insumos,
+      presupuesto.bibliografia,
+      presupuesto.gastosDePublicacion,
+      presupuesto.viajesYViaticos,
+      presupuesto.equipamiento,
+      presupuesto.serviciosTecnicos,
+      presupuesto.gastosDeAdministracion,
+      presupuesto.totalPresupuesto
+    ),
+
+    createData(
+      reformulacion.tipo,
+      reformulacion.insumos,
+      reformulacion.bibliografia,
+      reformulacion.gastosDePublicacion,
+      reformulacion.viajesYViaticos,
+      reformulacion.equipamiento,
+      reformulacion.serviciosTecnicos,
+      reformulacion.gastosDeAdministracion,
+      reformulacion.total
+    ),
+
+    createData(
+      pagoAProveedores.tipo,
+      pagoAProveedores.insumos,
+      pagoAProveedores.bibliografia,
+      pagoAProveedores.gastosDePublicacion,
+      pagoAProveedores.viajesYViaticos,
+      pagoAProveedores.equipamiento,
+      pagoAProveedores.serviciosTecnicos,
+      pagoAProveedores.gastosDeAdministracion,
+      pagoAProveedores.total
+    ),
+
+    createData(
+      rendicionesEspecificas.tipo,
+      rendicionesEspecificas.insumos,
+      rendicionesEspecificas.bibliografia,
+      rendicionesEspecificas.gastosDePublicacion,
+      rendicionesEspecificas.viajesYViaticos,
+      rendicionesEspecificas.equipamiento,
+      rendicionesEspecificas.serviciosTecnicos,
+      rendicionesEspecificas.gastosDeAdministracion,
+      rendicionesEspecificas.total
+    ),
+
+    createData(
+      contratos.tipo,
+      contratos.insumos,
+      contratos.bibliografia,
+      contratos.gastosDePublicacion,
+      contratos.viajesYViaticos,
+      contratos.equipamiento,
+      contratos.serviciosTecnicos,
+      contratos.gastosDeAdministracion,
+      contratos.total
+    ),
+
+    createData(
+      gastos.tipo,
+      gastos.insumos,
+      gastos.bibliografia,
+      gastos.gastosDePublicacion,
+      gastos.viajesYViaticos,
+      gastos.equipamiento,
+      gastos.serviciosTecnicos,
+      gastos.gastosDeAdministracion,
+      gastos.totalGastos
+    ),
+    createData(
+      totales.tipo,
+      totales.insumos,
+      totales.bibliografia,
+      totales.gastosDePublicacion,
+      totales.viajesYViaticos,
+      totales.equipamiento,
+      totales.serviciosTecnicos,
+      totales.gastosDeAdministracion,
+      totales.totalPresupuestoActual
+    ),
+  ];
+
+  return (
+    <Paper className={classes.root}>
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {column.label}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === 'number'
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
+  );
+}

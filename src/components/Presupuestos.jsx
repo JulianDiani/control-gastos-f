@@ -15,9 +15,9 @@ import {
 } from '../services/presupuestos.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import TortaPrincipal from './TortaPrincipal';
-import CardMontos from './CardMontos';
-import Tabla from './Tabla';
+import TortaPrincipal from './presupuestoComponents/TortaPrincipal';
+import CardMontos from './presupuestoComponents/CardMontos';
+import Tabla from './presupuestoComponents/Tabla';
 import Grid from '@material-ui/core/Grid';
 
 export const Presupuestos = () => {
