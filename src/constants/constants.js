@@ -128,7 +128,8 @@ export const proyectosEnHistoria = [
     porcentaje: '100%',
   },
 ];
-// tabla total de presupuesto
+
+// tabla total de presupuesto actualizada
 export const presupuestoPrueba = {
   tipo: 'Total Presupuesto',
   fechaInicio: '18/09/2021',
@@ -143,6 +144,22 @@ export const presupuestoPrueba = {
   gastosDeAdministracion: 40,
   totalPresupuesto: 1200,
 };
+
+// modifica presupuesto la reformulacion puede ser ir o id
+export const reformulacion = {
+  tipo: 'Reformulacion IR',
+  fechaInicio: '18/09/2022',
+
+  insumos: 1,
+  bibliografia: 0,
+  gastosDePublicacion: 1,
+  viajesYViaticos: 1,
+  equipamiento: 0,
+  serviciosTecnicos: 1,
+  gastosDeAdministracion: 1,
+  total: 0,
+};
+
 // tabla total de gastos
 export const gastosPrueba = {
   tipo: 'Gastos totales',

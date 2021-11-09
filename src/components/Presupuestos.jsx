@@ -4,30 +4,50 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import { getPresupuesto, getGastos } from '../services/presupuestos.js';
+import {
+  getPresupuesto,
+  getReformulacion,
+  getGastos,
+  getTotales,
+} from '../services/presupuestos.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './TortaPrincipal';
 import CardMontos from './CardMontos';
-import Tabla2 from './Tabla2';
+import Tabla from './Tabla';
 import Grid from '@material-ui/core/Grid';
 
 export const Presupuestos = () => {
   const $ = useStyles();
-  const [presupuesto, setPresupuesto] = useState(null);
   const [hasError, setHasError] = useState(false);
+
+  const [presupuesto, setPresupuesto] = useState(null);
+  const [reformulacion, setReformulacion] = useState(null);
+
   const [gastos, setGastos] = useState(null);
+
+  const [totales, setTotales] = useState(null);
 
   useEffect(() => {
     async function fetchPrespuesto() {
       const getFunctionPresupuesto = getPresupuesto;
+      const getFunctionReformulacion = getReformulacion;
+
       const getFunctionGastos = getGastos;
+      const getFunctionTotales = getTotales;
 
       try {
         const presupuesto = await getFunctionPresupuesto();
+        const reformulacion = await getFunctionReformulacion();
+
         const gastos = await getFunctionGastos();
+        const totales = await getFunctionTotales();
+
         setPresupuesto(presupuesto);
+        setReformulacion(reformulacion);
+
         setGastos(gastos);
+        setTotales(totales);
       } catch (err) {
         setHasError(true);
         console.log('ERROR USE EFFECT : ' + err);
@@ -69,7 +89,12 @@ export const Presupuestos = () => {
               </Card>
             </Grid>
 
-            <Tabla2 presupuesto={presupuesto} gastos={gastos} />
+            <Tabla
+              presupuesto={presupuesto}
+              reformulacion={reformulacion}
+              gastos={gastos}
+              totales={totales}
+            />
           </Grid>
         </div>
       </>
@@ -81,8 +106,9 @@ export const Presupuestos = () => {
       <div clasName={$.root}>
         <h1>Presupuesto</h1>
         <Divider className={$.divider} />
-        {presupuesto && gastos ? rendering() : loadingRendering()}
-
+        {presupuesto && gastos && reformulacion && totales
+          ? rendering()
+          : loadingRendering()}
         <Footer />
       </div>
     </>
