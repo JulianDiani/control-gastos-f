@@ -129,31 +129,107 @@ export const proyectosEnHistoria = [
   },
 ];
 
+// tabla total de presupuesto actualizada
 export const presupuestoPrueba = {
-  tipoPresupuesto: 'Asignacion Disponible',
+  tipo: 'Total Presupuesto',
   fechaInicio: '18/09/2021',
   fechaFin: '18/09/2022',
-  insumos: 718000,
+
+  insumos: 500,
   bibliografia: 0,
-  gastosDePublicacion: 4500,
-  viajesYViaticos: 16500,
-  equipamiento: 27700,
-  serviciosTecnicos: 6850,
-  gastosDeAdministracion: 6368,
-  totalPresupuesto: 100000,
+  gastosDePublicacion: 40,
+  viajesYViaticos: 220,
+  equipamiento: 200,
+  serviciosTecnicos: 100,
+  gastosDeAdministracion: 40,
+  totalPresupuesto: 1200,
 };
 
-export const gastosPrueba = {
-  tipoGasto: 'Rendiciones especificas',
+// modifica presupuesto la reformulacion puede ser ir o id
+export const reformulacion = {
+  tipo: 'Reformulacion IR',
   fechaInicio: '18/09/2022',
-  insumos: 41569,
+
+  insumos: 1,
+  bibliografia: 0,
+  gastosDePublicacion: 1,
+  viajesYViaticos: 1,
+  equipamiento: 0,
+  serviciosTecnicos: 1,
+  gastosDeAdministracion: 1,
+  total: 0,
+};
+
+// tabla total de gastos
+export const gastosPrueba = {
+  tipo: 'Gastos totales',
+  fechaInicio: '18/09/2022',
+
+  insumos: 400,
   bibliografia: 0,
   gastosDePublicacion: 0,
-  viajesYViaticos: 183235,
-  equipamiento: 19499,
+  viajesYViaticos: 180,
+  equipamiento: 200,
   serviciosTecnicos: 0,
   gastosDeAdministracion: 0,
-  totalGastos: 50,
+  totalGastos: 780,
+};
+
+// viene del back, es la resta entre presupuesto y gastos de cada rubro
+export const totalesPorRubro = {
+  tipo: 'Totales por rubro (P-G)',
+  fechaInicio: '18/09/2022',
+
+  insumos: 100,
+  bibliografia: 0,
+  gastosDePublicacion: 40,
+  viajesYViaticos: 40,
+  equipamiento: 0,
+  serviciosTecnicos: 100,
+  gastosDeAdministracion: 40,
+  totalPresupuestoActual: 420,
+};
+
+export const pagoAProv = {
+  tipo: 'Pago a proveedores',
+  fechaInicio: '18/09/2022',
+
+  insumos: 2,
+  bibliografia: 0,
+  gastosDePublicacion: 2,
+  viajesYViaticos: 2,
+  equipamiento: 0,
+  serviciosTecnicos: 2,
+  gastosDeAdministracion: 2,
+  total: 2,
+};
+
+export const rendEsp = {
+  tipo: 'Rendiciones Especificas',
+  fechaInicio: '18/09/2022',
+
+  insumos: 3,
+  bibliografia: 0,
+  gastosDePublicacion: 3,
+  viajesYViaticos: 3,
+  equipamiento: 0,
+  serviciosTecnicos: 3,
+  gastosDeAdministracion: 3,
+  total: 3,
+};
+
+export const contratos = {
+  tipo: 'Contratos',
+  fechaInicio: '18/09/2022',
+
+  insumos: 4,
+  bibliografia: 0,
+  gastosDePublicacion: 4,
+  viajesYViaticos: 4,
+  equipamiento: 0,
+  serviciosTecnicos: 4,
+  gastosDeAdministracion: 4,
+  total: 4,
 };
 
 export const compras = [
