@@ -28,14 +28,14 @@ export default function TortaPrincipal({ gastos, presupuesto }) {
           {
             label: 'Presupuesto',
             backgroundColor: [
-              'rgb(2, 242, 238)',
-              '	rgb(3, 252, 177)',
-              'rgb(13, 230, 103)',
-              'rgb(3, 252, 36)',
-              'rgb(47, 242, 2)',
-              'rgb(13, 227, 252)',
-              'rgb(0, 175, 230)',
-              'rgb(13, 133, 252)',
+              'rgb(250, 175, 30)',
+              'rgb(165, 200, 250)',
+              'rgb(255, 158, 54)',
+              'rgb(165, 200, 250)',
+              'rgb(1, 72, 173)',
+              'rgb(255, 187, 56)',
+              'rgb(173, 115, 3)',
+              'rgb(250, 175, 30)',
             ],
             data: [
               presupuesto.totalPresupuesto,
@@ -61,5 +61,5 @@ export default function TortaPrincipal({ gastos, presupuesto }) {
 }
 
 const useStyles = makeStyles({
-  root: {},
+  root: {}
 });

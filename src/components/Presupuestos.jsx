@@ -124,8 +124,8 @@ export const Presupuestos = () => {
 
   return (
     <>
-      <div clasName={$.root}>
-        <h1>Presupuesto</h1>
+      <h1>Presupuesto</h1>
+      <div className={$.root}>
         <Divider className={$.divider} />
         {presupuesto &&
         gastos &&
@@ -136,8 +136,8 @@ export const Presupuestos = () => {
         contratos
           ? rendering()
           : loadingRendering()}
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };

@@ -151,12 +151,12 @@ export const DatosGenerales = () => {
 
   return (
     <>
-      <div clasName={$.root}>
-        <h1>Datos Generales</h1>
+      <h1>Datos Generales</h1>
+      <div className={$.root}>
         <Divider className={$.divider} />
         {proyecto ? rendering() : loadingRendering()}
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };
