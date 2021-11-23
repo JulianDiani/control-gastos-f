@@ -232,49 +232,6 @@ export const contratos = {
   total: 4,
 };
 
-export const compras = [
-  {
-    fecha: '2021-02-01',
-    rubro: 'Rubro',
-    subrubro: 'Subrubro',
-    numeroCompra: '10',
-    proveedor: 'Proveedor',
-    monto: '1000',
-    estado: 'estado',
-    factura: 'factura',
-  },
-  {
-    fecha: '2021-02-01',
-    rubro: 'Rubro',
-    subrubro: 'Subrubro',
-    numeroCompra: '10',
-    proveedor: 'Proveedor',
-    monto: '2000',
-    estado: 'estado',
-    factura: 'factura',
-  },
-  {
-    fecha: '2021-02-01',
-    rubro: 'Rubro',
-    subrubro: 'Subrubro',
-    numeroCompra: '10',
-    proveedor: 'Proveedor',
-    monto: '3000',
-    estado: 'estado',
-    factura: 'factura',
-  },
-  {
-    fecha: '2021-02-01',
-    rubro: 'Rubro',
-    subrubro: 'Subrubro',
-    numeroCompra: '10',
-    proveedor: 'Proveedor',
-    monto: '4000',
-    estado: 'estado',
-    factura: 'factura',
-  },
-];
-
 export const proveedoresRegistrados = [
   {
     nombre: 'Logística Santos',
