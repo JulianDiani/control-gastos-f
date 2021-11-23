@@ -4,7 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-import { getCompras } from '../services/compras.js';
+import { getAllCompras } from '../services/compras.js';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
@@ -58,7 +58,7 @@ export const Compras = (props) => {
   //API Call
   useEffect(() => {
     async function fetchCompra() {
-      const getFunction = getCompras;
+      const getFunction = getAllCompras;
       try {
         const compras = await getFunction();
         setCompras(compras);
@@ -102,7 +102,7 @@ export const Compras = (props) => {
               </StyledTableCell>
             </StyledTableHead>
             <TableBody>
-              {compras.map((compra) => (
+              {compras.data.map((compra) => (
                 <StyledTableRow key={compra.fecha}>
                   <StyledTableCell scope="row">{compra.rubro}</StyledTableCell>
                   <StyledTableCell align="center">

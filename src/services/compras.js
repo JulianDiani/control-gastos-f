@@ -1,12 +1,4 @@
-import { compras } from '../constants/constants';
-
-/*
-export async function getCompras() {
-  return Promise.resolve(compras);
-}
-*/
-
-export async function getCompras() {
+export async function getAllCompras() {
   const url = 'http://localhost:3001/api/compras';
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
