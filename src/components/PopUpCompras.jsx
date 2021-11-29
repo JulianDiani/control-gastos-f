@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   makeStyles,
   TextField,
@@ -7,6 +7,7 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
+import { postCompra } from '../services/compras.js';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -62,9 +63,37 @@ const useStyles = makeStyles((theme) => ({
 export default function PopUpCompras(props) {
   const $ = useStyles();
 
-  const submitForm = () => {
+  const [rubro, setRubro] = useState('');
+  const [subrubro, setSubrubro] = useState('');
+  const [fecha, setFecha] = useState('02/01/2021');
+ 
+  const [proveedor,setProveedor] = useState('');
+  const [monto,setMonto] = useState(0);
+  
+ 
+  const [nombre,setNombre] = useState('');
+  //REVISAR ACA CONSUMO DE API REST - POST.
+  const submitForm = async() => {
     props.state(false);
-    //Enviar data al backend
+    let data = {
+      fecha: fecha,
+      rubro: rubro,
+      subrubro: subrubro,
+      numeroCompra: 80,
+      proveedor: proveedor,
+      monto: monto,
+      estado: "Comprado",
+      factura: "factura-054",
+      nombre: nombre,
+    };
+    console.log("LA DATA  " + JSON.stringify(data) );
+    console.log("LA DATA TYPE  " + typeof data);
+    const res = await postCompra(data);
+    console.log("response post " + JSON.stringify(res))
+  };
+  const submitHandle = (handle,value) => {
+    handle(value);
+    console.log(value);
   };
   const handleClose = () => {
     props.state(false);
@@ -75,16 +104,27 @@ export default function PopUpCompras(props) {
         <h2>Realizar Pedido de Compra</h2>
         <Divider />
         <div className={$.inputs}>
-          <TextField label="Rubro" />
-          <TextField label="Subrubro" />
+          <TextField
+            label="Rubro"
+            onChange={(e) => submitHandle(setRubro,e.target.value)}
+          />
+          <TextField 
+            label="Subrubro"  
+            onChange={(e) => submitHandle(setSubrubro,e.target.value)}/>
         </div>
         <Typography>Cuentas con $60.000 para este rubro </Typography>
         <br />
         <Divider />
         <div className={$.secondRow}>
-          <TextField label="Fecha" />
+          <TextField 
+            label="Fecha"
+            onChange={(e) => submitHandle(setFecha,e.target.value)}
+          /> 
           <div className={$.cargarFactura}>
-            <TextField label="Monto" />
+            <TextField 
+              label="Monto"
+              onChange={(e) => submitHandle(setMonto,e.target.value)}
+            />
             <Button color="primary" sx={{ minWidth: 100 }}>
               Cargar Factura
             </Button>
@@ -98,10 +138,15 @@ export default function PopUpCompras(props) {
             multiline
             rows={6}
             className={$.multiLineInput}
+            onChange={(e) => submitHandle(setNombre,e.target.value)}
           />
         </div>
         <div className={$.cargarFactura}>
-          <TextField label="Proveedor" className={$.proveedor} />
+          <TextField 
+            label="Proveedor" 
+            className={$.proveedor}
+            onChange={(e) => submitHandle(setProveedor,e.target.value)}
+          />
           <Button color="primary" sx={{ minWidth: 100 }}>
             Proveedor Nuevo
           </Button>
