@@ -74,8 +74,7 @@ export const Compras = (props) => {
     return <Alert severity="info">Cargando...</Alert>;
   };
   const rendering = () => {
-    console.log(compras);
-    console.log(JSON.stringify(compras));
+    console.log("Compras a renderizar: " + JSON.stringify(compras));
     return (
       <>
         <TableContainer className={$.container}>
@@ -103,7 +102,7 @@ export const Compras = (props) => {
             </StyledTableHead>
             <TableBody>
               {compras.data.map((compra) => (
-                <StyledTableRow key={compra.fecha}>
+                <StyledTableRow key={compra.id}>
                   <StyledTableCell scope="row">{compra.rubro}</StyledTableCell>
                   <StyledTableCell align="center">
                     {compra.subrubro}
