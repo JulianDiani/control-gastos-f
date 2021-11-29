@@ -72,7 +72,7 @@ export default function PopUpCompras(props) {
   
  
   const [nombre,setNombre] = useState('');
-
+  //REVISAR ACA CONSUMO DE API REST - POST.
   const submitForm = async() => {
     props.state(false);
     let data = {
