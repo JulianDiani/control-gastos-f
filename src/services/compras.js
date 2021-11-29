@@ -14,6 +14,7 @@ export async function getAllCompras() {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
+//REVISAR ACA PORQUE EL BODY SE ENVIA VACIO.  - ESTA HARCODEADO PERO DE TODAS FORMAS LLEGA VACIO AL BACK.
 export async function postCompra(body) {
   const url = 'http://localhost:3001/api/compras';
   console.log('Body Post ' + JSON.stringify(body));
