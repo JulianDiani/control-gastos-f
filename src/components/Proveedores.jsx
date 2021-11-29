@@ -53,13 +53,14 @@ export const Proveedores = () => {
       const handleClose = () => {
         setOpen(false);
       };
-    
+      
       useEffect(() => {
         async function fetchProveedores() {
           const getFunction = getAllProveedores;
           try {
             const proveedores = await getFunction();
             setProveedores(proveedores);
+            
           } catch (err) {
             console.log('ERROR FETCH API [proveedores]: ' + err);
           }
