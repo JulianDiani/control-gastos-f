@@ -20,23 +20,13 @@ export async function postCompra(body) {
   console.log('Body Post ' + JSON.stringify(body));
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'no-cors', // no-cors, *cors, same-origin
+    mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      fecha: '01/01/1999',
-      rubro: 'Tecnologia',
-      subrubro: 'informatica',
-      numeroCompra: 111,
-      proveedor: 'Electronic SA',
-      monto: 12000,
-      estado: 'aproabdo',
-      factura: 'F-0506',
-      nombre: 'Pepe',
-    }),
+    body: JSON.stringify(body),
     //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
   console.log(response);
