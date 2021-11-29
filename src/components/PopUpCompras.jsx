@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { postCompra } from '../services/compras.js';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -56,8 +57,16 @@ const useStyles = makeStyles((theme) => ({
     width: '90%',
   },
   proveedor: {
-    marginTop: '1.5rem',
+    marginTop: '0.5rem',
   },
+  uploadIcon: {
+    marginBlock : 'auto',
+    margin: '1rem',
+    marginTop: '1rem',
+    '&:hover': {
+      color: '#62B5F6',
+    },
+  }
 }));
 
 export default function PopUpCompras(props) {
@@ -98,6 +107,11 @@ export default function PopUpCompras(props) {
   const handleClose = () => {
     props.state(false);
   };
+
+  const handleClick = (e) => {
+    console.log("Click" + e);
+    return;
+  };
   return (
     <>
       <div className={$.modal}>
@@ -125,9 +139,10 @@ export default function PopUpCompras(props) {
               label="Monto"
               onChange={(e) => submitHandle(setMonto,e.target.value)}
             />
-            <Button color="primary" sx={{ minWidth: 100 }}>
-              Cargar Factura
-            </Button>
+            <CloudUploadIcon 
+              className={$.uploadIcon}
+              onClick={(e) => handleClick(e)}
+            /> 
           </div>
         </div>
         <div className={$.descripcion}>
@@ -147,9 +162,7 @@ export default function PopUpCompras(props) {
             className={$.proveedor}
             onChange={(e) => submitHandle(setProveedor,e.target.value)}
           />
-          <Button color="primary" sx={{ minWidth: 100 }}>
-            Proveedor Nuevo
-          </Button>
+          <CloudUploadIcon className={$.uploadIcon}/> 
         </div>
 
         <div className={$.button}>

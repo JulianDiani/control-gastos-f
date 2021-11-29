@@ -10,8 +10,8 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
 import { Button, Grid, Modal } from '@material-ui/core';
-import PopUp from './PopUpCompras';
-import { getProveedores } from '../services/proveedores';
+import PopUp from './PopUpProveedores';
+import { getAllProveedores } from '../services/proveedores';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -53,8 +53,22 @@ export const Proveedores = () => {
       const handleClose = () => {
         setOpen(false);
       };
+      
+      useEffect(() => {
+        async function fetchProveedores() {
+          const getFunction = getAllProveedores;
+          try {
+            const proveedores = await getFunction();
+            setProveedores(proveedores);
+            
+          } catch (err) {
+            console.log('ERROR FETCH API [proveedores]: ' + err);
+          }
+        }
+        fetchProveedores();
+      }, []);
     
-    const loadingRendering = () => {
+      const loadingRendering = () => {
         return <Alert severity="info">Cargando...</Alert>;
     };
     const rendering = () => {
@@ -70,8 +84,8 @@ export const Proveedores = () => {
                         <StyledTableCell align="center" className={ $.textColor }>CUIT</StyledTableCell>
                     </StyledTableHead>
                     <TableBody>
-                    {proveedores.map((proveedores) => (
-                        <StyledTableRow key={proveedores.nombre}>
+                    {proveedores.data.map((proveedores) => (
+                        <StyledTableRow key={proveedores.id}>
                         <StyledTableCell scope="row">{proveedores.nombre}</StyledTableCell>
                         <StyledTableCell align="center">{proveedores.rubro}</StyledTableCell>
                         <StyledTableCell align="center">{proveedores.telefono}</StyledTableCell>
@@ -86,20 +100,6 @@ export const Proveedores = () => {
         )
     }
 
-    useEffect(() => {
-        async function fetchProveedores() {
-          const getFunction = getProveedores;
-          try {
-            const proveedores = await getFunction();
-            setProveedores(proveedores);
-          } catch (err) {
-            console.log('ERROR FETCH API [proveedores]: ' + err);
-          }
-        }
-        fetchProveedores();
-      }, []);
-      
-
     return <>
         <Grid className={$.header}>
         <h1 className={$.title}>Proveedores</h1>
@@ -113,7 +113,8 @@ export const Proveedores = () => {
         </Grid>
         <Divider/>
         <br/>
-        {proveedores? rendering() : loadingRendering}
+        {console.log("Proveedores " + JSON.stringify(proveedores))}
+        {proveedores ? rendering() : loadingRendering()}
         <Footer />
         </>
 }

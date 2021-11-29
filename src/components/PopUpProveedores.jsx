@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   makeStyles,
   TextField,
@@ -7,6 +7,8 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
+import { postProveedor } from '../services/proveedores.js';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -55,64 +57,92 @@ const useStyles = makeStyles((theme) => ({
     width: '90%',
   },
   proveedor: {
-    marginTop: '1.5rem',
+    marginTop: '0.5rem',
   },
+  uploadIcon: {
+    marginBlock : 'auto',
+    margin: '1rem',
+    marginTop: '1rem',
+    '&:hover': {
+      color: '#62B5F6',
+    },
+  }
 }));
 
-export default function PopUpCompras(props) {
+export default function PopUpProveedores(props) {
   const $ = useStyles();
 
-  const submitForm = () => {
+  const [nombre, setNombre] = useState('');
+  const [rubro, setRubro] = useState('');
+  const [telefono, setTelefono] = useState('');
+  const [mail,setMail] = useState('');
+  const [cuit,setCuit] = useState('');
+  
+  const submitForm = async() => {
     props.state(false);
-    //Enviar data al backend
+    let data = {
+      nombre: nombre,
+      telefono: telefono,
+      rubro: rubro,
+      mail: mail,
+      cuit: cuit,
+    };
+    
+    const res = await postProveedor(data);
+    console.log("response post " + JSON.stringify(res))
+  };
+  const submitHandle = (handle,value) => {
+    handle(value);
+    console.log(value);
   };
   const handleClose = () => {
     props.state(false);
   };
+
+  const handleClick = (e) => {
+    console.log("Click" + e);
+    return;
+  };
   return (
     <>
       <div className={$.modal}>
-        <h2>Realizar Pedido de Compra</h2>
+        <h2>Agregar nuevo proveedor</h2>
         <Divider />
         <div className={$.inputs}>
-          <TextField label="Rubro" />
-          <TextField label="Subrubro" />
+          <TextField
+            label="Rubro"
+            onChange={(e) => submitHandle(setRubro,e.target.value)}
+          />
+          <TextField 
+            label="Nombre"  
+            onChange={(e) => submitHandle(setNombre,e.target.value)}/>
         </div>
-        <Typography>Cuentas con $60.000 para este rubro </Typography>
-        <br />
         <Divider />
         <div className={$.secondRow}>
-          <TextField label="Fecha" />
+          <TextField 
+            label="telefono"
+            onChange={(e) => submitHandle(setTelefono,e.target.value)}
+          /> 
           <div className={$.cargarFactura}>
-            <TextField label="Monto" />
-            <Button color="primary" sx={{ minWidth: 100 }}>
-              Cargar Factura
-            </Button>
+            <TextField 
+              label="cuit"
+              onChange={(e) => submitHandle(setCuit,e.target.value)}
+            />
           </div>
         </div>
-        <div className={$.descripcion}>
-          <Typography variant="h5">Descripcion</Typography>
-          <br />
-          <TextField
-            label="La compra cuenta con los siguientes objetos/servicios"
-            multiline
-            rows={6}
-            className={$.multiLineInput}
+        <div className={$.cargarFactura}>
+          <TextField 
+            label="mail" 
+            className={$.proveedor}
+            onChange={(e) => submitHandle(setMail,e.target.value)}
           />
         </div>
-        <div className={$.cargarFactura}>
-          <TextField label="Proveedor" className={$.proveedor} />
-          <Button color="primary" sx={{ minWidth: 100 }}>
-            Proveedor Nuevo
-          </Button>
-        </div>
-
         <div className={$.button}>
           <Button color="primary" className={$.botones} onClick={handleClose}>
             Cancelar
           </Button>
           <Button color="primary" onClick={submitForm}>
-            Finalizar Pedido de Compra
+            Agregar Proveedor
           </Button>
         </div>
       </div>

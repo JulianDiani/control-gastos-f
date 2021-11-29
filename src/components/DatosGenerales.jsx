@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -107,20 +107,22 @@ export const DatosGenerales = () => {
         </ListItem>
         <ListItem className={$.dropDown} button>
           <ListItemText primary={'Integrantes'} onClick={handleClick} />
-          <ExpandMoreIcon onClick={handleClick} sx={{ ml: 1 }} />
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-            className={$.menuItem}
-          >
-            {proyecto.integrantes.map((a) => (
-              <MenuItem onClick={handleClose} key={a}>
-                {a}
-              </MenuItem>
-            ))}
-          </Menu>
+          
+            <ExpandMoreIcon onClick={handleClick} />
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              className={$.menuItem}
+            >
+              {proyecto.integrantes.map((a) => (
+                <MenuItem onClick={handleClose} key={a}>
+                  {a}
+                </MenuItem>
+              ))}
+            </Menu>
+         
         </ListItem>
       </List>
     );
@@ -164,36 +166,37 @@ export const DatosGenerales = () => {
 const useStyles = makeStyles({
   root: {
     height: '100%',
-    display: 'flex'
+    display: 'flex',
   },
   card: {
     width: '50%',
     margin: '1rem',
-    maxHeight: '45rem'
+    maxHeight: '45rem',
   },
   divider: {
-    marginBottom: '2rem'
+    marginBottom: '2rem',
   },
   item: {
-    display: 'flex'
+    display: 'flex',
   },
   key: {
-    fontWeight: 'bolder'
+    fontWeight: 'bolder',
   },
   parrafo: {
     padding: '3rem',
     fontSize: '16px',
-    textAlign: 'justify'
+    textAlign: 'justify',
   },
   title: {
     fontWeight: 'bold',
-    marginLeft: '3rem'
+    marginLeft: '3rem',
   },
   dropDown: {
     marginRight: '1rem',
-    width: '10rem'
+    width: '10rem',
   },
   menuItem: {
-    marginLeft: '1rem'
+    marginTop: '46rem',
+    marginLeft: '30rem'
   },
 });
