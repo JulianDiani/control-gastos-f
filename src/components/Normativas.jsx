@@ -22,7 +22,7 @@ export const Normativas = () => {
                         variant="contained"
                         className={$.botonDescarga}
                         href={pdf}
-                        download
+                        download="normativa"
                     >
                         Descargar
                     </Button>
