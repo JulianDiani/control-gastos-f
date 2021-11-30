@@ -38,30 +38,30 @@ export default function NavBar() {
   }
   return (
     <Grid>
-    <div className={$.navbar}>
-      <Link to={'/'}>
-        <img
-          src={logo}
-          className={$.logo}
-          alt="Logo Universidad Nacional de Hurlingham"
-        />
-      </Link>
-      <List className={$.list}>
-        {navbar.map(({ text, icon, path },index) => (
-          <ListItem
-            divider= {index === navbar.length-1 ? false : true}
-            className={$.option}
-            button={true}
-            key={text}
-            component={Link}
-            to={path}
-          >
-            {icon}
-            <ListItemText primary={text} sx={{ ml: 2 }} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
+      <div className={$.navbar}>
+        <Link to={'/'}>
+          <img
+            src={logo}
+            className={$.logo}
+            alt="Logo Universidad Nacional de Hurlingham"
+          />
+        </Link>
+        <List className={$.list}>
+          {navbar.map(({ text, icon, path }, index) => (
+            <ListItem
+              divider={index === navbar.length - 1 ? false : true}
+              className={$.option}
+              button={true}
+              key={text}
+              component={Link}
+              to={path}
+            >
+              {icon}
+              <ListItemText primary={text} sx={{ ml: 2 }} />
+            </ListItem>
+          ))}
+        </List>
+      </div>
     </Grid>
   );
 }
@@ -82,7 +82,8 @@ const useStyles = makeStyles(() => ({
   },
   option: {
     '&:hover': {
-      color: '#62B5F6',
+      backgroundColor: '#62B5F6',
+      color: '#FAFAFA',
     },
   },
 }));

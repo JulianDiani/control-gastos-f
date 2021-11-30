@@ -2,18 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 export const Normativas = () => {
     const $ = useStyles();
 
+    const descarga = () => {
+        const link = document.createElement("a");
+        link.download = `normativas.pdf`;
+        link.href = "../assets/normativas.pdf";
+        link.click();
+    };
+
     return (
         <>
             <div className={$.root}>
-                <h1>Normativas</h1>
+                <div className={$.titleAndButton}>
+                    <h1>Normativas</h1>
+                    <Button
+                        startIcon={<GetAppIcon />}
+                        variant="contained"
+                        className={$.botonDescarga}
+                        component="a"
+                        href="../assets/normativas.pdf"
+                        download
+                    >
+                        Descargar
+                    </Button>
+                </div>
                 <Card>
                     <Paper className={$.paper}>
                         <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h2>
@@ -60,5 +80,21 @@ const useStyles = makeStyles(() => ({
     divider: {
         marginTop: '2vh',
         marginBottom: '2vh',
+    },
+    titleAndButton: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    botonDescarga: {
+        height: '3rem',
+        width: '10rem',
+        marginTop: '1vh',
+        backgroundColor: '#DCDCDC',
+        color: '#505050',
+        '&:hover': {
+            color: '#FAFAFA',
+            backgroundColor: '#62B5F6',
+        },
     }
 }));
