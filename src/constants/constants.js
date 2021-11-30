@@ -122,7 +122,7 @@ export const proyectosEnHistoria = [
   {
     nombre:
       'Gestión y optimización de escenas tridimensionales para simuladores de realidad virtual',
-    director: 'D amato, Juan Pablo',
+    director: 'D\'amato, Juan Pablo',
     fechaInicio: '25-12-2016',
     porcentaje: 100,
   },
