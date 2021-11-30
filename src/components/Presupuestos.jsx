@@ -92,8 +92,7 @@ export const Presupuestos = () => {
             >
               <CardMontos
                 item
-                xs={6}
-                className={$.cardMonto}
+                xl={6}
                 totalPresupuesto={presupuesto.totalPresupuesto}
                 totalGastos={gastos.totalGastos}
               />
