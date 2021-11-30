@@ -82,12 +82,13 @@ export const Presupuestos = () => {
     return (
       <>
         <div className={$.root}>
-          <Grid container direction="column" alignItems="center">
+          <Grid container direction="column" justifyContent="center" alignItems="center">
             <Grid
               container
               direction="row"
-              justifyContent="center"
-              alignItems="flex-start"
+              justifyContent="space-between"
+              alignItems="flex"
+              xl="auto"
             >
               <CardMontos
                 item
@@ -96,8 +97,8 @@ export const Presupuestos = () => {
                 totalPresupuesto={presupuesto.totalPresupuesto}
                 totalGastos={gastos.totalGastos}
               />
-              <Card className={$.card} item xs={6}>
-                <CardContent>
+              <Card className={$.card}>
+                <CardContent >
                   <TortaPrincipal
                     presupuesto={presupuesto}
                     gastos={gastos}
@@ -128,12 +129,12 @@ export const Presupuestos = () => {
       <div className={$.root}>
         <Divider className={$.divider} />
         {presupuesto &&
-        gastos &&
-        reformulacion &&
-        totales &&
-        rendicionesEspecificas &&
-        pagoAProveedores &&
-        contratos
+          gastos &&
+          reformulacion &&
+          totales &&
+          rendicionesEspecificas &&
+          pagoAProveedores &&
+          contratos
           ? rendering()
           : loadingRendering()}
       </div>
@@ -150,10 +151,12 @@ const useStyles = makeStyles({
   root: {
     height: '100%',
     display: 'flex',
+    marginLeft: '1vw'
   },
   card: {
-    width: '50%',
-    margin: '1rem',
+    width: '25vw',
+    marginLeft: '15vw',
+    marginBottom: '1rem',
   },
   divider: {
     marginBottom: '1rem',
