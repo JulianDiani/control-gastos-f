@@ -7,16 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import pdf from '../assets/normativas.pdf';
 
 export const Normativas = () => {
     const $ = useStyles();
-
-    const descarga = () => {
-        const link = document.createElement("a");
-        link.download = `normativas.pdf`;
-        link.href = "../assets/normativas.pdf";
-        link.click();
-    };
 
     return (
         <>
@@ -27,8 +21,7 @@ export const Normativas = () => {
                         startIcon={<GetAppIcon />}
                         variant="contained"
                         className={$.botonDescarga}
-                        component="a"
-                        href="../assets/normativas.pdf"
+                        href={pdf}
                         download
                     >
                         Descargar
