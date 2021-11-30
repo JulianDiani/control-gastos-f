@@ -5,6 +5,7 @@ import Header from './components/Header';
 import NavBar from './components/NavBar';
 import { DatosGenerales } from './components/DatosGenerales';
 import { MisProyectos } from './components/MisProyectos';
+import { Normativas } from './components/Normativas';
 import {
   AssignmentInd,
   Help,
@@ -40,6 +41,8 @@ export default function App() {
               <Route path="/proyectos/presupuestos" exact component={Presupuestos} />
               <Route path="/proyectos/compras" exact component={Compras} />
               <Route path="/proyectos/proveedores" exact component={Proveedores} />
+              <Route path="/normativas" exact component={Normativas} />
+              <Route path="/proyectos/normativas" exact component={Normativas} />
             </Switch>
           </div>
         </div>
