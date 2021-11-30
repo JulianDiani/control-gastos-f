@@ -105,7 +105,7 @@ export const proyectosEnCurso = [
   {
     nombre:
       'Plataforma de software de código abierto para aplicaciones de segmentación de imágenes médicas',
-    director: 'D amato, Juan Pablo',
+    director: 'D\'amato, Juan Pablo',
     fechaInicio: '15-12-2017',
     porcentaje: 47,
   },
