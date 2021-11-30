@@ -46,8 +46,8 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
 
 const useStyles = makeStyles({
   root: {
-    width: '400px',
-    height: '250px',
+    width: '25rem',
+    height: '15rem',
     background: '#DEFAAE',
     border: '4px solid rgba(96, 150, 0, 0.94)',
     boxSizing: 'border-box',
@@ -55,8 +55,8 @@ const useStyles = makeStyles({
   },
 
   montoDisponible: {
-    width: '312px',
-    height: '109px',
+    width: '20rem',
+    height: '6.5rem',
 
     fontFamily: 'Cabin',
     fontStyle: 'normal',
@@ -67,8 +67,8 @@ const useStyles = makeStyles({
   },
 
   nivelDeEjecucion: {
-    width: '321px',
-    height: '109px',
+    width: '20rem',
+    height: '6.5rem',
     fontFamily: 'Cabin',
     fontStyle: 'normal',
     fontWeight: 'normal',

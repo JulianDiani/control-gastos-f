@@ -41,89 +41,102 @@ export const usuarioPrueba = {
 };
 
 export const proyectoPrueba = {
-  titulo: 'Investigación del desarrollo de la saraza',
+  titulo:
+    'Plataforma abierta de gestion de camaras IP y aplicaciones moviles para la seguridad civil ciudadana',
   tipo: 'Proyecto',
-  organismo: 'QIDW',
-  lineaFinanciamiento: 'FGH',
+  organismo: 'UNAHUR',
+  lineaFinanciamiento: 'Programas I+D UNAHUR',
   año: 2020,
-  unidadAcademica: 'Departamento de Saraza',
-  areaTematica: 'Ciencias de la Saraza',
-  subsidio: 403323.0,
-  fechaInicio: '18/09/2021',
-  fechaFin: '18/09/2022',
-  fechaInicioGastos: '18/12/2021',
+  unidadAcademica: 'Instituto de Tecnología e Ingeniería',
+  areaTematica: 'Seguridad informática',
+  subsidio: 465000.0,
+  fechaInicio: '18-09-2020',
+  fechaFin: '18-09-2022',
+  fechaInicioGastos: '18-12-2020',
   numeroProyecto: 7567,
-  numeroExpediente: '21-0408/1409',
-  numeroResolucion: 'FDASD Nro 312/32',
-  director: 'Dr. Agoncito',
-  coDirector: 'Lic. Enciado',
-  integrantes: ['persona1', 'persona2', 'persona3', 'persona4'],
-  resumen: `Este proyecto tiene como objetivo la generación de un modelo de desarrollo basado en
-  componentes y requisitos que tenga en cuenta la reutilización. A partir de un método
-  inicial llamado COTSRE utilizado para seleccionar componentes a partir de una serie de
-  requisitos y características se ha diseñado un proceso que abarca todo el ciclo de vida de
-  un componente, al que llamaremos COTSRE+. Para ello se ha estudiado un proceso de
-  desarrollo de componentes existente creado por Chessman y Daniels y hemos ampliado
-  COTSRE a partir de él para obtener COTSRE+. COTSRE+ se ha formalizado
-  utilizando la notación estándar de OMG llamada SPEM y se ha ampliado la selección
-  de componentes definida en COTSRE para que además de los requisitos y
-  características, puedan utilizarse los casos de uso para seleccionar componentes. Para
-  automatizar este proceso de selección y catalogar los requisitos, casos de uso y
-  componentes se ha desarrollado una herramienta de escritorio llamada CotsreApp. Para
-  la publicación del método se ha desarrollado una web con ayuda de la herramienta EPF
-  Composer de Eclipse.`,
+  numeroExpediente: '1646-9895/20',
+  numeroResolucion: 'Nro 31285/20',
+  director: 'D amato, Juan Pablo',
+  coDirector: 'Dominguez, Leonardo Daniel',
+  integrantes: [
+    'Perez, Alejandro Julian',
+    'Rubiales, Aldo Jose',
+    'Dominguez, Leonardo Daniel',
+    'D amato, Juan Pablo',
+  ],
+  resumen: `La inseguridad es un problema que afecta en mayor o menor medida a todas las ciudades 
+del mundo. Las ciudades más informatizadas hacen uso de la video-vigilancia para combatirla, montando 
+en muchos de los casos centros de monitoreo con cientos de cámaras. En su mayoría, estos centros 
+cuentan con grupos de personas para realizar la tarea de observación, sin embargo, este método no es 
+suficiente y los organismos públicos deben lidiar un reclamo social por mayor transparencia y 
+eficiencia en el accionar ante un delito. En este contexto, es que surge el presente proyecto, una 
+plataforma de administración de cámaras y sensores, para apoyar a la gestión integral de la seguridad.
+ Esta plataforma complementa técnicas de análisis automatizado de video, junto con una API para 
+registrar eventos de tipo alarmas o alertas por parte de la ciudadanía y permitir el acceso a otras 
+entidades (policía, bomberos, organizaciones vecinales) a ciertos recursos (los videos). Toda la 
+información se centraliza en un sistema georreferenciado, en una arquitectura abierta y escalable, 
+organizado en diferentes capas de información, con un sistema de organización de roles de accesos. 
+Se presenta una discusión de la estructura ideada, de los algoritmos utilizados para el seguimiento, 
+problemas propios que se suceden en este tipo de sistemas y los resultados preliminares obtenidos.`,
 };
 
 export const proyectosEnCurso = [
   {
-    nombre: 'The Phantom Menace',
-    director: 'George Lucas',
-    fechaInicio: '08-07-1999',
+    nombre:
+      'Cifrado de secuencias de vídeo e imágenes mediante código OpenCL bajo demanda',
+    director: 'Venere, Marcelo Javier',
+    fechaInicio: '20-04-2019',
     porcentaje: 98,
   },
   {
-    nombre: 'A New Hope',
-    director: 'George Lucas',
-    fechaInicio: '25-12-1977',
+    nombre:
+      'Generación de mallas de elementos finitos para arterias coronarias a partir de imágenes Ivus',
+    director: 'Jonas, Ignacio',
+    fechaInicio: '25-11-2020',
     porcentaje: 52,
   },
   {
-    nombre: 'The Force Awakens',
-    director: 'J.J. Abrahams',
-    fechaInicio: '17-12-2015',
+    nombre:
+      'Un metodo eficiente para la sustraccion de fondo en videos usando gpu',
+    director: 'Gervasoni, Luciano',
+    fechaInicio: '17-12-2020',
     porcentaje: 32,
   },
   {
-    nombre: 'Rogue One',
-    director: 'Gareth Edwards',
-    fechaInicio: '15-12-2016',
+    nombre:
+      'Plataforma de software de código abierto para aplicaciones de segmentación de imágenes médicas',
+    director: 'D\'amato, Juan Pablo',
+    fechaInicio: '15-12-2017',
     porcentaje: 47,
   },
 ];
 
 export const proyectosEnHistoria = [
   {
-    nombre: 'Attack of the Clones',
-    director: 'George Lucas',
-    fechaInicio: '16-05-2002',
+    nombre:
+      'Sistema de Realidad Virtual para el Entrenamiento de Operarios de Excavadoras Hidráulicas',
+    director: 'Lazo, Marcos Gonzalo',
+    fechaInicio: '16-05-2014',
     porcentaje: 100,
   },
   {
     nombre:
-      'It is a dark time for the Rebellion. Although the Death Star has been destroyed, Imperial troops have driven the Rebel forces from their hidden base and pursued them across the galaxy',
-    director: 'George Lucas',
-    fechaInicio: '25-12-1977',
+      'Gestión y optimización de escenas tridimensionales para simuladores de realidad virtual',
+    director: 'D\'amato, Juan Pablo',
+    fechaInicio: '25-12-2016',
     porcentaje: 100,
   },
   {
-    nombre: 'The Last Jedi',
-    director: 'Rian Johnson',
+    nombre:
+      'Aplicación de Viterbi sobre Modelos Ocultos de Markov para la Estimación de Tráfico Vehicular',
+    director: 'Perez, Alejandro J.',
     fechaInicio: '14-12-2017',
     porcentaje: 100,
   },
   {
-    nombre: 'Solo',
-    director: 'Ron Howard',
+    nombre:
+      'A GPU-Accelerated LPR Algorithm on Broad Vision Survillance Cameras',
+    director: 'Dominguez, Leonardo Daniel',
     fechaInicio: '24-05-2018',
     porcentaje: 100,
   },
@@ -132,133 +145,133 @@ export const proyectosEnHistoria = [
 // tabla total de presupuesto actualizada
 export const presupuestoPrueba = {
   tipo: 'Total Presupuesto',
-  fechaInicio: '18/09/2021',
-  fechaFin: '18/09/2022',
+  fechaInicio: '18-09-2020',
+  fechaFin: '18-09-2022',
 
-  insumos: 500,
+  insumos: 100000,
   bibliografia: 0,
-  gastosDePublicacion: 40,
-  viajesYViaticos: 220,
-  equipamiento: 200,
-  serviciosTecnicos: 100,
-  gastosDeAdministracion: 40,
-  totalPresupuesto: 1200,
+  gastosDePublicacion: 9000,
+  viajesYViaticos: 30000,
+  equipamiento: 220000,
+  serviciosTecnicos: 100000,
+  gastosDeAdministracion: 6000,
+  totalPresupuesto: 465000,
 };
 
 // modifica presupuesto la reformulacion puede ser ir o id
 export const reformulacion = {
   tipo: 'Reformulacion IR',
-  fechaInicio: '18/09/2022',
+  fechaInicio: '18-10-2021',
 
-  insumos: 1,
+  insumos: 0,
   bibliografia: 0,
-  gastosDePublicacion: 1,
-  viajesYViaticos: 1,
+  gastosDePublicacion: 0,
+  viajesYViaticos: 20000,
   equipamiento: 0,
-  serviciosTecnicos: 1,
-  gastosDeAdministracion: 1,
+  serviciosTecnicos: -20000,
+  gastosDeAdministracion: 0,
   total: 0,
 };
 
 // tabla total de gastos
 export const gastosPrueba = {
   tipo: 'Gastos totales',
-  fechaInicio: '18/09/2022',
+  fechaInicio: '18-09-2021',
 
-  insumos: 400,
+  insumos: 500,
   bibliografia: 0,
   gastosDePublicacion: 0,
-  viajesYViaticos: 180,
-  equipamiento: 200,
-  serviciosTecnicos: 0,
+  viajesYViaticos: 32000,
+  equipamiento: 180000,
+  serviciosTecnicos: 20000,
   gastosDeAdministracion: 0,
-  totalGastos: 780,
+  totalGastos: 232500,
 };
 
 // viene del back, es la resta entre presupuesto y gastos de cada rubro
 export const totalesPorRubro = {
   tipo: 'Totales por rubro (P-G)',
-  fechaInicio: '18/09/2022',
+  fechaInicio: '18-09-2021',
 
-  insumos: 100,
+  insumos: 99500,
   bibliografia: 0,
-  gastosDePublicacion: 40,
-  viajesYViaticos: 40,
-  equipamiento: 0,
-  serviciosTecnicos: 100,
-  gastosDeAdministracion: 40,
-  totalPresupuestoActual: 420,
+  gastosDePublicacion: 9000,
+  viajesYViaticos: 18000,
+  equipamiento: 40000,
+  serviciosTecnicos: 60000,
+  gastosDeAdministracion: 6000,
+  totalPresupuestoActual: 232500,
 };
 
 export const pagoAProv = {
   tipo: 'Pago a proveedores',
-  fechaInicio: '18/09/2022',
+  fechaInicio: '18-09-2021',
 
-  insumos: 2,
+  insumos: 500,
   bibliografia: 0,
-  gastosDePublicacion: 2,
-  viajesYViaticos: 2,
-  equipamiento: 0,
-  serviciosTecnicos: 2,
-  gastosDeAdministracion: 2,
-  total: 2,
+  gastosDePublicacion: 0,
+  viajesYViaticos: 0,
+  equipamiento: 180000,
+  serviciosTecnicos: 0,
+  gastosDeAdministracion: 0,
+  total: 180500,
 };
 
 export const rendEsp = {
   tipo: 'Rendiciones Especificas',
-  fechaInicio: '18/09/2022',
+  fechaInicio: '18-09-2021',
 
-  insumos: 3,
+  insumos: 0,
   bibliografia: 0,
-  gastosDePublicacion: 3,
-  viajesYViaticos: 3,
+  gastosDePublicacion: 0,
+  viajesYViaticos: 32000,
   equipamiento: 0,
-  serviciosTecnicos: 3,
-  gastosDeAdministracion: 3,
-  total: 3,
+  serviciosTecnicos: 0,
+  gastosDeAdministracion: 0,
+  total: 32000,
 };
 
 export const contratos = {
   tipo: 'Contratos',
-  fechaInicio: '18/09/2022',
+  fechaInicio: '18-09-2021',
 
-  insumos: 4,
+  insumos: 0,
   bibliografia: 0,
-  gastosDePublicacion: 4,
-  viajesYViaticos: 4,
+  gastosDePublicacion: 0,
+  viajesYViaticos: 0,
   equipamiento: 0,
-  serviciosTecnicos: 4,
-  gastosDeAdministracion: 4,
-  total: 4,
+  serviciosTecnicos: 20000,
+  gastosDeAdministracion: 0,
+  total: 20000,
 };
 
 export const proveedoresRegistrados = [
   {
-    nombre: 'Logística Santos',
+    nombre: 'Libreria Mayorista S.A.',
     rubro: 'Insumos',
-    telefono: '67384433',
-    mail: 'dasjkd@gmail.com',
-    cuit: '23-31289332-9',
+    telefono: '4308-6106',
+    mail: 'casapaso3@gmail.com',
+    cuit: '30-71489822-8',
   },
   {
-    nombre: 'Messi Rve',
-    rubro: 'Viáticos',
-    telefono: '86954345',
-    mail: 'jkhgjfhe@gmail.com',
-    cuit: '20-34728353-4',
+    nombre: 'Despegar',
+    rubro: 'Viajes Y Viaticos',
+    telefono: '0810-810-9994',
+    mail: 'subscription@alertas.despegar.com',
+    cuit: '30-70130711-5',
   },
   {
-    nombre: 'Ya no se me ocurre',
-    rubro: 'Bibliografía',
-    telefono: '52897353',
-    mail: 'fkdasjdkf@gmail.com',
-    cuit: '27-23786542-9',
+    nombre: 'Garbarino',
+    rubro: 'Equipamiento',
+    telefono: '0810-888-7110',
+    mail: 'atencion@garbarino.com',
+    cuit: '30-54008821-3',
   },
   {
-    nombre: 'Posta que no se que poner',
-    rubro: 'Relleno',
-    telefono: '31267323',
-    mail: 'dakhf-dasji@gmail.com',
-    cuit: '22-52452412-5',
+    nombre: 'Lenovo Argentina',
+    rubro: 'Equipamiento',
+    telefono: '(+5411) 4006-9149',
+    mail: 'lenovo@ecomms.lenovo.com',
+    cuit: '30-71473138-2',
   },
 ];
