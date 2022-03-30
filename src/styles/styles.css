@@ -1,0 +1,42 @@
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+.wallpaper {
+  height: 100vh;
+  width: 55vw;
+}
+.formContainer {
+  width: 100%;
+}
+.login {
+  max-height: 100vh;
+  margin-left: 5rem;
+}
+.header {
+  min-height: '30vh';
+}
+/* Responsive layout - makes a one column layout instead of a two-column layout */
+@media (min-width: 1500px) {
+  .flex-container {
+    height: 50vh;
+  }
+  .wallpaper {
+    width: 70vw;
+  }
+}
+@media (max-width: 850px) {
+  .flex-container {
+    flex-direction: column;
+  }
+  .wallpaperAux {
+    width: 100%;
+    height: 30vh;
+  }
+  .header {
+    text-align: center;
+  }
+  .login {
+    align-items: center;
+  }
+}

@@ -68,13 +68,12 @@ export const Compras = (props) => {
       }
     }
     fetchCompra();
-  }, []);
+  }, [compras]);
 
   const loadingRendering = () => {
     return <Alert severity="info">Cargando...</Alert>;
   };
   const rendering = () => {
-    console.log("Compras a renderizar: " + JSON.stringify(compras));
     return (
       <>
         <TableContainer className={$.container}>

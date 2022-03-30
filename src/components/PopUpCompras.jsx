@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   TextField,
   Button,
   Divider,
-  Grid,
   Typography,
 } from '@material-ui/core';
 import { postCompra } from '../services/compras.js';
@@ -60,13 +59,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '0.5rem',
   },
   uploadIcon: {
-    marginBlock : 'auto',
+    marginBlock: 'auto',
     margin: '1rem',
     marginTop: '1rem',
     '&:hover': {
       color: '#62B5F6',
     },
-  }
+  },
 }));
 
 export default function PopUpCompras(props) {
@@ -75,14 +74,12 @@ export default function PopUpCompras(props) {
   const [rubro, setRubro] = useState('');
   const [subrubro, setSubrubro] = useState('');
   const [fecha, setFecha] = useState('02/01/2021');
- 
-  const [proveedor,setProveedor] = useState('');
-  const [monto,setMonto] = useState(0);
+  const [proveedor, setProveedor] = useState('');
+  const [monto, setMonto] = useState(0);
+  const [nombre, setNombre] = useState('');
   
- 
-  const [nombre,setNombre] = useState('');
   //REVISAR ACA CONSUMO DE API REST - POST.
-  const submitForm = async() => {
+  const submitForm = async () => {
     props.state(false);
     let data = {
       fecha: fecha,
@@ -91,16 +88,14 @@ export default function PopUpCompras(props) {
       numeroCompra: 80,
       proveedor: proveedor,
       monto: monto,
-      estado: "Comprado",
-      factura: "factura-054",
+      estado: 'Comprado',
+      factura: 'factura-054',
       nombre: nombre,
     };
-    console.log("LA DATA  " + JSON.stringify(data) );
-    console.log("LA DATA TYPE  " + typeof data);
     const res = await postCompra(data);
-    console.log("response post " + JSON.stringify(res))
+    console.log('[PopUpCompras] submitForm response: ', res);
   };
-  const submitHandle = (handle,value) => {
+  const submitHandle = (handle, value) => {
     handle(value);
     console.log(value);
   };
@@ -109,7 +104,6 @@ export default function PopUpCompras(props) {
   };
 
   const handleClick = (e) => {
-    console.log("Click" + e);
     return;
   };
   return (
@@ -120,29 +114,34 @@ export default function PopUpCompras(props) {
         <div className={$.inputs}>
           <TextField
             label="Rubro"
-            onChange={(e) => submitHandle(setRubro,e.target.value)}
+            onChange={(e) => submitHandle(setRubro, e.target.value)}
           />
-          <TextField 
-            label="Subrubro"  
-            onChange={(e) => submitHandle(setSubrubro,e.target.value)}/>
+          <TextField
+            label="Subrubro"
+            onChange={(e) => submitHandle(setSubrubro, e.target.value)}
+          />
         </div>
         <Typography>Cuentas con $60.000 para este rubro </Typography>
         <br />
         <Divider />
         <div className={$.secondRow}>
-          <TextField 
+          <TextField
             label="Fecha"
-            onChange={(e) => submitHandle(setFecha,e.target.value)}
-          /> 
+            onChange={(e) => submitHandle(setFecha, e.target.value)}
+            type="date"
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
           <div className={$.cargarFactura}>
-            <TextField 
+            <TextField
               label="Monto"
-              onChange={(e) => submitHandle(setMonto,e.target.value)}
+              onChange={(e) => submitHandle(setMonto, e.target.value)}
             />
-            <CloudUploadIcon 
+            <CloudUploadIcon
               className={$.uploadIcon}
               onClick={(e) => handleClick(e)}
-            /> 
+            />
           </div>
         </div>
         <div className={$.descripcion}>
@@ -153,16 +152,16 @@ export default function PopUpCompras(props) {
             multiline
             rows={6}
             className={$.multiLineInput}
-            onChange={(e) => submitHandle(setNombre,e.target.value)}
+            onChange={(e) => submitHandle(setNombre, e.target.value)}
           />
         </div>
         <div className={$.cargarFactura}>
-          <TextField 
-            label="Proveedor" 
+          <TextField
+            label="Proveedor"
             className={$.proveedor}
-            onChange={(e) => submitHandle(setProveedor,e.target.value)}
+            onChange={(e) => submitHandle(setProveedor, e.target.value)}
           />
-          <CloudUploadIcon className={$.uploadIcon}/> 
+          <CloudUploadIcon className={$.uploadIcon} />
         </div>
 
         <div className={$.button}>

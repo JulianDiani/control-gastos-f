@@ -15,11 +15,13 @@ import {
 } from '@material-ui/icons';
 import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
-import { Proveedores } from './components/Proveedores'
+import { Proveedores } from './components/Proveedores';
+import Login from './components/Login';
+import { useState } from 'react';
 
 export default function App() {
   const $ = useStyles();
-
+  const [loggedIn, setLoggedIn] = useState();
   const sideBarOptions = [
     { text: 'Proyectos', icon: <Home />, path: '/datos' },
     { text: 'Presupuesto', icon: <AttachMoney />, path: '/presupuesto' },
@@ -29,25 +31,44 @@ export default function App() {
   ];
 
   return (
-    <Container maxWidth="xl" className={$.root}>
-      <Router>
-        <NavBar sideBarOptions={sideBarOptions} />
-        <div className={$.container}>
-          <Header />
-          <div className={$.content}>
-            <Switch>
-              <Route path="/" exact component={MisProyectos} />
-              <Route path="/proyectos" exact component={DatosGenerales} />
-              <Route path="/proyectos/presupuestos" exact component={Presupuestos} />
-              <Route path="/proyectos/compras" exact component={Compras} />
-              <Route path="/proyectos/proveedores" exact component={Proveedores} />
-              <Route path="/normativas" exact component={Normativas} />
-              <Route path="/proyectos/normativas" exact component={Normativas} />
-            </Switch>
-          </div>
-        </div>
-      </Router>
-    </Container>
+    //ToDo: Como quitar espacio sobrante en el borde derecho.
+    <>
+      {!loggedIn ? (
+        <Login setLoggedIn={setLoggedIn} />
+      ) : (
+        <Container maxWidth="xl" className={$.root}>
+          <Router>
+            <NavBar sideBarOptions={sideBarOptions} />
+            <div className={$.container}>
+              <Header />
+              <div className={$.content}>
+                <Switch>
+                  <Route path="/" exact component={MisProyectos} />
+                  <Route path="/proyectos" exact component={DatosGenerales} />
+                  <Route
+                    path="/proyectos/presupuestos"
+                    exact
+                    component={Presupuestos}
+                  />
+                  <Route path="/proyectos/compras" exact component={Compras} />
+                  <Route
+                    path="/proyectos/proveedores"
+                    exact
+                    component={Proveedores}
+                  />
+                  <Route path="/normativas" exact component={Normativas} />
+                  <Route
+                    path="/proyectos/normativas"
+                    exact
+                    component={Normativas}
+                  />
+                </Switch>
+              </div>
+            </div>
+          </Router>
+        </Container>
+      )}
+    </>
   );
 }
 
@@ -56,7 +77,6 @@ const useStyles = makeStyles(() => ({
     marginTop: '1vh',
     display: 'flex',
     flexDirection: 'row',
-    width: '100%',
   },
   container: {
     display: 'flex',
