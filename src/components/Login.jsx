@@ -10,7 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import PasswordField from 'material-ui-password-field';
-import { users } from '../constants/users';
+import { getUser } from '../services/usuarios';
 import { Messages } from '../constants/messages';
 import Alert from '@material-ui/lab/Alert';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
@@ -27,19 +27,21 @@ const Login = (props) => {
 
   //form handling
   const submitHandle = (handleFunction, value) => {
-    console.log(value.type);
     handleFunction(value);
   };
 
-  //checking username and password - @TODO Connect to backend.
-  const checkedLogin = () => {
-    const user = users.find((user) => user.userName === userName);
-    return user?.password === password && password !== undefined; //user? es para hacerlo safeNull y que no rompa.
+  //checking username and password - @DONE Connect to backend.
+  const checkedLogin = async () => {
+    const user = await getUser(userName);
+    console.log("UserInfo: ",user);
+    return user?.data?.contraseña === password && password !== undefined; //user? es para hacerlo safeNull y que no rompa.
   };
 
   //set logedin true or false - @TODO use recoil.
-  const sendLoginData = () => {
-    checkedLogin() ? props.setLoggedIn(true) : setError(true); //true = login ok | false = login fail
+  const sendLoginData = async () => {
+    const checked = await checkedLogin()
+    setError(!checked); //if checked is false error is true.
+    props.setLoggedIn(checked)  //true = login ok | false = login fail
   };
 
   //it triggers by pressing the enter key

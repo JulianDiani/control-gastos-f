@@ -43,6 +43,7 @@ export default function App() {
               <Header />
               <div className={$.content}>
                 <Switch>
+                  <Route path="/login" component={Login}/>
                   <Route path="/" exact component={MisProyectos} />
                   <Route path="/proyectos" exact component={DatosGenerales} />
                   <Route
