@@ -68,12 +68,8 @@ const Login = (props) => {
   //left wallpallper rendering
   const Wallpallper = () => {
     return (
-      <div>
-        <img
-          className="wallpaper"
-          src="https://unahur.edu.ar/wp-content/uploads/2019/05/articles_InauguracionMalvinas-8.jpg" //@TODO conseguir imagen original con prensa
-          alt=""
-        />
+      <div className="wallpaper">
+      
       </div>
     );
   };
@@ -182,6 +178,7 @@ const useStyles = makeStyles({
   },
   alert: {
     marginBottom: '1rem',
+    width: '20rem'
   },
 });
 
