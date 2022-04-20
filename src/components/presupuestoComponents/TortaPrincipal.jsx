@@ -2,7 +2,7 @@ import { Doughnut } from 'react-chartjs-2';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-export default function TortaPrincipal({ gastos, presupuesto }) {
+export default function TortaPrincipal({ gastos, presupuesto, disponible }) {
   const classes = useStyles();
   {
     gastos ? gastos : null;
@@ -10,6 +10,7 @@ export default function TortaPrincipal({ gastos, presupuesto }) {
   {
     presupuesto ? presupuesto : null;
   }
+
   const graficoTorta = (
     <Doughnut
       className={classes.root}
@@ -33,16 +34,16 @@ export default function TortaPrincipal({ gastos, presupuesto }) {
               '#e2cf56',
               '#e25668',
               '#8a56e2',
-              '#e28956'
+              '#e28956',
             ],
             data: [
-              presupuesto.insumos,
-              presupuesto.gastosDePublicacion,
-              presupuesto.bibliografia,
-              presupuesto.viajesYViaticos,
-              presupuesto.equipamiento,
-              presupuesto.serviciosTecnicos,
-              presupuesto.gastosDeAdministracion,
+              disponible.insumos,
+              disponible.gastosDePublicacion,
+              disponible.bibliografia,
+              disponible.viajesYViaticos,
+              disponible.equipamiento,
+              disponible.serviciosTecnicos,
+              disponible.gastosDeAdministracion,
             ],
           },
         ],
@@ -58,5 +59,5 @@ export default function TortaPrincipal({ gastos, presupuesto }) {
 }
 
 const useStyles = makeStyles({
-  root: {}
+  root: {},
 });
