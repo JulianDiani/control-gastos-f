@@ -9,47 +9,57 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 const columns = [
-  { id: 'tipo', label: 'Tipo', minWidth: 100 },
-  { id: 'insumos', label: 'Insumos', minWidth: 100 },
-  { id: 'bibliografia', label: 'Bibliografia', minWidth: 100 },
+  { id: 'tipo', label: 'Tipo' },
+  { id: 'insumos', label: 'Insumos' },
+  { id: 'bibliografia', label: 'Bibliografia' },
   {
     id: 'gastosDePublicacion',
     label: 'Gastos De Publicacion',
-    minWidth: 100,
   },
-  { id: 'viajesYViaticos', label: 'Viajes Y Viaticos', minWidth: 100 },
-  { id: 'equipamiento', label: 'Equipamiento', minWidth: 100 },
-  { id: 'serviciosTecnicos', label: 'Servicios Tecnicos', minWidth: 100 },
+  { id: 'viajesYViaticos', label: 'Viajes Y Viaticos' },
+  { id: 'equipamiento', label: 'Equipamiento' },
+  { id: 'serviciosTecnicos', label: 'Servicios Tecnicos' },
   {
     id: 'gastosDeAdministracion',
     label: 'Gastos De Administración',
-    minWidth: 100,
   },
-  { id: 'total', label: 'Total', minWidth: 100 },
+  { id: 'total', label: 'Total' },
 ];
 
-function createData(
-  tipo,
-  insumos,
-  bibliografia,
-  gastosDePublicacion,
-  viajesYViaticos,
-  equipamiento,
-  serviciosTecnicos,
-  gastosDeAdministracion,
-  total
-) {
-  return {
-    tipo,
-    insumos,
-    bibliografia,
-    gastosDePublicacion,
-    viajesYViaticos,
-    equipamiento,
-    serviciosTecnicos,
-    gastosDeAdministracion,
-    total,
+function totalCalculo(gastos, presupuesto) {
+  var prueba = {
+    tipo: 'Total disponible',
+    insumos: 0,
+    bibliografia: 0,
+    gastosDePublicacion: 0,
+    viajesYViaticos: 0,
+    equipamiento: 0,
+    serviciosTecnicos: 0,
+    gastosDeAdministracion: 0,
+    total: 0,
   };
+
+  presupuesto.map((pre) => {
+    prueba.insumos += pre.insumos;
+    prueba.bibliografia += pre.bibliografia;
+    prueba.gastosDePublicacion += pre.gastosDePublicacion;
+    prueba.viajesYViaticos += pre.viajesYViaticos;
+    prueba.equipamiento += pre.equipamiento;
+    prueba.serviciosTecnicos += pre.serviciosTecnicos;
+    prueba.gastosDeAdministracion += pre.gastosDeAdministracion;
+    prueba.total += pre.total;
+  });
+  gastos.map((pre) => {
+    prueba.insumos -= pre.insumos;
+    prueba.bibliografia -= pre.bibliografia;
+    prueba.gastosDePublicacion -= pre.gastosDePublicacion;
+    prueba.viajesYViaticos -= pre.viajesYViaticos;
+    prueba.equipamiento -= pre.equipamiento;
+    prueba.serviciosTecnicos -= pre.serviciosTecnicos;
+    prueba.gastosDeAdministracion -= pre.gastosDeAdministracion;
+    prueba.total -= pre.total;
+  });
+  return prueba;
 }
 
 const useStyles = makeStyles({
@@ -61,122 +71,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Tabla({
-  presupuesto,
-  reformulacion,
-  gastos,
-  totales,
-  contratos,
-  rendicionesEspecificas,
-  pagoAProveedores,
-}) {
+export default function Tabla({ presupuesto, gastos, totalDisponible }) {
   const classes = useStyles();
   {
     presupuesto ? presupuesto : null;
   }
   {
-    reformulacion ? reformulacion : null;
-  }
-  {
-    contratos ? contratos : null;
-  }
-  {
-    rendicionesEspecificas ? rendicionesEspecificas : null;
-  }
-  {
-    pagoAProveedores ? pagoAProveedores : null;
-  }
-  {
     gastos ? gastos : null;
   }
-  {
-    totales ? totales : null;
-  }
 
-  const rows = [
-    createData(
-      presupuesto.tipo,
-      presupuesto.insumos,
-      presupuesto.bibliografia,
-      presupuesto.gastosDePublicacion,
-      presupuesto.viajesYViaticos,
-      presupuesto.equipamiento,
-      presupuesto.serviciosTecnicos,
-      presupuesto.gastosDeAdministracion,
-      presupuesto.totalPresupuesto
-    ),
-
-    createData(
-      reformulacion.tipo,
-      reformulacion.insumos,
-      reformulacion.bibliografia,
-      reformulacion.gastosDePublicacion,
-      reformulacion.viajesYViaticos,
-      reformulacion.equipamiento,
-      reformulacion.serviciosTecnicos,
-      reformulacion.gastosDeAdministracion,
-      reformulacion.total
-    ),
-
-    createData(
-      pagoAProveedores.tipo,
-      pagoAProveedores.insumos,
-      pagoAProveedores.bibliografia,
-      pagoAProveedores.gastosDePublicacion,
-      pagoAProveedores.viajesYViaticos,
-      pagoAProveedores.equipamiento,
-      pagoAProveedores.serviciosTecnicos,
-      pagoAProveedores.gastosDeAdministracion,
-      pagoAProveedores.total
-    ),
-
-    createData(
-      rendicionesEspecificas.tipo,
-      rendicionesEspecificas.insumos,
-      rendicionesEspecificas.bibliografia,
-      rendicionesEspecificas.gastosDePublicacion,
-      rendicionesEspecificas.viajesYViaticos,
-      rendicionesEspecificas.equipamiento,
-      rendicionesEspecificas.serviciosTecnicos,
-      rendicionesEspecificas.gastosDeAdministracion,
-      rendicionesEspecificas.total
-    ),
-
-    createData(
-      contratos.tipo,
-      contratos.insumos,
-      contratos.bibliografia,
-      contratos.gastosDePublicacion,
-      contratos.viajesYViaticos,
-      contratos.equipamiento,
-      contratos.serviciosTecnicos,
-      contratos.gastosDeAdministracion,
-      contratos.total
-    ),
-
-    createData(
-      gastos.tipo,
-      gastos.insumos,
-      gastos.bibliografia,
-      gastos.gastosDePublicacion,
-      gastos.viajesYViaticos,
-      gastos.equipamiento,
-      gastos.serviciosTecnicos,
-      gastos.gastosDeAdministracion,
-      gastos.totalGastos
-    ),
-    createData(
-      totales.tipo,
-      totales.insumos,
-      totales.bibliografia,
-      totales.gastosDePublicacion,
-      totales.viajesYViaticos,
-      totales.equipamiento,
-      totales.serviciosTecnicos,
-      totales.gastosDeAdministracion,
-      totales.totalPresupuestoActual
-    ),
-  ];
+  const rows = totalCalculo(gastos, presupuesto);
 
   return (
     <Paper className={classes.root}>
@@ -188,7 +92,7 @@ export default function Tabla({
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{ minWidth: 100 }}
                 >
                   {column.label}
                 </TableCell>
@@ -196,7 +100,7 @@ export default function Tabla({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => {
+            {presupuesto.map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
@@ -212,6 +116,36 @@ export default function Tabla({
                 </TableRow>
               );
             })}
+            {gastos.map((row) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  {columns.map((column) => {
+                    const value = row[column.id];
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === 'number'
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+            <TableRow
+              hover
+              role="checkbox"
+              tabIndex={-1}
+              key={totalDisponible.code}
+            >
+              {Object.values(totalDisponible).map((column) => {
+                return (
+                  <TableCell key={column.id} align={column.align}>
+                    {column}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

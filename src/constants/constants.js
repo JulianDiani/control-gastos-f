@@ -105,7 +105,7 @@ export const proyectosEnCurso = [
   {
     nombre:
       'Plataforma de software de código abierto para aplicaciones de segmentación de imágenes médicas',
-    director: 'D\'amato, Juan Pablo',
+    director: "D'amato, Juan Pablo",
     fechaInicio: '15-12-2017',
     porcentaje: 47,
   },
@@ -122,7 +122,7 @@ export const proyectosEnHistoria = [
   {
     nombre:
       'Gestión y optimización de escenas tridimensionales para simuladores de realidad virtual',
-    director: 'D\'amato, Juan Pablo',
+    director: "D'amato, Juan Pablo",
     fechaInicio: '25-12-2016',
     porcentaje: 100,
   },
@@ -143,50 +143,52 @@ export const proyectosEnHistoria = [
 ];
 
 // tabla total de presupuesto actualizada
-export const presupuestoPrueba = {
-  tipo: 'Total Presupuesto',
-  fechaInicio: '18-09-2020',
-  fechaFin: '18-09-2022',
+export const presupuestoPrueba = [
+  {
+    tipo: 'Total Presupuesto',
+    fechaInicio: '18-09-2020',
+    fechaFin: '18-09-2022',
 
-  insumos: 100000,
-  bibliografia: 0,
-  gastosDePublicacion: 9000,
-  viajesYViaticos: 30000,
-  equipamiento: 220000,
-  serviciosTecnicos: 100000,
-  gastosDeAdministracion: 6000,
-  totalPresupuesto: 465000,
-};
+    insumos: 100000,
+    bibliografia: 0,
+    gastosDePublicacion: 9000,
+    viajesYViaticos: 30000,
+    equipamiento: 220000,
+    serviciosTecnicos: 100000,
+    gastosDeAdministracion: 6000,
+    total: 465000,
+  },
+  {
+    tipo: 'Reformulacion IR',
+    fechaInicio: '18-10-2021',
 
-// modifica presupuesto la reformulacion puede ser ir o id
-export const reformulacion = {
-  tipo: 'Reformulacion IR',
-  fechaInicio: '18-10-2021',
-
-  insumos: 0,
-  bibliografia: 0,
-  gastosDePublicacion: 0,
-  viajesYViaticos: 20000,
-  equipamiento: 0,
-  serviciosTecnicos: -20000,
-  gastosDeAdministracion: 0,
-  total: 0,
-};
+    insumos: 0,
+    bibliografia: 0,
+    gastosDePublicacion: 0,
+    viajesYViaticos: 20000,
+    equipamiento: 0,
+    serviciosTecnicos: -20000,
+    gastosDeAdministracion: 0,
+    total: 0,
+  },
+];
 
 // tabla total de gastos
-export const gastosPrueba = {
-  tipo: 'Gastos totales',
-  fechaInicio: '18-09-2021',
+export const gastosPrueba = [
+  {
+    tipo: 'Gastos totales',
+    fechaInicio: '18-09-2021',
 
-  insumos: 500,
-  bibliografia: 0,
-  gastosDePublicacion: 0,
-  viajesYViaticos: 32000,
-  equipamiento: 180000,
-  serviciosTecnicos: 20000,
-  gastosDeAdministracion: 0,
-  totalGastos: 232500,
-};
+    insumos: 500,
+    bibliografia: 0,
+    gastosDePublicacion: 0,
+    viajesYViaticos: 32000,
+    equipamiento: 180000,
+    serviciosTecnicos: 20000,
+    gastosDeAdministracion: 0,
+    total: 232500,
+  },
+];
 
 // viene del back, es la resta entre presupuesto y gastos de cada rubro
 export const totalesPorRubro = {

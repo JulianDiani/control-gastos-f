@@ -4,15 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import {
-  getPresupuesto,
-  getReformulacion,
-  getGastos,
-  getTotales,
-  getPagoAProv,
-  getRendEsp,
-  getContratos,
-} from '../services/presupuestos.js';
+import { getPresupuesto, getGastos } from '../services/presupuestos.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './presupuestoComponents/TortaPrincipal';
@@ -20,52 +12,60 @@ import CardMontos from './presupuestoComponents/CardMontos';
 import Tabla from './presupuestoComponents/Tabla';
 import Grid from '@material-ui/core/Grid';
 
+function totalCalculo(gastos, presupuesto) {
+  var prueba = {
+    tipo: 'Total disponible',
+    insumos: 0,
+    bibliografia: 0,
+    gastosDePublicacion: 0,
+    viajesYViaticos: 0,
+    equipamiento: 0,
+    serviciosTecnicos: 0,
+    gastosDeAdministracion: 0,
+    total: 0,
+  };
+
+  presupuesto.map((pre) => {
+    prueba.insumos += pre.insumos;
+    prueba.bibliografia += pre.bibliografia;
+    prueba.gastosDePublicacion += pre.gastosDePublicacion;
+    prueba.viajesYViaticos += pre.viajesYViaticos;
+    prueba.equipamiento += pre.equipamiento;
+    prueba.serviciosTecnicos += pre.serviciosTecnicos;
+    prueba.gastosDeAdministracion += pre.gastosDeAdministracion;
+    prueba.total += pre.total;
+  });
+  gastos.map((pre) => {
+    prueba.insumos -= pre.insumos;
+    prueba.bibliografia -= pre.bibliografia;
+    prueba.gastosDePublicacion -= pre.gastosDePublicacion;
+    prueba.viajesYViaticos -= pre.viajesYViaticos;
+    prueba.equipamiento -= pre.equipamiento;
+    prueba.serviciosTecnicos -= pre.serviciosTecnicos;
+    prueba.gastosDeAdministracion -= pre.gastosDeAdministracion;
+    prueba.total -= pre.total;
+  });
+  return prueba;
+}
+
 export const Presupuestos = () => {
   const $ = useStyles();
   const [hasError, setHasError] = useState(false);
 
   const [presupuesto, setPresupuesto] = useState(null);
-  const [reformulacion, setReformulacion] = useState(null);
-
-  const [pagoAProveedores, setPagoAProv] = useState(null);
-  const [rendicionesEspecificas, setRendEsp] = useState(null);
-  const [contratos, setContratos] = useState(null);
   const [gastos, setGastos] = useState(null);
-
-  const [totales, setTotales] = useState(null);
 
   useEffect(() => {
     async function fetchPrespuesto() {
       const getFunctionPresupuesto = getPresupuesto;
-      const getFunctionReformulacion = getReformulacion;
-
-      const getFunctionPagoAProv = getPagoAProv;
-      const getFunctionRendEsp = getRendEsp;
-      const getFunctionContratos = getContratos;
       const getFunctionGastos = getGastos;
-
-      const getFunctionTotales = getTotales;
 
       try {
         const presupuesto = await getFunctionPresupuesto();
-        const reformulacion = await getFunctionReformulacion();
-
-        const pagoAProveedores = await getFunctionPagoAProv();
-        const rendicionesEspecificas = await getFunctionRendEsp();
-        const contratos = await getFunctionContratos();
         const gastos = await getFunctionGastos();
 
-        const totales = await getFunctionTotales();
-
         setPresupuesto(presupuesto);
-        setReformulacion(reformulacion);
-
-        setPagoAProv(pagoAProveedores);
-        setRendEsp(rendicionesEspecificas);
-        setContratos(contratos);
         setGastos(gastos);
-
-        setTotales(totales);
       } catch (err) {
         setHasError(true);
         console.log('ERROR USE EFFECT : ' + err);
@@ -77,12 +77,16 @@ export const Presupuestos = () => {
   const loadingRendering = () => {
     return <Alert severity="info">Cargando...</Alert>;
   };
-
   const rendering = () => {
     return (
       <>
         <div className={$.root}>
-          <Grid container direction="column" justifyContent="center" alignItems="center">
+          <Grid
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+          >
             <Grid
               container
               direction="row"
@@ -93,14 +97,15 @@ export const Presupuestos = () => {
               <CardMontos
                 item
                 xl={6}
-                totalPresupuesto={presupuesto.totalPresupuesto}
-                totalGastos={gastos.totalGastos}
+                totalPresupuesto={presupuesto[0].total}
+                totalGastos={gastos[0].total}
               />
               <Card className={$.card}>
-                <CardContent >
+                <CardContent>
                   <TortaPrincipal
                     presupuesto={presupuesto}
                     gastos={gastos}
+                    disponible={totalCalculo(gastos, presupuesto)}
                     className={$.torta}
                   />
                 </CardContent>
@@ -109,12 +114,8 @@ export const Presupuestos = () => {
 
             <Tabla
               presupuesto={presupuesto}
-              reformulacion={reformulacion}
-              rendicionesEspecificas={rendicionesEspecificas}
-              pagoAProveedores={pagoAProveedores}
-              contratos={contratos}
               gastos={gastos}
-              totales={totales}
+              totalDisponible={totalCalculo(gastos, presupuesto)}
             />
           </Grid>
         </div>
@@ -127,15 +128,7 @@ export const Presupuestos = () => {
       <h1>Presupuesto</h1>
       <div className={$.root}>
         <Divider className={$.divider} />
-        {presupuesto &&
-          gastos &&
-          reformulacion &&
-          totales &&
-          rendicionesEspecificas &&
-          pagoAProveedores &&
-          contratos
-          ? rendering()
-          : loadingRendering()}
+        {presupuesto && gastos ? rendering() : loadingRendering()}
       </div>
       <Footer />
     </>
@@ -150,7 +143,7 @@ const useStyles = makeStyles({
   root: {
     height: '100%',
     display: 'flex',
-    marginLeft: '1vw'
+    marginLeft: '1vw',
   },
   card: {
     width: '25vw',
