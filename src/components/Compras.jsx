@@ -33,7 +33,8 @@ const StyledTableRow = withStyles((theme) => ({
 const StyledTableHead = withStyles((theme) => ({
   root: {
     '&:nth-of-type(odd)': {
-      backgroundColor: '#5AA123',
+      background: 'linear-gradient(to left , #91ED34, #80B05C ,#5AA123)'
+      //backgroundColor: '#5AA123',
     },
   },
 }))(TableRow);

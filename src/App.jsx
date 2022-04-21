@@ -40,7 +40,7 @@ export default function App() {
           <Router>
             <NavBar sideBarOptions={sideBarOptions} />
             <div className={$.container}>
-              <Header />
+              <Header setLoggedIn={setLoggedIn}/>
               <div className={$.content}>
                 <Switch>
                   <Route path="/login" component={Login}/>
