@@ -47,6 +47,7 @@ export const Compras = (props) => {
   const [compras, setCompras] = useState(null);
   const [hasError, setHasError] = useState(null);
   const [open, setOpen] = useState(false);
+  const [newCompra, setNewCompra] = useState(true);
 
   const handleOpen = () => {
     setOpen(true);
@@ -68,8 +69,11 @@ export const Compras = (props) => {
         console.log('ERROR FETCH API [compras]: ' + err);
       }
     }
-    fetchCompra();
-  }, [compras]);
+    if(newCompra)
+      fetchCompra();
+      setNewCompra(false)
+    
+  }, [newCompra]);
 
   const loadingRendering = () => {
     return <Alert severity="info">Cargando...</Alert>;
@@ -140,7 +144,7 @@ export const Compras = (props) => {
           Nueva Compra
         </Button>
         <Modal open={open} onClose={handleClose}>
-          <PopUpCompras state={setOpen} />
+          <PopUpCompras state={setOpen} stateNewCompra={setNewCompra} />
         </Modal>
       </Grid>
       <Divider />

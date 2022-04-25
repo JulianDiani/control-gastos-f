@@ -93,6 +93,7 @@ export default function PopUpCompras(props) {
       nombre: nombre,
     };
     const res = await postCompra(data);
+    props.setNewCompra(true);
     console.log('[PopUpCompras] submitForm response: ', res);
   };
   const submitHandle = (handle, value) => {
