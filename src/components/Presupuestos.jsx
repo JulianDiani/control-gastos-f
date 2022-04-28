@@ -8,9 +8,9 @@ import { getPresupuesto } from '../services/presupuestos.js';
 import { getAllCompras } from '../services/compras.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import TortaPrincipal from './presupuestoComponents/TortaPrincipal';
-import CardMontos from './presupuestoComponents/CardMontos';
-import Tabla from './presupuestoComponents/Tabla';
+import TortaPrincipal from './dashboards/TortaPrincipal';
+import CardMontos from './dashboards/CardMontos';
+import Tabla from './dashboards/Tabla';
 import Grid from '@material-ui/core/Grid';
 import { calculateTotalExpenses } from '../utils/presupuestos'
 
@@ -98,7 +98,7 @@ export const Presupuestos = () => {
 
 const useStyles = makeStyles({
   root: {
-    height: '100%',
+    height: '100vw',
     display: 'flex',
     marginLeft: '1vw',
   },

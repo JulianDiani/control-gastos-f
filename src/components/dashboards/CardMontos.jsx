@@ -62,7 +62,7 @@ const useStyles = makeStyles({
   root: {
     width: '25rem',
     height: '100%',
-    background: '#DEFAAE',
+    background: '#9BC76D',
     border: '4px solid rgba(96, 150, 0, 0.94)',
     boxSizing: 'border-box',
     borderRadius: '19px',
