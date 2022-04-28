@@ -3,10 +3,9 @@ import {
   Button,
   makeStyles,
   MenuItem,
-  Menu,
-  Divider,
+  Menu
 } from '@material-ui/core';
-import { Person, Mail, Drafts, Inbox, ExpandMore } from '@material-ui/icons';
+import { Person, Mail,ExpandMore } from '@material-ui/icons';
 import { usuarioPrueba } from '../constants/constants';
 
 export default function Header(props) {
@@ -61,7 +60,7 @@ export default function Header(props) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
 
   header: {
     height: '10vh',
@@ -89,12 +88,10 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: '1vw',
   },
   greenBar: {
-    //backgroundColor: "#5AA123",
-    background: 'linear-gradient(to left , #91ED34, #80B05C ,#5AA123)', // ;)
+    background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)', 
     boxShadow: '0 5px 2px -2px gray',
-    width: '82vw',
     height: '8vh',
-    //position: 'absolute',
+    width: '100%',
     alignItems: 'center',
     paddingLeft: '1.5vw',
     color: '#fafafa',

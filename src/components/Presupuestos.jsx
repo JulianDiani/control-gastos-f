@@ -4,71 +4,35 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import { getPresupuesto, getGastos } from '../services/presupuestos.js';
+import { getPresupuesto } from '../services/presupuestos.js';
+import { getAllCompras } from '../services/compras.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import TortaPrincipal from './presupuestoComponents/TortaPrincipal';
-import CardMontos from './presupuestoComponents/CardMontos';
-import Tabla from './presupuestoComponents/Tabla';
+import TortaPrincipal from './dashboards/TortaPrincipal';
+import CardMontos from './dashboards/CardMontos';
+import Tabla from './dashboards/Tabla';
 import Grid from '@material-ui/core/Grid';
-
-function totalCalculo(gastos, presupuesto) {
-  var prueba = {
-    tipo: 'Total disponible',
-    insumos: 0,
-    bibliografia: 0,
-    gastosDePublicacion: 0,
-    viajesYViaticos: 0,
-    equipamiento: 0,
-    serviciosTecnicos: 0,
-    gastosDeAdministracion: 0,
-    total: 0,
-  };
-
-  presupuesto.map((pre) => {
-    prueba.insumos += pre.insumos;
-    prueba.bibliografia += pre.bibliografia;
-    prueba.gastosDePublicacion += pre.gastosDePublicacion;
-    prueba.viajesYViaticos += pre.viajesYViaticos;
-    prueba.equipamiento += pre.equipamiento;
-    prueba.serviciosTecnicos += pre.serviciosTecnicos;
-    prueba.gastosDeAdministracion += pre.gastosDeAdministracion;
-    prueba.total += pre.total;
-  });
-  gastos.map((pre) => {
-    prueba.insumos -= pre.insumos;
-    prueba.bibliografia -= pre.bibliografia;
-    prueba.gastosDePublicacion -= pre.gastosDePublicacion;
-    prueba.viajesYViaticos -= pre.viajesYViaticos;
-    prueba.equipamiento -= pre.equipamiento;
-    prueba.serviciosTecnicos -= pre.serviciosTecnicos;
-    prueba.gastosDeAdministracion -= pre.gastosDeAdministracion;
-    prueba.total -= pre.total;
-  });
-  return prueba;
-}
+import { calculateTotalExpenses } from '../utils/presupuestos'
 
 export const Presupuestos = () => {
   const $ = useStyles();
-  const [hasError, setHasError] = useState(false);
-
+  
   const [presupuesto, setPresupuesto] = useState(null);
-  const [gastos, setGastos] = useState(null);
+  const [comprasRealizadas, setComprasRealizadas] = useState(null);
+  const [totalGastos, setTotalGastos] = useState(null);
 
   useEffect(() => {
     async function fetchPrespuesto() {
-      const getFunctionPresupuesto = getPresupuesto;
-      const getFunctionGastos = getGastos;
-
       try {
-        const presupuesto = await getFunctionPresupuesto();
-        const gastos = await getFunctionGastos();
-
+        const presupuesto = await getPresupuesto();
+        const comprasRealizadas = await getAllCompras();
+        const gastos = calculateTotalExpenses(comprasRealizadas);
+        setTotalGastos(gastos);
+        setComprasRealizadas(comprasRealizadas);
         setPresupuesto(presupuesto);
-        setGastos(gastos);
       } catch (err) {
-        setHasError(true);
         console.log('ERROR USE EFFECT : ' + err);
+        //ToDo: Manejo de errores
       }
     }
     fetchPrespuesto();
@@ -92,30 +56,27 @@ export const Presupuestos = () => {
               direction="row"
               justifyContent="space-between"
               alignItems="flex"
-              xl="auto"
+              className={$.cardContent}
             >
               <CardMontos
                 item
                 xl={6}
                 totalPresupuesto={presupuesto[0].total}
-                totalGastos={gastos[0].total}
+                totalGastos={totalGastos}
               />
               <Card className={$.card}>
                 <CardContent>
                   <TortaPrincipal
                     presupuesto={presupuesto}
-                    gastos={gastos}
-                    disponible={totalCalculo(gastos, presupuesto)}
                     className={$.torta}
                   />
                 </CardContent>
               </Card>
             </Grid>
-
             <Tabla
               presupuesto={presupuesto}
-              gastos={gastos}
-              totalDisponible={totalCalculo(gastos, presupuesto)}
+              gastos={comprasRealizadas.data}
+              totalDisponible={presupuesto[0].total - totalGastos}
             />
           </Grid>
         </div>
@@ -128,7 +89,7 @@ export const Presupuestos = () => {
       <h1>Presupuesto</h1>
       <div className={$.root}>
         <Divider className={$.divider} />
-        {presupuesto && gastos ? rendering() : loadingRendering()}
+        {presupuesto && totalGastos ? rendering() : loadingRendering()}
       </div>
       <Footer />
     </>
@@ -136,12 +97,8 @@ export const Presupuestos = () => {
 };
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-
   root: {
-    height: '100%',
+    height: '100vw',
     display: 'flex',
     marginLeft: '1vw',
   },
@@ -150,29 +107,13 @@ const useStyles = makeStyles({
     marginLeft: '15vw',
     marginBottom: '1rem',
   },
+  cardContent: {
+    marginBottom: '2rem',
+  },
   divider: {
     marginBottom: '1rem',
   },
   item: {
     display: 'flex',
-  },
-  key: {
-    fontWeight: 'bolder',
-  },
-  parrafo: {
-    padding: '3rem',
-    fontSize: '16px',
-    textAlign: 'justify',
-  },
-  title: {
-    fontWeight: 'bold',
-    marginLeft: '3rem',
-  },
-  dropDown: {
-    marginRight: '1rem',
-    width: '10rem',
-  },
-  menuItem: {
-    marginLeft: '1rem',
   },
 });

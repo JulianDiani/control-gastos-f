@@ -26,6 +26,8 @@ const columns = [
   { id: 'total', label: 'Total' },
 ];
 
+//NO SE USA LA FUNCION
+/*
 function totalCalculo(gastos, presupuesto) {
   var prueba = {
     tipo: 'Total disponible',
@@ -61,6 +63,7 @@ function totalCalculo(gastos, presupuesto) {
   });
   return prueba;
 }
+*/
 
 const useStyles = makeStyles({
   root: {
@@ -80,7 +83,7 @@ export default function Tabla({ presupuesto, gastos, totalDisponible }) {
     gastos ? gastos : null;
   }
 
-  const rows = totalCalculo(gastos, presupuesto);
+  //const rows = totalCalculo(gastos, presupuesto); //NO SE USA
 
   return (
     <Paper className={classes.root}>
