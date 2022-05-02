@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import { DatosGenerales } from './components/DatosGenerales';
 import { MisProyectos } from './components/MisProyectos';
 import { Normativas } from './components/Normativas';
+import { Notas } from './components/Notas';
 import {
   AssignmentInd,
   Help,
@@ -19,6 +20,7 @@ import { Proveedores } from './components/Proveedores';
 import Login from './components/Login';
 import { useState } from 'react';
 
+
 export default function App() {
   const $ = useStyles();
   const [loggedIn, setLoggedIn] = useState();
@@ -28,6 +30,7 @@ export default function App() {
     { text: 'Proveedores', icon: <AssignmentInd />, path: '/proveedores' },
     { text: 'Normativas I+D', icon: <Info />, path: '/' },
     { text: 'Soporte', icon: <Help />, path: '/' },
+    { text: 'Notas', icon: <Help />, path: '/nota' },
   ];
 
   return (
@@ -40,18 +43,37 @@ export default function App() {
           <Router>
             <NavBar sideBarOptions={sideBarOptions} />
             <div className={$.container}>
-              <Header setLoggedIn={setLoggedIn}/>
+              <Header setLoggedIn={setLoggedIn} />
               <div className={$.content}>
                 <Switch>
-                  <Route path="/login" component={Login}/>
-                  <Route path="/" exact component={MisProyectos} />
-                  <Route path="/proyectos" exact component={DatosGenerales} />
+                  <Route 
+                    path="/login" 
+                    component={Login}
+                  />
+                  <Route 
+                    path="/" 
+                    exact 
+                    component={MisProyectos} 
+                  />
+                  <Route 
+                    path="/proyectos" 
+                    exact 
+                    component={DatosGenerales} 
+                  />
+                  <Route
+                    path="/proyectos/nota"
+                    exact
+                    component={Notas}
+                  />
                   <Route
                     path="/proyectos/presupuestos"
                     exact
                     component={Presupuestos}
                   />
-                  <Route path="/proyectos/compras" exact component={Compras} />
+                  <Route 
+                    path="/proyectos/compras" 
+                    exact 
+                    component={Compras} />
                   <Route
                     path="/proyectos/proveedores"
                     exact
