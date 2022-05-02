@@ -72,7 +72,6 @@ export const Compras = (props) => {
     if(newCompra)
       fetchCompra();
       setNewCompra(false)
-    
   }, [newCompra]);
 
   const loadingRendering = () => {
