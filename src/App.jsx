@@ -6,7 +6,6 @@ import NavBar from './components/NavBar';
 import { DatosGenerales } from './components/DatosGenerales';
 import { MisProyectos } from './components/MisProyectos';
 import { Normativas } from './components/Normativas';
-import { Notas } from './components/Notas';
 import {
   AssignmentInd,
   Help,
@@ -30,7 +29,6 @@ export default function App() {
     { text: 'Proveedores', icon: <AssignmentInd />, path: '/proveedores' },
     { text: 'Normativas I+D', icon: <Info />, path: '/' },
     { text: 'Soporte', icon: <Help />, path: '/' },
-    { text: 'Notas', icon: <Help />, path: '/nota' },
   ];
 
   return (
@@ -59,11 +57,6 @@ export default function App() {
                     path="/proyectos" 
                     exact 
                     component={DatosGenerales} 
-                  />
-                  <Route
-                    path="/proyectos/nota"
-                    exact
-                    component={Notas}
                   />
                   <Route
                     path="/proyectos/presupuestos"

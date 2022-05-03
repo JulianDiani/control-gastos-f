@@ -1,7 +1,12 @@
+const SERVICES_CONFIG = {
+  baseUrl: 'http://localhost',
+  port: ':3001',
+  path: '/api/compras',
+};
 export async function getAllCompras() {
-  const url = 'http://localhost:3001/api/compras';
-  const response = await fetch(url, {
-    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}`;
+  const response = await fetch(endpoint, {
+    method: 'GET',
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
@@ -11,14 +16,12 @@ export async function getAllCompras() {
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
   console.log(response);
-  return response.json(); // parses JSON response into native JavaScript objects
+  return response.json();
 }
 
-//REVISAR ACA PORQUE EL BODY SE ENVIA VACIO.  - ESTA HARCODEADO PERO DE TODAS FORMAS LLEGA VACIO AL BACK.
 export async function postCompra(body) {
-  const url = 'http://localhost:3001/api/compras';
-  console.log('Body Post ' + JSON.stringify(body));
-  const response = await fetch(url, {
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}`;
+  const response = await fetch(endpoint, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -27,20 +30,23 @@ export async function postCompra(body) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
-    //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
   console.log(response);
-  return response; // parses JSON response into native JavaScript objects
+  return response;
 }
 
-/*
-fecha: 'fecha',
-rubro: 'rubro',
-subrubro: 'DataTypes.STRING',
-numeroCompra: 'DataTypes.NUMBER',
-proveedor: 'DataTypes.STRING',
-monto: 1200,
-estado: 'DataTypes.STRING',
-factura: 'DataTypes.STRING',
-nombre: 'DataTypes.STRING,',
-*/
+export async function getGastosPorRubro(rubro) {
+  const EXTRA_PATH = '/gastos/findByRubro';
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}${EXTRA_PATH}?rubro=${rubro}`;
+  const response = await fetch(endpoint, {
+    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    referrerPolicy: 'no-referrer',
+  });
+  return response.json();
+}

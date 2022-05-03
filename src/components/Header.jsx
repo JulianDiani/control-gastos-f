@@ -30,7 +30,7 @@ export default function Header(props) {
             aria-controls={open ? 'basic-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
+            onClick={e => handleClick(e)}
             endIcon={React.cloneElement(<ExpandMore/>)}
           >
           <Mail className={$.icon} />

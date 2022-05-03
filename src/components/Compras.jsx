@@ -45,7 +45,6 @@ export const Compras = (props) => {
 
   //States
   const [compras, setCompras] = useState(null);
-  const [hasError, setHasError] = useState(null);
   const [open, setOpen] = useState(false);
   const [newCompra, setNewCompra] = useState(true);
 
@@ -65,7 +64,6 @@ export const Compras = (props) => {
         const compras = await getFunction();
         setCompras(compras);
       } catch (err) {
-        setHasError(true);
         console.log('ERROR FETCH API [compras]: ' + err);
       }
     }
