@@ -148,20 +148,18 @@ export const presupuestoPrueba = [
     tipo: 'Total Presupuesto',
     fechaInicio: '18-09-2020',
     fechaFin: '18-09-2022',
-
     insumos: 100000,
-    bibliografia: 0,
-    gastosDePublicacion: 9000,
-    viajesYViaticos: 30000,
+    bibliografia: 50000,
+    publicaciones: 9000,
+    viaticos: 100000,
     equipamiento: 220000,
-    serviciosTecnicos: 100000,
-    gastosDeAdministracion: 6000,
+    tecnico: 100000,
+    administracion: 6000,
     total: 465000,
   },
   {
     tipo: 'Reformulacion IR',
     fechaInicio: '18-10-2021',
-
     insumos: 0,
     bibliografia: 0,
     gastosDePublicacion: 0,
@@ -189,21 +187,6 @@ export const gastosPrueba = [
     total: 232500,
   },
 ];
-
-// viene del back, es la resta entre presupuesto y gastos de cada rubro
-export const totalesPorRubro = {
-  tipo: 'Totales por rubro (P-G)',
-  fechaInicio: '18-09-2021',
-
-  insumos: 99500,
-  bibliografia: 0,
-  gastosDePublicacion: 9000,
-  viajesYViaticos: 18000,
-  equipamiento: 40000,
-  serviciosTecnicos: 60000,
-  gastosDeAdministracion: 6000,
-  totalPresupuestoActual: 232500,
-};
 
 export const pagoAProv = {
   tipo: 'Pago a proveedores',
@@ -236,7 +219,6 @@ export const rendEsp = {
 export const contratos = {
   tipo: 'Contratos',
   fechaInicio: '18-09-2021',
-
   insumos: 0,
   bibliografia: 0,
   gastosDePublicacion: 0,
@@ -276,4 +258,14 @@ export const proveedoresRegistrados = [
     mail: 'lenovo@ecomms.lenovo.com',
     cuit: '30-71473138-2',
   },
+];
+
+export const rubros = [
+  'insumos',
+  'bibliografia',
+  'publicaciones',
+  'viaticos',
+  'equipamiento',
+  'tecnico',
+  'administracion',
 ];
