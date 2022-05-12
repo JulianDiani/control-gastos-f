@@ -35,7 +35,7 @@ export default function Header(props) {
           >
           <Mail className={$.icon} />
             <Person className={$.icon} />
-            <h5>{usuarioPrueba.email}</h5>
+            <h5>galosalerno</h5>
           </Button>
           <Menu
             anchorEl={anchorEl}
