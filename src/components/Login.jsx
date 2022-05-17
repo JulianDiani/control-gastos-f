@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PasswordField from 'material-ui-password-field';
 import { getUser } from '../services/usuarios';
 import { Messages } from '../constants/messages';
@@ -17,11 +17,17 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import '../styles/styles.css';
 
 const Login = (props) => {
-  //States
-  const [userName, setUserName] = useState();
-  const [password, setPassword] = useState();
+  //Hooks
   const [error, setError] = useState(false);
 
+  useEffect(() => {
+    async function fetch(){
+      const loggedIn = sessionStorage.getItem("loggedIn");
+      loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
+    }
+    fetch();
+  },[])
+  
   //Styles
   const $ = useStyles();
 
@@ -31,19 +37,18 @@ const Login = (props) => {
   };
 
   //checking username and password - @DONE Connect to backend.
-  const checkedLogin = async () => {
-    const user = await getUser(userName);
-    console.log("UserInfo: ",user);
-    return user?.data?.contraseña === password && password !== undefined; //user? es para hacerlo safeNull y que no rompa.
+  const checkedLogin = (user) => {
+    return user?.data?.contraseña === props.password && props.password !== undefined; //user? es para hacerlo safeNull y que no rompa.
   };
 
   //set logedin true or false - @TODO use recoil.
   const sendLoginData = async () => {
-    const checked = await checkedLogin()
+    const user = await getUser(props.userName);
+    const checked = checkedLogin(user);
     setError(!checked); //if checked is false error is true.
     props.setLoggedIn(checked)  //true = login ok | false = login fail
-  };
-
+    sessionStorage.setItem("loggedIn", checked);
+  }
   //it triggers by pressing the enter key
   const handleKeypress = (e) => {
     if (e.charCode === 13) {
@@ -96,7 +101,7 @@ const Login = (props) => {
                 id="my-input"
                 aria-describedby="my-helper-text"
                 type="text"
-                onChange={(e) => submitHandle(setUserName, e.target.value)}
+                onChange={(e) => submitHandle(props.setUserName, e.target.value)}
                 onKeyPress={handleKeypress} //Para que funcione el onClick del button tocando enter desde aca
               />
             </FormControl>
@@ -105,7 +110,7 @@ const Login = (props) => {
               <PasswordField
                 id="my-input"
                 aria-describedby="my-helper-text"
-                onChange={(e) => submitHandle(setPassword, e.target.value)}
+                onChange={(e) => submitHandle(props.setPassword, e.target.value)}
                 onKeyPress={handleKeypress} //Para que funcione el onClick del button tocando enter desde aca
               />
             </FormControl>

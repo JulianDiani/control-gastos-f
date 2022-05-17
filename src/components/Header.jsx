@@ -6,7 +6,6 @@ import {
   Menu
 } from '@material-ui/core';
 import { Person, Mail,ExpandMore } from '@material-ui/icons';
-import { usuarioPrueba } from '../constants/constants';
 
 export default function Header(props) {
   const $ = useStyles();
@@ -19,6 +18,7 @@ export default function Header(props) {
     setAnchorEl(null);
   };
   const handleLogOut = () => {
+    sessionStorage.setItem("loggedIn",false);
     props.setLoggedIn(false);
   };
   
@@ -35,7 +35,7 @@ export default function Header(props) {
           >
           <Mail className={$.icon} />
             <Person className={$.icon} />
-            <h5>galosalerno</h5>
+            <h5>{props.userName}</h5>
           </Button>
           <Menu
             anchorEl={anchorEl}
