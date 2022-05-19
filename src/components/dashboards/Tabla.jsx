@@ -8,62 +8,17 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-const columns = [
+const rubros = [
   { id: 'tipo', label: 'Tipo' },
   { id: 'insumos', label: 'Insumos' },
   { id: 'bibliografia', label: 'Bibliografia' },
-  {
-    id: 'gastosDePublicacion',
-    label: 'Gastos De Publicacion',
-  },
-  { id: 'viajesYViaticos', label: 'Viajes Y Viaticos' },
+  { id: 'publicaciones',label: 'Gastos De Publicacion',},
+  { id: 'viaticos', label: 'Viajes Y Viaticos' },
   { id: 'equipamiento', label: 'Equipamiento' },
-  { id: 'serviciosTecnicos', label: 'Servicios Tecnicos' },
-  {
-    id: 'gastosDeAdministracion',
-    label: 'Gastos De Administración',
-  },
+  { id: 'tecnico', label: 'Servicios Tecnicos' },
+  { id: 'administracion',label: 'Gastos De Administración'},
   { id: 'total', label: 'Total' },
 ];
-
-//NO SE USA LA FUNCION
-/*
-function totalCalculo(gastos, presupuesto) {
-  var prueba = {
-    tipo: 'Total disponible',
-    insumos: 0,
-    bibliografia: 0,
-    gastosDePublicacion: 0,
-    viajesYViaticos: 0,
-    equipamiento: 0,
-    serviciosTecnicos: 0,
-    gastosDeAdministracion: 0,
-    total: 0,
-  };
-
-  presupuesto.map((pre) => {
-    prueba.insumos += pre.insumos;
-    prueba.bibliografia += pre.bibliografia;
-    prueba.gastosDePublicacion += pre.gastosDePublicacion;
-    prueba.viajesYViaticos += pre.viajesYViaticos;
-    prueba.equipamiento += pre.equipamiento;
-    prueba.serviciosTecnicos += pre.serviciosTecnicos;
-    prueba.gastosDeAdministracion += pre.gastosDeAdministracion;
-    prueba.total += pre.total;
-  });
-  gastos.map((pre) => {
-    prueba.insumos -= pre.insumos;
-    prueba.bibliografia -= pre.bibliografia;
-    prueba.gastosDePublicacion -= pre.gastosDePublicacion;
-    prueba.viajesYViaticos -= pre.viajesYViaticos;
-    prueba.equipamiento -= pre.equipamiento;
-    prueba.serviciosTecnicos -= pre.serviciosTecnicos;
-    prueba.gastosDeAdministracion -= pre.gastosDeAdministracion;
-    prueba.total -= pre.total;
-  });
-  return prueba;
-}
-*/
 
 const useStyles = makeStyles({
   root: {
@@ -74,16 +29,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Tabla({ presupuesto, gastos, totalDisponible }) {
+export default function Tabla({ presupuesto }) {
   const classes = useStyles();
-  {
-    presupuesto ? presupuesto : null;
-  }
-  {
-    gastos ? gastos : null;
-  }
 
-  //const rows = totalCalculo(gastos, presupuesto); //NO SE USA
 
   return (
     <Paper className={classes.root}>
@@ -91,7 +39,7 @@ export default function Tabla({ presupuesto, gastos, totalDisponible }) {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {rubros.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
@@ -106,49 +54,16 @@ export default function Tabla({ presupuesto, gastos, totalDisponible }) {
             {presupuesto.map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
+                  {rubros.map((rubro) => {
                     return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
+                      <TableCell key={rubro.id}>
+                        {row[rubro.id]??0}
                       </TableCell>
                     );
                   })}
                 </TableRow>
               );
             })}
-            {gastos.map((row) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number'
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })}
-            <TableRow
-              hover
-              role="checkbox"
-              tabIndex={-1}
-              key={totalDisponible.code}
-            >
-              {Object.values(totalDisponible).map((column) => {
-                return (
-                  <TableCell key={column.id} align={column.align}>
-                    {column}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

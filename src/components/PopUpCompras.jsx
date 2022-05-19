@@ -10,10 +10,10 @@ import {
   InputLabel,
   Select,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { postCompra, getGastosPorRubro } from '../services/compras.js';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { getPresupuesto, getRubros } from '../services/presupuestos.js';
-
 const useStyles = makeStyles((theme) => ({
   modal: {
     position: 'absolute',
@@ -94,7 +94,7 @@ export default function PopUpCompras(props) {
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
   const [disponibleRubro, setDisponibleRubro] = useState('');
-  const canFinish = rubro && subrubro;
+  const canFinish = rubro && subrubro && monto && fecha && proveedor;
 
   useEffect(() => {
     async function fetchGastos() {
@@ -136,7 +136,13 @@ export default function PopUpCompras(props) {
     console.log('[PopUpCompras] submitForm response: ', res);
   };
 
-  const submitHandle = (handle, value) => {
+  const submitHandle = (handle, value, isNumber = false) => {
+    const regex = new RegExp('/^[0-9]$/');
+    if(isNumber){
+      if(!regex.test(value)){
+        return;
+      }
+    }
     handle(value);
     console.log(value);
   };
@@ -183,6 +189,7 @@ export default function PopUpCompras(props) {
           </Select>
         </FormControl>
       </div>
+
     );
   };
 
@@ -216,7 +223,7 @@ export default function PopUpCompras(props) {
           <div className={$.cargarFactura}>
             <TextField
               label="Monto"
-              onChange={(e) => submitHandle(setMonto, e.target.value)}
+              onChange={(e) => submitHandle(setMonto, e.target.value, true)}
             />
             <CloudUploadIcon className={$.uploadIcon} />
           </div>

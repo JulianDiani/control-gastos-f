@@ -23,6 +23,10 @@ import { useState } from 'react';
 export default function App() {
   const $ = useStyles();
   const [loggedIn, setLoggedIn] = useState();
+  //USAR REDUX PARA LOS DATOS DE LOGIN
+  const [userName, setUserName] = useState();
+  const [password, setPassword] = useState();
+  
   const sideBarOptions = [
     { text: 'Proyectos', icon: <Home />, path: '/datos' },
     { text: 'Presupuesto', icon: <AttachMoney />, path: '/presupuesto' },
@@ -35,38 +39,30 @@ export default function App() {
     //ToDo: Como quitar espacio sobrante en el borde derecho.
     <>
       {!loggedIn ? (
-        <Login setLoggedIn={setLoggedIn} />
+        <Login
+          userName={userName}
+          password={password}
+          setPassword={setPassword}
+          setUserName={setUserName}
+          setLoggedIn={setLoggedIn}
+        />
       ) : (
         <Container maxWidth="xl" className={$.root}>
           <Router>
             <NavBar sideBarOptions={sideBarOptions} />
             <div className={$.container}>
-              <Header setLoggedIn={setLoggedIn} />
+              <Header setLoggedIn={setLoggedIn} userName={userName} />
               <div className={$.content}>
                 <Switch>
-                  <Route 
-                    path="/login" 
-                    component={Login}
-                  />
-                  <Route 
-                    path="/" 
-                    exact 
-                    component={MisProyectos} 
-                  />
-                  <Route 
-                    path="/proyectos" 
-                    exact 
-                    component={DatosGenerales} 
-                  />
+                  <Route path="/login" component={Login} />
+                  <Route path="/" exact component={MisProyectos} />
+                  <Route path="/proyectos" exact component={DatosGenerales} />
                   <Route
                     path="/proyectos/presupuestos"
                     exact
                     component={Presupuestos}
                   />
-                  <Route 
-                    path="/proyectos/compras" 
-                    exact 
-                    component={Compras} />
+                  <Route path="/proyectos/compras" exact component={Compras} />
                   <Route
                     path="/proyectos/proveedores"
                     exact
