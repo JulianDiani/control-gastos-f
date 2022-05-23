@@ -22,7 +22,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
+const StyledTableRow = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
       backgroundColor: 'theme.palette.action.hover,',
@@ -30,16 +30,15 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const StyledTableHead = withStyles((theme) => ({
+const StyledTableHead = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
-      background: 'linear-gradient(to left , #91ED34, #80B05C ,#5AA123)'
-      //backgroundColor: '#5AA123',
+      background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)', 
     },
   },
 }))(TableRow);
 
-export const Compras = (props) => {
+export const Compras = () => {
   //Styles
   const $ = useStyles();
 

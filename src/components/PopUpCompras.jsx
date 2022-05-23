@@ -10,7 +10,6 @@ import {
   InputLabel,
   Select,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
 import { postCompra, getGastosPorRubro } from '../services/compras.js';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { getPresupuesto, getRubros } from '../services/presupuestos.js';
@@ -96,7 +95,7 @@ export default function PopUpCompras(props) {
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
   const [disponibleRubro, setDisponibleRubro] = useState('');
-  const [validateFields, setValidateFields] = useState(true);
+  const [validateFields, setValidateFields] = useState(true); //Usar para mostrar mensaje de error.
   const canFinish = rubro && subrubro && monto && fecha && proveedor;
 
   useEffect(() => {
