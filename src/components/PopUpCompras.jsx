@@ -128,7 +128,7 @@ export default function PopUpCompras(props) {
   const [newProveedorCuit,setNewProveedorCuit] = useState(null);
 
   const canFinish = rubro && subrubro && monto && fecha && proveedor;
-
+  const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit;
   useEffect(() => {
     async function fetchGastos() {
       const gastos = await getGastosPorRubro(rubro);
@@ -325,6 +325,7 @@ export default function PopUpCompras(props) {
             />
             <Button 
               onClick={sendDataNewProveedor}
+              disabled={!canAddProveedor}
             >
               Agregar proveedor
             </Button>
