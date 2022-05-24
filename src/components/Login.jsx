@@ -15,19 +15,22 @@ import { Messages } from '../constants/messages';
 import Alert from '@material-ui/lab/Alert';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import '../styles/styles.css';
+import isologo from '../assets/unahur-isologo.png';
+import background from '../assets/background.png';
 
 const Login = (props) => {
   //Hooks
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    async function fetch(){
+    async function fetch() {
       const loggedIn = sessionStorage.getItem("loggedIn");
+      // const loggedIn = "true";
       loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
     }
     fetch();
-  },[])
-  
+  }, [])
+
   //Styles
   const $ = useStyles();
 
@@ -64,7 +67,7 @@ const Login = (props) => {
       <div className="header">
         <img
           className={$.logoUnahur}
-          src="https://www.nodal.am/wp-content/uploads/2017/07/UNAHUR.png" //@TODO conseguir imagen original del logo con prensa
+          src={isologo} //@TODO conseguir imagen original del logo con prensa
           alt=""
         />
       </div>
@@ -74,8 +77,8 @@ const Login = (props) => {
   //left wallpallper rendering
   const Wallpallper = () => {
     return (
-      <div className="wallpaper">
-      
+      <div className="wallpaperContainer">
+
       </div>
     );
   };
@@ -139,6 +142,21 @@ const Login = (props) => {
 };
 
 const useStyles = makeStyles({
+  flexContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  formContainer: {
+    width: '100%',
+    flexDirection: 'row',
+  },
+  login: {
+    marginTop: '8rem',
+    marginLeft: '6rem',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   logoUsuario: {
     width: '7rem',
     height: '7rem',
@@ -149,13 +167,15 @@ const useStyles = makeStyles({
     textAlign: 'center',
   },
   logoUnahur: {
-    marginLeft: '0px',
-    width: '20rem',
-    height: '10rem',
+    marginLeft: '1rem',
+    marginTop: '1rem',
+    width: '15rem',
+    height: '4rem',
   },
   inputLabel: {
     width: '20rem',
     marginBottom: '1.5rem',
+    justifySelf: 'center'
   },
   grid: {
     display: 'grid',

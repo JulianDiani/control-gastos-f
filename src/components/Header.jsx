@@ -5,7 +5,7 @@ import {
   MenuItem,
   Menu
 } from '@material-ui/core';
-import { Person, Mail,ExpandMore } from '@material-ui/icons';
+import { Person, Mail, ExpandMore } from '@material-ui/icons';
 
 export default function Header(props) {
   const $ = useStyles();
@@ -18,37 +18,37 @@ export default function Header(props) {
     setAnchorEl(null);
   };
   const handleLogOut = () => {
-    sessionStorage.setItem("loggedIn",false);
+    sessionStorage.setItem("loggedIn", false);
     props.setLoggedIn(false);
   };
-  
-  const openConfig = () => {  
+
+  const openConfig = () => {
     return (
-        <div>
-          <Button
-            id="basic-button"
-            aria-controls={open ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={e => handleClick(e)}
-            endIcon={React.cloneElement(<ExpandMore/>)}
-          >
+      <div>
+        <Button
+          id="basic-button"
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={e => handleClick(e)}
+          endIcon={React.cloneElement(<ExpandMore />)}
+        >
           <Mail className={$.icon} />
-            <Person className={$.icon} />
-            <h5>{props.userName}</h5>
-          </Button>
-          <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            className={$.menu}
-          >
-            <MenuItem className={$.menuItem} onClick={handleClose}>Configuracion</MenuItem>
-            <MenuItem className={$.menuItem} divider={true} onClick={handleClose}>Mi perfil</MenuItem>
-            <MenuItem className={$.menuItem} onClick={handleLogOut}>Cerrar Session</MenuItem>
-          </Menu>
-        </div>
-      );
+          <Person className={$.icon} />
+          <h5>{props.userName}</h5>
+        </Button>
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          className={$.menu}
+        >
+          <MenuItem className={$.menuItem} onClick={handleClose}>Configuracion</MenuItem>
+          <MenuItem className={$.menuItem} divider={true} onClick={handleClose}>Mi perfil</MenuItem>
+          <MenuItem className={$.menuItem} onClick={handleLogOut}>Cerrar Session</MenuItem>
+        </Menu>
+      </div>
+    );
   };
   return (
     <div className={$.header}>
@@ -66,13 +66,13 @@ const useStyles = makeStyles(() => ({
     height: '10vh',
     width: '82vw',
   },
-  menu:{
+  menu: {
     marginTop: '2.7rem',
     width: '30rem',
     marginLeft: '0.5rem',
   },
-  menuItem:{
-    width:'15rem'
+  menuItem: {
+    width: '15rem'
   },
   logo: {
     height: '55px',
@@ -88,7 +88,7 @@ const useStyles = makeStyles(() => ({
     paddingRight: '1vw',
   },
   greenBar: {
-    background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)', 
+    background: 'linear-gradient(to left , #9BC76D, #5AA123)',
     boxShadow: '0 5px 2px -2px gray',
     height: '8vh',
     width: '100%',
