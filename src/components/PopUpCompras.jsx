@@ -102,7 +102,7 @@ export default function PopUpCompras(props) {
     async function fetchGastos() {
       const gastos = await getGastosPorRubro(rubro);
       const responsePresupuesto = await getPresupuesto();
-      const presupuesto = responsePresupuesto[0];
+      const presupuesto = responsePresupuesto;
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         presupuesto,
         gastos.totalGastado,

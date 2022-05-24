@@ -4,12 +4,33 @@ import React from 'react';
 
 export default function TortaPrincipal({presupuesto }) {
   
-  const totalDisponible = presupuesto[0]; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
+  const totalDisponible = presupuesto; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
   console.log("Presupuesto: ",presupuesto)
+  
+  const datosAConsumir = (({
+    insumos,
+    bibliografia,
+    publicaciones,
+    viaticos,
+    equipamiento,
+    tecnico,
+    administracion,
+    total,
+  }) => ({
+    insumos,
+    bibliografia,
+    publicaciones,
+    viaticos,
+    equipamiento,
+    tecnico,
+    administracion,
+    total,
+  }))(totalDisponible);
+
   const graficoTorta = (
     <Doughnut
       data={{
-        labels: Object.keys(totalDisponible).map(key =>{
+        labels: Object.keys(datosAConsumir).map(key =>{
           return key;
         }),
         datasets: [

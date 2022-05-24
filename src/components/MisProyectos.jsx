@@ -14,6 +14,9 @@ import { calculateTotalExpenses, nivelDeEjecucion } from '../utils/presupuestos'
 import { getPresupuesto } from '../services/presupuestos';
 import { getAllCompras } from '../services/compras';
 import { Box, CircularProgress, Typography } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { setNivelEjecucion } from '../state/nivelEjecucionSlice';
+
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -73,20 +76,25 @@ const circularProgressWithValue = (nivelEjecucion) => {
 export const MisProyectos = () => {
     const $ = useStyles();
     
-    const [nivelEjecucion, setNivelEjecicion] = useState();
+    const dispatch = useDispatch()
+    //const [nivelEjecucion, setNivelEjecicion] = useState();
     //Porcentaje USAR REDUX porque lo comparten presupuestos y CardMontos.
      useEffect(() => {
       async function getPorcentaje() {
         const presupuesto = await getPresupuesto();
         const comprasRealizadas = await getAllCompras();
         const gastos = calculateTotalExpenses(comprasRealizadas);
-        const totalPresupuesto = presupuesto[0].total
+        const totalPresupuesto = presupuesto.total;
         const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos).split(",")[0]; //Truncamiento del porcentaje.
+        dispatch(setNivelEjecucion(ejecucion))
         console.log("Ejecucion ",presupuesto,gastos)
-        setNivelEjecicion(ejecucion);
+        //setNivelEjecicion(ejecucion);
       }
       getPorcentaje();
-     })
+     },[])
+     console.log("PASO ACA", useSelector(state => state));
+     const nivelEjecucion = useSelector(state => state.nivelEjecucion.value)
+     console.log("Type ", nivelEjecucion);
     return <>
         <h2>En curso</h2>
         <TableContainer className={$.container} component={Paper}>

@@ -33,7 +33,7 @@ export default function Header(props) {
           onClick={e => handleClick(e)}
           endIcon={React.cloneElement(<ExpandMore />)}
         >
-          <Mail className={$.icon} />
+          {/* <Mail className={$.icon} /> */}
           <Person className={$.icon} />
           <h5>{props.userName}</h5>
         </Button>
@@ -99,5 +99,7 @@ const useStyles = makeStyles(() => ({
   },
   icon: {
     color: '#5AA123',
+    marginRight: '0.3rem',
+    marginBottom: '0.4rem'
   },
 }));

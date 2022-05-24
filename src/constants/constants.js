@@ -100,33 +100,32 @@ export const proyectosEnHistoria = [
 ];
 
 // tabla total de presupuesto actualizada
-export const presupuestoPrueba = [
-  {
-    tipo: 'Total Presupuesto',
-    fechaInicio: '18-09-2021',
-    fechaFin: '18-09-2022',
-    insumos: 100000,
-    bibliografia: 50000,
-    publicaciones: 9000,
-    viaticos: 100000,
-    equipamiento: 220000,
-    tecnico: 100000,
-    administracion: 6000,
-    total: 585000,
-  },
-  {
-    tipo: 'Reformulacion IR',
-    fechaInicio: '18-10-2021',
-    insumos: 0,
-    bibliografia: 0,
-    gastosDePublicacion: 0,
-    viajesYViaticos: 20000,
-    equipamiento: 0,
-    serviciosTecnicos: -20000,
-    gastosDeAdministracion: 0,
-    total: 0,
-  },
-];
+export const presupuestoPrueba = {
+  tipo: 'Total Presupuesto',
+  fechaInicio: '18-09-2021',
+  fechaFin: '18-09-2022',
+  insumos: 100000,
+  bibliografia: 50000,
+  publicaciones: 9000,
+  viaticos: 100000,
+  equipamiento: 220000,
+  tecnico: 100000,
+  administracion: 6000,
+  total: 585000,
+};
+
+export const reformulacionPrueba = {
+  tipo: 'Reformulacion IR',
+  fechaInicio: '18-10-2021',
+  insumos: 0,
+  bibliografia: 0,
+  gastosDePublicacion: 0,
+  viajesYViaticos: 20000,
+  equipamiento: 0,
+  serviciosTecnicos: -20000,
+  gastosDeAdministracion: 0,
+  total: 0,
+};
 
 export const pagoAProv = {
   tipo: 'Pago a proveedores',
