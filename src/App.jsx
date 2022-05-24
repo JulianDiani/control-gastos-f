@@ -17,7 +17,7 @@ import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
 import { Proveedores } from './components/Proveedores';
 import Login from './components/Login';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 export default function App() {
@@ -26,6 +26,7 @@ export default function App() {
   //USAR REDUX PARA LOS DATOS DE LOGIN
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [init, setInit] = useState(false);
   
   const sideBarOptions = [
     { text: 'Proyectos', icon: <Home />, path: '/datos' },
@@ -35,8 +36,19 @@ export default function App() {
     { text: 'Soporte', icon: <Help />, path: '/' },
   ];
 
+  useEffect(() => {
+    async function checkLogin(){
+      const loggedIn = sessionStorage.getItem("loggedIn");
+      const usuario = sessionStorage.getItem("username");
+      setUserName(usuario)
+      loggedIn === "true" ? setLoggedIn(true) : setLoggedIn(false);
+      setInit(true);
+    }
+    checkLogin();
+  },[])
   return (
     //ToDo: Como quitar espacio sobrante en el borde derecho.
+    init?
     <>
       {!loggedIn ? (
         <Login
@@ -81,6 +93,7 @@ export default function App() {
         </Container>
       )}
     </>
+    :<></>
   );
 }
 

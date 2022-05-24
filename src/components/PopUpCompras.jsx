@@ -14,6 +14,8 @@ import Alert from '@material-ui/lab/Alert';
 import { postCompra, getGastosPorRubro } from '../services/compras.js';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { getPresupuesto, getRubros } from '../services/presupuestos.js';
+import { validateField } from '../utils/validaciones';
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     position: 'absolute',
@@ -94,6 +96,7 @@ export default function PopUpCompras(props) {
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
   const [disponibleRubro, setDisponibleRubro] = useState('');
+  const [validateFields, setValidateFields] = useState(true);
   const canFinish = rubro && subrubro && monto && fecha && proveedor;
 
   useEffect(() => {
@@ -146,6 +149,7 @@ export default function PopUpCompras(props) {
     handle(value);
     console.log(value);
   };
+ 
 
   const handleClose = () => {
     props.state(false);
@@ -203,6 +207,7 @@ export default function PopUpCompras(props) {
           <TextField
             label="Subrubro"
             onChange={(e) => submitHandle(setSubrubro, e.target.value)}
+            onBlur={(e) => validateField("subrubro",e.target.value,setValidateFields)}
             className={$.subrubro}
           />
         </div>

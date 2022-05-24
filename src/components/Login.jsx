@@ -49,6 +49,7 @@ const Login = (props) => {
     const checked = checkedLogin(user);
     setError(!checked); //if checked is false error is true.
     props.setLoggedIn(checked)  //true = login ok | false = login fail
+    sessionStorage.setItem("username", props.userName);
     sessionStorage.setItem("loggedIn", checked);
   }
   //it triggers by pressing the enter key
