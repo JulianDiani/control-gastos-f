@@ -16,6 +16,7 @@ import Alert from '@material-ui/lab/Alert';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import '../styles/styles.css';
 import isologo from '../assets/unahur-isologo.png';
+import background from '../assets/background.png';
 
 const Login = (props) => {
   //Hooks
@@ -23,8 +24,8 @@ const Login = (props) => {
 
   useEffect(() => {
     async function fetch() {
-      // const loggedIn = sessionStorage.getItem("loggedIn");
-      const loggedIn = "true";
+      const loggedIn = sessionStorage.getItem("loggedIn");
+      // const loggedIn = "true";
       loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
     }
     fetch();
@@ -76,7 +77,7 @@ const Login = (props) => {
   //left wallpallper rendering
   const Wallpallper = () => {
     return (
-      <div className="wallpaper">
+      <div className="wallpaperContainer">
 
       </div>
     );
@@ -85,9 +86,9 @@ const Login = (props) => {
   //form rendering
   const Form = () => {
     return (
-      <div className={$.formContainer}>
+      <div className="formContainer">
         {Header()}
-        <div className={$.login}>
+        <div className="login">
           <div className={$.iconContainer}>
             <AccountCircleRoundedIcon className={$.logoUsuario} />
           </div>
@@ -133,7 +134,7 @@ const Login = (props) => {
 
   //MAIN RENDERING
   return (
-    <div className={$.flexContainer}>
+    <div className="flex-container">
       <div>{Wallpallper()}</div>
       <div>{Form()}</div>
     </div>
