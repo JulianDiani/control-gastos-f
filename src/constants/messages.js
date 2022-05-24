@@ -3,6 +3,6 @@ export const Messages = {
   passwordIncorrecta: 'Contraseña o usuario incorrecta',
   bienvenido: 'Bienvenido',
   contraseña: 'Contraseña',
-  iniciarSession: 'Iniciar Session',
+  iniciarSession: 'Iniciar Sesion',
   olvidoPassword: 'Olvide mi contraseña',
 };

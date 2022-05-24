@@ -2,20 +2,29 @@
   display: flex;
   flex-direction: row;
 }
-.wallpaper {
+
+.wallpaperContainer {
   height: 100vh;
   width: 55vw;
-  background-image: url('https://www.infoban.com.ar/wp-content/uploads/2020/06/universidad-hurlingham-unahur-sede-Malvinas.jpg');
+  background-image: url('../assets/background.png');
+  background-size: cover;
 }
+
 .formContainer {
   width: 100%;
+  flex-direction: row;
 }
+
 .login {
   max-height: 100vh;
-  margin-left: 5rem;
+  margin-left: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .header {
-  min-height: '30vh';
+  min-height: 30vh;
 }
 
 @media (min-width: 1500px) {
@@ -23,18 +32,22 @@
     height: 50vh;
   }
 }
+
 @media (max-width: 850px) {
   .flex-container {
     flex-direction: column;
   }
+
   .wallpaper {
-    height: 30vh;
-    width: 100%;
+    display: none;
   }
+
   .header {
     text-align: center;
   }
+
   .login {
     align-items: center;
+    width: 100%;
   }
 }
