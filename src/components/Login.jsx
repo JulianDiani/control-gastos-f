@@ -23,7 +23,7 @@ const Login = (props) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    async function fetch() {
+    async function fetch(){
       const loggedIn = sessionStorage.getItem("loggedIn");
       loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
     }
