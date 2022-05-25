@@ -19,6 +19,8 @@ export default function Header(props) {
   };
   const handleLogOut = () => {
     sessionStorage.setItem("loggedIn", false);
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("password");
     props.setLoggedIn(false);
   };
 

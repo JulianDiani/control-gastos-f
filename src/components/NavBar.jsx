@@ -10,10 +10,10 @@ import { Link } from 'react-router-dom';
 import { Help, Home, Info, ShoppingCart, ImportContacts, Timeline, Contacts, Create, PeopleAlt } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
 
-export default function NavBar() {
+export default function NavBar(props) {
   const $ = useStyles();
   let navbar;
-  const user = sessionStorage.getItem("username");
+  const user = props.user;
 
   const sideBarOptions = [
     { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/' },

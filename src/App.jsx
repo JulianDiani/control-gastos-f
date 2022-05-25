@@ -62,7 +62,7 @@ export default function App() {
       ) : (
         <Container maxWidth="xl" className={$.root}>
           <Router>
-            <NavBar sideBarOptions={sideBarOptions} />
+            <NavBar sideBarOptions={sideBarOptions} user={userName} />
             <div className={$.container}>
               <Header setLoggedIn={setLoggedIn} userName={userName} />
               <div className={$.content}>
