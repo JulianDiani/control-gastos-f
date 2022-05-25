@@ -1,22 +1,38 @@
 import { Doughnut } from 'react-chartjs-2';
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+
 
 export default function TortaPrincipal({presupuesto }) {
   
-  const totalDisponible = presupuesto[0]; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
+  const totalDisponible = presupuesto; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
+  console.log("Presupuesto: ",presupuesto)
+  
+  const datosAConsumir = (({
+    insumos,
+    bibliografia,
+    publicaciones,
+    viaticos,
+    equipamiento,
+    tecnico,
+    administracion,
+    total,
+  }) => ({
+    insumos,
+    bibliografia,
+    publicaciones,
+    viaticos,
+    equipamiento,
+    tecnico,
+    administracion,
+    total,
+  }))(totalDisponible);
+
   const graficoTorta = (
     <Doughnut
       data={{
-        labels: [
-          'Insumos',
-          'Bibliografia',
-          'Publicaciones',
-          'Viajes y viaticos',
-          'Equipamiento',
-          'Servicios Tecnicos',
-          'Gastos De Administración',
-        ],
+        labels: Object.keys(datosAConsumir).map(key =>{
+          return key;
+        }),
         datasets: [
           {
             label: 'Presupuesto',
@@ -31,12 +47,12 @@ export default function TortaPrincipal({presupuesto }) {
             ],
             data: [
               totalDisponible.insumos,
-              totalDisponible.gastosDePublicacion,
+              totalDisponible.publicaciones,
               totalDisponible.bibliografia,
-              totalDisponible.viajesYViaticos,
+              totalDisponible.viaticos,
               totalDisponible.equipamiento,
-              totalDisponible.serviciosTecnicos,
-              totalDisponible.gastosDeAdministracion,
+              totalDisponible.tecnico,
+              totalDisponible.administracion,
             ],
           },
         ],

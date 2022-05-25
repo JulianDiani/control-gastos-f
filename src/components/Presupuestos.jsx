@@ -61,7 +61,7 @@ export const Presupuestos = () => {
               <CardMontos
                 item
                 xl={6}
-                totalPresupuesto={presupuesto[0].total}
+                totalPresupuesto={presupuesto.total}
                 totalGastos={totalGastos}
               />
               <Card className={$.card}>
@@ -73,11 +73,11 @@ export const Presupuestos = () => {
                 </CardContent>
               </Card>
             </Grid>
-            <Tabla
+            {/* <Tabla
               presupuesto={presupuesto}
               gastos={comprasRealizadas.data}
-              totalDisponible={presupuesto[0].total - totalGastos}
-            />
+              totalDisponible={presupuesto.total - totalGastos}
+            /> */}
           </Grid>
         </div>
       </>

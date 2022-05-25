@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';

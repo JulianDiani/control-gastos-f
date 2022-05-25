@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import {
   makeStyles,
   TextField,
   Button,
   Divider,
-  Grid,
-  Typography,
+ 
 } from '@material-ui/core';
 import { postProveedor } from '../services/proveedores.js';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -99,10 +98,6 @@ export default function PopUpProveedores(props) {
     props.state(false);
   };
 
-  const handleClick = (e) => {
-    console.log("Click" + e);
-    return;
-  };
   return (
     <>
       <div className={$.modal}>

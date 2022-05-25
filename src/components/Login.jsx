@@ -16,16 +16,15 @@ import Alert from '@material-ui/lab/Alert';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import '../styles/styles.css';
 import isologo from '../assets/unahur-isologo.png';
-import background from '../assets/background.png';
+
 
 const Login = (props) => {
   //Hooks
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    async function fetch() {
+    async function fetch(){
       const loggedIn = sessionStorage.getItem("loggedIn");
-      // const loggedIn = "true";
       loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
     }
     fetch();
@@ -39,7 +38,7 @@ const Login = (props) => {
     handleFunction(value);
   };
 
-  //checking username and password - @DONE Connect to backend.
+  //checking username and password 
   const checkedLogin = (user) => {
     return user?.data?.contraseña === props.password && props.password !== undefined; //user? es para hacerlo safeNull y que no rompa.
   };

@@ -31,7 +31,8 @@ const useStyles = makeStyles({
 
 export default function Tabla({ presupuesto }) {
   const classes = useStyles();
-
+  const listaux =[presupuesto];
+  console.log("LIST AUX ",listaux);
 
   return (
     <Paper className={classes.root}>
@@ -51,13 +52,13 @@ export default function Tabla({ presupuesto }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {presupuesto.map((row) => {
+            {listaux.map((value,idx) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={idx}>
                   {rubros.map((rubro) => {
                     return (
                       <TableCell key={rubro.id}>
-                        {row[rubro.id]??0}
+                        {value??0}
                       </TableCell>
                     );
                   })}

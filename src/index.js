@@ -8,15 +8,16 @@ import {
   ThemeProvider,
 } from '@material-ui/core';
 import theme from './theme';
-import { RecoilRoot } from 'recoil';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Alert } from '@material-ui/lab';
+import store from './state/store';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <React.StrictMode>
       <CssBaseline />
-      <RecoilRoot>
+      <Provider store={store}>
         <Suspense fallback={<CircularProgress />}>
           <ErrorBoundary
             fallback={<Alert severity="error">Algo se rompió feo :(</Alert>}
@@ -24,7 +25,7 @@ ReactDOM.render(
             <App />
           </ErrorBoundary>
         </Suspense>
-      </RecoilRoot>
+      </Provider>
     </React.StrictMode>
   </ThemeProvider>,
   document.getElementById('root')
