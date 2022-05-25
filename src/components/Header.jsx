@@ -43,9 +43,9 @@ export default function Header(props) {
           onClose={handleClose}
           className={$.menu}
         >
-          <MenuItem className={$.menuItem} onClick={handleClose}>Configuracion</MenuItem>
-          <MenuItem className={$.menuItem} divider={true} onClick={handleClose}>Mi perfil</MenuItem>
-          <MenuItem className={$.menuItem} onClick={handleLogOut}>Cerrar Session</MenuItem>
+          {/* <MenuItem className={$.menuItem} onClick={handleClose}>Configuracion</MenuItem> */}
+          {/* <MenuItem className={$.menuItem} divider={true} onClick={handleClose}>Mi perfil</MenuItem> */}
+          <MenuItem className={$.menuItem} onClick={handleLogOut}>Cerrar Sesion</MenuItem>
         </Menu>
       </div>
     );

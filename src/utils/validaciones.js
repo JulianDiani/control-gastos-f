@@ -10,3 +10,9 @@ export const validateField = (input, value, setState) => {
     setState(!regexInteger.test(value));
   }
 };
+
+export const formatPrice = (price) => {
+  const format = new Intl.NumberFormat('de-DE').format(price);
+
+  return `$${format}`;
+};

@@ -78,19 +78,19 @@ export const Proveedores = () => {
                 <Table aria-label="customized table">
                     <StyledTableHead>
                         <StyledTableCell className={ $.textColor }>Nombre</StyledTableCell>
-                        <StyledTableCell align="center" className={ $.textColor }>Rubro</StyledTableCell>
-                        <StyledTableCell align="center" className={ $.textColor }>Teléfono</StyledTableCell>
-                        <StyledTableCell align="center" className={ $.textColor }>E-Mail</StyledTableCell>
-                        <StyledTableCell align="center" className={ $.textColor }>CUIT</StyledTableCell>
+                        <StyledTableCell align="left" className={ $.textColor }>Rubro</StyledTableCell>
+                        <StyledTableCell align="left" className={ $.textColor }>Teléfono</StyledTableCell>
+                        <StyledTableCell align="left" className={ $.textColor }>E-Mail</StyledTableCell>
+                        <StyledTableCell align="left" className={ $.textColor }>CUIT</StyledTableCell>
                     </StyledTableHead>
                     <TableBody>
                     {proveedores.data.map((proveedores) => (
                         <StyledTableRow key={proveedores.id}>
                         <StyledTableCell scope="row">{proveedores.nombre}</StyledTableCell>
-                        <StyledTableCell align="center">{proveedores.rubro}</StyledTableCell>
-                        <StyledTableCell align="center">{proveedores.telefono}</StyledTableCell>
-                        <StyledTableCell align="center">{proveedores.mail}</StyledTableCell>
-                        <StyledTableCell align="center">{proveedores.cuit}</StyledTableCell>
+                        <StyledTableCell align="left">{proveedores.rubro}</StyledTableCell>
+                        <StyledTableCell align="left">{proveedores.telefono}</StyledTableCell>
+                        <StyledTableCell align="left">{proveedores.mail}</StyledTableCell>
+                        <StyledTableCell align="left">{proveedores.cuit}</StyledTableCell>
                         </StyledTableRow>
                     ))}
                     </TableBody>

@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { montoDisponible, nivelDeEjecucion } from '../../utils/presupuestos'
+import { formatPrice } from '../../utils/validaciones';
 
 export default function CardMontos({ totalGastos, totalPresupuesto }) {
   const $ = useStyles();
@@ -25,7 +26,7 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
           variant="h5"
           className={$.typography}
         >
-         $ {totalPresupuesto}
+         {formatPrice(totalPresupuesto)}
         </span>
         <Typography
           variant="h5"
@@ -38,7 +39,7 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
           variant="h5"
           className={$.typography}
         >
-         $ {monto}
+         {formatPrice(monto)}
         </span>
         <Typography
           variant="body2"

@@ -42,28 +42,28 @@ export const proyectosEnCurso = [
     nombre:
       'Cifrado de secuencias de vídeo e imágenes mediante código OpenCL bajo demanda',
     director: 'Venere, Marcelo Javier',
-    fechaInicio: '20-04-2019',
+    fechaInicio: '20/04/2019',
     porcentaje: 98,
   },
   {
     nombre:
       'Generación de mallas de elementos finitos para arterias coronarias a partir de imágenes Ivus',
     director: 'Jonas, Ignacio',
-    fechaInicio: '25-11-2020',
+    fechaInicio: '25/11/2020',
     porcentaje: 52,
   },
   {
     nombre:
       'Un metodo eficiente para la sustraccion de fondo en videos usando gpu',
     director: 'Gervasoni, Luciano',
-    fechaInicio: '17-12-2020',
+    fechaInicio: '17/12/2020',
     porcentaje: 32,
   },
   {
     nombre:
       'Plataforma de software de código abierto para aplicaciones de segmentación de imágenes médicas',
     director: "D'amato, Juan Pablo",
-    fechaInicio: '15-12-2017',
+    fechaInicio: '15/12/2017',
     porcentaje: 47,
   },
 ];
@@ -73,28 +73,28 @@ export const proyectosEnHistoria = [
     nombre:
       'Sistema de Realidad Virtual para el Entrenamiento de Operarios de Excavadoras Hidráulicas',
     director: 'Lazo, Marcos Gonzalo',
-    fechaInicio: '16-05-2014',
+    fechaInicio: '16/05/2014',
     porcentaje: 100,
   },
   {
     nombre:
       'Gestión y optimización de escenas tridimensionales para simuladores de realidad virtual',
     director: "D'amato, Juan Pablo",
-    fechaInicio: '25-12-2016',
+    fechaInicio: '25/12/2016',
     porcentaje: 100,
   },
   {
     nombre:
       'Aplicación de Viterbi sobre Modelos Ocultos de Markov para la Estimación de Tráfico Vehicular',
     director: 'Perez, Alejandro J.',
-    fechaInicio: '14-12-2017',
+    fechaInicio: '14/12/2017',
     porcentaje: 100,
   },
   {
     nombre:
       'A GPU-Accelerated LPR Algorithm on Broad Vision Survillance Cameras',
     director: 'Dominguez, Leonardo Daniel',
-    fechaInicio: '24-05-2018',
+    fechaInicio: '24/05/2018',
     porcentaje: 100,
   },
 ];
@@ -102,8 +102,8 @@ export const proyectosEnHistoria = [
 // tabla total de presupuesto actualizada
 export const presupuestoPrueba = {
   tipo: 'Total Presupuesto',
-  fechaInicio: '18-09-2021',
-  fechaFin: '18-09-2022',
+  fechaInicio: '18/09/2021',
+  fechaFin: '18/09/2022',
   insumos: 100000,
   bibliografia: 50000,
   publicaciones: 9000,
@@ -116,7 +116,7 @@ export const presupuestoPrueba = {
 
 export const reformulacionPrueba = {
   tipo: 'Reformulacion IR',
-  fechaInicio: '18-10-2021',
+  fechaInicio: '18/10/2021',
   insumos: 0,
   bibliografia: 0,
   gastosDePublicacion: 0,
@@ -129,7 +129,7 @@ export const reformulacionPrueba = {
 
 export const pagoAProv = {
   tipo: 'Pago a proveedores',
-  fechaInicio: '18-09-2021',
+  fechaInicio: '18/09/2021',
 
   insumos: 500,
   bibliografia: 0,
@@ -143,7 +143,7 @@ export const pagoAProv = {
 
 export const rendEsp = {
   tipo: 'Rendiciones Especificas',
-  fechaInicio: '18-09-2021',
+  fechaInicio: '18/09/2021',
 
   insumos: 0,
   bibliografia: 0,
