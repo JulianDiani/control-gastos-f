@@ -4,9 +4,12 @@ import {
   TextField,
   Button,
   Divider,
-
+  Select, 
+  MenuItem
 } from '@material-ui/core';
 import { postProveedor } from '../services/proveedores.js';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { validateField } from '../utils/validaciones.js';
 
 export default function PopUpProveedores(props) {
   const $ = useStyles();
@@ -16,7 +19,13 @@ export default function PopUpProveedores(props) {
   const [telefono, setTelefono] = useState('');
   const [mail, setMail] = useState('');
   const [cuit, setCuit] = useState('');
-  const canSubmit = rubro && cuit && nombre && telefono && mail;
+  //Validate inputs
+  const [errorTelefono, setErrorTelefono] = useState('');
+  const [errorNombre, setErrorNombre] = useState('');
+  const [errorCuit, setErrorCuit] = useState('');
+  const [errorEmail, setErrorEmail] = useState('');
+
+  const canSubmit = rubro && cuit && nombre && telefono && mail && !errorNombre && !errorEmail && !errorCuit && !errorTelefono && !errorEmail;
 
   const submitForm = async () => {
     props.state(false);
@@ -45,8 +54,7 @@ export default function PopUpProveedores(props) {
         <h2>Agregar nuevo proveedor</h2>
         <Divider />
         <div className={$.inputs}>
-          <TextField
-            label="Rubro"
+          {/* <TextField
             className={$.textField}
             InputProps={{
               classes: {
@@ -56,10 +64,45 @@ export default function PopUpProveedores(props) {
             InputLabelProps={{
               classes: {
                 root: $.resize,
-                focused: $.labelFocused
+                focused: $.labelFocused,
               },
             }}
+            select
+            label="Rubro"
+            value={rubro}
             onChange={(e) => submitHandle(setRubro, e.target.value)}
+          >
+            {[
+              'insumos',
+              'bibliografia',
+              'publicaciones',
+              'viaticos',
+              'equipamiento',
+              'tecnico',
+              'administracion',
+            ].map((rubro,idx) => {
+              return (
+                <MenuItem key={idx} >{rubro}</MenuItem>
+              );
+              
+            })}
+            
+          </TextField> */}
+
+          <Autocomplete
+            id="proveedores"
+            options={[
+              'insumos',
+              'bibliografia',
+              'publicaciones',
+              'viaticos',
+              'equipamiento',
+              'tecnico',
+              'administracion',
+            ]}
+            getOptionLabel={(option) => option}
+            renderInput={(params) => <TextField {...params} label="Rubros" />}
+            onChange={(e, value) => submitHandle(setRubro, value)}
           />
           <TextField
             label="Nombre completo"
@@ -72,10 +115,13 @@ export default function PopUpProveedores(props) {
             InputLabelProps={{
               classes: {
                 root: $.resize,
-                focused: $.labelFocused
+                focused: $.labelFocused,
               },
             }}
-            onChange={(e) => submitHandle(setNombre, e.target.value)} />
+            onChange={(e) => submitHandle(setNombre, e.target.value)}
+            onBlur={(e) => validateField("string", e.target.value, setErrorNombre)}
+            error={errorNombre}
+          />
           <TextField
             label="Telefono"
             className={$.textField}
@@ -87,10 +133,12 @@ export default function PopUpProveedores(props) {
             InputLabelProps={{
               classes: {
                 root: $.resize,
-                focused: $.labelFocused
+                focused: $.labelFocused,
               },
             }}
             onChange={(e) => submitHandle(setTelefono, e.target.value)}
+            onBlur={(e) => validateField("int", e.target.value, setErrorTelefono)}
+            error={errorTelefono}
           />
           <TextField
             label="CUIT"
@@ -103,10 +151,12 @@ export default function PopUpProveedores(props) {
             InputLabelProps={{
               classes: {
                 root: $.resize,
-                focused: $.labelFocused
+                focused: $.labelFocused,
               },
             }}
             onChange={(e) => submitHandle(setCuit, e.target.value)}
+            onBlur={(e) => validateField("int", e.target.value, setErrorCuit)}
+            error={errorCuit}
           />
           <TextField
             label="E-mail"
@@ -119,10 +169,12 @@ export default function PopUpProveedores(props) {
             InputLabelProps={{
               classes: {
                 root: $.resize,
-                focused: $.labelFocused
+                focused: $.labelFocused,
               },
             }}
             onChange={(e) => submitHandle(setMail, e.target.value)}
+            onBlur={(e) => validateField("email", e.target.value, setErrorEmail)}
+            error={errorEmail}
           />
         </div>
         <div className={$.button}>
@@ -164,7 +216,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '2vh'
   },
   resize: {
-    fontSize: '2.3vh'
+    fontSize: '1.9vh'
   },
   labelFocused: {
     fontSize: '2vh'

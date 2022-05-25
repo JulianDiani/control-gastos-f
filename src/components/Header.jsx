@@ -64,7 +64,8 @@ const useStyles = makeStyles(() => ({
 
   header: {
     height: '10vh',
-    width: '82vw',
+    width: '80vw',
+    
   },
   menu: {
     marginTop: '2.7rem',
@@ -80,7 +81,7 @@ const useStyles = makeStyles(() => ({
   },
   whiteBar: {
     backgroundColor: '#fafafa',
-    width: '82vw',
+    width: '100%',
     height: '5vh',
     display: ' flex',
     justifyContent: 'flex-end',

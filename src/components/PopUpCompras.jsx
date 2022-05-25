@@ -9,13 +9,13 @@ import {
   FormControl,
   InputLabel,
   Select,
-  Tooltip,
 } from '@material-ui/core';
 import { postCompra, getGastosPorRubro } from '../services/compras.js';
-import PublishIcon from '@material-ui/icons/Publish';
 import { getPresupuesto, getRubros } from '../services/presupuestos.js';
 import { validateField } from '../utils/validaciones';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import PublishIcon from '@material-ui/icons/Publish';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -248,7 +248,7 @@ export default function PopUpCompras(props) {
           <RubroSelected />
           <TextField
             label="Subrubro"
-            onBlur={(e) => validateField("subrubro", e.target.value, setErrorSubrubro)}
+            onBlur={(e) => validateField("string", e.target.value, setErrorSubrubro)}
             onChange={(e) => submitHandle(setSubrubro, e.target.value)}
             className={$.subrubro}
             error={errorSubrubro}
@@ -272,7 +272,7 @@ export default function PopUpCompras(props) {
             <TextField
               label="Monto"
               onChange={(e) => submitHandle(setMonto, e.target.value)}
-              onBlur={(e) => validateField("monto", e.target.value, setErrorMonto)}
+              onBlur={(e) => validateField("int", e.target.value, setErrorMonto)}
               error={errorMonto}
             />
             <PublishIcon className={$.uploadIcon} />
@@ -298,7 +298,7 @@ export default function PopUpCompras(props) {
             renderInput={(params) => <TextField {...params} label="Proveedores" />}
             onChange={(e, value) => submitHandle(setProveedor, value.name)}
           />
-          <PublishIcon className={$.uploadIcon} />
+          <KeyboardArrowDownIcon className={$.uploadIcon} onClick={handleAddProveedor}/>
         </div>
         {newProveedor && (
           <div className={$.proveedorForm}>

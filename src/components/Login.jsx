@@ -23,8 +23,8 @@ const Login = (props) => {
 
   useEffect(() => {
     async function fetch() {
-      // const loggedIn = sessionStorage.getItem("loggedIn");
-      const loggedIn = "true";
+      const loggedIn = sessionStorage.getItem("loggedIn");
+      // const loggedIn = "true"; cuando no anda el back
       loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
     }
     fetch();

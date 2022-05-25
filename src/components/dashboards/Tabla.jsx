@@ -7,16 +7,17 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { formatPrice } from '../../utils/validaciones';
 
 const rubros = [
   { id: 'tipo', label: 'Tipo' },
   { id: 'insumos', label: 'Insumos' },
   { id: 'bibliografia', label: 'Bibliografia' },
-  { id: 'publicaciones',label: 'Gastos De Publicacion',},
-  { id: 'viaticos', label: 'Viajes Y Viaticos' },
+  { id: 'publicaciones',label: 'Publicacion',},
+  { id: 'viaticos', label: 'Viaticos' },
   { id: 'equipamiento', label: 'Equipamiento' },
   { id: 'tecnico', label: 'Servicios Tecnicos' },
-  { id: 'administracion',label: 'Gastos De Administración'},
+  { id: 'administracion',label: 'Administración'},
   { id: 'total', label: 'Total' },
 ];
 
@@ -32,7 +33,28 @@ const useStyles = makeStyles({
 
 export default function Tabla({ presupuesto }) {
   const classes = useStyles();
-
+  const datosAConsumir = (({
+    tipo,
+    insumos,
+    bibliografia,
+    publicaciones,
+    viaticos,
+    equipamiento,
+    tecnico,
+    administracion,
+    total,
+  }) => ({
+    tipo,
+    insumos,
+    bibliografia,
+    publicaciones,
+    viaticos,
+    equipamiento,
+    tecnico,
+    administracion,
+    total,
+  }))(presupuesto);
+  
   return (
     <>
     <Paper className={classes.root}>
@@ -53,11 +75,12 @@ export default function Tabla({ presupuesto }) {
           </TableHead>
             <TableBody> 
                 <TableRow hover role="checkbox" tabIndex={-1}>
-                  {Object.entries(presupuesto).map( (key,idx) => {
+                  {Object.entries(datosAConsumir).map( (key,idx) => {
+                    const clave = key[0];
                     const value = key[1];
                     return (
                       <TableCell key={idx}>
-                        {value??0}
+                        { clave === "tipo" ? value : formatPrice(value??0) }
                       </TableCell>
                     );
                   })}

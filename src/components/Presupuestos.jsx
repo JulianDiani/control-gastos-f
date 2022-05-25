@@ -99,6 +99,7 @@ const useStyles = makeStyles({
     height: '100%',
     display: 'flex',
     marginLeft: '1vw',
+    marginBottom: '2rem'
   },
   card: {
     width: '25vw',

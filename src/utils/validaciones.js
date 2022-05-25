@@ -1,13 +1,18 @@
 const regexString = new RegExp('^[a-zA-Z]+$');
 const regexInteger = new RegExp('^[0-9]+');
+//TODO regexCuit & regexEmail
 
 export const validateField = (input, value, setState) => {
-  if (input !== 'monto') {
-    console.log('ENTRO ACA');
-    console.log(regexString.test(value));
+  if (input === 'email') {
     setState(!regexString.test(value));
-  } else {
+  }
+  if (input === 'cuit') {
     setState(!regexInteger.test(value));
+  }
+  if (input === 'int') {
+    setState(!regexInteger.test(value));
+  } else {
+    setState(!regexString.test(value));
   }
 };
 
