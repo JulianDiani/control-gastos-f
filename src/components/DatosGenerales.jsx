@@ -13,7 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { getProyecto } from '../services/proyectos.js';
 import Alert from '@material-ui/lab/Alert';
-
+import { formatPrice } from '../utils/validaciones';
 export const DatosGenerales = () => {
   const $ = useStyles();
 
@@ -89,7 +89,7 @@ export const DatosGenerales = () => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Subsidio: ' + proyecto.subsidio}
+            primary={'Subsidio: ' + formatPrice(proyecto.subsidio)}
             sx={{ ml: 2 }}
           />
         </ListItem>

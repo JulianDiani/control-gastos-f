@@ -23,8 +23,8 @@ const Login = (props) => {
 
   useEffect(() => {
     async function fetch() {
-      const loggedIn = sessionStorage.getItem("loggedIn");
-      // const loggedIn = "true";
+      // const loggedIn = sessionStorage.getItem("loggedIn");
+      const loggedIn = "true";
       loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
     }
     fetch();
@@ -38,7 +38,7 @@ const Login = (props) => {
     handleFunction(value);
   };
 
-  //checking username and password - @DONE Connect to backend.
+  //checking username and password 
   const checkedLogin = (user) => {
     return user?.data?.contraseña === props.password && props.password !== undefined; //user? es para hacerlo safeNull y que no rompa.
   };

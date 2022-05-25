@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   TextField,
   Button,
   Divider,
-  Grid,
-  Typography,
+
 } from '@material-ui/core';
 import { postProveedor } from '../services/proveedores.js';
 

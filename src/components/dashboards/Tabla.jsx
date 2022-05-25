@@ -20,6 +20,7 @@ const rubros = [
   { id: 'total', label: 'Total' },
 ];
 
+
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -32,8 +33,8 @@ const useStyles = makeStyles({
 export default function Tabla({ presupuesto }) {
   const classes = useStyles();
 
-
   return (
+    <>
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
@@ -50,23 +51,21 @@ export default function Tabla({ presupuesto }) {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {presupuesto.map((row) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                  {rubros.map((rubro) => {
+            <TableBody> 
+                <TableRow hover role="checkbox" tabIndex={-1}>
+                  {Object.entries(presupuesto).map( (key,idx) => {
+                    const value = key[1];
                     return (
-                      <TableCell key={rubro.id}>
-                        {row[rubro.id]??0}
+                      <TableCell key={idx}>
+                        {value??0}
                       </TableCell>
                     );
                   })}
                 </TableRow>
-              );
-            })}
           </TableBody>
         </Table>
       </TableContainer>
-    </Paper>
+    </Paper> 
+     </>
   );
 }

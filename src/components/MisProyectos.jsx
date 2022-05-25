@@ -1,4 +1,4 @@
-import { React }from 'react';
+import { React, useEffect, useState }from 'react';
 import { Footer } from './Footer';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,9 +9,14 @@ import Paper from '@material-ui/core/Paper';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { proyectosEnCurso } from '../constants/constants';
 import { proyectosEnHistoria } from '../constants/constants';
-import { proyectoPrueba } from '../constants/constants';
 import { Link } from 'react-router-dom';
-import { CircularProgressWithValue } from './CircularProgressWithValue';
+import { calculateTotalExpenses, nivelDeEjecucion } from '../utils/presupuestos';
+import { getPresupuesto } from '../services/presupuestos';
+import { getAllCompras } from '../services/compras';
+import { Box, CircularProgress, Typography } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { setNivelEjecucion } from '../state/nivelEjecucionSlice';
+
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -24,7 +29,7 @@ const StyledTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 
-const StyledTableRow = withStyles((theme) => ({
+const StyledTableRow = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
       backgroundColor: 'theme.palette.action.hover,'
@@ -32,16 +37,15 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const StyledTableHead = withStyles((theme) => ({
+const StyledTableHead = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
-      background: 'linear-gradient(to left , #84ED34, #80B05C ,#5AA123)'
-      //backgroundColor: '#5AA123'
+      background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)', 
     },
   },
 }))(TableRow);
 
-const StyledTableHeadTerminados = withStyles((theme) => ({
+const StyledTableHeadTerminados = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
       backgroundColor: '#DCDCDC'
@@ -49,10 +53,48 @@ const StyledTableHeadTerminados = withStyles((theme) => ({
   },
 }))(TableRow);
 
+const circularProgressWithValue = (nivelEjecucion) => {
+  return (
+    <Box position="relative" display="inline-flex">
+      <CircularProgress variant="determinate" value={nivelEjecucion} />
+      <Box
+        top={0}
+        left={0}
+        bottom={0}
+        right={0}
+        position="absolute"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Typography variant="caption" color="textSecondary">{nivelEjecucion}%</Typography>
+      </Box>
+    </Box>
+  );
+}
 
 export const MisProyectos = () => {
     const $ = useStyles();
-
+    
+    const dispatch = useDispatch()
+    //const [nivelEjecucion, setNivelEjecicion] = useState();
+    //Porcentaje USAR REDUX porque lo comparten presupuestos y CardMontos.
+     useEffect(() => {
+      async function getPorcentaje() {
+        const presupuesto = await getPresupuesto();
+        const comprasRealizadas = await getAllCompras();
+        const gastos = calculateTotalExpenses(comprasRealizadas);
+        const totalPresupuesto = presupuesto.total;
+        const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos).split(",")[0]; //Truncamiento del porcentaje.
+        dispatch(setNivelEjecucion(ejecucion))
+        console.log("Ejecucion ",presupuesto,gastos)
+        //setNivelEjecicion(ejecucion);
+      }
+      getPorcentaje();
+     },[])
+     console.log("PASO ACA", useSelector(state => state));
+     const nivelEjecucion = useSelector(state => state.nivelEjecucion.value)
+     console.log("Type ", nivelEjecucion);
     return <>
         <h2>En curso</h2>
         <TableContainer className={$.container} component={Paper}>
@@ -64,29 +106,15 @@ export const MisProyectos = () => {
                     <StyledTableCell align="center" className={ $.textColor }>Porcentaje</StyledTableCell>
                 </StyledTableHead>
                 <TableBody>
-                  {/* Usando el proyecto de prueba */}
-                  <StyledTableRow key={proyectoPrueba.titulo}>
-                  <StyledTableCell 
-                  scope="row" 
-                  component={Link}
-                  to={'/proyectos'}
-                  >
-                    {proyectoPrueba.titulo}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">{proyectoPrueba.director}</StyledTableCell>
-                  <StyledTableCell align="center">{proyectoPrueba.fechaInicio}</StyledTableCell>
-                  <StyledTableCell align="center">
-                    <CircularProgressWithValue progreso={50} />
-                  </StyledTableCell>
-                </StyledTableRow>
+                  
 
                 {proyectosEnCurso.map((proyectosEnCurso) => (
                     <StyledTableRow key={proyectosEnCurso.nombre}>
-                      <StyledTableCell scope="row">{proyectosEnCurso.nombre}</StyledTableCell>
-                      <StyledTableCell align="center">{proyectosEnCurso.director}</StyledTableCell>
+                      <StyledTableCell scope="row" component={Link} to={'/proyectos'}>{proyectosEnCurso.nombre}</StyledTableCell>
+                      <StyledTableCell align="center" >{proyectosEnCurso.director}</StyledTableCell>
                       <StyledTableCell align="center">{proyectosEnCurso.fechaInicio}</StyledTableCell>
                       <StyledTableCell align="center">
-                        <CircularProgressWithValue progreso={proyectosEnCurso.porcentaje} />
+                        {circularProgressWithValue(nivelEjecucion)}
                       </StyledTableCell>
                     </StyledTableRow>
                 ))}
@@ -110,7 +138,7 @@ export const MisProyectos = () => {
                     <StyledTableCell align="center">{proyectosEnHistoria.director}</StyledTableCell>
                     <StyledTableCell align="center">{proyectosEnHistoria.fechaInicio}</StyledTableCell>
                     <StyledTableCell align="center">
-                      <CircularProgressWithValue progreso={proyectosEnHistoria.porcentaje} />
+                      {circularProgressWithValue(proyectosEnHistoria.porcentaje)}
                     </StyledTableCell>
                     </StyledTableRow>
                 ))}

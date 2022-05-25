@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import { Button, Grid, Modal } from '@material-ui/core';
 import PopUpCompras from './PopUpCompras';
 import { Footer } from './Footer';
+import {formatPrice} from '../utils/validaciones';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -22,7 +23,7 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-const StyledTableRow = withStyles((theme) => ({
+const StyledTableRow = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
       backgroundColor: 'theme.palette.action.hover,',
@@ -30,16 +31,15 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-const StyledTableHead = withStyles((theme) => ({
+const StyledTableHead = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
-      background: 'linear-gradient(to left , #91ED34, #80B05C ,#5AA123)'
-      //backgroundColor: '#5AA123',
+      background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)', 
     },
   },
 }))(TableRow);
 
-export const Compras = (props) => {
+export const Compras = () => {
   //Styles
   const $ = useStyles();
 
@@ -71,10 +71,18 @@ export const Compras = (props) => {
       fetchCompra();
       setNewCompra(false)
   }, [newCompra]);
-
+  
   const loadingRendering = () => {
     return <Alert severity="info">Cargando...</Alert>;
   };
+
+  const totalGastos = () => {
+    const compra = compras.data.map(compra => Number(compra.monto));
+    console.log(compra);
+    const suma = compra.reduce((a, b) => a + b, 0)
+    
+    return formatPrice(suma);
+  }
   const rendering = () => {
     return (
       <>
@@ -82,52 +90,65 @@ export const Compras = (props) => {
           <Table aria-label="customized table">
             <StyledTableHead>
               <StyledTableCell className={$.textColor}>Rubro</StyledTableCell>
-              <StyledTableCell align="center" className={$.textColor}>
+              <StyledTableCell align="left" className={$.textColor}>
                 Subrubro
               </StyledTableCell>
               <StyledTableCell align="center" className={$.textColor}>
                 Numero de compra
               </StyledTableCell>
-              <StyledTableCell align="center" className={$.textColor}>
+              <StyledTableCell align="left" className={$.textColor}>
                 Proveedor
               </StyledTableCell>
-              <StyledTableCell align="center" className={$.textColor}>
-                Monto
-              </StyledTableCell>
-              <StyledTableCell align="center" className={$.textColor}>
+              <StyledTableCell align="left" className={$.textColor}>
                 Estado
               </StyledTableCell>
-              <StyledTableCell align="center" className={$.textColor}>
-                Proveedor
+              <StyledTableCell align="left" className={$.textColor}>
+                Nro factura
+              </StyledTableCell>
+              <StyledTableCell align="right" className={$.textColor}>
+                Monto
               </StyledTableCell>
             </StyledTableHead>
             <TableBody>
               {compras.data.map((compra) => (
                 <StyledTableRow key={compra.id}>
                   <StyledTableCell scope="row">{compra.rubro}</StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell align="left">
                     {compra.subrubro}
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {compra.numeroCompra}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell align="left">
                     {compra.proveedor}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
-                    ${compra.monto}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell align="left">
                     {compra.estado}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell align="left">
                     {compra.factura}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {formatPrice(compra.monto)}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
+            <TableBody>
+            {[0,1,2,3,4].map(key => (
+              <StyledTableCell key={key} style={{backgroundColor: '#E5E9F0'}}/>
+            )
+              )}
+            <StyledTableCell align="left" style={{fontWeight: 'bold', backgroundColor: '#E5E9F0'}} >
+                    TOTAL
+            </StyledTableCell>
+            <StyledTableCell align="right" style={{fontWeight: 'bold', backgroundColor: '#E5E9F0'}}>
+                    {totalGastos()}
+            </StyledTableCell>
+            </TableBody>
           </Table>
         </TableContainer>
+
       </>
     );
   };
@@ -173,4 +194,7 @@ const useStyles = makeStyles({
   tableCellContent: {
     maxWidth: '10vw',
   },
+  montoTotal:{
+    alignContent: 'right'
+  }
 });

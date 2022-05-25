@@ -9,12 +9,105 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Tooltip,
 } from '@material-ui/core';
-import Alert from '@material-ui/lab/Alert';
 import { postCompra, getGastosPorRubro } from '../services/compras.js';
 import PublishIcon from '@material-ui/icons/Publish';
 import { getPresupuesto, getRubros } from '../services/presupuestos.js';
 import { validateField } from '../utils/validaciones';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    width: '50vw',
+    height: '80%',
+    boxShadow: '0px 0px 5px 1px grey',
+    padding: theme.spacing(2, 4, 3),
+    top: '55%',
+    left: '55%',
+    transform: 'translate(-50%,-50%)',
+    overflow: 'scroll',
+  },
+  inputs: {
+    width: '100%',
+    paddingBottom: '1rem',
+    display: 'flex',
+  },
+  item: {
+    paddingLeft: '1rem',
+  },
+  button: {
+    display: 'flex',
+    justifyContent: 'right',
+    marginTop: '6.5rem',
+  },
+  secondRow: {
+    display: 'grid',
+    width: '30%',
+  },
+  cargarFactura: {
+    display: 'flex',
+    marginTop: '1rem'
+  },
+  descripcion: {
+    display: 'grid',
+    marginTop: '1.5rem',
+  },
+  multiLineInput: {
+    backgroundColor: '#fafafa',
+    borderRadius: '5px',
+    width: '90%',
+  },
+  proveedor: {
+    marginTop: '1.5rem',
+    display: 'flex'
+  },
+  uploadIcon: {
+    marginBlock: 'auto',
+    margin: '1rem',
+    marginTop: '2rem',
+    '&:hover': {
+      color: '#62B5F6',
+    },
+  },
+  buttonList: {
+    display: 'block',
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  subrubro: {
+    marginTop: '1.25rem',
+  },
+  divider: {
+    //width: '40rem',
+    marginLeft: '0rem',
+    marginBottom: '1.5rem',
+  },
+  proveedorForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '15rem',
+    marginTop: '2rem'
+  },
+  buttonNewProveedor: {
+    marginTop: '1rem',
+    '&:hover': {
+      backgroundColor: '#ffffff',
+      color: 'green'
+    },
+  },
+  label: {
+    fontSize: '16px',
+    fontWeight: 'bold'
+  },
+  inputForm: {
+    marginBottom: '2rem'
+  }
+}));
 
 export default function PopUpCompras(props) {
   const $ = useStyles();
@@ -28,12 +121,21 @@ export default function PopUpCompras(props) {
   const [disponibleRubro, setDisponibleRubro] = useState('');
   const [validateFields, setValidateFields] = useState(true);
   const canSubmit = rubro && subrubro && monto && fecha && proveedor;
+  const [errorMonto, setErrorMonto] = useState(false);
+  const [errorSubrubro, setErrorSubrubro] = useState(false);
+  const [newProveedor, setNewProveedor] = useState(null);
+  //Agregar nuevo proveedor
+  const [newProveedorRubro, setNewProveedorRubro] = useState(null);
+  const [newProveedorNombre, setNewProveedorNombre] = useState(null);
+  const [newProveedorCuit, setNewProveedorCuit] = useState(null);
 
+  const canFinish = rubro && subrubro && monto && fecha && proveedor;
+  const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit;
   useEffect(() => {
     async function fetchGastos() {
       const gastos = await getGastosPorRubro(rubro);
       const responsePresupuesto = await getPresupuesto();
-      const presupuesto = responsePresupuesto[0];
+      const presupuesto = responsePresupuesto;
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         presupuesto,
         gastos.totalGastado,
@@ -69,21 +171,31 @@ export default function PopUpCompras(props) {
     console.log('[PopUpCompras] submitForm response: ', res);
   };
 
-  const submitHandle = (handle, value, isNumber = false) => {
-    const regex = new RegExp('/^[0-9]$/');
-    if (isNumber) {
-      if (!regex.test(value)) {
-        return;
-      }
-    }
+  const submitHandle = (handle, value) => {
     handle(value);
     console.log(value);
   };
 
-
   const handleClose = () => {
     props.state(false);
   };
+
+  //New proveedor handlers
+  const handleAddProveedor = () => {
+    setNewProveedor(!newProveedor);
+  }
+  const handleNewProveedor = (value, setState) => {
+    setState(value);
+  }
+  const sendDataNewProveedor = () => {
+    const data = {
+      cuit: newProveedorCuit,
+      nombre: newProveedorNombre,
+      rubro: newProveedorRubro
+    }
+    console.log("Data to post", data);
+  }
+
   const RubroSelected = () => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -136,13 +248,14 @@ export default function PopUpCompras(props) {
           <RubroSelected />
           <TextField
             label="Subrubro"
+            onBlur={(e) => validateField("subrubro", e.target.value, setErrorSubrubro)}
             onChange={(e) => submitHandle(setSubrubro, e.target.value)}
-            onBlur={(e) => validateField("subrubro", e.target.value, setValidateFields)}
             className={$.subrubro}
+            error={errorSubrubro}
           />
         </div>
         <Typography>
-          Cuentas con $<b>{disponibleRubro}</b> para este rubro{' '}
+          Cuentas con $<b>{disponibleRubro}</b> para este rubro
         </Typography>
         <br />
         <Divider class={$.divider} />
@@ -158,7 +271,9 @@ export default function PopUpCompras(props) {
           <div className={$.cargarFactura}>
             <TextField
               label="Monto"
-              onChange={(e) => submitHandle(setMonto, e.target.value, true)}
+              onChange={(e) => submitHandle(setMonto, e.target.value)}
+              onBlur={(e) => validateField("monto", e.target.value, setErrorMonto)}
+              error={errorMonto}
             />
             <PublishIcon className={$.uploadIcon} />
           </div>
@@ -174,15 +289,45 @@ export default function PopUpCompras(props) {
             onChange={(e) => submitHandle(setNombre, e.target.value)}
           />
         </div>
-        <div className={$.cargarFactura}>
-          <TextField
-            label="Proveedor"
-            className={$.proveedor}
-            onChange={(e) => submitHandle(setProveedor, e.target.value)}
+        <div className={$.proveedor}>
+          <Autocomplete
+            id="proveedores"
+            options={proveedores}
+            getOptionLabel={(option) => option.name}
+            style={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label="Proveedores" />}
+            onChange={(e, value) => submitHandle(setProveedor, value.name)}
           />
           <PublishIcon className={$.uploadIcon} />
         </div>
-
+        {newProveedor && (
+          <div className={$.proveedorForm}>
+            <span className={$.label}>Nombre completo</span>
+            <TextField
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorNombre)}
+              placeholder="ingrese el Nombre completo"
+              className={$.inputForm}
+            />
+            <span className={$.label}>Cuit</span>
+            <TextField
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorCuit)}
+              placeholder="ingrese el CUIT"
+              className={$.inputForm}
+            />
+            <span className={$.label}>Rubro</span>
+            <TextField
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorRubro)}
+              placeholder="ingrese el rubro"
+              className={$.inputForm}
+            />
+            <Button
+              onClick={sendDataNewProveedor}
+              disabled={!canAddProveedor}
+            >
+              Agregar proveedor
+            </Button>
+          </div>
+        )}
         <div className={$.button}>
           <Button color="primary" className={$.botones} onClick={handleClose}>
             Cancelar
@@ -196,72 +341,4 @@ export default function PopUpCompras(props) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    width: '50vw',
-    height: '80%',
-    boxShadow: '0px 0px 5px 1px grey',
-    padding: theme.spacing(2, 4, 3),
-    top: '55%',
-    left: '55%',
-    transform: 'translate(-50%,-50%)',
-    overflow: 'scroll',
-  },
-  inputs: {
-    width: '100%',
-    paddingBottom: '1rem',
-    display: 'flex',
-  },
-  item: {
-    paddingLeft: '1rem',
-  },
-  button: {
-    display: 'flex',
-    justifyContent: 'right',
-    marginTop: '6.5rem',
-  },
-  secondRow: {
-    display: 'grid',
-    width: '30%',
-  },
-  cargarFactura: {
-    display: 'flex',
-  },
-  descripcion: {
-    display: 'grid',
-    marginTop: '1.5rem',
-  },
-  multiLineInput: {
-    backgroundColor: '#fafafa',
-    borderRadius: '5px',
-    width: '90%',
-  },
-  proveedor: {
-    marginTop: '0.5rem',
-  },
-  uploadIcon: {
-    // marginBlock: 'auto',
-    margin: '1rem',
-    marginTop: '1.8rem',
-    '&:hover': {
-      color: '#62B5F6',
-    },
-  },
-  buttonList: {
-    display: 'block',
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  subrubro: {
-    marginTop: '1.25rem',
-  },
-  divider: {
-    //width: '40rem',
-    marginLeft: '0rem',
-    marginBottom: '1.5rem',
-  },
-}));
+const proveedores = [{ name: "Pepito" }, { name: "Josesito" }, { name: "Ruben" }]; //PASAR A SERVICE
