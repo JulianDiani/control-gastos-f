@@ -7,19 +7,20 @@ import Grid from '@material-ui/core/Grid';
 import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Help, Home, Info, ShoppingCart, ImportContacts, Timeline, Contacts, Create } from '@material-ui/icons';
+import { Help, Home, Info, ShoppingCart, ImportContacts, Timeline, Contacts, Create, PeopleAlt } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
 
 export default function NavBar() {
   const $ = useStyles();
   let navbar;
+  const user = sessionStorage.getItem("username");
 
   const sideBarOptions = [
     { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/' },
     { text: 'Normativas I+D', icon: <Info />, path: '/normativas' },
     { text: 'Soporte', icon: <Help />, path: '/soporte' },
   ];
-  const proyects = [
+  const investigadorSlides = [
     { text: 'Inicio', icon: <Home />, path: '/' },
     { text: 'Datos Generales', icon: <ImportContacts />, path: '/proyectos' },
     { text: 'Presupuestos', icon: <Timeline />, path: '/proyectos/presupuestos' },
@@ -29,12 +30,18 @@ export default function NavBar() {
     { text: 'Proveedores', icon: <Contacts />, path: '/proyectos/proveedores' },
     { text: 'Normativas I+D', icon: <Info />, path: '/proyectos/normativas' },
   ];
+
+  const adminSlides = [
+    { text: 'Proyectos', icon: <ShareIcon />, path: '/' },
+    { text: 'Usuarios', icon: <PeopleAlt />, path: '/' },
+  ]
+
   let location = useLocation();
 
   if (location.pathname.startsWith('/proyectos')) {
-    navbar = proyects;
+    user === "galosalerno" ? navbar = investigadorSlides : navbar = adminSlides; 
   } else {
-    navbar = sideBarOptions;
+      user === "galosalerno" ? navbar = sideBarOptions : navbar = adminSlides;
   }
   return (
     <Grid>
