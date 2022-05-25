@@ -4,10 +4,10 @@ const regexInteger = new RegExp('^[0-9]+');
 
 export const validateField = (input, value, setState) => {
   if (input === 'email') {
-    setState(!regexString.test(value));
+    setState(false); //TODO: Validaciones para email
   }
   if (input === 'cuit') {
-    setState(!regexInteger.test(value));
+    setState(!regexInteger.test(value)); //TODO: Validaciones para CUIT
   }
   if (input === 'int') {
     setState(!regexInteger.test(value));

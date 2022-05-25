@@ -296,7 +296,7 @@ export default function PopUpCompras(props) {
             getOptionLabel={(option) => option.name}
             style={{ width: 300 }}
             renderInput={(params) => <TextField {...params} label="Proveedores" />}
-            onChange={(e, value) => submitHandle(setProveedor, value.name)}
+            onChange={(e, value) => submitHandle(setProveedor, value?.name)}
           />
           <KeyboardArrowDownIcon className={$.uploadIcon} onClick={handleAddProveedor}/>
         </div>
