@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import { postCompra, getGastosPorRubro } from '../services/compras.js';
-import AddCircle from '@material-ui/icons/AddCircle';
+import PublishIcon from '@material-ui/icons/Publish';
 import { getPresupuesto, getRubros } from '../services/presupuestos.js';
 import { validateField } from '../utils/validaciones';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   uploadIcon: {
     marginBlock: 'auto',
     margin: '1rem',
-    marginTop: '1rem',
+    marginTop: '2rem',
     '&:hover': {
       color: '#62B5F6',
     },
@@ -87,24 +87,24 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '0rem',
     marginBottom: '1.5rem',
   },
-  proveedorForm:{
+  proveedorForm: {
     display: 'flex',
     flexDirection: 'column',
     width: '15rem',
     marginTop: '2rem'
   },
-  buttonNewProveedor:{
+  buttonNewProveedor: {
     marginTop: '1rem',
     '&:hover': {
       backgroundColor: '#ffffff',
       color: 'green'
     },
   },
-  label:{
+  label: {
     fontSize: '16px',
     fontWeight: 'bold'
   },
-  inputForm:{
+  inputForm: {
     marginBottom: '2rem'
   }
 }));
@@ -119,13 +119,15 @@ export default function PopUpCompras(props) {
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
   const [disponibleRubro, setDisponibleRubro] = useState('');
+  const [validateFields, setValidateFields] = useState(true);
+  const canSubmit = rubro && subrubro && monto && fecha && proveedor;
   const [errorMonto, setErrorMonto] = useState(false);
   const [errorSubrubro, setErrorSubrubro] = useState(false);
   const [newProveedor, setNewProveedor] = useState(null);
   //Agregar nuevo proveedor
-  const [newProveedorRubro,setNewProveedorRubro] = useState(null);
-  const [newProveedorNombre,setNewProveedorNombre] = useState(null);
-  const [newProveedorCuit,setNewProveedorCuit] = useState(null);
+  const [newProveedorRubro, setNewProveedorRubro] = useState(null);
+  const [newProveedorNombre, setNewProveedorNombre] = useState(null);
+  const [newProveedorCuit, setNewProveedorCuit] = useState(null);
 
   const canFinish = rubro && subrubro && monto && fecha && proveedor;
   const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit;
@@ -149,8 +151,8 @@ export default function PopUpCompras(props) {
     }
   }, [rubro]); //Ver mejor practica para no pegarle tanto al back.
 
-  const calcularDineroDisponiblePorRubro = (presupuestoTotal,gastosRubro,rubro) => rubro? presupuestoTotal[rubro.toLowerCase()] - gastosRubro : 0;
-  
+  const calcularDineroDisponiblePorRubro = (presupuestoTotal, gastosRubro, rubro) => rubro ? presupuestoTotal[rubro.toLowerCase()] - gastosRubro : 0;
+
   const submitForm = async () => {
     props.state(false);
     let data = {
@@ -173,25 +175,25 @@ export default function PopUpCompras(props) {
     handle(value);
     console.log(value);
   };
- 
+
   const handleClose = () => {
     props.state(false);
   };
 
   //New proveedor handlers
-  const handleAddProveedor = () =>{
+  const handleAddProveedor = () => {
     setNewProveedor(!newProveedor);
   }
-  const handleNewProveedor = (value,setState) =>{
-      setState(value);
+  const handleNewProveedor = (value, setState) => {
+    setState(value);
   }
-  const sendDataNewProveedor = () =>{
+  const sendDataNewProveedor = () => {
     const data = {
       cuit: newProveedorCuit,
       nombre: newProveedorNombre,
       rubro: newProveedorRubro
     }
-    console.log("Data to post",data);
+    console.log("Data to post", data);
   }
 
   const RubroSelected = () => {
@@ -209,7 +211,7 @@ export default function PopUpCompras(props) {
     const handleOpen = () => {
       setOpen(true);
     };
-    
+
     return (
       <div>
         <Button className={classes.buttonList} onClick={handleOpen} />
@@ -246,7 +248,7 @@ export default function PopUpCompras(props) {
           <RubroSelected />
           <TextField
             label="Subrubro"
-            onBlur={(e) => validateField("subrubro",e.target.value,setErrorSubrubro)}
+            onBlur={(e) => validateField("subrubro", e.target.value, setErrorSubrubro)}
             onChange={(e) => submitHandle(setSubrubro, e.target.value)}
             className={$.subrubro}
             error={errorSubrubro}
@@ -270,9 +272,10 @@ export default function PopUpCompras(props) {
             <TextField
               label="Monto"
               onChange={(e) => submitHandle(setMonto, e.target.value)}
-              onBlur={(e) => validateField("monto",e.target.value,setErrorMonto)}
+              onBlur={(e) => validateField("monto", e.target.value, setErrorMonto)}
               error={errorMonto}
             />
+            <PublishIcon className={$.uploadIcon} />
           </div>
         </div>
         <div className={$.descripcion}>
@@ -292,38 +295,32 @@ export default function PopUpCompras(props) {
             options={proveedores}
             getOptionLabel={(option) => option.name}
             style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Proveedores"  />}
-            onChange={(e,value) => submitHandle(setProveedor, value.name)}
+            renderInput={(params) => <TextField {...params} label="Proveedores" />}
+            onChange={(e, value) => submitHandle(setProveedor, value.name)}
           />
-          <Tooltip title="Agregar nuevo proveedor" >
-            <Button 
-              startIcon={<AddCircle/>}
-              onClick={handleAddProveedor}
-              className={$.buttonNewProveedor}
-            />
-          </Tooltip>         
+          <PublishIcon className={$.uploadIcon} />
         </div>
-        {newProveedor &&(
+        {newProveedor && (
           <div className={$.proveedorForm}>
             <span className={$.label}>Nombre completo</span>
             <TextField
-              onChange={(e) => handleNewProveedor(e.target.value,setNewProveedorNombre)}
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorNombre)}
               placeholder="ingrese el Nombre completo"
               className={$.inputForm}
             />
             <span className={$.label}>Cuit</span>
             <TextField
-              onChange={(e) => handleNewProveedor(e.target.value,setNewProveedorCuit)}
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorCuit)}
               placeholder="ingrese el CUIT"
               className={$.inputForm}
             />
             <span className={$.label}>Rubro</span>
             <TextField
-              onChange={(e) => handleNewProveedor(e.target.value,setNewProveedorRubro)}
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorRubro)}
               placeholder="ingrese el rubro"
               className={$.inputForm}
             />
-            <Button 
+            <Button
               onClick={sendDataNewProveedor}
               disabled={!canAddProveedor}
             >
@@ -332,10 +329,10 @@ export default function PopUpCompras(props) {
           </div>
         )}
         <div className={$.button}>
-          <Button color="inherit" className={$.botones} onClick={handleClose}>
+          <Button color="primary" className={$.botones} onClick={handleClose}>
             Cancelar
           </Button>
-          <Button color="primary" disabled={!canFinish} onClick={submitForm}>
+          <Button color="primary" disabled={!canSubmit} onClick={submitForm}>
             Finalizar Pedido de Compra
           </Button>
         </div>
@@ -344,4 +341,4 @@ export default function PopUpCompras(props) {
   );
 }
 
-const proveedores = [{name:"Pepito"},{name:"Josesito"},{name:"Ruben"}]; //PASAR A SERVICE
+const proveedores = [{ name: "Pepito" }, { name: "Josesito" }, { name: "Ruben" }]; //PASAR A SERVICE

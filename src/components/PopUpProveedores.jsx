@@ -1,72 +1,12 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles,
   TextField,
   Button,
   Divider,
- 
+
 } from '@material-ui/core';
 import { postProveedor } from '../services/proveedores.js';
-
-
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    width: '75vw',
-    height: '80vh',
-    boxShadow: '0px 0px 5px 1px grey',
-    padding: theme.spacing(2, 4, 3),
-    top: '55%',
-    left: '55%',
-    transform: 'translate(-50%,-50%)',
-  },
-  inputs: {
-    width: '100%',
-    paddingBottom: '1rem',
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  item: {
-    paddingLeft: '1rem',
-  },
-  button: {
-    display: 'flex',
-    position: 'fixed',
-    bottom: '0',
-    right: '0',
-    height: '3rem',
-    marginBottom: '2rem',
-    marginRight: '2rem',
-  },
-  secondRow: {
-    display: 'grid',
-    width: '30%',
-  },
-  cargarFactura: {
-    display: 'flex',
-  },
-  descripcion: {
-    display: 'grid',
-    marginTop: '1.5rem',
-  },
-  multiLineInput: {
-    backgroundColor: '#fafafa',
-    borderRadius: '5px',
-    width: '90%',
-  },
-  proveedor: {
-    marginTop: '0.5rem',
-  },
-  uploadIcon: {
-    marginBlock : 'auto',
-    margin: '1rem',
-    marginTop: '1rem',
-    '&:hover': {
-      color: '#62B5F6',
-    },
-  }
-}));
 
 export default function PopUpProveedores(props) {
   const $ = useStyles();
@@ -74,10 +14,11 @@ export default function PopUpProveedores(props) {
   const [nombre, setNombre] = useState('');
   const [rubro, setRubro] = useState('');
   const [telefono, setTelefono] = useState('');
-  const [mail,setMail] = useState('');
-  const [cuit,setCuit] = useState('');
-  
-  const submitForm = async() => {
+  const [mail, setMail] = useState('');
+  const [cuit, setCuit] = useState('');
+  const canSubmit = rubro && cuit && nombre && telefono && mail;
+
+  const submitForm = async () => {
     props.state(false);
     let data = {
       nombre: nombre,
@@ -86,11 +27,11 @@ export default function PopUpProveedores(props) {
       mail: mail,
       cuit: cuit,
     };
-    
+
     const res = await postProveedor(data);
     console.log("response post " + JSON.stringify(res))
   };
-  const submitHandle = (handle,value) => {
+  const submitHandle = (handle, value) => {
     handle(value);
     console.log(value);
   };
@@ -106,37 +47,89 @@ export default function PopUpProveedores(props) {
         <div className={$.inputs}>
           <TextField
             label="Rubro"
-            onChange={(e) => submitHandle(setRubro,e.target.value)}
+            className={$.textField}
+            InputProps={{
+              classes: {
+                input: $.resize,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: $.resize,
+                focused: $.labelFocused
+              },
+            }}
+            onChange={(e) => submitHandle(setRubro, e.target.value)}
           />
-          <TextField 
-            label="Nombre"  
-            onChange={(e) => submitHandle(setNombre,e.target.value)}/>
-        </div>
-        <Divider />
-        <div className={$.secondRow}>
-          <TextField 
-            label="telefono"
-            onChange={(e) => submitHandle(setTelefono,e.target.value)}
-          /> 
-          <div className={$.cargarFactura}>
-            <TextField 
-              label="cuit"
-              onChange={(e) => submitHandle(setCuit,e.target.value)}
-            />
-          </div>
-        </div>
-        <div className={$.cargarFactura}>
-          <TextField 
-            label="mail" 
-            className={$.proveedor}
-            onChange={(e) => submitHandle(setMail,e.target.value)}
+          <TextField
+            label="Nombre completo"
+            className={$.textField}
+            InputProps={{
+              classes: {
+                input: $.resize,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: $.resize,
+                focused: $.labelFocused
+              },
+            }}
+            onChange={(e) => submitHandle(setNombre, e.target.value)} />
+          <TextField
+            label="Telefono"
+            className={$.textField}
+            InputProps={{
+              classes: {
+                input: $.resize,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: $.resize,
+                focused: $.labelFocused
+              },
+            }}
+            onChange={(e) => submitHandle(setTelefono, e.target.value)}
+          />
+          <TextField
+            label="CUIT"
+            className={$.textField}
+            InputProps={{
+              classes: {
+                input: $.resize,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: $.resize,
+                focused: $.labelFocused
+              },
+            }}
+            onChange={(e) => submitHandle(setCuit, e.target.value)}
+          />
+          <TextField
+            label="E-mail"
+            className={$.textField}
+            InputProps={{
+              classes: {
+                input: $.resize,
+              },
+            }}
+            InputLabelProps={{
+              classes: {
+                root: $.resize,
+                focused: $.labelFocused
+              },
+            }}
+            onChange={(e) => submitHandle(setMail, e.target.value)}
           />
         </div>
         <div className={$.button}>
           <Button color="primary" className={$.botones} onClick={handleClose}>
             Cancelar
           </Button>
-          <Button color="primary" onClick={submitForm}>
+          <Button color="primary" disabled={!canSubmit} onClick={submitForm}>
             Agregar Proveedor
           </Button>
         </div>
@@ -144,3 +137,45 @@ export default function PopUpProveedores(props) {
     </>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '50vh',
+    height: '60vh',
+    boxShadow: '0px 0px 5px 1px grey',
+    padding: theme.spacing(2, 4, 3),
+    top: '55%',
+    left: '55%',
+    transform: 'translate(-50%,-50%)',
+  },
+  inputs: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  textField: {
+    height: '5vh',
+    paddingBottom: '2vh',
+    marginTop: '2vh'
+  },
+  resize: {
+    fontSize: '2.3vh'
+  },
+  labelFocused: {
+    fontSize: '2vh'
+  },
+  button: {
+    display: 'flex',
+    position: 'fixed',
+    bottom: '0',
+    right: '0',
+    height: '3rem',
+    marginBottom: '2.3vh',
+    marginRight: '2.3vh',
+  }
+}));

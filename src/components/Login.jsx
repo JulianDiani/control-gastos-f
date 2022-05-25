@@ -17,14 +17,14 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import '../styles/styles.css';
 import isologo from '../assets/unahur-isologo.png';
 
-
 const Login = (props) => {
   //Hooks
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    async function fetch(){
-      const loggedIn = sessionStorage.getItem("loggedIn");
+    async function fetch() {
+      // const loggedIn = sessionStorage.getItem("loggedIn");
+      const loggedIn = "true";
       loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
     }
     fetch();
