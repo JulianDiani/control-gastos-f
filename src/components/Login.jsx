@@ -16,7 +16,6 @@ import Alert from '@material-ui/lab/Alert';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import '../styles/styles.css';
 import isologo from '../assets/unahur-isologo.png';
-import background from '../assets/background.png';
 
 const Login = (props) => {
   //Hooks
@@ -24,8 +23,8 @@ const Login = (props) => {
 
   useEffect(() => {
     async function fetch() {
-      // const loggedIn = sessionStorage.getItem("loggedIn");
-      const loggedIn = "true";
+      const loggedIn = sessionStorage.getItem("loggedIn");
+      // const loggedIn = "true";
       loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
     }
     fetch();
