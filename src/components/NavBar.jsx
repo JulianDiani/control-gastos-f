@@ -68,7 +68,7 @@ export default function NavBar() {
 
 const useStyles = makeStyles(() => ({
   navbar: {
-    width: '16vw',
+    width: '18vw',
     height: '100%',
     boxShadow: '10px 0 5px -5px grey',
     float: 'left'
