@@ -73,11 +73,9 @@ export const Presupuestos = () => {
                 </CardContent>
               </Card>
             </Grid>
-            {/* <Tabla
+            <Tabla
               presupuesto={presupuesto}
-              gastos={comprasRealizadas.data}
-              totalDisponible={presupuesto.total - totalGastos}
-            /> */}
+            />
           </Grid>
         </div>
       </>
@@ -98,7 +96,7 @@ export const Presupuestos = () => {
 
 const useStyles = makeStyles({
   root: {
-    height: '100vw',
+    height: '100%',
     display: 'flex',
     marginLeft: '1vw',
   },
