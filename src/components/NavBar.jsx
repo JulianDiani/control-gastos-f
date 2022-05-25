@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Help, Home, Info, ShoppingCart, ImportContacts, Timeline, Contacts, Create } from '@material-ui/icons';
+import { Help, Home, Info, ShoppingCart, ImportContacts, Timeline, Contacts, Create, PeopleAlt } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
 
 export default function NavBar() {
@@ -32,8 +32,8 @@ export default function NavBar() {
   ];
 
   const adminSlides = [
-    { text: 'Proyectos', icon: <Home />, path: '/' },
-    { text: 'Usuarios', icon: <ImportContacts />, path: '/proyectos' },
+    { text: 'Proyectos', icon: <ShareIcon />, path: '/' },
+    { text: 'Usuarios', icon: <PeopleAlt />, path: '/' },
   ]
 
   let location = useLocation();
