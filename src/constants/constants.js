@@ -111,7 +111,7 @@ export const presupuestoPrueba = {
   equipamiento: 220000,
   tecnico: 100000,
   administracion: 6000,
-  total: 585000,
+  total: 600000,
 };
 
 export const reformulacionPrueba = {

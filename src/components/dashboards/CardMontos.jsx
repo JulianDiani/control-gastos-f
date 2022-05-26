@@ -62,7 +62,7 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
 const useStyles = makeStyles({
   root: {
     width: '25rem',
-    height: '100%',
+    height: '95%',
     background: '#9BC76D',
     border: '4px solid rgba(96, 150, 0, 0.94)',
     boxSizing: 'border-box',
