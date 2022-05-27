@@ -88,7 +88,7 @@ export default function PopUpProveedores(props) {
             error={errorNombre}
           />
           <TextField
-            label="Telefono"
+            label="Teléfono"
             className={$.textField}
             InputProps={{
               classes: {

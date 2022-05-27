@@ -16,7 +16,7 @@ import { getPresupuesto, getRubros } from '../services/presupuestos.js';
 import { validateField } from '../utils/validaciones';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { GetApp, KeyboardArrowDown } from '@material-ui/icons';
-
+import { postProveedor } from '../services/proveedores.js';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -121,26 +121,36 @@ export default function PopUpCompras(props) {
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
   const [disponibleRubro, setDisponibleRubro] = useState('');
-  //const [validateFields, setValidateFields] = useState(true);
-  const canSubmit = rubro && subrubro && monto && fecha && proveedor;
+  const [newProveedor, setNewProveedor] = useState(null);
+  
+  //Errors in fields
   const [errorMonto, setErrorMonto] = useState(false);
   const [errorSubrubro, setErrorSubrubro] = useState(false);
-  const [newProveedor, setNewProveedor] = useState(null);
-  //Agregar nuevo proveedor
+  const [errorNombreNewProveedor, setErrorNombreNewProveedor] = useState(null);
+  const [errorCuitNewProveedor, setErrorCuitNewProveedor] = useState(null);
+  const [errorTelefonoNewProveedor, setErrorTelefonoNewProveedor] = useState(null);
+  
+  //New proveedor fields
   const [newProveedorRubro, setNewProveedorRubro] = useState(null);
   const [newProveedorNombre, setNewProveedorNombre] = useState(null);
   const [newProveedorCuit, setNewProveedorCuit] = useState(null);
-  const [errorNombreNewProveedor, setErrorNombreNewProveedor] = useState(null);
-  const [errorCuitNewProveedor, setErrorCuitNewProveedor] = useState(null);
+  const [newProveedorTelefono, setNewProveedorTelefono] = useState(null);
 
-  //const canFinish = rubro && subrubro && monto && fecha && proveedor; change for canSubmit;
-  const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit;
+
+const [newProveedorEmail, setNewProveedorEmail] = useState(null);
+const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
+  //Validate form to send
+  const canSubmit = rubro && subrubro && monto && fecha && proveedor;
+  const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit && newProveedorTelefono;
+  
+  //Consts
   const rubros = getRubros();
+  
+  //UseEffect when changing "rubros"
   useEffect(() => {
     async function fetchGastos() {
       const gastos = await getGastosPorRubro(rubro);
-      const responsePresupuesto = await getPresupuesto();
-      const presupuesto = responsePresupuesto;
+      const presupuesto = await getPresupuesto();
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         presupuesto,
         gastos.totalGastado,
@@ -152,12 +162,13 @@ export default function PopUpCompras(props) {
     try {
       fetchGastos();
     } catch (err) {
-      console.log('ERROR FETCH GASTOS:' + err.message);
+      console.log('[PopUpCompras] ERROR IN USEEFFECT:' + err.message);
     }
-  }, [rubro]); //Ver mejor practica para no pegarle tanto al back.
+  }, [rubro]); 
 
   const calcularDineroDisponiblePorRubro = (presupuestoTotal, gastosRubro, rubro) => rubro ? presupuestoTotal[rubro.toLowerCase()] - gastosRubro : 0;
 
+  //POST DATA TO BACKEND
   const submitForm = async () => {
     props.state(false);
     let data = {
@@ -175,7 +186,22 @@ export default function PopUpCompras(props) {
     props.stateNewCompra(true);
     console.log('[PopUpCompras] submitForm response: ', res);
   };
+  
+  const sendDataNewProveedor = async () => {
+    const data = {
+      cuit: newProveedorCuit,
+      nombre: newProveedorNombre,
+      telefono: newProveedorTelefono,
+      rubro: newProveedorRubro,
+      mail: newProveedorEmail
+    }
+    console.log("Data to post", data);
+    const resposeBack = await postProveedor(data);
+    handleAddProveedor();
+    console.log("Response back", resposeBack);
+  }
 
+  //HANDLERS
   const submitHandle = (handle, value) => {
     handle(value);
     console.log(value);
@@ -191,14 +217,6 @@ export default function PopUpCompras(props) {
   }
   const handleNewProveedor = (value, setState) => {
     setState(value);
-  }
-  const sendDataNewProveedor = () => {
-    const data = {
-      cuit: newProveedorCuit,
-      nombre: newProveedorNombre,
-      rubro: newProveedorRubro
-    }
-    console.log("Data to post", data);
   }
 
   const RubroSelected = () => {
@@ -280,7 +298,7 @@ export default function PopUpCompras(props) {
               onBlur={(e) => validateField("int", e.target.value, setErrorMonto)}
               error={errorMonto}
             />
-            <GetApp className={$.uploadIcon} />
+            <GetApp className={$.uploadIcon}/>
           </div>
         </div>
         <div className={$.descripcion}>
@@ -318,6 +336,14 @@ export default function PopUpCompras(props) {
               onBlur={(e) => validateField("string", e.target.value, setErrorNombreNewProveedor)}
               error={errorNombreNewProveedor}
             />
+            <span className={$.label}>Teléfono</span>
+            <TextField
+              className={$.inputForm}
+              placeholder="Ingrese el número de teléfono"
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorTelefono)}
+              onBlur={(e) => validateField("int", e.target.value, setErrorTelefonoNewProveedor)}
+              error={errorTelefonoNewProveedor}
+            />
             <span className={$.label}>Cuit</span>
             <TextField
               className={$.inputForm}
@@ -325,6 +351,14 @@ export default function PopUpCompras(props) {
               onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorCuit)}
               onBlur={(e) => validateField("cuit", e.target.value, setErrorCuitNewProveedor)}
               error={errorCuitNewProveedor}
+            />
+            <span className={$.label}>Email</span>
+            <TextField
+              className={$.inputForm}
+              placeholder="ingrese el correo"
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorEmail)}
+              onBlur={(e) => validateField("email", e.target.value, setErrorEmailNewProveedor)}
+              error={errorEmailNewProveedor}
             />
             <span className={$.label}>Rubro</span>
             <Autocomplete
@@ -335,11 +369,6 @@ export default function PopUpCompras(props) {
               renderInput={(params) => <TextField {...params} label="Seleccione un rubro"/>}
               onChange={(e, value) => handleNewProveedor(value, setNewProveedorRubro)}
             />
-            {/* <TextField
-              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorRubro)}
-              placeholder="ingrese el rubro"
-              className={$.inputForm}
-            /> */}
             <Button
               onClick={sendDataNewProveedor}
               disabled={!canAddProveedor}
