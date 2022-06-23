@@ -8,10 +8,10 @@ export const proyectosEnCurso = [
     año: 2020,
     unidadAcademica: 'Instituto de Tecnología e Ingeniería',
     areaTematica: 'Seguridad informática',
-    subsidio: 465000.0,
-    fechaInicio: '18-09-2020',
-    fechaFin: '18-09-2022',
-    fechaInicioGastos: '18-12-2020',
+    subsidio: 585000,
+    fechaInicio: '18/09/2020',
+    fechaFin: '18/09/2022',
+    fechaInicioGastos: '18/12/2020',
     numeroProyecto: 7567,
     numeroExpediente: '1646-9895/20',
     numeroResolucion: 'Nro 31285/20',
@@ -107,7 +107,7 @@ export const presupuestoPrueba = {
   equipamiento: 220000,
   tecnico: 100000,
   administracion: 6000,
-  total: 600000,
+  total: 585000,
 };
 
 export const reformulacionPrueba = {
