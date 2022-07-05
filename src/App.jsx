@@ -13,7 +13,8 @@ import {
   Info,
   AttachMoney,
   PersonAdd,
-  NoteAdd
+  NoteAdd,
+  ShoppingCart
 } from '@material-ui/icons';
 
 import { Presupuestos } from './components/Presupuestos';
@@ -39,6 +40,7 @@ export default function App() {
     { text: 'Proyectos', icon: <Home />, path: '/proyectos' },
     { text: 'Presupuesto', icon: <AttachMoney />, path: '/proyectos/presupuestos' },
     { text: 'Proveedores', icon: <AssignmentInd />, path: '/proyectos/proveedores' },
+    { text: 'Compras', icon: <ShoppingCart />, path: '/proyectos/compras' },
     { text: 'Normativas I+D', icon: <Info />, path: '/' },
     { text: 'Soporte', icon: <Help />, path: '/' },
   ];
