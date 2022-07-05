@@ -174,11 +174,12 @@ export const Compras = () => {
 };
 const useStyles = makeStyles({
   container: {
-    width: '100%',
+    width: '98%',
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
+    width: '98%'
   },
   button: {
     height: '2rem',

@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider';
 import { Button, Grid, Modal } from '@material-ui/core';
 import PopUp from './PopUpProveedores';
 import { getAllProveedores } from '../services/proveedores';
+import { PlayCircleFilledWhiteOutlined } from '@material-ui/icons';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -122,7 +123,7 @@ export const Proveedores = () => {
 const useStyles = makeStyles({
     container: {
         display: 'flex',
-        width: '100%',
+        width: '98%',
     },
     textColor: {
       color: 'white', 
@@ -136,7 +137,8 @@ const useStyles = makeStyles({
     },
     header:{
       display: 'flex',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      width: '98%'
     },
     button: {
       height: '2rem',

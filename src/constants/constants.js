@@ -8,10 +8,10 @@ export const proyectosEnCurso = [
     año: 2020,
     unidadAcademica: 'Instituto de Tecnología e Ingeniería',
     areaTematica: 'Seguridad informática',
-    subsidio: 465000.0,
-    fechaInicio: '18-09-2020',
-    fechaFin: '18-09-2022',
-    fechaInicioGastos: '18-12-2020',
+    subsidio: 585000,
+    fechaInicio: '18/09/2020',
+    fechaFin: '18/09/2022',
+    fechaInicioGastos: '18/12/2020',
     numeroProyecto: 7567,
     numeroExpediente: '1646-9895/20',
     numeroResolucion: 'Nro 31285/20',
@@ -32,11 +32,7 @@ export const proyectosEnCurso = [
     plataforma de administración de cámaras y sensores, para apoyar a la gestión integral de la seguridad.
      Esta plataforma complementa técnicas de análisis automatizado de video, junto con una API para 
     registrar eventos de tipo alarmas o alertas por parte de la ciudadanía y permitir el acceso a otras 
-    entidades (policía, bomberos, organizaciones vecinales) a ciertos recursos (los videos). Toda la 
-    información se centraliza en un sistema georreferenciado, en una arquitectura abierta y escalable, 
-    organizado en diferentes capas de información, con un sistema de organización de roles de accesos. 
-    Se presenta una discusión de la estructura ideada, de los algoritmos utilizados para el seguimiento, 
-    problemas propios que se suceden en este tipo de sistemas y los resultados preliminares obtenidos.`,
+    entidades (policía, bomberos, organizaciones vecinales) a ciertos recursos (los videos).`,
   },
   {
     nombre:

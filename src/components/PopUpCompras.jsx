@@ -9,13 +9,14 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Tooltip,
 } from '@material-ui/core';
 import { postCompra, getGastosPorRubro } from '../services/compras.js';
 import { getPresupuesto, getRubros } from '../services/presupuestos.js';
 import { validateField } from '../utils/validaciones';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import PublishIcon from '@material-ui/icons/Publish';
+import { GetApp, KeyboardArrowDown } from '@material-ui/icons';
+import { postProveedor } from '../services/proveedores.js';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -65,9 +66,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex'
   },
   uploadIcon: {
-    marginBlock: 'auto',
-    margin: '1rem',
-    marginTop: '2rem',
+    //marginBlock: 'auto',
+    //margin: '1rem',
+    marginTop: '1.7rem',
+    marginLeft: '0.5rem',
     '&:hover': {
       color: '#62B5F6',
     },
@@ -119,23 +121,36 @@ export default function PopUpCompras(props) {
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
   const [disponibleRubro, setDisponibleRubro] = useState('');
-  const [validateFields, setValidateFields] = useState(true);
-  const canSubmit = rubro && subrubro && monto && fecha && proveedor;
+  const [newProveedor, setNewProveedor] = useState(null);
+  
+  //Errors in fields
   const [errorMonto, setErrorMonto] = useState(false);
   const [errorSubrubro, setErrorSubrubro] = useState(false);
-  const [newProveedor, setNewProveedor] = useState(null);
-  //Agregar nuevo proveedor
+  const [errorNombreNewProveedor, setErrorNombreNewProveedor] = useState(null);
+  const [errorCuitNewProveedor, setErrorCuitNewProveedor] = useState(null);
+  const [errorTelefonoNewProveedor, setErrorTelefonoNewProveedor] = useState(null);
+  
+  //New proveedor fields
   const [newProveedorRubro, setNewProveedorRubro] = useState(null);
   const [newProveedorNombre, setNewProveedorNombre] = useState(null);
   const [newProveedorCuit, setNewProveedorCuit] = useState(null);
+  const [newProveedorTelefono, setNewProveedorTelefono] = useState(null);
 
-  const canFinish = rubro && subrubro && monto && fecha && proveedor;
-  const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit;
+
+const [newProveedorEmail, setNewProveedorEmail] = useState(null);
+const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
+  //Validate form to send
+  const canSubmit = rubro && subrubro && monto && fecha && proveedor;
+  const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit && newProveedorTelefono;
+  
+  //Consts
+  const rubros = getRubros();
+  
+  //UseEffect when changing "rubros"
   useEffect(() => {
     async function fetchGastos() {
       const gastos = await getGastosPorRubro(rubro);
-      const responsePresupuesto = await getPresupuesto();
-      const presupuesto = responsePresupuesto;
+      const presupuesto = await getPresupuesto();
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         presupuesto,
         gastos.totalGastado,
@@ -147,12 +162,13 @@ export default function PopUpCompras(props) {
     try {
       fetchGastos();
     } catch (err) {
-      console.log('ERROR FETCH GASTOS:' + err.message);
+      console.log('[PopUpCompras] ERROR IN USEEFFECT:' + err.message);
     }
-  }, [rubro]); //Ver mejor practica para no pegarle tanto al back.
+  }, [rubro]); 
 
   const calcularDineroDisponiblePorRubro = (presupuestoTotal, gastosRubro, rubro) => rubro ? presupuestoTotal[rubro.toLowerCase()] - gastosRubro : 0;
 
+  //POST DATA TO BACKEND
   const submitForm = async () => {
     props.state(false);
     let data = {
@@ -170,7 +186,22 @@ export default function PopUpCompras(props) {
     props.stateNewCompra(true);
     console.log('[PopUpCompras] submitForm response: ', res);
   };
+  
+  const sendDataNewProveedor = async () => {
+    const data = {
+      cuit: newProveedorCuit,
+      nombre: newProveedorNombre,
+      telefono: newProveedorTelefono,
+      rubro: newProveedorRubro,
+      mail: newProveedorEmail
+    }
+    console.log("Data to post", data);
+    const resposeBack = await postProveedor(data);
+    handleAddProveedor();
+    console.log("Response back", resposeBack);
+  }
 
+  //HANDLERS
   const submitHandle = (handle, value) => {
     handle(value);
     console.log(value);
@@ -186,14 +217,6 @@ export default function PopUpCompras(props) {
   }
   const handleNewProveedor = (value, setState) => {
     setState(value);
-  }
-  const sendDataNewProveedor = () => {
-    const data = {
-      cuit: newProveedorCuit,
-      nombre: newProveedorNombre,
-      rubro: newProveedorRubro
-    }
-    console.log("Data to post", data);
   }
 
   const RubroSelected = () => {
@@ -227,7 +250,7 @@ export default function PopUpCompras(props) {
             value={rubro}
             onChange={handleChange}
           >
-            {getRubros().map((r, idx) => (
+            {rubros.map((r, idx) => (
               <MenuItem value={r} key={idx}>
                 {r}
               </MenuItem>
@@ -275,7 +298,7 @@ export default function PopUpCompras(props) {
               onBlur={(e) => validateField("int", e.target.value, setErrorMonto)}
               error={errorMonto}
             />
-            <PublishIcon className={$.uploadIcon} />
+            <GetApp className={$.uploadIcon}/>
           </div>
         </div>
         <div className={$.descripcion}>
@@ -298,27 +321,53 @@ export default function PopUpCompras(props) {
             renderInput={(params) => <TextField {...params} label="Proveedores" />}
             onChange={(e, value) => submitHandle(setProveedor, value?.name)}
           />
-          <KeyboardArrowDownIcon className={$.uploadIcon} onClick={handleAddProveedor}/>
+          <Tooltip title="Agregar proveedor">
+            <KeyboardArrowDown className={$.uploadIcon} onClick={handleAddProveedor}/>  
+          </Tooltip>
         </div>
+        {/* Form para cargar nuevo proveedor */}
         {newProveedor && (
           <div className={$.proveedorForm}>
             <span className={$.label}>Nombre completo</span>
             <TextField
-              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorNombre)}
-              placeholder="ingrese el Nombre completo"
               className={$.inputForm}
+              placeholder="ingrese el Nombre completo"
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorNombre)}
+              onBlur={(e) => validateField("string", e.target.value, setErrorNombreNewProveedor)}
+              error={errorNombreNewProveedor}
+            />
+            <span className={$.label}>Teléfono</span>
+            <TextField
+              className={$.inputForm}
+              placeholder="Ingrese el número de teléfono"
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorTelefono)}
+              onBlur={(e) => validateField("int", e.target.value, setErrorTelefonoNewProveedor)}
+              error={errorTelefonoNewProveedor}
             />
             <span className={$.label}>Cuit</span>
             <TextField
-              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorCuit)}
-              placeholder="ingrese el CUIT"
               className={$.inputForm}
+              placeholder="ingrese el CUIT"
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorCuit)}
+              onBlur={(e) => validateField("cuit", e.target.value, setErrorCuitNewProveedor)}
+              error={errorCuitNewProveedor}
+            />
+            <span className={$.label}>Email</span>
+            <TextField
+              className={$.inputForm}
+              placeholder="ingrese el correo"
+              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorEmail)}
+              onBlur={(e) => validateField("email", e.target.value, setErrorEmailNewProveedor)}
+              error={errorEmailNewProveedor}
             />
             <span className={$.label}>Rubro</span>
-            <TextField
-              onChange={(e) => handleNewProveedor(e.target.value, setNewProveedorRubro)}
-              placeholder="ingrese el rubro"
+            <Autocomplete
+              id="rubro"
+              options={rubros}
+              getOptionLabel={(option) => option}
               className={$.inputForm}
+              renderInput={(params) => <TextField {...params} label="Seleccione un rubro"/>}
+              onChange={(e, value) => handleNewProveedor(value, setNewProveedorRubro)}
             />
             <Button
               onClick={sendDataNewProveedor}
@@ -341,4 +390,12 @@ export default function PopUpCompras(props) {
   );
 }
 
-const proveedores = [{ name: "Pepito" }, { name: "Josesito" }, { name: "Ruben" }]; //PASAR A SERVICE
+const proveedores = [
+  {name:"Libreria Mayorista S.A."},	
+  {name:"Garbarino	"},
+  {name:"Despegar	"},
+  {name:"Solutions S.A."},
+  {name:"InfoTech S.A.	"},
+  {name:"Lenovo Argentina	"},
+  {name:"Informatica S.A."}
+]

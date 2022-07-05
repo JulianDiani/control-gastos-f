@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
       left: 0,
       width: '100%',
       textAlign: 'center',
-      alignSelf: 'flex-end'
+      alignSelf: 'flex-end',
+      marginTop: '1.5rem'
 
     },
     texto: {

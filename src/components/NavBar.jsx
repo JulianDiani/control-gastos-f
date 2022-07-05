@@ -10,11 +10,9 @@ import { Link } from 'react-router-dom';
 import { Help, Home, Info, ShoppingCart, ImportContacts, Timeline, Contacts, Create, PeopleAlt } from '@material-ui/icons';
 import { useLocation } from 'react-router-dom';
 
-export default function NavBar(props) {
+export default function NavBar({ user, sideBarOptions }) {
   const $ = useStyles();
-  let navbar;
-  const user = props.user;
-
+ /*
   const sideBarOptions = [
     { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/' },
     { text: 'Normativas I+D', icon: <Info />, path: '/normativas' },
@@ -35,14 +33,16 @@ export default function NavBar(props) {
     { text: 'Proyectos', icon: <ShareIcon />, path: '/' },
     { text: 'Usuarios', icon: <PeopleAlt />, path: '/' },
   ]
+  */
 
   let location = useLocation();
-
+/*
   if (location.pathname.startsWith('/proyectos')) {
     user === "galosalerno" ? navbar = investigadorSlides : navbar = adminSlides; 
   } else {
       user === "galosalerno" ? navbar = sideBarOptions : navbar = adminSlides;
   }
+  */
   return (
     <Grid>
       <div className={$.navbar}>
@@ -54,9 +54,9 @@ export default function NavBar(props) {
           />
         </Link>
         <List className={$.list}>
-          {navbar.map(({ text, icon, path }, index) => (
+          {sideBarOptions.map(({ text, icon, path }, index) => (
             <ListItem
-              divider={index === navbar.length - 1 ? false : true}
+              divider={index === sideBarOptions.length - 1 ? false : true}
               className={$.option}
               button={true}
               key={text}

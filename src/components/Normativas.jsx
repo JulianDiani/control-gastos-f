@@ -64,7 +64,8 @@ const useStyles = makeStyles(() => ({
     root: {
         height: '100%',
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        width: '98%'
     },
     paper: {
         padding: '1rem'

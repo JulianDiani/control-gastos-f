@@ -54,41 +54,6 @@ export default function PopUpProveedores(props) {
         <h2>Agregar nuevo proveedor</h2>
         <Divider />
         <div className={$.inputs}>
-          {/* <TextField
-            className={$.textField}
-            InputProps={{
-              classes: {
-                input: $.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: $.resize,
-                focused: $.labelFocused,
-              },
-            }}
-            select
-            label="Rubro"
-            value={rubro}
-            onChange={(e) => submitHandle(setRubro, e.target.value)}
-          >
-            {[
-              'insumos',
-              'bibliografia',
-              'publicaciones',
-              'viaticos',
-              'equipamiento',
-              'tecnico',
-              'administracion',
-            ].map((rubro,idx) => {
-              return (
-                <MenuItem key={idx} >{rubro}</MenuItem>
-              );
-              
-            })}
-            
-          </TextField> */}
-
           <Autocomplete
             id="proveedores"
             options={[
@@ -123,7 +88,7 @@ export default function PopUpProveedores(props) {
             error={errorNombre}
           />
           <TextField
-            label="Telefono"
+            label="Teléfono"
             className={$.textField}
             InputProps={{
               classes: {
@@ -155,7 +120,7 @@ export default function PopUpProveedores(props) {
               },
             }}
             onChange={(e) => submitHandle(setCuit, e.target.value)}
-            onBlur={(e) => validateField("int", e.target.value, setErrorCuit)}
+            onBlur={(e) => validateField("cuit", e.target.value, setErrorCuit)}
             error={errorCuit}
           />
           <TextField

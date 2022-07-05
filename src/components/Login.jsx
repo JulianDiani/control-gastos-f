@@ -17,15 +17,17 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import '../styles/styles.css';
 import isologo from '../assets/unahur-isologo.png';
 
-const Login = (props) => {
+const Login = ({ setLoggedIn, password, userName, setUserName, setPassword, rol, setRol }) => {
   //Hooks
   const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetch() {
       const loggedIn = sessionStorage.getItem("loggedIn");
+      const role = sessionStorage.getItem("role");
       // const loggedIn = "true"; cuando no anda el back
-      loggedIn === "true" ? props.setLoggedIn(true) : props.setLoggedIn(false);
+      setRol(role)
+      loggedIn === "true" ? setLoggedIn(true) : setLoggedIn(false);
     }
     fetch();
   }, [])
@@ -40,17 +42,22 @@ const Login = (props) => {
 
   //checking username and password 
   const checkedLogin = (user) => {
-    return user?.data?.contraseña === props.password && props.password !== undefined; //user? es para hacerlo safeNull y que no rompa.
+    return user?.data?.contraseña === password && password !== undefined; //user? es para hacerlo safeNull y que no rompa.
   };
 
   //set logedin true or false - @TODO use recoil.
   const sendLoginData = async () => {
-    const user = await getUser(props.userName);
+    const user = await getUser(userName);
     const checked = checkedLogin(user);
+    console.log("User",user)
+    const role = user?.data?.rol;
+    console.log("Role",role);
     setError(!checked); //if checked is false error is true.
-    props.setLoggedIn(checked)  //true = login ok | false = login fail
-    sessionStorage.setItem("username", props.userName);
+    setLoggedIn(checked);  //true = login ok | false = login fail
+    setRol(role);
+    sessionStorage.setItem("username", userName);
     sessionStorage.setItem("loggedIn", checked);
+    sessionStorage.setItem("role", role);
   }
   //it triggers by pressing the enter key
   const handleKeypress = (e) => {
@@ -104,7 +111,7 @@ const Login = (props) => {
                 id="my-input"
                 aria-describedby="my-helper-text"
                 type="text"
-                onChange={(e) => submitHandle(props.setUserName, e.target.value)}
+                onChange={(e) => submitHandle(setUserName, e.target.value)}
                 onKeyPress={handleKeypress} //Para que funcione el onClick del button tocando enter desde aca
               />
             </FormControl>
@@ -113,7 +120,7 @@ const Login = (props) => {
               <PasswordField
                 id="my-input"
                 aria-describedby="my-helper-text"
-                onChange={(e) => submitHandle(props.setPassword, e.target.value)}
+                onChange={(e) => submitHandle(setPassword, e.target.value)}
                 onKeyPress={handleKeypress} //Para que funcione el onClick del button tocando enter desde aca
               />
             </FormControl>
