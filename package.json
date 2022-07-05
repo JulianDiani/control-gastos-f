@@ -13,6 +13,7 @@
     "chart.js": "^3.5.1",
     "luxon": "^1.25.0",
     "material-ui-password-field": "^2.1.2",
+    "moment": "^2.29.3",
     "react": "^17.0.1",
     "react-chartjs-2": "^3.0.5",
     "react-dom": "^17.0.1",

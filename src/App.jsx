@@ -12,12 +12,17 @@ import {
   Home,
   Info,
   AttachMoney,
+  PersonAdd,
+  NoteAdd
 } from '@material-ui/icons';
+
 import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
 import { Proveedores } from './components/Proveedores';
 import Login from './components/Login';
 import { useEffect, useState } from 'react';
+import CreateProyect from './components/screens/CreateProyect';
+import CreateUser from './components/screens/CreateUser';
 
 
 
@@ -27,26 +32,33 @@ export default function App() {
   //USAR REDUX PARA LOS DATOS DE LOGIN
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [rol, setRol] = useState();
   const [init, setInit] = useState(false);
   
-  const sideBarOptions = [
-    { text: 'Proyectos', icon: <Home />, path: '/datos' },
-    { text: 'Presupuesto', icon: <AttachMoney />, path: '/presupuesto' },
-    { text: 'Proveedores', icon: <AssignmentInd />, path: '/proveedores' },
+  const userSideBarOptions = [
+    { text: 'Proyectos', icon: <Home />, path: '/proyectos' },
+    { text: 'Presupuesto', icon: <AttachMoney />, path: '/proyectos/presupuestos' },
+    { text: 'Proveedores', icon: <AssignmentInd />, path: '/proyectos/proveedores' },
     { text: 'Normativas I+D', icon: <Info />, path: '/' },
     { text: 'Soporte', icon: <Help />, path: '/' },
   ];
-
+  const adminSideBarOptions = [
+    { text: 'Cargar proyecto', icon: <NoteAdd />, path: '/admin/createProyect' },
+    { text: 'Cargar usuario', icon: <PersonAdd />, path: '/admin/createUser' },
+  ];
   useEffect(() => {
     async function checkLogin(){
       const loggedIn = sessionStorage.getItem("loggedIn");
       const usuario = sessionStorage.getItem("username");
-      setUserName(usuario)
+      const role = sessionStorage.getItem("role");
+      setRol(role);
+      setUserName(usuario);
       loggedIn === "true" ? setLoggedIn(true) : setLoggedIn(false);
       setInit(true);
     }
     checkLogin();
   },[])
+  console.log("Rol",rol);
   return (
     //ToDo: Como quitar espacio sobrante en el borde derecho.
     init?
@@ -58,11 +70,32 @@ export default function App() {
           setPassword={setPassword}
           setUserName={setUserName}
           setLoggedIn={setLoggedIn}
+          rol={rol}
+          setRol={setRol}
         />
-      ) : (
+      ) : 
+          rol === 'admin' ? (
+          <>
+             <Container maxWidth="xl" className={$.root}>
+                <Router>
+                  <NavBar sideBarOptions={adminSideBarOptions} user={userName} />
+                  <div className={$.container}>
+                    <Header setLoggedIn={setLoggedIn} userName={userName} />
+                    <div className={$.content}>
+                      <Switch>
+                        <Route path="/login" component={Login} />
+                        <Route path="/admin/createProyect" component={CreateProyect} />
+                        <Route path="/admin/createUser" component={CreateUser} />
+                      </Switch>
+                    </div>
+                  </div>
+                </Router>
+              </Container>
+          </>
+          ) : 
         <Container maxWidth="xl" className={$.root}>
           <Router>
-            <NavBar sideBarOptions={sideBarOptions} user={userName} />
+            <NavBar sideBarOptions={userSideBarOptions} user={userName} />
             <div className={$.container}>
               <Header setLoggedIn={setLoggedIn} userName={userName} />
               <div className={$.content}>
@@ -92,7 +125,7 @@ export default function App() {
             </div>
           </Router>
         </Container>
-      )}
+      })
     </>
     :<></>
   );
