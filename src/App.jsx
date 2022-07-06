@@ -49,7 +49,7 @@ export default function App() {
     { text: 'Cargar usuario', icon: <PersonAdd />, path: '/admin/createUser' },
   ];
   useEffect(() => {
-    async function checkLogin(){
+    function checkLogin(){
       const loggedIn = sessionStorage.getItem("loggedIn");
       const usuario = sessionStorage.getItem("username");
       const role = sessionStorage.getItem("role");
@@ -104,7 +104,7 @@ export default function App() {
                 <Switch>
                   <Route path="/login" component={Login} />
                   <Route path="/" exact component={MisProyectos} />
-                  <Route path="/proyectos" exact component={DatosGenerales} />
+                  <Route path="/proyectos" component={DatosGenerales} />
                   <Route
                     path="/proyectos/presupuestos"
                     exact

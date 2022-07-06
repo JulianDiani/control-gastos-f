@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Paper } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import * as moment from 'moment';
 import { createUser } from '../../services/usuarios';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles(() => ({
     formContainer: {
@@ -21,6 +22,11 @@ const useStyles = makeStyles(() => ({
     },
     submitButton: {
         margin: '0.5rem'
+    },
+    loading: {
+      width: '20rem',
+      marginLeft: '30rem',
+      marginTop: '3rem'
     }
 }));
 
@@ -32,8 +38,25 @@ const CreateUser = () => {
     const [password, setPassword] = useState(null);
     const [birthDate, setBirthDate] = useState(null);
     const [role, setRole] = useState(null);
+    const [hasChanges,setHasChanges] = useState(false);
+    const [loading, setLoading] = useState(false);
     
+    const timer = useRef();
     const canSubmit = name && lastName && username && password && birthDate && role;
+    
+    useEffect(() => {
+      console.log("ENTRO AL USEFFECT");
+      function setChanges(){
+        timer.current = setTimeout(() =>{
+          setLoading(true);
+      }, 2000);
+      setLoading(false);
+      }
+      if(hasChanges){
+        setChanges();
+      }
+    },[hasChanges])
+    
     //Handle events
     const handleChange = (event,setState,isAutocomplete=false) => {
         if(isAutocomplete){
@@ -55,7 +78,8 @@ const CreateUser = () => {
         }
         
         const  response = await createUser(user);    
-        console.log(`Create-new-user-response: ${response}`);    
+        setHasChanges(true);
+        console.log(`Create-new-user-response: ${JSON.stringify(response)}`);    
     }
     return (
         <div>
@@ -124,6 +148,10 @@ const CreateUser = () => {
                         Crear usuario
                     </Button>
             </Paper >
+            {!loading && (
+              <Alert className={classes.loading}>Usuario cargado con exito</Alert>
+            )
+            }
             </div>
         </div>
       );

@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { proyectosEnCurso } from '../constants/constants';
 import { proyectosEnHistoria } from '../constants/constants';
 import { Link } from 'react-router-dom';
 import { calculateTotalExpenses, nivelDeEjecucion } from '../utils/presupuestos';
@@ -16,6 +15,7 @@ import { getAllCompras } from '../services/compras';
 import { Box, CircularProgress, Typography } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { setNivelEjecucion } from '../state/nivelEjecucionSlice';
+import { getProyecto } from '../services/proyectos';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -75,20 +75,26 @@ const circularProgressWithValue = (nivelEjecucion) => {
 
 export const MisProyectos = () => {
     const $ = useStyles();
-    
-    const dispatch = useDispatch()
-    //const [nivelEjecucion, setNivelEjecicion] = useState();
-    //Porcentaje USAR REDUX porque lo comparten presupuestos y CardMontos.
-     useEffect(() => {
+    const [proyectosEnCurso,setProyectosEnCurso] = useState([]);
+    const dispatch = useDispatch();
+    const username = sessionStorage.getItem("username");
+   
+    const handleSelectProyect = (id) =>{
+      console.log("ID PROYECTO",id);
+      sessionStorage.setItem("idProyecto",id)
+    }
+    useEffect(() => {
       async function getPorcentaje() {
         const presupuesto = await getPresupuesto();
         const comprasRealizadas = await getAllCompras();
+        console.log("username",username);
+        const proyectos = await getProyecto(username);
+        setProyectosEnCurso(proyectos)
+        console.log("proyectos",proyectos);
         const gastos = calculateTotalExpenses(comprasRealizadas);
         const totalPresupuesto = presupuesto.total;
         const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos).split(",")[0]; //Truncamiento del porcentaje.
         dispatch(setNivelEjecucion(ejecucion))
-        console.log("Ejecucion ",presupuesto,gastos)
-        //setNivelEjecicion(ejecucion);
       }
       getPorcentaje();
      },[])
@@ -108,11 +114,11 @@ export const MisProyectos = () => {
                 <TableBody>
                   
 
-                {proyectosEnCurso.map((proyectosEnCurso) => (
-                    <StyledTableRow key={proyectosEnCurso.nombre}>
-                      <StyledTableCell scope="row" component={Link} to={'/proyectos'}>{proyectosEnCurso.nombre}</StyledTableCell>
-                      <StyledTableCell align="center" >{proyectosEnCurso.director}</StyledTableCell>
-                      <StyledTableCell align="center">{proyectosEnCurso.fechaInicio}</StyledTableCell>
+                {proyectosEnCurso.map(proyecto => (
+                    <StyledTableRow key={proyecto.id}>
+                      <StyledTableCell scope="row" onClick={() => handleSelectProyect(proyecto.id)} component={Link} to={'/proyectos'}>{proyecto.titulo}</StyledTableCell>
+                      <StyledTableCell align="center" >{proyecto.director}</StyledTableCell>
+                      <StyledTableCell align="center">{proyecto.fechaInicio}</StyledTableCell>
                       <StyledTableCell align="center">
                         {circularProgressWithValue(nivelEjecucion)}
                       </StyledTableCell>
