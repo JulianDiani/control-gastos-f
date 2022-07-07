@@ -50,9 +50,9 @@ export async function postCompra(body) {
   return response;
 }
 
-export async function getGastosPorRubro(rubro) {
+export async function getGastosPorRubro(rubro, idProyecto) {
   const EXTRA_PATH = '/gastos/findByRubro';
-  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}${EXTRA_PATH}?rubro=${rubro}`;
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}${EXTRA_PATH}?rubro=${rubro}&idProyecto=${idProyecto}`;
   const response = await fetch(endpoint, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin

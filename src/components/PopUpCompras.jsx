@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import { postCompra, getGastosPorRubro } from '../services/compras.js';
 import { getPresupuesto, getRubros } from '../services/presupuestos.js';
-import { validateField } from '../utils/validaciones';
+import { validateField, validateMonto } from '../utils/validaciones';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { GetApp, KeyboardArrowDown } from '@material-ui/icons';
 import { postProveedor } from '../services/proveedores.js';
@@ -140,7 +140,8 @@ export default function PopUpCompras(props) {
   const [newProveedorEmail, setNewProveedorEmail] = useState(null);
   const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
   //Validate form to send
-  const canSubmit = rubro && subrubro && monto && fecha && proveedor;
+  const availableMoneyForRubro = disponibleRubro > 0;
+  const canSubmit = rubro && subrubro && monto && fecha && proveedor && availableMoneyForRubro;
   const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit && newProveedorTelefono;
   
   //Consts
@@ -149,7 +150,7 @@ export default function PopUpCompras(props) {
   //UseEffect when changing "rubros"
   useEffect(() => {
     async function fetchGastos() {
-      const gastos = await getGastosPorRubro(rubro);
+      const gastos = await getGastosPorRubro(rubro,idProyecto);
       const presupuesto = await getPresupuesto();
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         presupuesto,
@@ -171,7 +172,7 @@ export default function PopUpCompras(props) {
   //POST DATA TO BACKEND
   const submitForm = async () => {
     props.state(false);
-    let data = {
+    const data = {
       fecha: fecha,
       rubro: rubro,
       subrubro: subrubro,
@@ -237,8 +238,8 @@ export default function PopUpCompras(props) {
     return (
       <div>
         <Button className={classes.buttonList} onClick={handleOpen} />
-        <FormControl className={classes.formControl}>
-          <InputLabel id="demo-controlled-open-select-label">Rubro</InputLabel>
+        <FormControl className={classes.formControl} error={!availableMoneyForRubro}>
+          <InputLabel id="demo-controlled-open-select-label" >Rubro</InputLabel>
 
           <Select
             labelId="demo-controlled-open-select-label"
@@ -294,7 +295,7 @@ export default function PopUpCompras(props) {
             <TextField
               label="Monto"
               onChange={(e) => submitHandle(setMonto, e.target.value)}
-              onBlur={(e) => validateField("int", e.target.value, setErrorMonto)}
+              onBlur={(e) => validateMonto(disponibleRubro, e.target.value, setErrorMonto)}
               error={errorMonto}
             />
             <GetApp className={$.uploadIcon}/>

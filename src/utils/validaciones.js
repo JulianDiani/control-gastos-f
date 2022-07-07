@@ -24,6 +24,10 @@ export const validateField = (input, value, setState) => {
   }
 };
 
+export const validateMonto = (disponibleRubro, montoIngresado, setState) => {
+  const canBuy = disponibleRubro - montoIngresado >= 0;
+  setState(!canBuy);
+};
 export const formatPrice = (price) => {
   const format = new Intl.NumberFormat('de-DE').format(price);
 
