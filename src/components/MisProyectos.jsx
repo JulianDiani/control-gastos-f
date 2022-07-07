@@ -89,6 +89,7 @@ export const MisProyectos = () => {
     useEffect(() => {
       async function getPorcentaje() {                
         const proyectos = await getProyecto(username);
+        console.log("Proyectos para el usario",proyectos);
         const comprasRealizadas = await getAllCompras();
         const presupuestoProyecto = await getPresupuesto();
         setCompras(comprasRealizadas);

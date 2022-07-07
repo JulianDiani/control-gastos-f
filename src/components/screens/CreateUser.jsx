@@ -3,7 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Paper } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import * as moment from 'moment';
 import { createUser } from '../../services/usuarios';
 import Alert from '@material-ui/lab/Alert';
 
@@ -47,12 +46,13 @@ const CreateUser = () => {
     useEffect(() => {
       function setChanges(){
         timer.current = setTimeout(() =>{
-          setLoading(true);
+          setLoading(false);
       }, 2000);
-      setLoading(false);
+      setLoading(true);
       }
       if(hasChanges){
         setChanges();
+        setHasChanges(false);
       }
     },[hasChanges])
     
@@ -138,7 +138,7 @@ const CreateUser = () => {
                     />
                     <Autocomplete
                       id="outlined-name"
-                      options={["Admin","User"]}
+                      options={["admin","user"]}
                       value={role}
                       onChange={(_,value) => handleChange(value,setRole,true)}
                       getOptionLabel={option => option}
@@ -156,7 +156,7 @@ const CreateUser = () => {
                         Crear usuario
                     </Button>
             </Paper >
-            {!loading && (
+            {loading && (
               <Alert className={classes.loading}>Usuario cargado con exito</Alert>
             )
             }

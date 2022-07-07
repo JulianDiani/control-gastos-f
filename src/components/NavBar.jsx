@@ -12,7 +12,7 @@ import { useLocation } from 'react-router-dom';
 
 export default function NavBar({ user, sideBarOptions }) {
   const $ = useStyles();
-  
+  console.log("sideBarOptions",sideBarOptions);
   return (
     <Grid>
       <div className={$.navbar}>

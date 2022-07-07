@@ -8,10 +8,11 @@ import { getAllCompras, getComprasByProyecto } from '../services/compras.js';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
-import { Button, Grid, Modal } from '@material-ui/core';
+import { Button, Grid, Modal, Typography } from '@material-ui/core';
 import PopUpCompras from './PopUpCompras';
 import { Footer } from './Footer';
 import {formatPrice} from '../utils/validaciones';
+import BlockIcon from '@material-ui/icons/Block';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -48,6 +49,7 @@ export const Compras = () => {
   const [open, setOpen] = useState(false);
   const [newCompra, setNewCompra] = useState(true);
   const idProyecto = sessionStorage.getItem("idProyecto"); //TODO: PASAR A REDUX
+  console.log("Id proyecto",idProyecto);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -81,9 +83,10 @@ export const Compras = () => {
     
     return formatPrice(suma);
   }
-  const rendering = () => {
+  const rendering = (compras) => {
     return (
       <>
+        {compras.length > 0 ?
         <TableContainer className={$.container}>
           <Table aria-label="customized table">
             <StyledTableHead>
@@ -146,7 +149,12 @@ export const Compras = () => {
             </TableBody>
           </Table>
         </TableContainer>
-
+        :
+        <div className={$.emptyCompras}>
+          <Typography variant="h6">No hay compras realizadas</Typography>
+          <BlockIcon fontSize="large" className={$.emptyIcon}/>
+        </div>
+      }
       </>
     );
   };
@@ -165,7 +173,7 @@ export const Compras = () => {
       </Grid>
       <Divider />
       <br />
-      {compras ? rendering() : loadingRendering}
+      {compras ? rendering(compras) : loadingRendering}
       <Footer />
     </>
   );
@@ -195,5 +203,11 @@ const useStyles = makeStyles({
   },
   montoTotal:{
     alignContent: 'right'
+  },
+  emptyCompras: {
+    margin: '10rem auto',
+  },
+  emptyIcon: {
+    marginLeft: '7rem'
   }
-});
+ });

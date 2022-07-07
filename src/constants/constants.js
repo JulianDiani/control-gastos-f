@@ -69,28 +69,28 @@ export const proyectosEnHistoria = [
     nombre:
       'Sistema de Realidad Virtual para el Entrenamiento de Operarios de Excavadoras Hidráulicas',
     director: 'Lazo, Marcos Gonzalo',
-    fechaInicio: '16/05/2014',
+    fechaInicio: '2021-06-10',
     porcentaje: 100,
   },
   {
     nombre:
       'Gestión y optimización de escenas tridimensionales para simuladores de realidad virtual',
     director: "D'amato, Juan Pablo",
-    fechaInicio: '25/12/2016',
+    fechaInicio: '2021-06-10',
     porcentaje: 100,
   },
   {
     nombre:
       'Aplicación de Viterbi sobre Modelos Ocultos de Markov para la Estimación de Tráfico Vehicular',
     director: 'Perez, Alejandro J.',
-    fechaInicio: '14/12/2017',
+    fechaInicio: '2021-06-10',
     porcentaje: 100,
   },
   {
     nombre:
       'A GPU-Accelerated LPR Algorithm on Broad Vision Survillance Cameras',
     director: 'Dominguez, Leonardo Daniel',
-    fechaInicio: '24/05/2018',
+    fechaInicio: '2021-06-10',
     porcentaje: 100,
   },
 ];

@@ -26,6 +26,11 @@ const useStyles = makeStyles(() => ({
     },
     column : {
         flexDirection: 'column'
+    },
+    loading: {
+      width: '20rem',
+      marginLeft: '30rem',
+      marginTop: '3rem'
     }
 }));
 
@@ -46,8 +51,8 @@ const CreateProyect = () => {
     const [director,setDirector] = useState(null);
     const [codirector,setCodirector] = useState(null);
     const [usuario,setUsuario] = useState([]);
-    const [hasChanges,setHasChanges] = useState(null);
-    const [loadedProject, setLoadedProject] = useState(null);
+    const [hasChanges,setHasChanges] = useState(false);
+    const [loadedProject, setLoadedProject] = useState(false);
     //Campos obligatorios
     const canSubmit = titulo && tipo && organismo && lineaFinanciamiento && año && unidadAcademica && areaTematica && subsidio && fechaInicio && fechaFin && numeroExpediente && numeroResolucion && director && codirector;
     const timer = useRef();
@@ -59,7 +64,11 @@ const CreateProyect = () => {
       }, 2000);
       setLoadedProject(true);
       }
-      setChanges();
+      console.log("has changes", hasChanges);
+      if(hasChanges){
+        setChanges();
+        setHasChanges(false);
+      }
     },[hasChanges])
 
 
@@ -283,7 +292,7 @@ const CreateProyect = () => {
                     </Button>
             </Paper >
             {loadedProject && (
-              <Alert>Proyecto cargado con exito</Alert>
+              <Alert className={classes.loading}>Proyecto cargado con exito</Alert>
             )
             }
             </div>
