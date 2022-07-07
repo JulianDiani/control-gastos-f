@@ -46,8 +46,8 @@ const CreateProyect = () => {
     const [director,setDirector] = useState(null);
     const [codirector,setCodirector] = useState(null);
     const [usuario,setUsuario] = useState([]);
-    const [hasChanges,setHasChanges] = useState(false);
-    const [loadedProject, setLoadedProject] = useState(false);
+    const [hasChanges,setHasChanges] = useState(null);
+    const [loadedProject, setLoadedProject] = useState(null);
     //Campos obligatorios
     const canSubmit = titulo && tipo && organismo && lineaFinanciamiento && año && unidadAcademica && areaTematica && subsidio && fechaInicio && fechaFin && numeroExpediente && numeroResolucion && director && codirector;
     const timer = useRef();
@@ -55,13 +55,11 @@ const CreateProyect = () => {
     useEffect(() => {
       function setChanges(){
         timer.current = setTimeout(() =>{
-          setLoadedProject(true);
+          setLoadedProject(false);
       }, 2000);
-      setLoadedProject(false);
+      setLoadedProject(true);
       }
-      if(hasChanges){
-        setChanges();
-      }
+      setChanges();
     },[hasChanges])
 
 
@@ -91,27 +89,44 @@ const CreateProyect = () => {
       setUsuario("");
     }
     const submitForm = async () => {
+      // const proyecto = {
+        // titulo,
+        // tipo,
+        // organismo,
+        // lineaFinanciamiento,
+        // año,
+        // unidadAcademica,
+        // areaTematica,
+        // subsidio,
+        // fechaInicio,
+        // fechaFin,
+        // numeroExpediente,
+        // numeroResolucion,
+        // director,
+        // codirector,
+        // usuario,          
+      // } 
       const proyecto = {
-        titulo,
-        tipo,
-        organismo,
-        lineaFinanciamiento,
-        año,
-        unidadAcademica,
-        areaTematica,
-        subsidio,
-        fechaInicio,
-        fechaFin,
-        numeroExpediente,
-        numeroResolucion,
-        director,
-        codirector,
-        usuario,          
+        titulo:"titulo",
+        tipo:"tipo",
+        organismo:"organismo",
+        lineaFinanciamiento:"unahur",
+        año:"2021/06/01",
+        unidadAcademica:"unidadAcademica,",
+        areaTematica:"areaTematica",
+        subsidio:5777666,
+        fechaInicio:"2021/06/01",
+        fechaFin:"2022/06/01",
+        numeroExpediente:1234,
+        numeroResolucion: 82171,
+        director:"Pedroza 3",
+        codirector:"Mafia 3",
+        usuario :"galosalerno",          
       } 
         const  response = await createProyecto(proyecto);
-        clearStates();
         setHasChanges(true);
-        console.log(`Create-new-user-response: ${JSON.stringify(response)}`);    
+        clearStates();
+        console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);    
     }
     return (
         <div>
@@ -267,7 +282,7 @@ const CreateProyect = () => {
                         Cargar proyecto
                     </Button>
             </Paper >
-            {!loadedProject && (
+            {loadedProject && (
               <Alert>Proyecto cargado con exito</Alert>
             )
             }

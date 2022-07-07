@@ -137,15 +137,15 @@ export default function PopUpCompras(props) {
   const [newProveedorTelefono, setNewProveedorTelefono] = useState(null);
 
 
-const [newProveedorEmail, setNewProveedorEmail] = useState(null);
-const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
+  const [newProveedorEmail, setNewProveedorEmail] = useState(null);
+  const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
   //Validate form to send
   const canSubmit = rubro && subrubro && monto && fecha && proveedor;
   const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit && newProveedorTelefono;
   
   //Consts
   const rubros = getRubros();
-  
+  const idProyecto = sessionStorage.getItem("idProyecto");
   //UseEffect when changing "rubros"
   useEffect(() => {
     async function fetchGastos() {
@@ -162,7 +162,7 @@ const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
     try {
       fetchGastos();
     } catch (err) {
-      console.log('[PopUpCompras] ERROR IN USEEFFECT:' + err.message);
+      console.log('[PopUpCompras Component] ERROR:' + err.message);
     }
   }, [rubro]); 
 
@@ -181,6 +181,7 @@ const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
       estado: 'Comprado',
       factura: 'factura-054',
       nombre: nombre,
+      idProyecto: idProyecto
     };
     const res = await postCompra(data);
     props.stateNewCompra(true);
@@ -195,16 +196,14 @@ const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
       rubro: newProveedorRubro,
       mail: newProveedorEmail
     }
-    console.log("Data to post", data);
-    const resposeBack = await postProveedor(data);
+    const responseBack = await postProveedor(data);
+    console.log(`[PopUpCompras Component] create proveedor response ${responseBack}`);
     handleAddProveedor();
-    console.log("Response back", resposeBack);
   }
 
   //HANDLERS
   const submitHandle = (handle, value) => {
     handle(value);
-    console.log(value);
   };
 
   const handleClose = () => {

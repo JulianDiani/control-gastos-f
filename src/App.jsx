@@ -37,7 +37,8 @@ export default function App() {
   const [init, setInit] = useState(false);
   
   const userSideBarOptions = [
-    { text: 'Proyectos', icon: <Home />, path: '/proyectos' },
+    { text: 'Proyectos', icon: <Home />, path: '/' },
+    { text: 'Datos generales', icon: <Home />, path: '/proyectos' },
     { text: 'Presupuesto', icon: <AttachMoney />, path: '/proyectos/presupuestos' },
     { text: 'Proveedores', icon: <AssignmentInd />, path: '/proyectos/proveedores' },
     { text: 'Compras', icon: <ShoppingCart />, path: '/proyectos/compras' },
@@ -60,7 +61,6 @@ export default function App() {
     }
     checkLogin();
   },[])
-  console.log("Rol",rol);
   return (
     //ToDo: Como quitar espacio sobrante en el borde derecho.
     init?
@@ -104,13 +104,13 @@ export default function App() {
                 <Switch>
                   <Route path="/login" component={Login} />
                   <Route path="/" exact component={MisProyectos} />
-                  <Route path="/proyectos" component={DatosGenerales} />
+                  <Route path="/proyectos" exact component={DatosGenerales} />
                   <Route
                     path="/proyectos/presupuestos"
                     exact
                     component={Presupuestos}
                   />
-                  <Route path="/proyectos/compras" exact component={Compras} />
+                  <Route path="/proyectos/compras" component={Compras} />
                   <Route
                     path="/proyectos/proveedores"
                     exact

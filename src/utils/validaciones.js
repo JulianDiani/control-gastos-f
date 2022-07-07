@@ -8,7 +8,6 @@ const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 
 export const validateField = (input, value, setState) => {
   if (input === 'email') {
-    console.log('ENTRO ACA');
     setState(!regexEmail.test(value)); //TODO: Validaciones para email
     return;
   }

@@ -1,6 +1,6 @@
 import { presupuestoPrueba, rubros } from '../constants/constants';
 
-export async function getPresupuesto() {
+export function getPresupuesto() {
   return Promise.resolve(presupuestoPrueba);
 }
 

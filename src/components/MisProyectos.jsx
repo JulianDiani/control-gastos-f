@@ -11,7 +11,7 @@ import { proyectosEnHistoria } from '../constants/constants';
 import { Link } from 'react-router-dom';
 import { calculateTotalExpenses, nivelDeEjecucion } from '../utils/presupuestos';
 import { getPresupuesto } from '../services/presupuestos';
-import { getAllCompras } from '../services/compras';
+import { getAllCompras, getComprasByProyecto } from '../services/compras';
 import { Box, CircularProgress, Typography } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { setNivelEjecucion } from '../state/nivelEjecucionSlice';
@@ -76,31 +76,36 @@ const circularProgressWithValue = (nivelEjecucion) => {
 export const MisProyectos = () => {
     const $ = useStyles();
     const [proyectosEnCurso,setProyectosEnCurso] = useState([]);
+    const [compras,setCompras] = useState([]);
+    const [presupuesto,setPresupuesto] = useState([]);
+
     const dispatch = useDispatch();
     const username = sessionStorage.getItem("username");
-   
+    const idProyecto = sessionStorage.getItem("idProyecto");
+
     const handleSelectProyect = (id) =>{
-      console.log("ID PROYECTO",id);
       sessionStorage.setItem("idProyecto",id)
     }
     useEffect(() => {
-      async function getPorcentaje() {
-        const presupuesto = await getPresupuesto();
-        const comprasRealizadas = await getAllCompras();
-        console.log("username",username);
+      async function getPorcentaje() {                
         const proyectos = await getProyecto(username);
-        setProyectosEnCurso(proyectos)
-        console.log("proyectos",proyectos);
-        const gastos = calculateTotalExpenses(comprasRealizadas);
-        const totalPresupuesto = presupuesto.total;
-        const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos).split(",")[0]; //Truncamiento del porcentaje.
-        dispatch(setNivelEjecucion(ejecucion))
+        const comprasRealizadas = await getAllCompras();
+        const presupuestoProyecto = await getPresupuesto();
+        setCompras(comprasRealizadas);
+        setProyectosEnCurso(proyectos);
+        setPresupuesto(presupuestoProyecto)         
       }
       getPorcentaje();
      },[])
-     console.log("PASO ACA", useSelector(state => state));
-     const nivelEjecucion = useSelector(state => state.nivelEjecucion.value)
-     console.log("Type ", nivelEjecucion);
+
+    const calcularNivelEjecucion = (idProyecto) =>{
+      const comprasRealizadasEnproyecto = compras.filter(compra => compra.idProyecto == idProyecto);
+      const gastos = calculateTotalExpenses(comprasRealizadasEnproyecto);
+      const totalPresupuesto = presupuesto.total;
+      const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos).split(",")[0]; //Truncamiento del porcentaje.
+      dispatch(setNivelEjecucion(ejecucion))
+      return ejecucion;
+    }
     return <>
         <h2>En curso</h2>
         <TableContainer className={$.container} component={Paper}>
@@ -120,7 +125,7 @@ export const MisProyectos = () => {
                       <StyledTableCell align="center" >{proyecto.director}</StyledTableCell>
                       <StyledTableCell align="center">{proyecto.fechaInicio}</StyledTableCell>
                       <StyledTableCell align="center">
-                        {circularProgressWithValue(nivelEjecucion)}
+                        {circularProgressWithValue(calcularNivelEjecucion(proyecto.id))}
                       </StyledTableCell>
                     </StyledTableRow>
                 ))}
@@ -144,7 +149,7 @@ export const MisProyectos = () => {
                     <StyledTableCell align="center">{proyectosEnHistoria.director}</StyledTableCell>
                     <StyledTableCell align="center">{proyectosEnHistoria.fechaInicio}</StyledTableCell>
                     <StyledTableCell align="center">
-                      {circularProgressWithValue(proyectosEnHistoria.porcentaje)}
+                      {circularProgressWithValue(100)}
                     </StyledTableCell>
                     </StyledTableRow>
                 ))}

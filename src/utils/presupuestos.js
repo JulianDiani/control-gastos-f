@@ -9,8 +9,11 @@ const nivelDeEjecucion = (presupuesto, gastos) =>
   });
 
 const calculateTotalExpenses = (compras) => {
-  const gastos = compras.data.map((a) => parseInt(a.monto));
-  return _.sum(gastos);
+  const gastos = compras.map((a) => parseInt(a.monto));
+  if (gastos.length === 0) {
+    return 0;
+  }
+  return _.sum(gastos || 0);
 };
 
 export { montoDisponible, nivelDeEjecucion, calculateTotalExpenses };

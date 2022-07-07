@@ -12,37 +12,7 @@ import { useLocation } from 'react-router-dom';
 
 export default function NavBar({ user, sideBarOptions }) {
   const $ = useStyles();
- /*
-  const sideBarOptions = [
-    { text: 'Mis Proyectos', icon: <ShareIcon />, path: '/' },
-    { text: 'Normativas I+D', icon: <Info />, path: '/normativas' },
-    { text: 'Soporte', icon: <Help />, path: '/soporte' },
-  ];
-  const investigadorSlides = [
-    { text: 'Inicio', icon: <Home />, path: '/' },
-    { text: 'Datos Generales', icon: <ImportContacts />, path: '/proyectos' },
-    { text: 'Presupuestos', icon: <Timeline />, path: '/proyectos/presupuestos' },
-    { text: 'Compras', icon: <ShoppingCart />, path: '/proyectos/compras' },
-    // { text: 'Subsidios', icon: <AssignmentInd />, path: '/proyectos/subsidios' },
-    { text: 'Crear nota', icon: <Create />, path: '/proyectos/nota' },
-    { text: 'Proveedores', icon: <Contacts />, path: '/proyectos/proveedores' },
-    { text: 'Normativas I+D', icon: <Info />, path: '/proyectos/normativas' },
-  ];
-
-  const adminSlides = [
-    { text: 'Proyectos', icon: <ShareIcon />, path: '/' },
-    { text: 'Usuarios', icon: <PeopleAlt />, path: '/' },
-  ]
-  */
-
-  let location = useLocation();
-/*
-  if (location.pathname.startsWith('/proyectos')) {
-    user === "galosalerno" ? navbar = investigadorSlides : navbar = adminSlides; 
-  } else {
-      user === "galosalerno" ? navbar = sideBarOptions : navbar = adminSlides;
-  }
-  */
+  
   return (
     <Grid>
       <div className={$.navbar}>

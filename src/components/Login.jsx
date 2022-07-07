@@ -49,9 +49,7 @@ const Login = ({ setLoggedIn, password, userName, setUserName, setPassword, rol,
   const sendLoginData = async () => {
     const user = await getUser(userName);
     const checked = checkedLogin(user);
-    console.log("User",user)
     const role = user?.data?.rol;
-    console.log("Role",role);
     setError(!checked); //if checked is false error is true.
     setLoggedIn(checked);  //true = login ok | false = login fail
     setRol(role);

@@ -3,6 +3,7 @@ const SERVICES_CONFIG = {
   port: ':3001',
   path: '/api/compras',
 };
+
 export async function getAllCompras() {
   const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}`;
   const response = await fetch(endpoint, {
@@ -15,7 +16,22 @@ export async function getAllCompras() {
     },
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
-  console.log(response);
+  return response.json();
+}
+
+export async function getComprasByProyecto(idProyecto) {
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}/getComprasByProyect`;
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ idProyecto: idProyecto }),
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  });
   return response.json();
 }
 
@@ -31,7 +47,6 @@ export async function postCompra(body) {
     },
     body: JSON.stringify(body),
   });
-  console.log(response);
   return response;
 }
 

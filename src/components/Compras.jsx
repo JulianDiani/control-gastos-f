@@ -4,7 +4,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-import { getAllCompras } from '../services/compras.js';
+import { getAllCompras, getComprasByProyecto } from '../services/compras.js';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
@@ -47,7 +47,7 @@ export const Compras = () => {
   const [compras, setCompras] = useState(null);
   const [open, setOpen] = useState(false);
   const [newCompra, setNewCompra] = useState(true);
-
+  const idProyecto = sessionStorage.getItem("idProyecto"); //TODO: PASAR A REDUX
   const handleOpen = () => {
     setOpen(true);
   };
@@ -59,9 +59,8 @@ export const Compras = () => {
   //API Call
   useEffect(() => {
     async function fetchCompra() {
-      const getFunction = getAllCompras;
       try {
-        const compras = await getFunction();
+        const compras = await getComprasByProyecto(idProyecto);
         setCompras(compras);
       } catch (err) {
         console.log('ERROR FETCH API [compras]: ' + err);
@@ -77,8 +76,7 @@ export const Compras = () => {
   };
 
   const totalGastos = () => {
-    const compra = compras.data.map(compra => Number(compra.monto));
-    console.log(compra);
+    const compra = compras.map(compra => Number(compra.monto));
     const suma = compra.reduce((a, b) => a + b, 0)
     
     return formatPrice(suma);
@@ -110,7 +108,7 @@ export const Compras = () => {
               </StyledTableCell>
             </StyledTableHead>
             <TableBody>
-              {compras.data.map((compra) => (
+              {compras.map((compra) => (
                 <StyledTableRow key={compra.id}>
                   <StyledTableCell scope="row">{compra.rubro}</StyledTableCell>
                   <StyledTableCell align="left">

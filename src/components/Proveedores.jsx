@@ -114,7 +114,6 @@ export const Proveedores = () => {
         </Grid>
         <Divider/>
         <br/>
-        {console.log("Proveedores " + JSON.stringify(proveedores))}
         {proveedores ? rendering() : loadingRendering()}
         <Footer />
         </>

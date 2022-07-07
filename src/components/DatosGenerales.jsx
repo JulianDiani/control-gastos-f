@@ -22,11 +22,10 @@ export const DatosGenerales = () => {
   useEffect(() => {
     async function fetchUsuarios() {
       try {
-        console.log("idProyecto",idProyecto)
         const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
         setProyecto(proyecto[0]);
       } catch (err) {
-        console.log('ERROR USE EFFECT : ' + err);
+        console.log('[DatosGenerales Component] ERROR : ' + err);
       }
     }
     fetchUsuarios();

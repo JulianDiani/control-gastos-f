@@ -5,7 +5,6 @@ import React from 'react';
 export default function TortaPrincipal({presupuesto }) {
   
   const totalDisponible = presupuesto; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
-  console.log("Presupuesto: ",presupuesto)
   
   const datosAConsumir = (({
     insumos,

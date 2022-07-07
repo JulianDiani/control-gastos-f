@@ -10,13 +10,11 @@ export async function getAllProveedores() {
     },
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
-  console.log(response);
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
 export async function postProveedor(body) {
   const url = 'http://localhost:3001/api/proveedores';
-  console.log('BODY DE PROVEEDORES ' + JSON.stringify(body));
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -28,6 +26,5 @@ export async function postProveedor(body) {
     body: JSON.stringify(body),
     //referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
-  console.log(response);
   return response; // parses JSON response into native JavaScript objects
 }

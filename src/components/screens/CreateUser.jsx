@@ -45,7 +45,6 @@ const CreateUser = () => {
     const canSubmit = name && lastName && username && password && birthDate && role;
     
     useEffect(() => {
-      console.log("ENTRO AL USEFFECT");
       function setChanges(){
         timer.current = setTimeout(() =>{
           setLoading(true);
@@ -57,6 +56,14 @@ const CreateUser = () => {
       }
     },[hasChanges])
     
+    const clearStates = () => {
+      setName("")
+      setLastName("")
+      setUsername("")
+      setPassword("")
+      setBirthDate("")
+      setRole("")
+    }
     //Handle events
     const handleChange = (event,setState,isAutocomplete=false) => {
         if(isAutocomplete){
@@ -79,6 +86,7 @@ const CreateUser = () => {
         
         const  response = await createUser(user);    
         setHasChanges(true);
+        clearStates();
         console.log(`Create-new-user-response: ${JSON.stringify(response)}`);    
     }
     return (

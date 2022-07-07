@@ -5,7 +5,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import { getPresupuesto } from '../services/presupuestos.js';
-import { getAllCompras } from '../services/compras.js';
+import { getAllCompras, getComprasByProyecto } from '../services/compras.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './dashboards/TortaPrincipal';
@@ -20,13 +20,14 @@ export const Presupuestos = () => {
   const [presupuesto, setPresupuesto] = useState(null);
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
-
+  const idProyecto = sessionStorage.getItem("idProyecto");
+ 
   useEffect(() => {
     async function fetchPrespuesto() {
       try {
         const presupuesto = await getPresupuesto();
-        const comprasRealizadas = await getAllCompras();
-        const gastos = calculateTotalExpenses(comprasRealizadas);
+        const compras = await getComprasByProyecto(idProyecto);
+        const gastos = calculateTotalExpenses(compras);
         setTotalGastos(gastos);
         setComprasRealizadas(comprasRealizadas);
         setPresupuesto(presupuesto);
@@ -87,7 +88,7 @@ export const Presupuestos = () => {
       <h1>Presupuesto</h1>
       <div className={$.root}>
         <Divider className={$.divider} />
-        {presupuesto && totalGastos ? rendering() : loadingRendering()}
+        {presupuesto ? rendering() : loadingRendering()}
       </div>
       <Footer />
     </>

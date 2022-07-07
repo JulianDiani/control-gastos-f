@@ -53,6 +53,5 @@ export async function createProyecto(body) {
     body: JSON.stringify(body),
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origi
   });
-  console.log(response);
   return response.json(); // parses JSON response into native JavaScript objects
 }

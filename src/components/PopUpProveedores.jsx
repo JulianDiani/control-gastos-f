@@ -38,11 +38,10 @@ export default function PopUpProveedores(props) {
     };
 
     const res = await postProveedor(data);
-    console.log("response post " + JSON.stringify(res))
+    console.log(`[PopUpProveedores component] create proveedor ${JSON.stringify(res)}`)
   };
   const submitHandle = (handle, value) => {
     handle(value);
-    console.log(value);
   };
   const handleClose = () => {
     props.state(false);
