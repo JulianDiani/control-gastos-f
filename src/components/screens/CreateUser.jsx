@@ -10,6 +10,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns'; 
+import moment from 'moment';
 
 const useStyles = makeStyles(() => ({
     formContainer: {
@@ -165,6 +166,7 @@ const CreateUser = () => {
                         label="Fecha nacimiento"
                         format="MM/dd/yyyy"
                         value={birthDate}
+                        maxDate={moment()}
                         style={{width:'98%',marginLeft:'0.5rem'}}
                         onChange={(e) => handleChange(e,setBirthDate,true)}
                         inputVariant="outlined"
