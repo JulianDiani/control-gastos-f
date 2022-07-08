@@ -1,28 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Paper } from '@material-ui/core';
+import { Button, Divider, Paper } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import * as moment from 'moment';
-import { createUser } from '../../services/usuarios';
 import { createProyecto } from '../../services/proyectos';
 import Alert from '@material-ui/lab/Alert';
-
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns'; 
+import { validateField } from '../../utils/validaciones';
+import * as moment from 'moment';
 const useStyles = makeStyles(() => ({
     formContainer: {
         display: 'flex',
         flexDirection: 'column',
-        width: '50%',
+        width: '60%',
         boxShadow: '0 5px 10px -2px #333',
         backgroundColor: '#fafafa',
         padding: '0 1rem 1rem 1rem',
-        margin: 'auto'
+        margin: 'auto',
+        borderTop: '1rem solid #5AA123',
+        borderRadius: '17px 17px 0 0'
     },
     field : {
         margin: '0.5rem'
     },
     submitButton: {
-        margin: '0.5rem'
+        margin: '0.5rem',
+        backgroundColor: '#5AA123'
     },
     column : {
         flexDirection: 'column'
@@ -31,6 +38,15 @@ const useStyles = makeStyles(() => ({
       width: '20rem',
       marginLeft: '30rem',
       marginTop: '3rem'
+    },
+    grid: {
+      display: 'grid',
+    },
+    flex: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      margin: '1rem',
+      width: '97%'
     }
 }));
 
@@ -48,11 +64,16 @@ const CreateProyect = () => {
     const [fechaFin,setFechaFin] = useState(null);
     const [numeroExpediente,setNumeroExpediente] = useState(null);
     const [numeroResolucion,setNumeroResolucion] = useState(null);
+    const [numeroProyecto,setNumeroProyecto] = useState(null);
     const [director,setDirector] = useState(null);
     const [codirector,setCodirector] = useState(null);
     const [usuario,setUsuario] = useState([]);
     const [hasChanges,setHasChanges] = useState(false);
     const [loadedProject, setLoadedProject] = useState(false);
+    const [errorNumeroExpediente,setErrorNumeroExpediente] = useState(false);
+    const [errorNumeroResolucion,setErrorNumeroResolucion] = useState(false);
+    const [errorNumeroProyecto,setErrorNumeroProyecto] = useState(false);
+    const [añoValue,setAñoValue] = useState() //Fix to datapicker - se meustra un año menos que el valor que tiene el state
     //Campos obligatorios
     const canSubmit = titulo && tipo && organismo && lineaFinanciamiento && año && unidadAcademica && areaTematica && subsidio && fechaInicio && fechaFin && numeroExpediente && numeroResolucion && director && codirector;
     const timer = useRef();
@@ -74,12 +95,26 @@ const CreateProyect = () => {
 
     //Handle events
     const handleChange = (event,setState,isAutocomplete=false) => {
-        if(isAutocomplete){
+      console.log("Event",event);  
+      if(isAutocomplete){
             setState(event);    
         }else{
             setState(event.target.value);
         }
     };
+    
+    const handlePicker = (event,setDate,onlyYear=false) => {
+      if(onlyYear){
+        const year = moment(event).format("YYYY");
+        const yearToValue = moment(year);
+        console.log("Year",yearToValue)
+        setDate(year);
+        setAñoValue(yearToValue)
+      }else{
+        const date = moment(event).format("YYYY-MM-DD");
+        setDate(date);
+      }
+    }
     const clearStates = () => {
       setTitulo("");
       setTipo("");
@@ -98,40 +133,42 @@ const CreateProyect = () => {
       setUsuario("");
     }
     const submitForm = async () => {
-      // const proyecto = {
-        // titulo,
-        // tipo,
-        // organismo,
-        // lineaFinanciamiento,
-        // año,
-        // unidadAcademica,
-        // areaTematica,
-        // subsidio,
-        // fechaInicio,
-        // fechaFin,
-        // numeroExpediente,
-        // numeroResolucion,
-        // director,
-        // codirector,
-        // usuario,          
-      // } 
       const proyecto = {
-        titulo:"titulo",
-        tipo:"tipo",
-        organismo:"organismo",
-        lineaFinanciamiento:"unahur",
-        año:"2021/06/01",
-        unidadAcademica:"unidadAcademica,",
-        areaTematica:"areaTematica",
-        subsidio:5777666,
-        fechaInicio:"2021/06/01",
-        fechaFin:"2022/06/01",
-        numeroExpediente:1234,
-        numeroResolucion: 82171,
-        director:"Pedroza 3",
-        codirector:"Mafia 3",
-        usuario :"galosalerno",          
+        titulo,
+        tipo,
+        organismo,
+        lineaFinanciamiento,
+        año,
+        unidadAcademica,
+        areaTematica,
+        subsidio,
+        fechaInicio,
+        fechaFin,
+        numeroExpediente,
+        numeroResolucion,
+        numeroProyecto,
+        director,
+        codirector,
+        usuario,          
       } 
+      //DATA TO TEST SUBMIT.
+      // const proyecto = {
+        // titulo:"titulo",
+        // tipo:"tipo",
+        // organismo:"organismo",
+        // lineaFinanciamiento:"unahur",
+        // año:"2021/06/01",
+        // unidadAcademica:"unidadAcademica,",
+        // areaTematica:"areaTematica",
+        // subsidio:5777666,
+        // fechaInicio:"2021/06/01",
+        // fechaFin:"2022/06/01",
+        // numeroExpediente:1234,
+        // numeroResolucion: 82171,
+        // director:"Pedroza 3",
+        // codirector:"Mafia 3",
+        // usuario :"galosalerno",          
+      // } 
         const  response = await createProyecto(proyecto);
         setHasChanges(true);
         clearStates();
@@ -144,7 +181,7 @@ const CreateProyect = () => {
             <Paper className={classes.formContainer}>
                     <h2>Cargar datos</h2>
                     <div>
-                        <div>
+                        <div className={classes.grid}>
                             <TextField
                               id="outlined-name"
                               label="Titulo"
@@ -173,22 +210,13 @@ const CreateProyect = () => {
                               id="outlined-name"
                               label="Linea de financiamiento"
                               value={lineaFinanciamiento}
-                              type="año"
+                              type="text"
                               onChange={(e) => handleChange(e,setLineaFinanciamiento)}
                               variant="outlined"
                               className={classes.field}
                             />
-                            <TextField
-                              id="outlined-name"
-                              label="año"
-                              value={año}
-                              type="text"
-                              onChange={(e) => handleChange(e,setAño)}
-                              variant="outlined"
-                              className={classes.field}
-                            />
                         </div>
-                    <div>
+                    <div className={classes.grid}>
                         <TextField
                           id="outlined-name"
                           label="Unidad academica"
@@ -216,42 +244,86 @@ const CreateProyect = () => {
                           variant="outlined"
                           className={classes.field}
                         />
-                        <TextField
-                          id="outlined-name"
-                          label="Fecha inicio"
-                          type="text"
-                          value={fechaInicio}
-                          onChange={(e) => handleChange(e,setFechaInicio)}
-                          variant="outlined"
-                          className={classes.field}
-                        />
-                        <TextField
-                          id="outlined-name"
-                          label="Fecha fin"
-                          value={fechaFin}
-                          type="text"
-                          onChange={(e) => handleChange(e,setFechaFin)}
-                          variant="outlined"
-                          className={classes.field}
-                        />
-                        <TextField
-                          id="outlined-name"
-                          label="Numero expediente"
-                          value={numeroExpediente}
-                          type="text"
-                          onChange={(e) => handleChange(e,setNumeroExpediente)}
-                          variant="outlined"
-                          className={classes.field}
-                        />
-                        <TextField
-                          id="outlined-name"
-                          label="Numero resolucion"
-                          value={numeroResolucion}
-                          type="text"
-                          onChange={(e) => handleChange(e,setNumeroResolucion)}
-                          variant="outlined"
-                          className={classes.field}
-                        />
+                        <Divider/>
+                        <MuiPickersUtilsProvider utils={DateFnsUtils} >
+                          <div className={classes.flex}>
+                            <KeyboardDatePicker
+                              id="date-picker-dialog"
+                              label="Fecha inicio"
+                              format="MM/dd/yyyy"
+                              minDate={moment()}
+                              value={fechaInicio}
+                              onChange={(e) => handlePicker(e,setFechaInicio)}
+                              inputVariant="outlined"
+                              KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                              }}
+                            />
+                            <KeyboardDatePicker
+                              id="date-picker-dialog"
+                              label="Fecha fin"
+                              format="MM/dd/yyyy"
+                              minDate={moment().add(6, 'month')} //6 meses es el minimo de duracion de un proyecto
+                              value={fechaFin}
+                              onChange={(e) => handlePicker(e,setFechaFin)}
+                              inputVariant="outlined"
+                              KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                              }}
+                            />
+                            <KeyboardDatePicker
+                              // margin="normal"
+                              id="date-picker-dialog"
+                              label="Año"
+                              views={["year"]}
+                              format="yyyy"
+                              minDate={moment()}
+                              value={añoValue}
+                              onChange={(e) => handlePicker(e,setAño,true)}
+                              inputVariant="outlined"
+                              KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                              }}
+                            />
+                            
+                          </div>
+                        </MuiPickersUtilsProvider>
+                        <Divider/>
+                        <div className={classes.flex}>
+                          <TextField
+                            id="outlined-name"
+                            label="Numero expediente"
+                            value={numeroExpediente}
+                            onBlur={(e) => validateField("int", e.target.value, setErrorNumeroExpediente)}
+                            type="text"
+                            onChange={(e) => handleChange(e,setNumeroExpediente)}
+                            variant="outlined"
+                            className={classes.field}
+                            error={errorNumeroExpediente}
+                          />
+                          <TextField
+                            id="outlined-name"
+                            label="Numero resolucion"
+                            value={numeroResolucion}
+                            onBlur={(e) => validateField("int", e.target.value, setErrorNumeroResolucion)}
+                            type="text"
+                            onChange={(e) => handleChange(e,setNumeroResolucion)}
+                            variant="outlined"
+                            className={classes.field}
+                            error={errorNumeroResolucion}
+                          />
+                          <TextField
+                            id="outlined-name"
+                            label="Numero proyecto"
+                            value={numeroProyecto}
+                            onBlur={(e) => validateField("int", e.target.value, setErrorNumeroProyecto)}
+                            type="text"
+                            onChange={(e) => handleChange(e,setNumeroProyecto)}
+                            variant="outlined"
+                            className={classes.field}
+                            error={errorNumeroProyecto}
+                          />
+                        </div>
                         <TextField
                           id="outlined-name"
                           label="Director"

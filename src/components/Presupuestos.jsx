@@ -14,20 +14,25 @@ import Tabla from './dashboards/Tabla';
 import Grid from '@material-ui/core/Grid';
 import { calculateTotalExpenses } from '../utils/presupuestos'
 
-export const Presupuestos = () => {
+export const Presupuestos = ({idProyecto, setIdProyecto}) => {
   const $ = useStyles();
   
   const [presupuesto, setPresupuesto] = useState(null);
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
-  const idProyecto = sessionStorage.getItem("idProyecto");
+  //const idProyecto = sessionStorage.getItem("idProyecto");
  
   useEffect(() => {
     async function fetchPrespuesto() {
       try {
+      
+        const id = sessionStorage.getItem("idProyecto");
+        setIdProyecto(id)
         const presupuesto = await getPresupuesto();
         const compras = await getComprasByProyecto(idProyecto);
         const gastos = calculateTotalExpenses(compras);
+        console.log("Presupuesto",presupuesto);
+        console.log("compras",compras);
         setTotalGastos(gastos);
         setComprasRealizadas(comprasRealizadas);
         setPresupuesto(presupuesto);

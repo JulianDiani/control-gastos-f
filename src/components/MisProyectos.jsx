@@ -11,10 +11,8 @@ import { proyectosEnHistoria } from '../constants/constants';
 import { Link } from 'react-router-dom';
 import { calculateTotalExpenses, nivelDeEjecucion } from '../utils/presupuestos';
 import { getPresupuesto } from '../services/presupuestos';
-import { getAllCompras, getComprasByProyecto } from '../services/compras';
+import { getAllCompras } from '../services/compras';
 import { Box, CircularProgress, Typography } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
-import { setNivelEjecucion } from '../state/nivelEjecucionSlice';
 import { getProyecto } from '../services/proyectos';
 
 
@@ -40,7 +38,7 @@ const StyledTableRow = withStyles(() => ({
 const StyledTableHead = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
-      background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)', 
+      background: '#5AA123',
     },
   },
 }))(TableRow);
@@ -73,23 +71,19 @@ const circularProgressWithValue = (nivelEjecucion) => {
   );
 }
 
-export const MisProyectos = () => {
+export const MisProyectos = ({userName,setIdProyecto}) => {
     const $ = useStyles();
     const [proyectosEnCurso,setProyectosEnCurso] = useState([]);
     const [compras,setCompras] = useState([]);
-    const [presupuesto,setPresupuesto] = useState([]);
-
-    const dispatch = useDispatch();
-    const username = sessionStorage.getItem("username");
-    const idProyecto = sessionStorage.getItem("idProyecto");
-
+    const [presupuesto,setPresupuesto] = useState([]);    
+    
     const handleSelectProyect = (id) =>{
-      sessionStorage.setItem("idProyecto",id)
+      sessionStorage.setItem("idProyecto",id);
+      setIdProyecto(id);
     }
     useEffect(() => {
-      async function getPorcentaje() {                
-        const proyectos = await getProyecto(username);
-        console.log("Proyectos para el usario",proyectos);
+      async function getPorcentaje() {               
+        const proyectos = await getProyecto(userName);
         const comprasRealizadas = await getAllCompras();
         const presupuestoProyecto = await getPresupuesto();
         setCompras(comprasRealizadas);
@@ -99,12 +93,11 @@ export const MisProyectos = () => {
       getPorcentaje();
      },[])
 
-    const calcularNivelEjecucion = (idProyecto) =>{
-      const comprasRealizadasEnproyecto = compras.filter(compra => compra.idProyecto == idProyecto);
+    const calcularNivelEjecucion = (proyectoId) =>{
+      const comprasRealizadasEnproyecto = compras.filter(compra => compra.idProyecto == proyectoId);
       const gastos = calculateTotalExpenses(comprasRealizadasEnproyecto);
       const totalPresupuesto = presupuesto.total;
       const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos).split(",")[0]; //Truncamiento del porcentaje.
-      dispatch(setNivelEjecucion(ejecucion))
       return ejecucion;
     }
     return <>

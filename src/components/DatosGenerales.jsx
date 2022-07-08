@@ -12,12 +12,12 @@ import { getProyecto, getProyectoById } from '../services/proyectos.js';
 import Alert from '@material-ui/lab/Alert';
 import { formatPrice } from '../utils/validaciones';
 
-export const DatosGenerales = () => {
+export const DatosGenerales = ({idProyecto}) => {
   const $ = useStyles();
 
   const [proyecto, setProyecto] = useState(null);
   // const userName = sessionStorage.getItem("username");
-  const idProyecto = sessionStorage.getItem("idProyecto");
+  //const idProyecto = sessionStorage.getItem("idProyecto");
   //useEffect para traer la proyecto del proyecto de la api.
   useEffect(() => {
     async function fetchUsuarios() {
@@ -146,6 +146,8 @@ const useStyles = makeStyles({
     width: '50%',
     margin: '1rem',
     maxHeight: '45rem',
+    borderTop: '1rem solid #5AA123',
+    borderRadius: '17px 17px 0 0'
   },
   divider: {
     marginBottom: '2rem',

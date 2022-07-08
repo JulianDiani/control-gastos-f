@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PopUpCompras(props) {
+export default function PopUpCompras({state,idProyecto,stateNewCompra,setIdProyecto}) {
   const $ = useStyles();
 
   const [rubro, setRubro] = useState('');
@@ -146,12 +146,19 @@ export default function PopUpCompras(props) {
   
   //Consts
   const rubros = getRubros();
-  const idProyecto = sessionStorage.getItem("idProyecto");
+  
+  
+  useEffect(() => {
+      const id = sessionStorage.getItem("idProyecto");
+      setIdProyecto(id)
+  }, []); 
+  
   //UseEffect when changing "rubros"
   useEffect(() => {
     async function fetchGastos() {
       const gastos = await getGastosPorRubro(rubro,idProyecto);
       const presupuesto = await getPresupuesto();
+      console.log("presupuesto",presupuesto);
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         presupuesto,
         gastos.totalGastado,
@@ -167,11 +174,16 @@ export default function PopUpCompras(props) {
     }
   }, [rubro]); 
 
-  const calcularDineroDisponiblePorRubro = (presupuestoTotal, gastosRubro, rubro) => rubro ? presupuestoTotal[rubro.toLowerCase()] - gastosRubro : 0;
+  const calcularDineroDisponiblePorRubro = (presupuestoTotal, gastosRubro, rubro) => {
+    console.log("PRESUPUESTO TOTAL",presupuestoTotal);
+    console.log("gastosRubro",gastosRubro);
+    console.log("rubro",rubro);
+    return rubro ? presupuestoTotal[rubro.toLowerCase()] - gastosRubro : 0
+  };
 
   //POST DATA TO BACKEND
   const submitForm = async () => {
-    props.state(false);
+    state(false);
     const data = {
       fecha: fecha,
       rubro: rubro,
@@ -185,7 +197,7 @@ export default function PopUpCompras(props) {
       idProyecto: idProyecto
     };
     const res = await postCompra(data);
-    props.stateNewCompra(true);
+    stateNewCompra(true);
     console.log('[PopUpCompras] submitForm response: ', res);
   };
   
@@ -208,7 +220,7 @@ export default function PopUpCompras(props) {
   };
 
   const handleClose = () => {
-    props.state(false);
+    state(false);
   };
 
   //New proveedor handlers
@@ -248,7 +260,7 @@ export default function PopUpCompras(props) {
             onClose={handleClose}
             onOpen={handleOpen}
             value={rubro}
-            onChange={handleChange}
+            onChange={(e) =>handleChange(e)}
           >
             {rubros.map((r, idx) => (
               <MenuItem value={r} key={idx}>

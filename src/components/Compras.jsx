@@ -40,7 +40,7 @@ const StyledTableHead = withStyles(() => ({
   },
 }))(TableRow);
 
-export const Compras = () => {
+export const Compras = ({setIdProyecto}) => {
   //Styles
   const $ = useStyles();
 
@@ -53,6 +53,11 @@ export const Compras = () => {
   const handleOpen = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    const id = sessionStorage.getItem("idProyecto");
+    setIdProyecto(id)
+  }, []); 
 
   const handleClose = () => {
     setOpen(false);
@@ -168,7 +173,7 @@ export const Compras = () => {
           Nueva Compra
         </Button>
         <Modal open={open} onClose={handleClose}>
-          <PopUpCompras state={setOpen} stateNewCompra={setNewCompra} />
+          <PopUpCompras state={setOpen} stateNewCompra={setNewCompra} idProyecto={idProyecto} setIdProyecto={setIdProyecto}/>
         </Modal>
       </Grid>
       <Divider />

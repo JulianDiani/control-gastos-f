@@ -25,6 +25,8 @@ export const validateField = (input, value, setState) => {
 };
 
 export const validateMonto = (disponibleRubro, montoIngresado, setState) => {
+  console.log('DisponibleRubro', disponibleRubro);
+  console.log('montoIngresado', montoIngresado);
   const canBuy = disponibleRubro - montoIngresado >= 0;
   setState(!canBuy);
 };

@@ -5,6 +5,11 @@ import { Button, Paper } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createUser } from '../../services/usuarios';
 import Alert from '@material-ui/lab/Alert';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns'; 
 
 const useStyles = makeStyles(() => ({
     formContainer: {
@@ -14,17 +19,20 @@ const useStyles = makeStyles(() => ({
         boxShadow: '0 5px 10px -2px #333',
         backgroundColor: '#fafafa',
         padding: '0 1rem 1rem 1rem',
-        margin: 'auto'
+        margin: 'auto',
+        borderTop: '1rem solid #5AA123',
+        borderRadius: '17px 17px 0 0'
     },
     field : {
         margin: '0.5rem'
     },
     submitButton: {
-        margin: '0.5rem'
+        margin: '0.5rem',
+        backgroundColor: '#5AA123'
     },
-    loading: {
+    alert: {
       width: '20rem',
-      marginLeft: '30rem',
+      marginLeft: '35rem',
       marginTop: '3rem'
     }
 }));
@@ -39,7 +47,8 @@ const CreateUser = () => {
     const [role, setRole] = useState(null);
     const [hasChanges,setHasChanges] = useState(false);
     const [loading, setLoading] = useState(false);
-    
+    const [hasError,setHasError] = useState(false);
+
     const timer = useRef();
     const canSubmit = name && lastName && username && password && birthDate && role;
     
@@ -52,6 +61,19 @@ const CreateUser = () => {
       }
       if(hasChanges){
         setChanges();
+        setHasChanges(false);
+      }
+    },[hasChanges])
+
+    useEffect(() => {
+      function setError(){
+        timer.current = setTimeout(() =>{
+          setHasError(false);
+      }, 2000);
+      setHasError(true);
+      }
+      if(hasChanges){
+        setError();
         setHasChanges(false);
       }
     },[hasChanges])
@@ -73,7 +95,7 @@ const CreateUser = () => {
         }
     };
     
-    const submitForm = async () => {
+    const submitForm = () => {
       const user = {
             nombre:name,
             apellido:lastName,
@@ -84,14 +106,23 @@ const CreateUser = () => {
             avatar:"http:g00gle..com"
         }
         
-        const  response = await createUser(user);    
-        setHasChanges(true);
+        createUser(user)
+        .then(res => {
+          setHasChanges(true);
+          console.log(`Create-new-user-response: ${JSON.stringify(res)}`);    
+        })
+        .catch(err =>{
+          setHasError(true)
+          console.log(`Create-new-user-ERROR: ${err.message}`);
+        });
+
+        
         clearStates();
-        console.log(`Create-new-user-response: ${JSON.stringify(response)}`);    
+        
     }
     return (
         <div>
-            <h1>Crear usuario</h1>
+            <h1>Cargar usuario</h1>
             <div >
             <Paper className={classes.formContainer}>
                     <h2>Cargar datos</h2>
@@ -128,18 +159,25 @@ const CreateUser = () => {
                       variant="outlined"
                       className={classes.field}
                     />
-                    <TextField
-                      id="outlined-name"
-                      value={birthDate}
-                      type="date"
-                      onChange={(e) => handleChange(e,setBirthDate)}
-                      variant="outlined"
-                      className={classes.field}
-                    />
+                    <MuiPickersUtilsProvider utils={DateFnsUtils} >
+                      <KeyboardDatePicker
+                        id="date-picker-dialog"
+                        label="Fecha nacimiento"
+                        format="MM/dd/yyyy"
+                        value={birthDate}
+                        style={{width:'98%',marginLeft:'0.5rem'}}
+                        onChange={(e) => handleChange(e,setBirthDate,true)}
+                        inputVariant="outlined"
+                        KeyboardButtonProps={{
+                          'aria-label': 'change date',
+                        }}
+                      />
+                    </MuiPickersUtilsProvider>
                     <Autocomplete
                       id="outlined-name"
                       options={["admin","user"]}
                       value={role}
+                      style={{width:'98%'}}
                       onChange={(_,value) => handleChange(value,setRole,true)}
                       getOptionLabel={option => option}
                       getOptionSelected={(option, value) => option === value}
@@ -157,8 +195,11 @@ const CreateUser = () => {
                     </Button>
             </Paper >
             {loading && (
-              <Alert className={classes.loading}>Usuario cargado con exito</Alert>
-            )
+              <Alert className={classes.alert}>Usuario cargado con exito</Alert>
+            )}
+             {hasError && (
+                <Alert className={classes.alert} severity="error">Error al cargar usuario</Alert>
+              )
             }
             </div>
         </div>

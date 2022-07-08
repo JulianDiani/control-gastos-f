@@ -35,7 +35,7 @@ export default function App() {
   const [password, setPassword] = useState();
   const [rol, setRol] = useState();
   const [init, setInit] = useState(false);
-  
+  const [idProyecto, setIdProyecto] = useState(null);
   const userSideBarOptions = [
     { text: 'Proyectos', icon: <Home />, path: '/' },
     { text: 'Datos generales', icon: <Home />, path: '/proyectos' },
@@ -103,14 +103,14 @@ export default function App() {
               <div className={$.content}>
                 <Switch>
                   <Route path="/login" component={Login} />
-                  <Route path="/" exact component={MisProyectos} />
-                  <Route path="/proyectos" exact component={DatosGenerales} />
+                  <Route path="/" exact component={() => <MisProyectos userName={userName} setIdProyecto={setIdProyecto} />} />
+                  <Route path="/proyectos" exact component={() => <DatosGenerales idProyecto={idProyecto} setIdProyect={setIdProyecto} />} />
                   <Route
                     path="/proyectos/presupuestos"
                     exact
-                    component={Presupuestos}
+                    component={() => <Presupuestos idProyecto={idProyecto} setIdProyecto={setIdProyecto}/>}
                   />
-                  <Route path="/proyectos/compras" component={Compras} />
+                  <Route path="/proyectos/compras" component={() => <Compras idProyecto={idProyecto} setIdProyecto={setIdProyecto} />} />idProyecto
                   <Route
                     path="/proyectos/proveedores"
                     exact

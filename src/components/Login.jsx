@@ -22,7 +22,7 @@ const Login = ({ setLoggedIn, password, userName, setUserName, setPassword, rol,
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    async function fetch() {
+    function fetch() {
       const loggedIn = sessionStorage.getItem("loggedIn");
       const role = sessionStorage.getItem("role");
       // const loggedIn = "true"; cuando no anda el back
