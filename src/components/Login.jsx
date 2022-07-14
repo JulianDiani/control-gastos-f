@@ -128,9 +128,9 @@ const Login = ({ setLoggedIn, password, userName, setUserName, setPassword, rol,
               {Messages.iniciarSession}
             </Button>
           </CardActions>
-          <div className={$.olvidoPassword}>
+          {/* <div className={$.olvidoPassword}>
             <a href="http://www.google.com">{Messages.olvidoPassword}</a>
-          </div>
+          </div> */}
         </div>
       </div>
     );

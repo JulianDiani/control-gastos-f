@@ -42,7 +42,7 @@ export default function App() {
     { text: 'Presupuesto', icon: <AttachMoney />, path: '/proyectos/presupuestos' },
     { text: 'Proveedores', icon: <AssignmentInd />, path: '/proyectos/proveedores' },
     { text: 'Compras', icon: <ShoppingCart />, path: '/proyectos/compras' },
-    { text: 'Normativas I+D', icon: <Info />, path: '/' },
+    { text: 'Normativas I+D', icon: <Info />, path: '/proyectos/normativas' },
     { text: 'Soporte', icon: <Help />, path: '/' },
   ];
   const adminSideBarOptions = [
@@ -50,7 +50,7 @@ export default function App() {
     { text: 'Cargar usuario', icon: <PersonAdd />, path: '/admin/createUser' },
   ];
   useEffect(() => {
-    function checkLogin(){
+    function checkLogin() {
       const loggedIn = sessionStorage.getItem("loggedIn");
       const usuario = sessionStorage.getItem("username");
       const role = sessionStorage.getItem("role");
@@ -60,25 +60,25 @@ export default function App() {
       setInit(true);
     }
     checkLogin();
-  },[])
+  }, [])
   return (
     //ToDo: Como quitar espacio sobrante en el borde derecho.
-    init?
-    <>
-      {!loggedIn ? (
-        <Login
-          userName={userName}
-          password={password}
-          setPassword={setPassword}
-          setUserName={setUserName}
-          setLoggedIn={setLoggedIn}
-          rol={rol}
-          setRol={setRol}
-        />
-      ) : 
+    init ?
+      <>
+        {!loggedIn ? (
+          <Login
+            userName={userName}
+            password={password}
+            setPassword={setPassword}
+            setUserName={setUserName}
+            setLoggedIn={setLoggedIn}
+            rol={rol}
+            setRol={setRol}
+          />
+        ) :
           rol === 'admin' ? (
-          <>
-             <Container maxWidth="xl" className={$.root}>
+            <>
+              <Container maxWidth="xl" className={$.root}>
                 <Router>
                   <NavBar sideBarOptions={adminSideBarOptions} user={userName} />
                   <div className={$.container}>
@@ -93,43 +93,43 @@ export default function App() {
                   </div>
                 </Router>
               </Container>
-          </>
-          ) : 
-        <Container maxWidth="xl" className={$.root}>
-          <Router>
-            <NavBar sideBarOptions={userSideBarOptions} user={userName} />
-            <div className={$.container}>
-              <Header setLoggedIn={setLoggedIn} userName={userName} />
-              <div className={$.content}>
-                <Switch>
-                  <Route path="/login" component={Login} />
-                  <Route path="/" exact component={() => <MisProyectos userName={userName} setIdProyecto={setIdProyecto} />} />
-                  <Route path="/proyectos" exact component={() => <DatosGenerales idProyecto={idProyecto} setIdProyect={setIdProyecto} />} />
-                  <Route
-                    path="/proyectos/presupuestos"
-                    exact
-                    component={() => <Presupuestos idProyecto={idProyecto} setIdProyecto={setIdProyecto}/>}
-                  />
-                  <Route path="/proyectos/compras" component={() => <Compras idProyecto={idProyecto} setIdProyecto={setIdProyecto} />} />idProyecto
-                  <Route
-                    path="/proyectos/proveedores"
-                    exact
-                    component={Proveedores}
-                  />
-                  <Route path="/normativas" exact component={Normativas} />
-                  <Route
-                    path="/proyectos/normativas"
-                    exact
-                    component={Normativas}
-                  />
-                </Switch>
-              </div>
-            </div>
-          </Router>
-        </Container>
-      })
-    </>
-    :<></>
+            </>
+          ) :
+            <Container maxWidth="xl" className={$.root}>
+              <Router>
+                <NavBar sideBarOptions={userSideBarOptions} user={userName} />
+                <div className={$.container}>
+                  <Header setLoggedIn={setLoggedIn} userName={userName} />
+                  <div className={$.content}>
+                    <Switch>
+                      <Route path="/login" component={Login} />
+                      <Route path="/" exact component={() => <MisProyectos userName={userName} setIdProyecto={setIdProyecto} />} />
+                      <Route path="/proyectos" exact component={() => <DatosGenerales idProyecto={idProyecto} setIdProyect={setIdProyecto} />} />
+                      <Route
+                        path="/proyectos/presupuestos"
+                        exact
+                        component={() => <Presupuestos idProyecto={idProyecto} setIdProyecto={setIdProyecto} />}
+                      />
+                      <Route path="/proyectos/compras" component={() => <Compras idProyecto={idProyecto} setIdProyecto={setIdProyecto} />} />idProyecto
+                      <Route
+                        path="/proyectos/proveedores"
+                        exact
+                        component={Proveedores}
+                      />
+                      <Route path="/normativas" exact component={Normativas} />
+                      <Route
+                        path="/proyectos/normativas"
+                        exact
+                        component={Normativas}
+                      />
+                    </Switch>
+                  </div>
+                </div>
+              </Router>
+            </Container>
+        })
+      </>
+      : <></>
   );
 }
 
