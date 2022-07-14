@@ -141,7 +141,7 @@ export default function PopUpCompras({state,idProyecto,stateNewCompra,setIdProye
   const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
   //Validate form to send
   const availableMoneyForRubro = disponibleRubro > 0;
-  const canSubmit = rubro && subrubro && monto && fecha && proveedor && availableMoneyForRubro;
+  const canSubmit = rubro && subrubro && monto && fecha && proveedor && availableMoneyForRubro && !errorMonto;
   const canAddProveedor = newProveedorRubro && newProveedorNombre && newProveedorCuit && newProveedorTelefono;
   
   //Consts
