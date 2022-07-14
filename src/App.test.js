@@ -5,14 +5,14 @@ import { createProyecto, getProyectoById } from './services/proyectos.js';
 
 const sumarCompras = (compras) => compras.reduce((a, b) => a + b, 0);
 
-test('Proyecto fue creado', async () => {
+test('Proyecto creado', async () => {
   const proyecto = {
     titulo: 'Proyecto Testing',
     tipo: 'Testing',
     organismo: 'Testing',
     lineaFinanciamiento: 'Testing',
     año: '2021/06/01',
-    unidadAcademica: 'Testing,',
+    unidadAcademica: 'Testing',
     areaTematica: 'Testing',
     subsidio: 5777666,
     fechaInicio: '2021/06/01',
@@ -60,14 +60,13 @@ test('Monto por rubros equivale al total', () => {
   expect(sumaDeMontos).toEqual(total);
 });
 
-test('Compra es realizada', async () => {
-  const idProyecto = 42; //Poner un Id correspondiente acá
+test('Compra realizada', async () => {
+  const idProyecto = 42;
   const todasLasCompras = await getComprasByProyecto(idProyecto);
   const compra = todasLasCompras.map((compra) => Number(compra.monto));
   const totalComprasAntes = sumarCompras(compra);
   const montoCompra = 7357;
   const compraARealizar = {
-    // Poner datos relevantes
     fecha: '2019-01-31 21:00:00',
     rubro: 'insumos',
     subrubro: 'resmas',
