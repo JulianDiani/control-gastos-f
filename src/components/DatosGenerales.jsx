@@ -29,7 +29,13 @@ export const DatosGenerales = ({ idProyecto }) => {
         console.log('[DatosGenerales Component] ERROR : ' + err);
       }
     }
-    fetchUsuarios();
+    if (idProyecto) {
+      fetchUsuarios();
+    } else {
+      window.location.replace(
+        'https://controlgastosdesubsidios-unahur.netlify.app/'
+      );
+    }
   }, []);
 
   const loadingRendering = () => {
