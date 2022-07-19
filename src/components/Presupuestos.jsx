@@ -5,34 +5,33 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import { getPresupuesto } from '../services/presupuestos.js';
-import { getAllCompras, getComprasByProyecto } from '../services/compras.js';
+import { getComprasByProyecto } from '../services/compras.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './dashboards/TortaPrincipal';
 import CardMontos from './dashboards/CardMontos';
 import Tabla from './dashboards/Tabla';
 import Grid from '@material-ui/core/Grid';
-import { calculateTotalExpenses } from '../utils/presupuestos'
+import { calculateTotalExpenses } from '../utils/presupuestos';
 
-export const Presupuestos = ({idProyecto, setIdProyecto}) => {
+export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
   const $ = useStyles();
-  
+
   const [presupuesto, setPresupuesto] = useState(null);
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
   //const idProyecto = sessionStorage.getItem("idProyecto");
- 
+
   useEffect(() => {
     async function fetchPrespuesto() {
       try {
-      
-        const id = sessionStorage.getItem("idProyecto");
-        setIdProyecto(id)
+        const id = sessionStorage.getItem('idProyecto');
+        setIdProyecto(id);
         const presupuesto = await getPresupuesto();
         const compras = await getComprasByProyecto(idProyecto);
         const gastos = calculateTotalExpenses(compras);
-        console.log("Presupuesto",presupuesto);
-        console.log("compras",compras);
+        console.log('Presupuesto', presupuesto);
+        console.log('compras', compras);
         setTotalGastos(gastos);
         setComprasRealizadas(comprasRealizadas);
         setPresupuesto(presupuesto);
@@ -42,6 +41,7 @@ export const Presupuestos = ({idProyecto, setIdProyecto}) => {
       }
     }
     fetchPrespuesto();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadingRendering = () => {
@@ -79,9 +79,7 @@ export const Presupuestos = ({idProyecto, setIdProyecto}) => {
                 </CardContent>
               </Card>
             </Grid>
-            <Tabla
-              presupuesto={presupuesto}
-            />
+            <Tabla presupuesto={presupuesto} />
           </Grid>
         </div>
       </>
@@ -105,7 +103,7 @@ const useStyles = makeStyles({
     height: '100%',
     display: 'flex',
     marginLeft: '1vw',
-    marginBottom: '2rem'
+    marginBottom: '2rem',
   },
   card: {
     width: '25vw',

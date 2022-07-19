@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Divider, Paper } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createProyecto } from '../../services/proyectos';
 import Alert from '@material-ui/lab/Alert';
 import {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,11 +9,11 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
-import { getProyecto, getProyectoById } from '../services/proyectos.js';
+import { getProyectoById } from '../services/proyectos.js';
 import Alert from '@material-ui/lab/Alert';
 import { formatPrice } from '../utils/validaciones';
 
-export const DatosGenerales = ({idProyecto}) => {
+export const DatosGenerales = ({ idProyecto }) => {
   const $ = useStyles();
 
   const [proyecto, setProyecto] = useState(null);
@@ -147,7 +148,7 @@ const useStyles = makeStyles({
     margin: '1rem',
     maxHeight: '45rem',
     borderTop: '1rem solid #5AA123',
-    borderRadius: '17px 17px 0 0'
+    borderRadius: '17px 17px 0 0',
   },
   divider: {
     marginBottom: '2rem',
@@ -173,6 +174,6 @@ const useStyles = makeStyles({
   },
   menuItem: {
     marginTop: '46rem',
-    marginLeft: '30rem'
+    marginLeft: '30rem',
   },
 });

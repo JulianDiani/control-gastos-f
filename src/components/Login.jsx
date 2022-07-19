@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
   CardActions,
@@ -17,20 +18,27 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import '../styles/styles.css';
 import isologo from '../assets/unahur-isologo.png';
 
-const Login = ({ setLoggedIn, password, userName, setUserName, setPassword, rol, setRol }) => {
+const Login = ({
+  setLoggedIn,
+  password,
+  userName,
+  setUserName,
+  setPassword,
+  setRol,
+}) => {
   //Hooks
   const [error, setError] = useState(false);
 
   useEffect(() => {
     function fetch() {
-      const loggedIn = sessionStorage.getItem("loggedIn");
-      const role = sessionStorage.getItem("role");
+      const loggedIn = sessionStorage.getItem('loggedIn');
+      const role = sessionStorage.getItem('role');
       // const loggedIn = "true"; cuando no anda el back
-      setRol(role)
-      loggedIn === "true" ? setLoggedIn(true) : setLoggedIn(false);
+      setRol(role);
+      loggedIn === 'true' ? setLoggedIn(true) : setLoggedIn(false);
     }
     fetch();
-  }, [])
+  }, []);
 
   //Styles
   const $ = useStyles();
@@ -40,7 +48,7 @@ const Login = ({ setLoggedIn, password, userName, setUserName, setPassword, rol,
     handleFunction(value);
   };
 
-  //checking username and password 
+  //checking username and password
   const checkedLogin = (user) => {
     return user?.data?.contraseña === password && password !== undefined; //user? es para hacerlo safeNull y que no rompa.
   };
@@ -51,12 +59,12 @@ const Login = ({ setLoggedIn, password, userName, setUserName, setPassword, rol,
     const checked = checkedLogin(user);
     const role = user?.data?.rol;
     setError(!checked); //if checked is false error is true.
-    setLoggedIn(checked);  //true = login ok | false = login fail
+    setLoggedIn(checked); //true = login ok | false = login fail
     setRol(role);
-    sessionStorage.setItem("username", userName);
-    sessionStorage.setItem("loggedIn", checked);
-    sessionStorage.setItem("role", role);
-  }
+    sessionStorage.setItem('username', userName);
+    sessionStorage.setItem('loggedIn', checked);
+    sessionStorage.setItem('role', role);
+  };
   //it triggers by pressing the enter key
   const handleKeypress = (e) => {
     if (e.charCode === 13) {
@@ -80,11 +88,7 @@ const Login = ({ setLoggedIn, password, userName, setUserName, setPassword, rol,
 
   //left wallpallper rendering
   const Wallpallper = () => {
-    return (
-      <div className="wallpaperContainer">
-
-      </div>
-    );
+    return <div className="wallpaperContainer"></div>;
   };
 
   //form rendering
@@ -179,7 +183,7 @@ const useStyles = makeStyles({
   inputLabel: {
     width: '20rem',
     marginBottom: '1.5rem',
-    justifySelf: 'center'
+    justifySelf: 'center',
   },
   grid: {
     display: 'grid',
@@ -208,7 +212,7 @@ const useStyles = makeStyles({
   },
   alert: {
     marginBottom: '1rem',
-    width: '20rem'
+    width: '20rem',
   },
 });
 

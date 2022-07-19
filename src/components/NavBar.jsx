@@ -1,18 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { React } from 'react';
 import List from '@material-ui/core/List';
 import logo from '../assets/logoUnahur.png';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
-import ShareIcon from '@material-ui/icons/Share';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { Help, Home, Info, ShoppingCart, ImportContacts, Timeline, Contacts, Create, PeopleAlt } from '@material-ui/icons';
-import { useLocation } from 'react-router-dom';
 
-export default function NavBar({ user, sideBarOptions }) {
+export default function NavBar({ sideBarOptions }) {
   const $ = useStyles();
-  console.log("sideBarOptions",sideBarOptions);
+  console.log('sideBarOptions', sideBarOptions);
   return (
     <Grid>
       <div className={$.navbar}>
@@ -48,7 +46,7 @@ const useStyles = makeStyles(() => ({
     width: '18vw',
     height: '100%',
     boxShadow: '10px 0 5px -5px grey',
-    float: 'left'
+    float: 'left',
   },
   logo: {
     height: '55px',

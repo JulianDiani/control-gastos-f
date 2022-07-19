@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  makeStyles,
-  TextField,
-  Button,
-  Divider,
-  Select, 
-  MenuItem
-} from '@material-ui/core';
+import { makeStyles, TextField, Button, Divider } from '@material-ui/core';
 import { postProveedor } from '../services/proveedores.js';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { validateField } from '../utils/validaciones.js';
@@ -25,11 +18,21 @@ export default function PopUpProveedores(props) {
   const [errorCuit, setErrorCuit] = useState('');
   const [errorEmail, setErrorEmail] = useState('');
 
-  const canSubmit = rubro && cuit && nombre && telefono && mail && !errorNombre && !errorEmail && !errorCuit && !errorTelefono && !errorEmail;
+  const canSubmit =
+    rubro &&
+    cuit &&
+    nombre &&
+    telefono &&
+    mail &&
+    !errorNombre &&
+    !errorEmail &&
+    !errorCuit &&
+    !errorTelefono &&
+    !errorEmail;
 
   const submitForm = async () => {
     props.state(false);
-    let data = {
+    const data = {
       nombre: nombre,
       telefono: telefono,
       rubro: rubro,
@@ -38,7 +41,9 @@ export default function PopUpProveedores(props) {
     };
 
     const res = await postProveedor(data);
-    console.log(`[PopUpProveedores component] create proveedor ${JSON.stringify(res)}`)
+    console.log(
+      `[PopUpProveedores component] create proveedor ${JSON.stringify(res)}`
+    );
   };
   const submitHandle = (handle, value) => {
     handle(value);
@@ -83,7 +88,9 @@ export default function PopUpProveedores(props) {
               },
             }}
             onChange={(e) => submitHandle(setNombre, e.target.value)}
-            onBlur={(e) => validateField("string", e.target.value, setErrorNombre)}
+            onBlur={(e) =>
+              validateField('string', e.target.value, setErrorNombre)
+            }
             error={errorNombre}
           />
           <TextField
@@ -101,7 +108,9 @@ export default function PopUpProveedores(props) {
               },
             }}
             onChange={(e) => submitHandle(setTelefono, e.target.value)}
-            onBlur={(e) => validateField("int", e.target.value, setErrorTelefono)}
+            onBlur={(e) =>
+              validateField('int', e.target.value, setErrorTelefono)
+            }
             error={errorTelefono}
           />
           <TextField
@@ -119,7 +128,7 @@ export default function PopUpProveedores(props) {
               },
             }}
             onChange={(e) => submitHandle(setCuit, e.target.value)}
-            onBlur={(e) => validateField("cuit", e.target.value, setErrorCuit)}
+            onBlur={(e) => validateField('cuit', e.target.value, setErrorCuit)}
             error={errorCuit}
           />
           <TextField
@@ -137,7 +146,9 @@ export default function PopUpProveedores(props) {
               },
             }}
             onChange={(e) => submitHandle(setMail, e.target.value)}
-            onBlur={(e) => validateField("email", e.target.value, setErrorEmail)}
+            onBlur={(e) =>
+              validateField('email', e.target.value, setErrorEmail)
+            }
             error={errorEmail}
           />
         </div>
@@ -177,13 +188,13 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     height: '5vh',
     paddingBottom: '2vh',
-    marginTop: '2vh'
+    marginTop: '2vh',
   },
   resize: {
-    fontSize: '1.9vh'
+    fontSize: '1.9vh',
   },
   labelFocused: {
-    fontSize: '2vh'
+    fontSize: '2vh',
   },
   button: {
     display: 'flex',
@@ -193,5 +204,5 @@ const useStyles = makeStyles((theme) => ({
     height: '3rem',
     marginBottom: '2.3vh',
     marginRight: '2.3vh',
-  }
+  },
 }));
