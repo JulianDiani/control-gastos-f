@@ -214,7 +214,7 @@ const CreateUser = () => {
           </Button>
         </Paper>
         {loading && (
-          <Alert className={classes.alert}>Usuario cargado con exito</Alert>
+          <Alert className={classes.alert}>Usuario cargado con éxito</Alert>
         )}
         {hasError && (
           <Alert className={classes.alert} severity="error">
