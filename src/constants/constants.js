@@ -196,11 +196,11 @@ export const proveedoresRegistrados = [
 ];
 
 export const rubros = [
-  'Insumos',
-  'Bibliografía',
-  'Publicaciones',
-  'Viáticos',
-  'Equipamiento',
-  'Técnico',
-  'Administración',
+  'insumos',
+  'bibliografia',
+  'publicaciones',
+  'viaticos',
+  'equipamiento',
+  'tecnico',
+  'administracion',
 ];
