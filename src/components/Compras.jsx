@@ -100,7 +100,7 @@ export const Compras = ({ setIdProyecto }) => {
                   Subrubro
                 </StyledTableCell>
                 <StyledTableCell align="center" className={$.textColor}>
-                  Numero de compra
+                  Número de compra
                 </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
                   Proveedor
@@ -109,7 +109,7 @@ export const Compras = ({ setIdProyecto }) => {
                   Estado
                 </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
-                  Nro factura
+                  Nro. factura
                 </StyledTableCell>
                 <StyledTableCell align="right" className={$.textColor}>
                   Monto
