@@ -61,13 +61,13 @@ export default function PopUpProveedores(props) {
           <Autocomplete
             id="proveedores"
             options={[
-              'insumos',
-              'bibliografia',
-              'publicaciones',
-              'viaticos',
-              'equipamiento',
-              'tecnico',
-              'administracion',
+              'Insumos',
+              'Bibliografía',
+              'Publicaciones',
+              'Viáticos',
+              'Equipamiento',
+              'Técnico',
+              'Administración',
             ]}
             getOptionLabel={(option) => option}
             renderInput={(params) => <TextField {...params} label="Rubros" />}
