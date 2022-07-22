@@ -12,11 +12,11 @@ import { formatPrice } from '../../utils/validaciones';
 const rubros = [
   { id: 'tipo', label: 'Tipo' },
   { id: 'insumos', label: 'Insumos' },
-  { id: 'bibliografia', label: 'Bibliografia' },
-  { id: 'publicaciones',label: 'Publicacion',},
-  { id: 'viaticos', label: 'Viaticos' },
+  { id: 'bibliografia', label: 'Bibliografía' },
+  { id: 'publicaciones',label: 'Publicación',},
+  { id: 'viaticos', label: 'Viáticos' },
   { id: 'equipamiento', label: 'Equipamiento' },
-  { id: 'tecnico', label: 'Servicios Tecnicos' },
+  { id: 'tecnico', label: 'Servicios Técnicos' },
   { id: 'administracion',label: 'Administración'},
   { id: 'total', label: 'Total' },
 ];
