@@ -220,7 +220,7 @@ const CreateProyect = () => {
             <div className={classes.grid}>
               <TextField
                 id="outlined-name"
-                label="Titulo"
+                label="Título"
                 value={titulo}
                 onChange={(e) => handleChange(e, setTitulo)}
                 variant="outlined"
@@ -244,7 +244,7 @@ const CreateProyect = () => {
               />
               <TextField
                 id="outlined-name"
-                label="Linea de financiamiento"
+                label="Línea de financiamiento"
                 value={lineaFinanciamiento}
                 type="text"
                 onChange={(e) => handleChange(e, setLineaFinanciamiento)}
@@ -255,7 +255,7 @@ const CreateProyect = () => {
             <div className={classes.grid}>
               <TextField
                 id="outlined-name"
-                label="Unidad academica"
+                label="Unidad académica"
                 value={unidadAcademica}
                 type="text"
                 onChange={(e) => handleChange(e, setUnidadAcademica)}
@@ -264,7 +264,7 @@ const CreateProyect = () => {
               />
               <TextField
                 id="outlined-name"
-                label="Area tematica"
+                label="Área temática"
                 value={areaTematica}
                 type="text"
                 onChange={(e) => handleChange(e, setAreaTematica)}
@@ -327,7 +327,7 @@ const CreateProyect = () => {
               <div className={classes.flex}>
                 <TextField
                   id="outlined-name"
-                  label="Numero expediente"
+                  label="Número expediente"
                   value={numeroExpediente}
                   onBlur={(e) =>
                     validateField(
@@ -344,7 +344,7 @@ const CreateProyect = () => {
                 />
                 <TextField
                   id="outlined-name"
-                  label="Numero resolucion"
+                  label="Número resolución"
                   value={numeroResolucion}
                   onBlur={(e) =>
                     validateField(
@@ -361,7 +361,7 @@ const CreateProyect = () => {
                 />
                 <TextField
                   id="outlined-name"
-                  label="Numero proyecto"
+                  label="Número proyecto"
                   value={numeroProyecto}
                   onBlur={(e) =>
                     validateField('int', e.target.value, setErrorNumeroProyecto)
