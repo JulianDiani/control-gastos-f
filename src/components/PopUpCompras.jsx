@@ -343,7 +343,7 @@ export default function PopUpCompras({
           </div>
         </div>
         <div className={$.descripcion}>
-          <Typography variant="h5">Descripcion</Typography>
+          <Typography variant="h5">Descripción</Typography>
           <br />
           <TextField
             label="La compra cuenta con los siguientes objetos/servicios"
@@ -377,7 +377,7 @@ export default function PopUpCompras({
             <span className={$.label}>Nombre completo</span>
             <TextField
               className={$.inputForm}
-              placeholder="ingrese el Nombre completo"
+              placeholder="Ingrese el Nombre completo"
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorNombre)
               }
@@ -409,7 +409,7 @@ export default function PopUpCompras({
             <span className={$.label}>Cuit</span>
             <TextField
               className={$.inputForm}
-              placeholder="ingrese el CUIT"
+              placeholder="Ingrese el CUIT"
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorCuit)
               }
@@ -421,7 +421,7 @@ export default function PopUpCompras({
             <span className={$.label}>Email</span>
             <TextField
               className={$.inputForm}
-              placeholder="ingrese el correo"
+              placeholder="Ingrese el correo"
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorEmail)
               }
