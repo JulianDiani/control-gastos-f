@@ -46,7 +46,7 @@ export const DatosGenerales = ({ idProyecto }) => {
     return (
       <List>
         <ListItem className={$.item}>
-          <ListItemText primary={'Titulo: ' + proyecto.titulo} sx={{ ml: 1 }} />
+          <ListItemText primary={'Título: ' + proyecto.titulo} sx={{ ml: 1 }} />
         </ListItem>
         <ListItem>
           <ListItemText primary={'Tipo: ' + proyecto.tipo} sx={{ ml: 1 }} />
@@ -59,7 +59,7 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Linea de financiamiento: ' + proyecto.lineaFinanciamiento}
+            primary={'Línea de financiamiento: ' + proyecto.lineaFinanciamiento}
             sx={{ ml: 2 }}
           />
         </ListItem>
@@ -71,13 +71,13 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Unidad Academica: ' + proyecto.unidadAcademica}
+            primary={'Unidad Académica: ' + proyecto.unidadAcademica}
             sx={{ ml: 2 }}
           />
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Area: ' + proyecto.areaTematica}
+            primary={'Área: ' + proyecto.areaTematica}
             sx={{ ml: 2 }}
           />
         </ListItem>
