@@ -52,8 +52,8 @@ const CreateUser = () => {
   const [hasError, setHasError] = useState(false);
 
   const timer = useRef();
-  const canSubmit =
-    name && lastName && username && password && birthDate && role;
+  const canSubmit = name && lastName && username && password && birthDate && role;
+   
 
   useEffect(() => {
     function setChanges() {
@@ -208,7 +208,7 @@ const CreateUser = () => {
             color="primary"
             variant="contained"
             className={classes.submitButton}
-            disable={!canSubmit}
+            disabled={!canSubmit}
           >
             Crear usuario
           </Button>
