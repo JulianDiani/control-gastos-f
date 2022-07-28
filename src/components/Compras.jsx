@@ -50,7 +50,7 @@ export const Compras = ({ setIdProyecto }) => {
   const [open, setOpen] = useState(false);
   const [newCompra, setNewCompra] = useState(true);
   const idProyecto = sessionStorage.getItem('idProyecto'); //TODO: PASAR A REDUX
-  console.log('Id proyecto', idProyecto);
+  
   const handleOpen = () => {
     setOpen(true);
   };

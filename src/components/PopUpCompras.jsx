@@ -17,7 +17,7 @@ import { getPresupuesto, getRubros } from '../services/presupuestos.js';
 import { validateField, validateMonto } from '../utils/validaciones';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { GetApp, KeyboardArrowDown } from '@material-ui/icons';
-import { postProveedor } from '../services/proveedores.js';
+import { postProveedor,getAllProveedores } from '../services/proveedores.js';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -126,9 +126,9 @@ export default function PopUpCompras({
   const [proveedor, setProveedor] = useState('');
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
-  const [disponibleRubro, setDisponibleRubro] = useState('');
+  const [disponibleRubro, setDisponibleRubro] = useState(0);
   const [newProveedor, setNewProveedor] = useState(null);
-
+  const [proveedores, setProveedores] = useState([]);
   //Errors in fields
   const [errorMonto, setErrorMonto] = useState(false);
   const [errorSubrubro, setErrorSubrubro] = useState(false);
@@ -166,16 +166,22 @@ export default function PopUpCompras({
   const rubros = getRubros();
 
   useEffect(() => {
+    async function getProveedores(){
+      const provedoresResponse = await getAllProveedores();
+      
+      setProveedores(provedoresResponse.data);
+    }
+    getProveedores();
     const id = sessionStorage.getItem('idProyecto');
     setIdProyecto(id);
   }, []);
-
+  
   //UseEffect when changing "rubros"
   useEffect(() => {
     async function fetchGastos() {
       const gastos = await getGastosPorRubro(rubro, idProyecto);
       const presupuesto = await getPresupuesto();
-      console.log('presupuesto', presupuesto);
+      
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         presupuesto,
         gastos.totalGastado,
@@ -196,9 +202,6 @@ export default function PopUpCompras({
     gastosRubro,
     rubro
   ) => {
-    console.log('PRESUPUESTO TOTAL', presupuestoTotal);
-    console.log('gastosRubro', gastosRubro);
-    console.log('rubro', rubro);
     return rubro ? presupuestoTotal[rubro.toLowerCase()] - gastosRubro : 0;
   };
 
@@ -317,7 +320,7 @@ export default function PopUpCompras({
           />
         </div>
         <Typography>
-          Cuentas con $<b>{disponibleRubro}</b> para este rubro
+          {availableMoneyForRubro ? `Cuentas con $${disponibleRubro} para este rubro` : `No cuentas con dinero disponible para este rubro`}
         </Typography>
         <br />
         <Divider class={$.divider} />
@@ -357,12 +360,12 @@ export default function PopUpCompras({
           <Autocomplete
             id="proveedores"
             options={proveedores}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => option.nombre}
             style={{ width: 300 }}
             renderInput={(params) => (
               <TextField {...params} label="Proveedores" />
             )}
-            onChange={(e, value) => submitHandle(setProveedor, value?.name)}
+            onChange={(e, value) => submitHandle(setProveedor, value?.nombre)}
           />
           <Tooltip title="Agregar proveedor">
             <KeyboardArrowDown
@@ -465,12 +468,12 @@ export default function PopUpCompras({
   );
 }
 
-const proveedores = [
-  { name: 'Libreria Mayorista S.A.' },
-  { name: 'Garbarino	' },
-  { name: 'Despegar	' },
-  { name: 'Solutions S.A.' },
-  { name: 'InfoTech S.A.	' },
-  { name: 'Lenovo Argentina	' },
-  { name: 'Informatica S.A.' },
-];
+// const proveedores = [
+  // { name: 'Libreria Mayorista S.A.' },
+  // { name: 'Garbarino	' },
+  // { name: 'Despegar	' },
+  // { name: 'Solutions S.A.' },
+  // { name: 'InfoTech S.A.	' },
+  // { name: 'Lenovo Argentina	' },
+  // { name: 'Informatica S.A.' },
+// ];

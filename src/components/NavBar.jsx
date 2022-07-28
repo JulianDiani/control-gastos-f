@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 export default function NavBar({ sideBarOptions }) {
   const $ = useStyles();
-  console.log('sideBarOptions', sideBarOptions);
+  
   return (
     <Grid>
       <div className={$.navbar}>

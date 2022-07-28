@@ -104,7 +104,7 @@ const CreateProyect = () => {
       }, 2000);
       setLoadedProject(true);
     }
-    console.log('has changes', hasChanges);
+    
     if (hasChanges) {
       setChanges();
       setHasChanges(false);
@@ -126,7 +126,7 @@ const CreateProyect = () => {
 
   //Handle events
   const handleChange = (event, setState, isAutocomplete = false) => {
-    console.log('Event', event);
+    
     if (isAutocomplete) {
       setState(event);
     } else {
@@ -138,7 +138,7 @@ const CreateProyect = () => {
     if (onlyYear) {
       const year = moment(event).format('YYYY');
       const yearToValue = moment(year);
-      console.log('Year', yearToValue);
+      
       setDate(year);
       setAñoValue(yearToValue);
     } else {

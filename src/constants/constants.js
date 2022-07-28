@@ -101,13 +101,13 @@ export const presupuestoPrueba = {
   fechaInicio: '18/09/2021',
   fechaFin: '18/09/2022',
   insumos: 100000,
-  bibliografia: 50000,
-  publicaciones: 9000,
+  bibliografia: 100000,
+  publicaciones: 100000,
   viaticos: 100000,
-  equipamiento: 220000,
-  tecnico: 100000,
-  administracion: 6000,
-  total: 585000,
+  equipamiento: 200000,
+  tecnico: 200000,
+  administracion: 200000,
+  total: 1000000,
 };
 
 export const reformulacionPrueba = {
