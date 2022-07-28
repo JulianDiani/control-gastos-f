@@ -467,13 +467,3 @@ export default function PopUpCompras({
     </>
   );
 }
-
-// const proveedores = [
-  // { name: 'Libreria Mayorista S.A.' },
-  // { name: 'Garbarino	' },
-  // { name: 'Despegar	' },
-  // { name: 'Solutions S.A.' },
-  // { name: 'InfoTech S.A.	' },
-  // { name: 'Lenovo Argentina	' },
-  // { name: 'Informatica S.A.' },
-// ];
