@@ -14,7 +14,6 @@ export default function TortaPrincipal({presupuesto }) {
     equipamiento,
     tecnico,
     administracion,
-    total,
   }) => ({
     insumos,
     bibliografia,
@@ -22,8 +21,7 @@ export default function TortaPrincipal({presupuesto }) {
     viaticos,
     equipamiento,
     tecnico,
-    administracion,
-    total,
+    administracion, 
   }))(totalDisponible);
 
   const graficoTorta = (

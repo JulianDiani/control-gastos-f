@@ -30,8 +30,6 @@ export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
         const presupuesto = await getPresupuesto();
         const compras = await getComprasByProyecto(idProyecto);
         const gastos = calculateTotalExpenses(compras);
-        console.log('Presupuesto', presupuesto);
-        console.log('compras', compras);
         setTotalGastos(gastos);
         setComprasRealizadas(comprasRealizadas);
         setPresupuesto(presupuesto);

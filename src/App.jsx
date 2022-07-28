@@ -11,10 +11,12 @@ import {
   Help,
   Home,
   Info,
-  AttachMoney,
   PersonAdd,
   NoteAdd,
-  ShoppingCart
+  ShoppingCart,
+  LibraryBooks,
+  LocalAtm,
+  Receipt
 } from '@material-ui/icons';
 
 import { Presupuestos } from './components/Presupuestos';
@@ -24,13 +26,12 @@ import Login from './components/Login';
 import { useEffect, useState } from 'react';
 import CreateProyect from './components/screens/CreateProyect';
 import CreateUser from './components/screens/CreateUser';
-
+import ProyectsLists from './components/screens/ProyectsLists';
 
 
 export default function App() {
   const $ = useStyles();
   const [loggedIn, setLoggedIn] = useState();
-  //USAR REDUX PARA LOS DATOS DE LOGIN
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [rol, setRol] = useState();
@@ -38,14 +39,15 @@ export default function App() {
   const [idProyecto, setIdProyecto] = useState(null);
   const userSideBarOptions = [
     { text: 'Proyectos', icon: <Home />, path: '/' },
-    { text: 'Datos generales', icon: <Home />, path: '/proyectos' },
-    { text: 'Presupuesto', icon: <AttachMoney />, path: '/proyectos/presupuestos' },
+    { text: 'Datos generales', icon: <Receipt />, path: '/proyectos' },
+    { text: 'Presupuesto', icon: <LocalAtm />, path: '/proyectos/presupuestos' },
     { text: 'Proveedores', icon: <AssignmentInd />, path: '/proyectos/proveedores' },
     { text: 'Compras', icon: <ShoppingCart />, path: '/proyectos/compras' },
     { text: 'Normativas I+D', icon: <Info />, path: '/proyectos/normativas' },
     { text: 'Soporte', icon: <Help />, path: '/' },
   ];
   const adminSideBarOptions = [
+    { text: 'Proyectos', icon: <LibraryBooks />, path: '/admin/proyects' },
     { text: 'Cargar proyecto', icon: <NoteAdd />, path: '/admin/createProyect' },
     { text: 'Cargar usuario', icon: <PersonAdd />, path: '/admin/createUser' },
   ];
@@ -55,6 +57,13 @@ export default function App() {
       const usuario = sessionStorage.getItem("username");
       const role = sessionStorage.getItem("role");
       setRol(role);
+      //Fix to first path to admin
+      if(role === 'admin' && !window.location.href.endsWith('/admin/proyects'))
+        window.location.href = '/admin/proyects'
+      //Fix to first path to user
+      if(role === 'user' && window.location.href.includes('/admin'))
+        window.location.href = '/'
+      
       setUserName(usuario);
       loggedIn === "true" ? setLoggedIn(true) : setLoggedIn(false);
       setInit(true);
@@ -88,6 +97,7 @@ export default function App() {
                         <Route path="/login" component={Login} />
                         <Route path="/admin/createProyect" component={CreateProyect} />
                         <Route path="/admin/createUser" component={CreateUser} />
+                        <Route path="/admin/proyects" component={ProyectsLists} />
                       </Switch>
                     </div>
                   </div>

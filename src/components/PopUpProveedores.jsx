@@ -70,23 +70,13 @@ export default function PopUpProveedores(props) {
               'administracion',
             ]}
             getOptionLabel={(option) => option}
-            renderInput={(params) => <TextField {...params} label="Rubros" />}
+            renderInput={(params) => <TextField {...params} label="Rubros"/>}
             onChange={(e, value) => submitHandle(setRubro, value)}
+            size="small"
           />
           <TextField
             label="Nombre completo"
             className={$.textField}
-            InputProps={{
-              classes: {
-                input: $.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: $.resize,
-                focused: $.labelFocused,
-              },
-            }}
             onChange={(e) => submitHandle(setNombre, e.target.value)}
             onBlur={(e) =>
               validateField('string', e.target.value, setErrorNombre)
@@ -96,17 +86,6 @@ export default function PopUpProveedores(props) {
           <TextField
             label="Teléfono"
             className={$.textField}
-            InputProps={{
-              classes: {
-                input: $.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: $.resize,
-                focused: $.labelFocused,
-              },
-            }}
             onChange={(e) => submitHandle(setTelefono, e.target.value)}
             onBlur={(e) =>
               validateField('int', e.target.value, setErrorTelefono)
@@ -116,17 +95,6 @@ export default function PopUpProveedores(props) {
           <TextField
             label="CUIT"
             className={$.textField}
-            InputProps={{
-              classes: {
-                input: $.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: $.resize,
-                focused: $.labelFocused,
-              },
-            }}
             onChange={(e) => submitHandle(setCuit, e.target.value)}
             onBlur={(e) => validateField('cuit', e.target.value, setErrorCuit)}
             error={errorCuit}
@@ -134,17 +102,6 @@ export default function PopUpProveedores(props) {
           <TextField
             label="E-mail"
             className={$.textField}
-            InputProps={{
-              classes: {
-                input: $.resize,
-              },
-            }}
-            InputLabelProps={{
-              classes: {
-                root: $.resize,
-                focused: $.labelFocused,
-              },
-            }}
             onChange={(e) => submitHandle(setMail, e.target.value)}
             onBlur={(e) =>
               validateField('email', e.target.value, setErrorEmail)
@@ -171,8 +128,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
-    width: '50vh',
-    height: '60vh',
+    width: '80vh',
+    height: '30rem',
     boxShadow: '0px 0px 5px 1px grey',
     padding: theme.spacing(2, 4, 3),
     top: '55%',
@@ -184,17 +141,10 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    marginTop: '1rem'
   },
   textField: {
-    height: '5vh',
-    paddingBottom: '2vh',
-    marginTop: '2vh',
-  },
-  resize: {
-    fontSize: '1.9vh',
-  },
-  labelFocused: {
-    fontSize: '2vh',
+    marginTop: '0.5rem',
   },
   button: {
     display: 'flex',
