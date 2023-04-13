@@ -58,12 +58,12 @@ export default function App() {
       const role = sessionStorage.getItem("role");
       setRol(role);
       //Fix to first path to admin
-      if(role === 'admin' && !window.location.href.endsWith('/admin/proyects'))
+      if (role === 'admin' && !window.location.href.endsWith('/admin/proyects'))
         window.location.href = '/admin/proyects'
       //Fix to first path to user
-      if(role === 'user' && window.location.href.includes('/admin'))
+      if (role === 'user' && window.location.href.includes('/admin'))
         window.location.href = '/'
-      
+
       setUserName(usuario);
       loggedIn === "true" ? setLoggedIn(true) : setLoggedIn(false);
       setInit(true);
@@ -154,6 +154,7 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     minHeight: '100vh',
     height: '100%',
+    backgroundColor: 'azure',
   },
   content: {
     paddingLeft: '2%',
