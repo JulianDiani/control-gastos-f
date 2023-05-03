@@ -32,9 +32,7 @@ export const DatosGenerales = ({ idProyecto }) => {
     if (idProyecto) {
       fetchUsuarios();
     } else {
-      window.location.replace(
-        'https://controlgastosdesubsidios-unahur.netlify.app/'
-      );
+      window.location.replace('/');
     }
   }, []);
 
