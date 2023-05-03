@@ -53,15 +53,27 @@ export default function Header(props) {
   return (
     <div className={$.header}>
       <div className={$.whiteBar}>{openConfig()}</div>
-      <div className={$.greenBar}></div>
+      <div className={$.greenBar}>
+        {(props.rol === 'admin' || props.rol !== undefined) && (
+          <>
+            {' '}
+            <h2 className={$.text}>Proyecto actual</h2>
+            <h3 className={$.text}>
+              {props.proyecto
+                ? props.proyecto.titulo
+                : 'Ninguno. Debe seleccionar uno de los proyectos en curso de la sección Proyectos.'}
+            </h3>
+          </>
+        )}
+      </div>
     </div>
   );
 }
 
 const useStyles = makeStyles(() => ({
   header: {
-    height: '10vh',
-    width: '80vw',
+    height: '8.5rem',
+    width: '100%',
   },
   menu: {
     marginTop: '2.7rem',
@@ -78,16 +90,19 @@ const useStyles = makeStyles(() => ({
   whiteBar: {
     backgroundColor: '#fafafa',
     width: '100%',
-    height: '5vh',
+    height: '4rem',
     display: ' flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
     paddingRight: '1vw',
   },
   greenBar: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     background: 'linear-gradient(to left , #9BC76D, #5AA123)',
     boxShadow: '0 5px 2px -2px gray',
-    height: '8vh',
+    height: '4.5rem',
     width: '100%',
     alignItems: 'center',
     paddingLeft: '1.5vw',
@@ -98,5 +113,8 @@ const useStyles = makeStyles(() => ({
     color: '#5AA123',
     marginRight: '0.3rem',
     marginBottom: '0.4rem',
+  },
+  text: {
+    margin: 0,
   },
 }));
