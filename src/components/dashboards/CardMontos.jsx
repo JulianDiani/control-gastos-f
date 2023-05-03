@@ -23,7 +23,6 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
          Presupuesto total: 
         </Typography>
         <span
-          variant="h5"
           className={$.typography}
         >
          {formatPrice(totalPresupuesto)}
@@ -36,7 +35,6 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
           Monto disponible: 
         </Typography>
         <span
-          variant="h5"
           className={$.typography}
         >
          {formatPrice(monto)}
@@ -49,7 +47,6 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
           Nivel de ejecución: 
         </Typography>
         <span
-          variant="h5"
           className={$.typography}
         >
          {ejecucion}
