@@ -10,7 +10,8 @@ import {
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { getProyectsForAdmin } from '../../services/proyectos';
-//hola
+import { Link } from 'react-router-dom';
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -37,11 +38,14 @@ const StyledTableHead = withStyles(() => ({
   },
 }))(TableRow);
 
-const ProyectsList = () => {
+export const ProyectsList = ({ setIdProyecto }) => {
   const $ = useStyles();
 
   const [proyects,setProyects] = useState([]);
-
+  const handleSelectProyecto = (id) => {
+    sessionStorage.setItem('idProyecto', id);
+    setIdProyecto(id);
+  };
   useEffect( () => {
     async function getProyects(){
         const proyectos = await getProyectsForAdmin();
@@ -66,10 +70,15 @@ const ProyectsList = () => {
             </StyledTableCell>
           </StyledTableHead>
           <TableBody>
-            {proyects.map((proyecto) => (
-              <StyledTableRow key={proyecto.id}>
-                <StyledTableCell scope="row" to={'/proyectos'}>
-                  {proyecto.titulo}
+          {proyects.map((proyecto) => (
+          <StyledTableRow key={proyecto.id}>
+           <StyledTableCell
+             scope="row"
+             onClick={() => handleSelectProyecto(proyecto.id)}
+             component={Link}
+             to={'/proyectos'}//edit cuando se cree la vista de proyecto singular con compra
+           >
+             {proyecto.titulo}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {proyecto.director}
