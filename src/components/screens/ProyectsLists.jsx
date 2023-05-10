@@ -42,9 +42,10 @@ export const ProyectsList = ({ setIdProyecto }) => {
   const $ = useStyles();
 
   const [proyects,setProyects] = useState([]);
-  const handleSelectProyecto = (id) => {
-    sessionStorage.setItem('idProyecto', id);
-    setIdProyecto(id);
+  const handleSelectProyect = (id) => {
+    //sessionStorage.setItem('idProyecto', id);
+    //setIdProyecto(id);
+    console.log("id" + id)
   };
   useEffect( () => {
     async function getProyects(){
@@ -74,9 +75,9 @@ export const ProyectsList = ({ setIdProyecto }) => {
           <StyledTableRow key={proyecto.id}>
            <StyledTableCell
              scope="row"
-             onClick={() => handleSelectProyecto(proyecto.id)}
+             onClick={() => handleSelectProyect(proyecto.id)}
              component={Link}
-             to={'/proyectos'}//edit cuando se cree la vista de proyecto singular con compra
+             to={'/admin/proyectView'}//edit cuando se cree la vista de proyecto singular con compra
            >
              {proyecto.titulo}
                 </StyledTableCell>

@@ -28,6 +28,7 @@ import { useEffect, useState } from 'react';
 import CreateProyect from './components/screens/CreateProyect';
 import CreateUser from './components/screens/CreateUser';
 import ProyectsLists from './components/screens/ProyectsLists';
+import { VistaProyecto } from './components/screens/VistaProyecto';
 
 export default function App() {
   const $ = useStyles();
@@ -129,12 +130,27 @@ export default function App() {
                   <div className={$.content}>
                     <Switch>
                       <Route path="/login" component={Login} />
-                      <Route
-                        path="/admin/createProyect"
-                        component={CreateProyect}
-                      />
+                      <Route path="/admin/createProyect" component={CreateProyect} />
                       <Route path="/admin/createUser" component={CreateUser} />
-                      <Route path="/admin/proyects" component={ProyectsLists} />
+                      <Route path="/admin/proyects"   
+                       exact
+                       render={(props) => (
+                        <ProyectsLists
+                        ProyectsLists
+                          handleSetProyect={handleSetProyect}
+                          {...props}  
+                           />
+                          )}
+                       />
+                      <Route path="/admin/proyectView"  
+                      exact
+                      component={() => (
+                        <VistaProyecto
+                          idProyecto={idProyecto}
+                          setIdProyect={setIdProyecto}
+                        />
+                      )}
+                    />
                     </Switch>
                   </div>
                 </div>
