@@ -43,7 +43,7 @@ export const ProyectsList = ({ setIdProyecto }) => {
 
   const [proyects,setProyects] = useState([]);
   const handleSelectProyect = (id) => {
-    //sessionStorage.setItem('idProyecto', id);
+    sessionStorage.setItem('idProyecto', id);
     //setIdProyecto(id);
     console.log("id" + id)
   };
