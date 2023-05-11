@@ -28,21 +28,21 @@ import { useEffect, useState } from 'react';
 import CreateProyect from './components/screens/CreateProyect';
 import CreateUser from './components/screens/CreateUser';
 import ProyectsLists from './components/screens/ProyectsLists';
+import { setUserActualProject } from './services/usuarios';
 
 export default function App() {
   const $ = useStyles();
   const [loggedIn, setLoggedIn] = useState();
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
+  const [idProyecto, setIdProyecto] = useState();
   const [rol, setRol] = useState();
   const [init, setInit] = useState(false);
   const [proyectoActual, setProyectoActual] = useState(null);
-  const [idProyecto, setIdProyecto] = useState(
-    sessionStorage.getItem('idProyecto') | null
-  );
 
-  const handleSetProyect = (id) => {
-    sessionStorage.setItem('idProyecto', id);
+  const handleSetProyect = async (id) => {
+    await setUserActualProject(userName, id);
+    sessionStorage.setItem('proyectoActualId', id);
     setIdProyecto(id);
   };
 
@@ -91,6 +91,7 @@ export default function App() {
       const loggedIn = sessionStorage.getItem('loggedIn');
       const usuario = sessionStorage.getItem('username');
       const role = sessionStorage.getItem('role');
+      const proyectoActualId = sessionStorage.getItem('proyectoActualId');
       setRol(role);
       //Fix to first path to admin
       if (role === 'admin' && !window.location.href.endsWith('/admin/proyects'))
@@ -100,6 +101,7 @@ export default function App() {
         window.location.href = '/';
 
       setUserName(usuario);
+      setIdProyecto(proyectoActualId);
       loggedIn === 'true' ? setLoggedIn(true) : setLoggedIn(false);
       setInit(true);
     }
@@ -116,8 +118,8 @@ export default function App() {
             setPassword={setPassword}
             setUserName={setUserName}
             setLoggedIn={setLoggedIn}
-            rol={rol}
             setRol={setRol}
+            setIdProyecto={setIdProyecto}
           />
         ) : rol === 'admin' ? (
           <>
@@ -163,6 +165,7 @@ export default function App() {
                           MisProyectos
                           userName={userName}
                           handleSetProyect={handleSetProyect}
+                          idProyecto={idProyecto}
                           {...props}
                         />
                       )}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -24,16 +24,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SelectorProyectos = ({ handleSetProyect, proyectosEnCurso }) => {
+export const SelectorProyectos = ({
+  handleSetProyect,
+  proyectosEnCurso,
+  idProyecto,
+}) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [proyectoActual, setProyectoActual] = useState(
-    sessionStorage.getItem('idProyecto')
-  );
 
   const handleChange = (e) => {
     handleSetProyect(e.target.value);
-    setProyectoActual(e.target.value);
   };
 
   const handleClose = () => {
@@ -59,11 +59,10 @@ export const SelectorProyectos = ({ handleSetProyect, proyectosEnCurso }) => {
           open={open}
           onClose={handleClose}
           onOpen={handleOpen}
-          defaultValue={null}
-          value={proyectoActual}
+          value={idProyecto}
           onChange={handleChange}
         >
-          <MenuItem value="">Ninguno</MenuItem>
+          <MenuItem value={null}>Ninguno</MenuItem>
           {proyectosEnCurso.map((proyecto) => (
             <MenuItem key={proyecto.id} value={proyecto.id}>
               <Typography noWrap> {proyecto.titulo}</Typography>

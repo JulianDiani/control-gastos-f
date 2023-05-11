@@ -25,6 +25,7 @@ const Login = ({
   setUserName,
   setPassword,
   setRol,
+  setIdProyecto,
 }) => {
   //Hooks
   const [error, setError] = useState(false);
@@ -57,11 +58,14 @@ const Login = ({
   const sendLoginData = async () => {
     const user = await getUser(userName);
     const checked = checkedLogin(user);
+    const proyectoActualId = user?.data?.proyectoActualId;
     const role = user?.data?.rol;
     setError(!checked); //if checked is false error is true.
     setLoggedIn(checked); //true = login ok | false = login fail
+    setIdProyecto(proyectoActualId);
     setRol(role);
     sessionStorage.setItem('username', userName);
+    sessionStorage.setItem('proyectoActualId', proyectoActualId);
     sessionStorage.setItem('loggedIn', checked);
     sessionStorage.setItem('role', role);
   };

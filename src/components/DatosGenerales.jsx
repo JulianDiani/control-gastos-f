@@ -32,7 +32,7 @@ export const DatosGenerales = ({ idProyecto }) => {
     if (idProyecto) {
       fetchUsuarios();
     } else {
-      window.location.replace('/');
+      window.history.back();
     }
   }, []);
 
