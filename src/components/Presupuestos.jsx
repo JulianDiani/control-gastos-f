@@ -25,7 +25,7 @@ export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
   useEffect(() => {
     async function fetchPrespuesto() {
       try {
-        const id = sessionStorage.getItem('idProyecto');
+        const id = sessionStorage.getItem('proyectoActualId');
         setIdProyecto(id);
         const presupuesto = await getPresupuesto();
         const compras = await getComprasByProyecto(idProyecto);

@@ -73,7 +73,7 @@ const circularProgressWithValue = (nivelEjecucion) => {
   );
 };
 
-export const MisProyectos = ({ userName, handleSetProyect }) => {
+export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
   const $ = useStyles();
   const [proyectosEnCurso, setProyectosEnCurso] = useState([]);
   const [compras, setCompras] = useState([]);
@@ -113,6 +113,7 @@ export const MisProyectos = ({ userName, handleSetProyect }) => {
       <SelectorProyectos
         handleSetProyect={handleSetProyect}
         proyectosEnCurso={proyectosEnCurso}
+        idProyecto={idProyecto}
       />
       <h2>Proyectos en curso</h2>
       <TableContainer className={$.container} component={Paper}>
@@ -135,16 +136,13 @@ export const MisProyectos = ({ userName, handleSetProyect }) => {
           </StyledTableHead>
           <TableBody>
             {proyectosEnCurso.map((proyecto) => (
-              <StyledTableRow
-                key={proyecto.id}
-                onClick={() => console.log(proyecto.id)}
-              >
+              <StyledTableRow key={proyecto.id}>
                 <StyledTableCell scope="row">{proyecto.titulo}</StyledTableCell>
                 <StyledTableCell align="center">
                   {proyecto.director}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyecto.fechaInicio}
+                  {proyecto.fechaInicio.substr(0, 10)}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {circularProgressWithValue(

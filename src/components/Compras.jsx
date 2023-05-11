@@ -49,14 +49,14 @@ export const Compras = ({ setIdProyecto }) => {
   const [compras, setCompras] = useState(null);
   const [open, setOpen] = useState(false);
   const [newCompra, setNewCompra] = useState(true);
-  const idProyecto = sessionStorage.getItem('idProyecto'); //TODO: PASAR A REDUX
-  
+  const idProyecto = sessionStorage.getItem('proyectoActualId'); //TODO: PASAR A REDUX
+
   const handleOpen = () => {
     setOpen(true);
   };
 
   useEffect(() => {
-    const id = sessionStorage.getItem('idProyecto');
+    const id = sessionStorage.getItem('proyectoActualId');
     setIdProyecto(id);
   }, []);
 
