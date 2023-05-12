@@ -121,7 +121,7 @@ export const Compras = ({ setIdProyecto }) => {
                 {compras.map((compra) => (
                   <StyledTableRow key={compra.id}>
                     <StyledTableCell scope="row">
-                      {compra.fecha}
+                      {new Date(compra.fecha).toLocaleDateString()}
                     </StyledTableCell>
                     <StyledTableCell align="left">
                       {compra.factura}
