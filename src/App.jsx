@@ -28,7 +28,7 @@ import { useEffect, useState } from 'react';
 import CreateProyect from './components/screens/CreateProyect';
 import CreateUser from './components/screens/CreateUser';
 import ProyectsLists from './components/screens/ProyectsLists';
-import { VistaProyecto } from './components/screens/VistaProyecto';
+import { VistaProyecto } from './components/screens/viewProyect';
 
 export default function App() {
   const $ = useStyles();

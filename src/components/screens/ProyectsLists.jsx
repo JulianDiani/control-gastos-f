@@ -11,6 +11,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { getProyectsForAdmin } from '../../services/proyectos';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../../utils/validaciones';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -45,7 +46,7 @@ export const ProyectsList = ({ setIdProyecto }) => {
   const handleSelectProyect = (id) => {
     sessionStorage.setItem('idProyecto', id);
     //setIdProyecto(id);
-    console.log("id" + id)
+    console.log("id desde Proyects list" + id)
   };
   useEffect( () => {
     async function getProyects(){
@@ -85,7 +86,7 @@ export const ProyectsList = ({ setIdProyecto }) => {
                   {proyecto.director}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyecto.fechaInicio}
+                  {formatDate(proyecto.fechaInicio)}
                 </StyledTableCell>
               </StyledTableRow>
             ))}

@@ -33,3 +33,16 @@ export const formatPrice = (price) => {
 
   return `$${format}`;
 };
+
+export const formatDate = (date) => {
+  var date1 = new Date(date);
+  var format =
+    date1.getDay() + '-' + date1.getMonth() + '-' + date1.getFullYear();
+  return `${format}`;
+};
+
+export const formatYear = (date) => {
+  var date1 = new Date(date);
+  var format = date1.getFullYear();
+  return `${format}`;
+};

@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { Footer } from './Footer';
+import { Footer } from '../Footer';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import PopUpCompras from './PopUpCompras';
-import { getComprasByProyecto } from '../services/compras.js';
-import { getProyectoById } from '../services/proyectos.js';
-import { formatPrice } from '../utils/validaciones';
+//import PopUpCompras from './PopUpCompras';
+import { getComprasByProyecto } from '../../services/compras';
+import { getProyectoById } from '../../services/proyectos';
+import { formatPrice, formatDate, formatYear} from '../../utils/validaciones';
 import {
 
     Table,
@@ -21,14 +21,14 @@ import {
     Grid,
 
 } from '@material-ui/core';
-import { Compras } from './Compras';
+//import { Compras } from './Compras';
 
 //hola
 
-export const DatosGenerales = ({ idProyecto }) => {
+export const VistaProyecto = ({ idProyecto }) => {
 
 
-
+    
     const [proyecto, setProyecto] = useState(null);
     // const userName = sessionStorage.getItem("username");
     //const idProyecto = sessionStorage.getItem("idProyecto");
@@ -46,6 +46,7 @@ export const DatosGenerales = ({ idProyecto }) => {
 
     useEffect(() => {
         const id = sessionStorage.getItem('idProyecto');
+        console.log("id desde view Proyects"+ id)
         getComprasByProyecto(id);
     }, []);
 
@@ -57,6 +58,7 @@ export const DatosGenerales = ({ idProyecto }) => {
     useEffect(() => {
         async function fetchCompra() {
             try {
+                
                 const compras = await getComprasByProyecto(idProyecto);
                 setCompras(compras);
             } catch (err) {
@@ -114,7 +116,6 @@ export const DatosGenerales = ({ idProyecto }) => {
 
 
     const DatosList = () => {
-
 
 
         return (
@@ -176,7 +177,7 @@ export const DatosGenerales = ({ idProyecto }) => {
                                 {proyecto.lineaFinanciamiento}
                             </StyledTableCell>
                             <StyledTableCell align="left">
-                                {proyecto.año}
+                                {formatYear(proyecto.año)}
                             </StyledTableCell>
                             <StyledTableCell align="left">
                                 {proyecto.unidadAcademica}
@@ -188,10 +189,10 @@ export const DatosGenerales = ({ idProyecto }) => {
                                 {formatPrice(proyecto.subsidio)}
                             </StyledTableCell>
                             <StyledTableCell align="left">
-                                {proyecto.fechaInicio}
+                                {formatDate(proyecto.fechaInicio)}
                             </StyledTableCell>
                             <StyledTableCell align="left">
-                                {proyecto.fechaFin}
+                                {formatDate(proyecto.fechaFin)}
                             </StyledTableCell>
                             <StyledTableCell align="left">
                                 {proyecto.usuario}
@@ -221,6 +222,7 @@ export const DatosGenerales = ({ idProyecto }) => {
                 </div>
             </>
         );
+        
     };
 
 
@@ -304,3 +306,5 @@ const useStyles = makeStyles({
         width: '98%',
     },
 });
+
+export default VistaProyecto;

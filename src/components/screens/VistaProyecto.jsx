@@ -50,7 +50,6 @@ export const VistaProyecto = ({ idProyecto }) => {
             const proyectos = await getProyectoById(id);
             setProyecto(proyectos);
         }
-        console.log("id" + id)
        
         getProyects(id)
         getComprasByProyecto(id);
@@ -77,7 +76,6 @@ export const VistaProyecto = ({ idProyecto }) => {
         async function fetchUsuarios() {
             try {
                 const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
-                console.log("proyecto" + proyecto)
                 setProyecto(proyecto[0]);
             } catch (err) {
                 console.log('[DatosGenerales Component] ERROR : ' + err);
