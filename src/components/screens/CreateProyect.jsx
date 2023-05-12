@@ -1,7 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Divider, Paper } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+} from '@material-ui/core';
 import { createProyecto } from '../../services/proyectos';
 import Alert from '@material-ui/lab/Alert';
 import {
@@ -104,7 +113,7 @@ const CreateProyect = () => {
       }, 2000);
       setLoadedProject(true);
     }
-    
+
     if (hasChanges) {
       setChanges();
       setHasChanges(false);
@@ -126,7 +135,6 @@ const CreateProyect = () => {
 
   //Handle events
   const handleChange = (event, setState, isAutocomplete = false) => {
-    
     if (isAutocomplete) {
       setState(event);
     } else {
@@ -138,7 +146,7 @@ const CreateProyect = () => {
     if (onlyYear) {
       const year = moment(event).format('YYYY');
       const yearToValue = moment(year);
-      
+
       setDate(year);
       setAñoValue(yearToValue);
     } else {
@@ -210,6 +218,8 @@ const CreateProyect = () => {
     clearStates();
     console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);
   };
+  //Convocatorias prueba
+  const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
   return (
     <div>
       <h1>Crear proyecto</h1>
@@ -307,7 +317,54 @@ const CreateProyect = () => {
                       'aria-label': 'change date',
                     }}
                   />
-                  <KeyboardDatePicker
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                  >
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Convocatoria
+                    </InputLabel>
+                    <Select
+                      style={{ width: '' }}
+                      placeholder="Convocatoria"
+                      autoWidth="true"
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      // value={''}
+                      // onChange={handleChange}
+                      label="Convocatoria"
+                    >
+                      {/* <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem> */}
+                      {convocatoria.map((r, idx) => (
+                        <MenuItem value={r} key={idx}>
+                          {r}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  {/* <InputLabel id="demo-simple-select-label">Conv</InputLabel>
+                  <Select
+                    id="demo-simple-select"
+                    label="Convocatoria"
+                    // onChange={handleChange}
+                    variant="outlined"
+                    style={{ width: 'auto' }}
+                    autoWidth="true"
+                    labelId="demo-simple-select-label"
+                  >
+                    <MenuItem disabled value="Convocatoria">
+                      Convocatoria
+                    </MenuItem>
+                    {convocatoria.map((r, idx) => (
+                      <MenuItem value={r} key={idx}>
+                        {r}
+                      </MenuItem>
+                    ))}
+                  </Select> */}
+
+                  {/* <KeyboardDatePicker
                     // margin="normal"
                     id="date-picker-dialog"
                     label="Año"
@@ -320,7 +377,7 @@ const CreateProyect = () => {
                     KeyboardButtonProps={{
                       'aria-label': 'change date',
                     }}
-                  />
+                  /> */}
                 </div>
               </MuiPickersUtilsProvider>
               <Divider />
