@@ -95,21 +95,23 @@ export const Compras = ({ setIdProyecto }) => {
           <TableContainer className={$.container}>
             <Table aria-label="customized table">
               <StyledTableHead>
-                <StyledTableCell className={$.textColor}>Rubro</StyledTableCell>
+                <StyledTableCell className={$.textColor}>
+                  Fecha
+                  </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
-                  Subrubro
-                </StyledTableCell>
-                <StyledTableCell align="center" className={$.textColor}>
-                  Número de compra
+                  Nro Factura
                 </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
                   Proveedor
                 </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
-                  Estado
+                  Rubro
                 </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
-                  Nro. factura
+                  Subrubro
+                </StyledTableCell>
+                <StyledTableCell align="left" className={$.textColor}>
+                  Estado
                 </StyledTableCell>
                 <StyledTableCell align="right" className={$.textColor}>
                   Monto
@@ -119,22 +121,22 @@ export const Compras = ({ setIdProyecto }) => {
                 {compras.map((compra) => (
                   <StyledTableRow key={compra.id}>
                     <StyledTableCell scope="row">
-                      {compra.rubro}
+                      {compra.fecha}
                     </StyledTableCell>
                     <StyledTableCell align="left">
-                      {compra.subrubro}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {compra.numeroCompra}
+                      {compra.factura}
                     </StyledTableCell>
                     <StyledTableCell align="left">
                       {compra.proveedor}
                     </StyledTableCell>
                     <StyledTableCell align="left">
-                      {compra.estado}
+                      {compra.rubro}
                     </StyledTableCell>
                     <StyledTableCell align="left">
-                      {compra.factura}
+                      {compra.subrubro}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {compra.estado}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {formatPrice(compra.monto)}
