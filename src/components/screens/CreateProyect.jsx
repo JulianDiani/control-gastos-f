@@ -20,7 +20,7 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import { validateField } from '../../utils/validaciones';
 import * as moment from 'moment';
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -60,6 +60,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     margin: '1rem',
     width: '97%',
+  },
+  width30: {
+    width: '30%',
+    margin: '0.5rem',
   },
 }));
 
@@ -294,6 +298,7 @@ const CreateProyect = () => {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <div className={classes.flex}>
                   <KeyboardDatePicker
+                    className={classes.width30}
                     id="date-picker-dialog"
                     label="Fecha inicio"
                     format="MM/dd/yyyy"
@@ -306,6 +311,7 @@ const CreateProyect = () => {
                     }}
                   />
                   <KeyboardDatePicker
+                    className={classes.width30}
                     id="date-picker-dialog"
                     label="Fecha fin"
                     format="MM/dd/yyyy"
@@ -317,26 +323,17 @@ const CreateProyect = () => {
                       'aria-label': 'change date',
                     }}
                   />
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl}
-                  >
+                  <FormControl variant="outlined" className={classes.width30}>
                     <InputLabel id="demo-simple-select-outlined-label">
                       Convocatoria
                     </InputLabel>
                     <Select
-                      style={{ width: '' }}
-                      placeholder="Convocatoria"
-                      autoWidth="true"
                       labelId="demo-simple-select-outlined-label"
+                      label="Convocatoria"
                       id="demo-simple-select-outlined"
                       // value={''}
                       // onChange={handleChange}
-                      label="Convocatoria"
                     >
-                      {/* <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem> */}
                       {convocatoria.map((r, idx) => (
                         <MenuItem value={r} key={idx}>
                           {r}
@@ -344,45 +341,12 @@ const CreateProyect = () => {
                       ))}
                     </Select>
                   </FormControl>
-                  {/* <InputLabel id="demo-simple-select-label">Conv</InputLabel>
-                  <Select
-                    id="demo-simple-select"
-                    label="Convocatoria"
-                    // onChange={handleChange}
-                    variant="outlined"
-                    style={{ width: 'auto' }}
-                    autoWidth="true"
-                    labelId="demo-simple-select-label"
-                  >
-                    <MenuItem disabled value="Convocatoria">
-                      Convocatoria
-                    </MenuItem>
-                    {convocatoria.map((r, idx) => (
-                      <MenuItem value={r} key={idx}>
-                        {r}
-                      </MenuItem>
-                    ))}
-                  </Select> */}
-
-                  {/* <KeyboardDatePicker
-                    // margin="normal"
-                    id="date-picker-dialog"
-                    label="Año"
-                    views={['year']}
-                    format="yyyy"
-                    minDate={moment()}
-                    value={añoValue}
-                    onChange={(e) => handlePicker(e, setAño, true)}
-                    inputVariant="outlined"
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  /> */}
                 </div>
               </MuiPickersUtilsProvider>
               <Divider />
               <div className={classes.flex}>
                 <TextField
+                  style={{ width: '30%' }}
                   id="outlined-name"
                   label="Número expediente"
                   value={numeroExpediente}
@@ -400,6 +364,7 @@ const CreateProyect = () => {
                   error={errorNumeroExpediente}
                 />
                 <TextField
+                  style={{ width: '30%' }}
                   id="outlined-name"
                   label="Número resolución"
                   value={numeroResolucion}
@@ -417,6 +382,7 @@ const CreateProyect = () => {
                   error={errorNumeroResolucion}
                 />
                 <TextField
+                  style={{ width: '30%' }}
                   id="outlined-name"
                   label="Número proyecto"
                   value={numeroProyecto}
