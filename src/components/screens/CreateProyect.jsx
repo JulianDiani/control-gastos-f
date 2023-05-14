@@ -1,7 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Divider, Paper } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+} from '@material-ui/core';
 import { createProyecto } from '../../services/proyectos';
 import Alert from '@material-ui/lab/Alert';
 import {
@@ -11,7 +20,7 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import { validateField } from '../../utils/validaciones';
 import * as moment from 'moment';
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -51,6 +60,10 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     margin: '1rem',
     width: '97%',
+  },
+  width30: {
+    width: '30%',
+    margin: '0.5rem',
   },
 }));
 
@@ -104,7 +117,7 @@ const CreateProyect = () => {
       }, 2000);
       setLoadedProject(true);
     }
-    
+
     if (hasChanges) {
       setChanges();
       setHasChanges(false);
@@ -126,7 +139,6 @@ const CreateProyect = () => {
 
   //Handle events
   const handleChange = (event, setState, isAutocomplete = false) => {
-    
     if (isAutocomplete) {
       setState(event);
     } else {
@@ -138,7 +150,7 @@ const CreateProyect = () => {
     if (onlyYear) {
       const year = moment(event).format('YYYY');
       const yearToValue = moment(year);
-      
+
       setDate(year);
       setAñoValue(yearToValue);
     } else {
@@ -210,6 +222,8 @@ const CreateProyect = () => {
     clearStates();
     console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);
   };
+  //Convocatorias prueba
+  const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
   return (
     <div>
       <h1>Crear proyecto</h1>
@@ -284,6 +298,7 @@ const CreateProyect = () => {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <div className={classes.flex}>
                   <KeyboardDatePicker
+                    className={classes.width30}
                     id="date-picker-dialog"
                     label="Fecha inicio"
                     format="MM/dd/yyyy"
@@ -296,6 +311,7 @@ const CreateProyect = () => {
                     }}
                   />
                   <KeyboardDatePicker
+                    className={classes.width30}
                     id="date-picker-dialog"
                     label="Fecha fin"
                     format="MM/dd/yyyy"
@@ -307,25 +323,30 @@ const CreateProyect = () => {
                       'aria-label': 'change date',
                     }}
                   />
-                  <KeyboardDatePicker
-                    // margin="normal"
-                    id="date-picker-dialog"
-                    label="Año"
-                    views={['year']}
-                    format="yyyy"
-                    minDate={moment()}
-                    value={añoValue}
-                    onChange={(e) => handlePicker(e, setAño, true)}
-                    inputVariant="outlined"
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
+                  <FormControl variant="outlined" className={classes.width30}>
+                    <InputLabel id="demo-simple-select-outlined-label">
+                      Convocatoria
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      label="Convocatoria"
+                      id="demo-simple-select-outlined"
+                      // value={''}
+                      // onChange={handleChange}
+                    >
+                      {convocatoria.map((r, idx) => (
+                        <MenuItem value={r} key={idx}>
+                          {r}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </div>
               </MuiPickersUtilsProvider>
               <Divider />
               <div className={classes.flex}>
                 <TextField
+                  style={{ width: '30%' }}
                   id="outlined-name"
                   label="Número expediente"
                   value={numeroExpediente}
@@ -343,6 +364,7 @@ const CreateProyect = () => {
                   error={errorNumeroExpediente}
                 />
                 <TextField
+                  style={{ width: '30%' }}
                   id="outlined-name"
                   label="Número resolución"
                   value={numeroResolucion}
@@ -360,6 +382,7 @@ const CreateProyect = () => {
                   error={errorNumeroResolucion}
                 />
                 <TextField
+                  style={{ width: '30%' }}
                   id="outlined-name"
                   label="Número proyecto"
                   value={numeroProyecto}
@@ -424,5 +447,6 @@ const CreateProyect = () => {
     </div>
   );
 };
-
+//LOKO
 export default CreateProyect;
+//PANA
