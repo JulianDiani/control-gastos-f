@@ -7,6 +7,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -22,11 +24,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModal() {
+const ComprasModal = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [aprobado, setAprobado] = React.useState(true);
 
-  const handleOpen = () => {
+  const handleOpenAprobado = () => {
+    setAprobado(true);
+    setOpen(true);
+  };
+  const handleOpenRechazado = () => {
+    setAprobado(false);
     setOpen(true);
   };
 
@@ -37,10 +45,14 @@ export default function TransitionsModal() {
   return (
     <div>
       <Button 
-      variant="outlined" 
-      color="primary"
-      onClick={handleOpen}>
-        Modal
+        color="primary"
+        onClick={handleOpenAprobado}
+        ><CheckCircleOutlineIcon />
+      </Button>
+      <Button 
+        color="secondary"
+        onClick={handleOpenRechazado}
+        ><HighlightOffIcon />
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -56,14 +68,14 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h4>¿Está seguro que desea aprobar la compra?</h4>
+            <h4>¿Está seguro que desea {aprobado ? 'APROBAR' : 'RECHAZAR'} la compra?</h4>
             <Grid container spacing={12}>
                 <Box item 
                 mx="auto"
-                ><CheckIcon color="primary"/></Box>
+                ><Button><CheckIcon color="primary"/></Button></Box>
                 <Box item 
                 mx="auto"
-                ><ClearIcon color="secondary"/></Box>
+                ><Button><ClearIcon color="secondary"/></Button></Box>
             </Grid>
           </div>
         </Fade>
@@ -71,3 +83,5 @@ export default function TransitionsModal() {
     </div>
   );
 }
+
+export default ComprasModal;
