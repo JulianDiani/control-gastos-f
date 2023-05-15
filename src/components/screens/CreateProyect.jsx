@@ -10,6 +10,8 @@ import {
   MenuItem,
   Paper,
   Select,
+  Container,
+  Grid,
 } from '@material-ui/core';
 import { createProyecto } from '../../services/proyectos';
 import Alert from '@material-ui/lab/Alert';
@@ -20,6 +22,9 @@ import {
 import DateFnsUtils from '@date-io/date-fns';
 import { validateField } from '../../utils/validaciones';
 import * as moment from 'moment';
+//import axios from 'axios';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 const useStyles = makeStyles((theme) => ({
   formContainer: {
     display: 'flex',
@@ -31,9 +36,12 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto',
     borderTop: '1rem solid #5AA123',
     borderRadius: '17px 17px 0 0',
+    minWidth: '17rem',
   },
   field: {
     margin: '0.5rem',
+    minWidth: '11rem',
+    display: 'flex',
   },
   submitButton: {
     margin: '0.5rem',
@@ -64,6 +72,14 @@ const useStyles = makeStyles((theme) => ({
   width30: {
     width: '30%',
     margin: '0.5rem',
+  },
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
   },
 }));
 
@@ -222,15 +238,34 @@ const CreateProyect = () => {
     clearStates();
     console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);
   };
+
+
   //Convocatorias prueba
-  const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
+  const [convocatorias, setConvocatorias] = useState([null]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/api/convocatorias/')
+      .then(response => response.json())
+      .then(response => {
+        //console.log(response);
+        //console.log(typeof response.data[0].nombre);
+        //console.log(response.data[0].nombre);
+        //onst lista = response.data.map(elem => elem.nombre);
+        //console.log(lista);
+        setConvocatorias(response);
+
+      })
+
+  }, []);
+  //const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
+  const usuarios = [{ nombre: 'julian' }, { nombre: 'galo' }, { nombre: 'pedroza' }, { nombre: 'mafia' }, { nombre: 'mariano' }, { nombre: 'Emir' }]
   return (
     <div>
       <h1>Crear proyecto</h1>
       <div>
         <Paper className={classes.formContainer}>
           <h2>Cargar datos</h2>
-          <div>
+          <div className={classes.grid}>
             <div className={classes.grid}>
               <TextField
                 id="outlined-name"
@@ -265,8 +300,6 @@ const CreateProyect = () => {
                 variant="outlined"
                 className={classes.field}
               />
-            </div>
-            <div className={classes.grid}>
               <TextField
                 id="outlined-name"
                 label="Unidad académica"
@@ -276,6 +309,7 @@ const CreateProyect = () => {
                 variant="outlined"
                 className={classes.field}
               />
+
               <TextField
                 id="outlined-name"
                 label="Área temática"
@@ -285,6 +319,7 @@ const CreateProyect = () => {
                 variant="outlined"
                 className={classes.field}
               />
+
               <TextField
                 id="outlined-name"
                 label="Subsidio"
@@ -295,134 +330,153 @@ const CreateProyect = () => {
                 className={classes.field}
               />
               <Divider />
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <div className={classes.flex}>
-                  <KeyboardDatePicker
-                    className={classes.width30}
-                    id="date-picker-dialog"
-                    label="Fecha inicio"
-                    format="MM/dd/yyyy"
-                    minDate={moment()}
-                    value={fechaInicio}
-                    onChange={(e) => handlePicker(e, setFechaInicio)}
-                    inputVariant="outlined"
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
-                  <KeyboardDatePicker
-                    className={classes.width30}
-                    id="date-picker-dialog"
-                    label="Fecha fin"
-                    format="MM/dd/yyyy"
-                    minDate={moment().add(6, 'month')} //6 meses es el minimo de duracion de un proyecto
-                    value={fechaFin}
-                    onChange={(e) => handlePicker(e, setFechaFin)}
-                    inputVariant="outlined"
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
-                  <FormControl variant="outlined" className={classes.width30}>
-                    <InputLabel id="demo-simple-select-outlined-label">
-                      Convocatoria
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      label="Convocatoria"
-                      id="demo-simple-select-outlined"
-                      // value={''}
-                      // onChange={handleChange}
-                    >
-                      {convocatoria.map((r, idx) => (
-                        <MenuItem value={r} key={idx}>
-                          {r}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </div>
-              </MuiPickersUtilsProvider>
+            </div >
+            <div className={classes.root}>
+              <Grid container spacing={1}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <Grid item xs>
+                    <KeyboardDatePicker
+                      className={classes.field}
+                      variant="outlined"
+                      id="date-picker-dialog"
+                      label="Fecha inicio"
+                      format="MM/dd/yyyy"
+                      minDate={moment()}
+                      value={fechaInicio}
+                      onChange={(e) => handlePicker(e, setFechaInicio)}
+                      inputVariant="outlined"
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs>
+                    <KeyboardDatePicker
+                      className={classes.field}
+                      minwidth="30%"
+                      id="date-picker-dialog"
+                      label="Fecha fin"
+                      format="MM/dd/yyyy"
+                      minDate={moment().add(6, 'month')} //6 meses es el minimo de duracion de un proyecto
+                      value={fechaFin}
+                      onChange={(e) => handlePicker(e, setFechaFin)}
+                      inputVariant="outlined"
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs>
+                    <Autocomplete
+                      className={classes.field}
+                      options={convocatorias}
+                      getOptionLabel={(option) => option.nombre}
+
+                      renderInput={(params) => <TextField {...params} label="Convocatoria" variant="outlined" />}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
+              </Grid>
               <Divider />
-              <div className={classes.flex}>
-                <TextField
-                  style={{ width: '30%' }}
-                  id="outlined-name"
-                  label="Número expediente"
-                  value={numeroExpediente}
-                  onBlur={(e) =>
-                    validateField(
-                      'int',
-                      e.target.value,
-                      setErrorNumeroExpediente
-                    )
-                  }
-                  type="text"
-                  onChange={(e) => handleChange(e, setNumeroExpediente)}
-                  variant="outlined"
-                  className={classes.field}
-                  error={errorNumeroExpediente}
-                />
-                <TextField
-                  style={{ width: '30%' }}
-                  id="outlined-name"
-                  label="Número resolución"
-                  value={numeroResolucion}
-                  onBlur={(e) =>
-                    validateField(
-                      'int',
-                      e.target.value,
-                      setErrorNumeroResolucion
-                    )
-                  }
-                  type="text"
-                  onChange={(e) => handleChange(e, setNumeroResolucion)}
-                  variant="outlined"
-                  className={classes.field}
-                  error={errorNumeroResolucion}
-                />
-                <TextField
-                  style={{ width: '30%' }}
-                  id="outlined-name"
-                  label="Número proyecto"
-                  value={numeroProyecto}
-                  onBlur={(e) =>
-                    validateField('int', e.target.value, setErrorNumeroProyecto)
-                  }
-                  type="text"
-                  onChange={(e) => handleChange(e, setNumeroProyecto)}
-                  variant="outlined"
-                  className={classes.field}
-                  error={errorNumeroProyecto}
-                />
-              </div>
-              <TextField
-                id="outlined-name"
-                label="Director"
-                value={director}
-                type="text"
-                onChange={(e) => handleChange(e, setDirector)}
-                variant="outlined"
-                className={classes.field}
-              />
-              <TextField
-                id="outlined-name"
-                label="Codirector"
-                value={codirector}
-                type="text"
-                onChange={(e) => handleChange(e, setCodirector)}
-                variant="outlined"
-                className={classes.field}
-              />
-              <TextField
-                id="outlined-name"
-                label="Usuario responsable"
-                value={usuario}
-                type="text"
-                onChange={(e) => handleChange(e, setUsuario)}
-                variant="outlined"
-                className={classes.field}
-              />
+            </div>
+            <div className={classes.root}>
+              <Grid container spacing={1}>
+                <Grid item xs>
+                  <TextField
+                    id="outlined-name"
+                    label="Número expediente"
+                    value={numeroExpediente}
+                    onBlur={(e) =>
+                      validateField(
+                        'int',
+                        e.target.value,
+                        setErrorNumeroExpediente
+                      )
+                    }
+                    type="text"
+                    onChange={(e) => handleChange(e, setNumeroExpediente)}
+                    variant="outlined"
+                    className={classes.field}
+                    error={errorNumeroExpediente}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <TextField
+                    id="outlined-name"
+                    label="Número resolución"
+                    value={numeroResolucion}
+                    onBlur={(e) =>
+                      validateField(
+                        'int',
+                        e.target.value,
+                        setErrorNumeroResolucion
+                      )
+                    }
+                    type="text"
+                    onChange={(e) => handleChange(e, setNumeroResolucion)}
+                    variant="outlined"
+                    className={classes.field}
+                    error={errorNumeroResolucion}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <TextField
+                    id="outlined-name"
+                    label="Número proyecto"
+                    value={numeroProyecto}
+                    onBlur={(e) =>
+                      validateField('int', e.target.value, setErrorNumeroProyecto)
+                    }
+                    type="text"
+                    onChange={(e) => handleChange(e, setNumeroProyecto)}
+                    variant="outlined"
+                    className={classes.field}
+                    error={errorNumeroProyecto}
+                  />
+                </Grid>
+              </Grid>
+            </div>
+            <Divider />
+            <TextField
+              id="outlined-name"
+              label="Director"
+              value={director}
+              type="text"
+              onChange={(e) => handleChange(e, setDirector)}
+              variant="outlined"
+              className={classes.field}
+            />
+            <TextField
+              id="outlined-name"
+              label="Codirector"
+              value={codirector}
+              type="text"
+              onChange={(e) => handleChange(e, setCodirector)}
+              variant="outlined"
+              className={classes.field}
+            />
+            <div className={classes.root}>
+              <Grid container spacing={1}>
+                <Grid item xs>
+
+                  <Autocomplete
+                    className={classes.field}
+                    multiple
+                    id="tags-outlined"
+                    options={usuarios}
+                    getOptionLabel={(option) => option.nombre}
+                    defaultValue={[]}
+                    filterSelectedOptions
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Usuarios responsables"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
             </div>
           </div>
           <Button
@@ -435,16 +489,20 @@ const CreateProyect = () => {
             Cargar proyecto
           </Button>
         </Paper>
-        {loadedProject && (
-          <Alert className={classes.loading}>Proyecto cargado con exito</Alert>
-        )}
-        {hasError && (
-          <Alert severity="error" className={classes.error}>
-            Hubo un problema al procesar su solicitud
-          </Alert>
-        )}
-      </div>
-    </div>
+        {
+          loadedProject && (
+            <Alert className={classes.loading}>Proyecto cargado con exito</Alert>
+          )
+        }
+        {
+          hasError && (
+            <Alert severity="error" className={classes.error}>
+              Hubo un problema al procesar su solicitud
+            </Alert>
+          )
+        }
+      </div >
+    </div >
   );
 };
 //LOKO
