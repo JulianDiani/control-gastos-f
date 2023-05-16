@@ -58,7 +58,7 @@ export const VistaProyecto = ({ idProyecto }) => {
     useEffect(() => {
         async function fetchCompra() {
             try {
-                
+                setCompras(null);
                 const compras = await getComprasByProyecto(idProyecto);
                 setCompras(compras);
             } catch (err) {
@@ -71,6 +71,7 @@ export const VistaProyecto = ({ idProyecto }) => {
     useEffect(() => {
         async function fetchUsuarios() {
             try {
+                setProyecto(null);
                 const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
                 setProyecto(proyecto[0]);
             } catch (err) {
@@ -81,7 +82,8 @@ export const VistaProyecto = ({ idProyecto }) => {
             fetchUsuarios();
         } else {
             window.location.replace(
-                'https://controlgastosdesubsidios-unahur.netlify.app/'
+                //'https://controlgastosdesubsidios-unahur.netlify.app/'
+
             );
         }
     }, []);
@@ -117,7 +119,7 @@ export const VistaProyecto = ({ idProyecto }) => {
 
     const DatosList = () => {
 
-
+        console.log(proyecto.titulo)
         return (
 
 
@@ -206,8 +208,57 @@ export const VistaProyecto = ({ idProyecto }) => {
         );
     };
 
+    const DatosList1 = () => {
 
+        console.log(compras)
+        return (
+            <>
 
+            <TableContainer className={$.container} component={Paper}>
+              <Table aria-label="customized table">
+                <StyledTableHead>
+                  <StyledTableCell className={$.textColor}>N* Factura</StyledTableCell>
+                  <StyledTableCell align="center" className={$.textColor}>
+                    Nombre 
+                  </StyledTableCell>
+                  <StyledTableCell align="center" className={$.textColor}>
+                    Monto
+                  </StyledTableCell>
+                  <StyledTableCell align="center" className={$.textColor}>
+                    Estado
+                  </StyledTableCell>
+                  <StyledTableCell align="center" className={$.textColor}>
+                    Rubro
+                  </StyledTableCell>    
+                </StyledTableHead>
+                <TableBody>
+                {compras.map((compras) => (
+                <StyledTableRow key={compras.id}>
+                 <StyledTableCell
+              //edit cuando se cree la vista de proyecto singular con compra
+            >
+                   {compras.factura}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {compras.nombre}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                      {formatPrice(compras.monto)}
+                      </StyledTableCell> 
+                       <StyledTableCell align="center">
+                      {compras.estado}
+                      </StyledTableCell>     
+                       <StyledTableCell align="center">
+                      {compras.rubro}
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </>
+          );
+      };
 
     const rendering = () => {
         return (
@@ -222,7 +273,24 @@ export const VistaProyecto = ({ idProyecto }) => {
                 </div>
             </>
         );
-        
+    
+    };
+
+    const rendering1 = () => {
+        return (
+            <>
+                <div className={$.root}>
+
+                    <CardContent>
+                        <DatosList1 />
+                    </CardContent>
+                  
+
+
+                </div>
+            </>
+        );
+    
     };
 
 
@@ -239,6 +307,7 @@ export const VistaProyecto = ({ idProyecto }) => {
             <h1>Solicitudes de Compras</h1>
             <div className={$.container}>
                 <Divider className={$.divider} />
+                {proyecto ? rendering1() : loadingRendering()}
 
             </div>
             <Footer />
