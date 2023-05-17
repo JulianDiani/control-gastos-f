@@ -217,7 +217,6 @@ export default function App() {
             </Router>
           </Container>
         )}
-        )
       </>
     ) : (
       <></>
@@ -229,17 +228,17 @@ const useStyles = makeStyles(() => ({
   root: {
     marginTop: '1vh',
     display: 'flex',
-    flexDirection: 'row',
   },
   container: {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
     height: '100%',
+    width: 'calc(100% - 13rem)',
+    paddingLeft: '1.5rem',
   },
   content: {
-    paddingLeft: '2%',
-    width: '80vw',
+    padding: '0 1rem',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

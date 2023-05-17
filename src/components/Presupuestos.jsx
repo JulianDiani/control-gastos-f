@@ -99,17 +99,14 @@ export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
 const useStyles = makeStyles({
   root: {
     height: '100%',
-    display: 'flex',
-    marginLeft: '1vw',
     marginBottom: '2rem',
   },
   card: {
-    width: '25vw',
-    marginLeft: '15vw',
     marginBottom: '1rem',
   },
   cardContent: {
     marginBottom: '2rem',
+    justifyContent: 'space-between',
   },
   divider: {
     marginBottom: '1rem',
