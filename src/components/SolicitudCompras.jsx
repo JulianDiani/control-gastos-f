@@ -21,11 +21,10 @@ function createData(factura, id, proyecto, rubro, subRubro, remanente, monto, es
 }
 
 const rows = [
-  createData(1, 1, 'Snow Jon', 'Insumos', 'PC y Notebooks', 10000, 5000, 'Pendiente'),
-  createData(1, 2, 'Snow Jon', 'Insumos', 'PC y Notebooks', 10000, 5000, 'Pendiente'),
-  createData(1, 3, 'Snow Jon', 'Insumos', 'PC y Notebooks', 10000, 5000, 'Pendiente'),
-  createData(1, 4, 'Snow Jon', 'Insumos', 'PC y Notebooks', 10000, 5000, 'Pendiente'),
-  createData(1, 5, 'Snow Jon', 'Insumos', 'PC y Notebooks', 10000, 5000, 'Pendiente'),
+  createData(1, 1, 'Proyecto Tec', 'Equipamiento', 'PC y Notebooks', 1000000, 110000.00, 'Pendiente'),
+  createData(2, 2, 'Proyecto Universidad', 'Insumos', 'Hojas', 10000, 500, 'Pendiente'),
+  createData(20, 3, 'Proyecto UNAHUR', 'Equipamiento', 'Impresora', 100000, 70000, 'Pendiente'),
+  createData(80, 4, 'Proyecto Innovación', 'Insumos', 'Comida', 10000, 5000, 'Pendiente'),
 ];
 
 const SolicitudCompra = () => {
