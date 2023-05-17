@@ -69,6 +69,9 @@ export const ProyectsList = ({ setIdProyecto }) => {
             </StyledTableCell>
             <StyledTableCell align="center" className={$.textColor}>
               Fecha de Inicio
+            </StyledTableCell>   
+              <StyledTableCell align="center" className={$.textColor}>
+              Solicitudes de compras
             </StyledTableCell>
           </StyledTableHead>
           <TableBody>
@@ -87,6 +90,9 @@ export const ProyectsList = ({ setIdProyecto }) => {
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {formatDate(proyecto.fechaInicio)}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {proyecto.compras.length()}
                 </StyledTableCell>
               </StyledTableRow>
             ))}

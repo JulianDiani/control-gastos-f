@@ -19,7 +19,7 @@ import {
   LocalAtm,
   Receipt,
 } from '@material-ui/icons';
-
+import { Error404 } from "./components/ErrorGenerico"
 import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
 import { Proveedores } from './components/Proveedores';
@@ -151,6 +151,11 @@ export default function App() {
                         />
                       )}
                     />
+                    <Route
+                      path="/error"
+                      exact
+                      component={Error404}
+                    />
                     </Switch>
                   </div>
                 </div>
@@ -223,6 +228,11 @@ export default function App() {
                       path="/proyectos/normativas"
                       exact
                       component={Normativas}
+                    />
+                    <Route
+                      path="/error"
+                      exact
+                      component={Error404}
                     />
                   </Switch>
                 </div>

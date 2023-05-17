@@ -21,6 +21,7 @@ import {
     Grid,
 
 } from '@material-ui/core';
+import { id } from 'date-fns/locale';
 //import { Compras } from './Compras';
 
 //hola
@@ -40,26 +41,25 @@ export const VistaProyecto = ({ idProyecto }) => {
     const [open, setOpen] = useState(false);
     const [newCompra, setNewCompra] = useState(true);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    //const handleOpen = () => {
+     //   setOpen(true);
+    //};
 
-    useEffect(() => {
-        const id = sessionStorage.getItem('idProyecto');
-        console.log("id desde view Proyects"+ id)
-        getComprasByProyecto(id);
-    }, []);
+   // useEffect(() => {
+  
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    //}, []);
+
+    //const handleClose = () => {
+      //  setOpen(false);
+    //};
 
     //API Call
-    useEffect(() => {
+    useEffect(() => {        //getComprasByProyecto(id);
         async function fetchCompra() {
+            const id = sessionStorage.getItem('idProyecto');
             try {
-                setCompras(null);
-                const compras = await getComprasByProyecto(idProyecto);
+                const compras = await getComprasByProyecto(id);
                 setCompras(compras);
             } catch (err) {
                 console.log('ERROR FETCH API [compras]: ' + err);
@@ -71,8 +71,9 @@ export const VistaProyecto = ({ idProyecto }) => {
     useEffect(() => {
         async function fetchUsuarios() {
             try {
-                setProyecto(null);
-                const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
+                const id = sessionStorage.getItem('idProyecto');
+                const proyecto = await getProyectoById(id); //Tiene que ser por ID la busqueda
+                console.log("id Proyecto" + idProyecto + "trae objeto" + proyecto[0].titulo)
                 setProyecto(proyecto[0]);
             } catch (err) {
                 console.log('[DatosGenerales Component] ERROR : ' + err);
@@ -82,7 +83,7 @@ export const VistaProyecto = ({ idProyecto }) => {
             fetchUsuarios();
         } else {
             window.location.replace(
-                //'https://controlgastosdesubsidios-unahur.netlify.app/'
+                "/error"
 
             );
         }
@@ -210,7 +211,6 @@ export const VistaProyecto = ({ idProyecto }) => {
 
     const DatosList1 = () => {
 
-        console.log(compras)
         return (
             <>
 
@@ -243,7 +243,7 @@ export const VistaProyecto = ({ idProyecto }) => {
                         {compras.nombre}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                      {formatPrice(compras.monto)}
+                      {formatPrice(compras.subsidio)}
                       </StyledTableCell> 
                        <StyledTableCell align="center">
                       {compras.estado}
@@ -307,7 +307,7 @@ export const VistaProyecto = ({ idProyecto }) => {
             <h1>Solicitudes de Compras</h1>
             <div className={$.container}>
                 <Divider className={$.divider} />
-                {proyecto ? rendering1() : loadingRendering()}
+                {compras ? rendering1() : loadingRendering()}
 
             </div>
             <Footer />
