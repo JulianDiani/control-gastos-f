@@ -46,7 +46,6 @@ export const ProyectsList = ({ setIdProyecto }) => {
   const handleSelectProyect = (id) => {
     sessionStorage.setItem('idProyecto', id);
     //setIdProyecto(id);
-    console.log("id desde Proyects list" + id)
   };
   useEffect( () => {
     async function getProyects(){
@@ -92,7 +91,7 @@ export const ProyectsList = ({ setIdProyecto }) => {
                   {formatDate(proyecto.fechaInicio)}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyecto.compras.length()}
+                  {proyecto.Compras.length}
                 </StyledTableCell>
               </StyledTableRow>
             ))}

@@ -17,14 +17,11 @@ import {
     TableContainer,
     Paper,
     TableRow,
-    Modal,
-    Grid,
 
 } from '@material-ui/core';
-import { id } from 'date-fns/locale';
+//import { id } from 'date-fns/locale';
 //import { Compras } from './Compras';
 
-//hola
 
 export const VistaProyecto = ({ idProyecto }) => {
 
@@ -38,17 +35,12 @@ export const VistaProyecto = ({ idProyecto }) => {
     const $ = useStyles();
     //States
     const [compras, setCompras] = useState(null);
-    const [open, setOpen] = useState(false);
+    //const [open, setOpen] = useState(false);
     const [newCompra, setNewCompra] = useState(true);
 
     //const handleOpen = () => {
      //   setOpen(true);
     //};
-
-   // useEffect(() => {
-  
-
-    //}, []);
 
     //const handleClose = () => {
       //  setOpen(false);
@@ -67,13 +59,12 @@ export const VistaProyecto = ({ idProyecto }) => {
         }
         if (newCompra) fetchCompra();
         setNewCompra(false);
-    }, [newCompra]);
+    }, [newCompra]);    
     useEffect(() => {
         async function fetchUsuarios() {
             try {
                 const id = sessionStorage.getItem('idProyecto');
                 const proyecto = await getProyectoById(id); //Tiene que ser por ID la busqueda
-                console.log("id Proyecto" + idProyecto + "trae objeto" + proyecto[0].titulo)
                 setProyecto(proyecto[0]);
             } catch (err) {
                 console.log('[DatosGenerales Component] ERROR : ' + err);
@@ -120,7 +111,6 @@ export const VistaProyecto = ({ idProyecto }) => {
 
     const DatosList = () => {
 
-        console.log(proyecto.titulo)
         return (
 
 
