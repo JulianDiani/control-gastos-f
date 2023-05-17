@@ -21,7 +21,7 @@ import {
 } from '@material-ui/core';
 //import { id } from 'date-fns/locale';
 //import { Compras } from './Compras';
-
+import { Link } from 'react-router-dom';
 
 export const VistaProyecto = ({ idProyecto }) => {
 
@@ -37,7 +37,10 @@ export const VistaProyecto = ({ idProyecto }) => {
     const [compras, setCompras] = useState(null);
     //const [open, setOpen] = useState(false);
     const [newCompra, setNewCompra] = useState(true);
-
+    const handleSelectCompras = (id) => {
+        sessionStorage.setItem('idCompra', id);
+        //setIdProyecto(id);
+      };
     //const handleOpen = () => {
      //   setOpen(true);
     //};
@@ -49,8 +52,8 @@ export const VistaProyecto = ({ idProyecto }) => {
     //API Call
     useEffect(() => {        //getComprasByProyecto(id);
         async function fetchCompra() {
-            const id = sessionStorage.getItem('idProyecto');
             try {
+                const id = sessionStorage.getItem('idProyecto');
                 const compras = await getComprasByProyecto(id);
                 setCompras(compras);
             } catch (err) {
@@ -70,7 +73,8 @@ export const VistaProyecto = ({ idProyecto }) => {
                 console.log('[DatosGenerales Component] ERROR : ' + err);
             }
         }
-        if (idProyecto) {
+        const id = sessionStorage.getItem('idProyecto');
+        if (id) {
             fetchUsuarios();
         } else {
             window.location.replace(
@@ -225,8 +229,11 @@ export const VistaProyecto = ({ idProyecto }) => {
                 {compras.map((compras) => (
                 <StyledTableRow key={compras.id}>
                  <StyledTableCell
-              //edit cuando se cree la vista de proyecto singular con compra
-            >
+                    scope="row"
+                    onClick={() => handleSelectCompras(compras.id)}
+                    component={Link}
+                    to={'/admin/proyectView'}//edit cuando se cree la vista de compra singular 
+                            >
                    {compras.factura}
                       </StyledTableCell>
                       <StyledTableCell align="center">
