@@ -240,7 +240,7 @@ export const VistaProyecto = ({ idProyecto }) => {
                         {compras.nombre}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                      {formatPrice(compras.subsidio)}
+                      {formatPrice(compras.monto)}
                       </StyledTableCell> 
                        <StyledTableCell align="center">
                       {compras.estado}
