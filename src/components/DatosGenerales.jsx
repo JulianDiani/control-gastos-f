@@ -21,19 +21,25 @@ export const DatosGenerales = ({ idProyecto }) => {
   //const idProyecto = sessionStorage.getItem("idProyecto");
   //useEffect para traer la proyecto del proyecto de la api.
   useEffect(() => {
-    async function fetchUsuarios() {
-      try {
-        const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
-        setProyecto(proyecto[0]);
-      } catch (err) {
-        console.log('[DatosGenerales Component] ERROR : ' + err);
+    let isMounted = true;
+    async function fetchProyectos() {
+      if (idProyecto)
+        try {
+          const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
+          if (isMounted) {
+            setProyecto(proyecto[0]);
+          }
+        } catch (err) {
+          console.log('[DatosGenerales Component] ERROR : ' + err);
+        }
+      else {
+        return window.history.back();
       }
     }
-    if (idProyecto) {
-      fetchUsuarios();
-    } else {
-      window.history.back();
-    }
+    fetchProyectos();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const loadingRendering = () => {
@@ -63,7 +69,7 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Año de convocatoria: ' + proyecto.año}
+            primary={'Año de convocatoria: ' + proyecto.año.substr(0, 4)}
             sx={{ ml: 2 }}
           />
         </ListItem>
@@ -87,13 +93,13 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Fecha Inicio: ' + proyecto.fechaInicio}
+            primary={'Fecha Inicio: ' + proyecto.fechaInicio.substr(0, 10)}
             sx={{ ml: 2 }}
           />
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Fecha Fin: ' + proyecto.fechaFin}
+            primary={'Fecha Fin: ' + proyecto.fechaFin.substr(0, 10)}
             sx={{ ml: 2 }}
           />
         </ListItem>

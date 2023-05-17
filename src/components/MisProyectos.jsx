@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from 'react';
 import { Footer } from './Footer';
-import { SelectorProyectos } from './SelectorProyectos';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,6 +19,7 @@ import {
   CircularProgress,
   Typography,
   TableHead,
+  Button,
 } from '@material-ui/core';
 import { getProyecto } from '../services/proyectos';
 
@@ -38,7 +38,7 @@ const StyledTableRow = withStyles(() => ({
 const StyledTableHead = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
-      background: '#5AA123',
+      background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)',
     },
   },
 }))(TableHead);
@@ -79,6 +79,14 @@ export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
   const [compras, setCompras] = useState([]);
   const [presupuesto, setPresupuesto] = useState([]);
 
+  const handleSelect = (id) => {
+    if (id === idProyecto) {
+      handleSetProyect(null);
+    } else {
+      handleSetProyect(id);
+    }
+  };
+
   useEffect(() => {
     let isMounted = true;
     async function fetchData() {
@@ -104,17 +112,12 @@ export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
     );
     const gastos = calculateTotalExpenses(comprasRealizadasEnproyecto);
     const totalPresupuesto = presupuesto.total;
-    const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos).split(',')[0]; //Truncamiento del porcentaje.
+    const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos); //Truncamiento del porcentaje.
     return ejecucion;
   };
 
   return (
     <>
-      <SelectorProyectos
-        handleSetProyect={handleSetProyect}
-        proyectosEnCurso={proyectosEnCurso}
-        idProyecto={idProyecto}
-      />
       <h2>Proyectos en curso</h2>
       <TableContainer className={$.container} component={Paper}>
         <Table aria-label="customized table">
@@ -132,11 +135,22 @@ export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
               <StyledTableCell align="center" className={$.textColor}>
                 Porcentaje
               </StyledTableCell>
+              <StyledTableCell align="center" className={$.textColor}>
+                Opciones
+              </StyledTableCell>
             </StyledTableRow>
           </StyledTableHead>
           <TableBody>
             {proyectosEnCurso.map((proyecto) => (
-              <StyledTableRow key={proyecto.id}>
+              <StyledTableRow
+                key={proyecto.id}
+                className={
+                  idProyecto !== null &&
+                  proyecto.id.toString() === idProyecto.toString()
+                    ? $.selectedRow
+                    : ''
+                }
+              >
                 <StyledTableCell scope="row">{proyecto.titulo}</StyledTableCell>
                 <StyledTableCell align="center">
                   {proyecto.director}
@@ -148,6 +162,18 @@ export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
                   {circularProgressWithValue(
                     calcularNivelEjecucion(proyecto.id)
                   )}
+                </StyledTableCell>
+                <StyledTableCell>
+                  <Button
+                    variant="contained"
+                    className={$.button}
+                    onClick={() => handleSelect(proyecto.id)}
+                  >
+                    {idProyecto !== null &&
+                    proyecto.id.toString() === idProyecto.toString()
+                      ? 'Ignorar'
+                      : 'Investigar'}
+                  </Button>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -217,5 +243,9 @@ const useStyles = makeStyles({
   button: {
     height: '2rem',
     margin: '0',
+    width: '100%',
+  },
+  selectedRow: {
+    background: 'antiquewhite',
   },
 });
