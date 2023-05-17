@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { getProyectsForAdmin } from '../../services/proyectos';
+import { Link } from 'react-router-dom';
+import { formatDate } from '../../utils/validaciones';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,11 +39,14 @@ const StyledTableHead = withStyles(() => ({
   },
 }))(TableRow);
 
-const ProyectsList = () => {
+export const ProyectsList = ({ setIdProyecto }) => {
   const $ = useStyles();
 
   const [proyects,setProyects] = useState([]);
-
+  const handleSelectProyect = (id) => {
+    sessionStorage.setItem('idProyecto', id);
+    //setIdProyecto(id);
+  };
   useEffect( () => {
     async function getProyects(){
         const proyectos = await getProyectsForAdmin();
@@ -63,19 +68,30 @@ const ProyectsList = () => {
             </StyledTableCell>
             <StyledTableCell align="center" className={$.textColor}>
               Fecha de Inicio
+            </StyledTableCell>   
+              <StyledTableCell align="center" className={$.textColor}>
+              Solicitudes de compras
             </StyledTableCell>
           </StyledTableHead>
           <TableBody>
-            {proyects.map((proyecto) => (
-              <StyledTableRow key={proyecto.id}>
-                <StyledTableCell scope="row" to={'/proyectos'}>
-                  {proyecto.titulo}
+          {proyects.map((proyecto) => (
+          <StyledTableRow key={proyecto.id}>
+           <StyledTableCell
+             scope="row"
+             onClick={() => handleSelectProyect(proyecto.id)}
+             component={Link}
+             to={'/admin/proyectView'}//edit cuando se cree la vista de proyecto singular con compra
+           >
+             {proyecto.titulo}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {proyecto.director}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyecto.fechaInicio}
+                  {formatDate(proyecto.fechaInicio)}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {proyecto.Compras.length}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
