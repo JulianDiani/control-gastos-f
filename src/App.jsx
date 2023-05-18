@@ -19,17 +19,19 @@ import {
   LocalAtm,
   Receipt,
 } from '@material-ui/icons';
-
+import StoreIcon from '@material-ui/icons/Store';
+import { Error404 } from "./components/ErrorGenerico"
 import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
 import { Proveedores } from './components/Proveedores';
+import SolicitudCompra from './components/SolicitudCompras';
 import Login from './components/Login';
 import { useEffect, useState } from 'react';
 import CreateProyect from './components/screens/CreateProyect';
 import CreateUser from './components/screens/CreateUser';
 import ProyectsLists from './components/screens/ProyectsLists';
 import { setUserActualProject } from './services/usuarios';
-
+import { VistaProyecto } from './components/screens/VistaProyecto';
 export default function App() {
   const $ = useStyles();
   const [loggedIn, setLoggedIn] = useState();
@@ -100,6 +102,7 @@ export default function App() {
       path: '/admin/createUser',
       canBeDisabled: false,
     },
+    { text: 'Solicitudes de Compra', icon: <StoreIcon />, path: '/admin/solicitudCompra' },
   ];
 
   useEffect(() => {
@@ -164,7 +167,32 @@ export default function App() {
                         component={CreateProyect}
                       />
                       <Route path="/admin/createUser" component={CreateUser} />
+                      <Route path="/admin/proyects"
+                        exact
+                        render={(props) => (
+                          <ProyectsLists
+                            ProyectsLists
+                            handleSetProyect={handleSetProyect}
+                            {...props}
+                          />
+                        )}
+                      />
+                      <Route path="/admin/proyectView"
+                        exact
+                        component={() => (
+                          <VistaProyecto
+                            idProyecto={idProyecto}
+                            setIdProyect={setIdProyecto}
+                          />
+                        )}
+                      />
+                      <Route
+                        path="/error"
+                        exact
+                        component={Error404}
+                      />
                       <Route path="/admin/proyects" component={ProyectsLists} />
+                      <Route path="/admin/solicitudCompra" component={SolicitudCompra} />
                     </Switch>
                   </div>
                 </div>
@@ -241,6 +269,11 @@ export default function App() {
                       path="/proyectos/normativas"
                       exact
                       component={Normativas}
+                    />
+                    <Route
+                      path="/error"
+                      exact
+                      component={Error404}
                     />
                   </Switch>
                 </div>
