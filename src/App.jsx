@@ -19,20 +19,16 @@ import {
   LocalAtm,
   Receipt,
 } from '@material-ui/icons';
-import StoreIcon from '@material-ui/icons/Store';
-import { Error404 } from "./components/ErrorGenerico"
+
 import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
 import { Proveedores } from './components/Proveedores';
-import SolicitudCompra from './components/SolicitudCompras';
 import Login from './components/Login';
 import { useEffect, useState } from 'react';
 import CreateProyect from './components/screens/CreateProyect';
 import CreateUser from './components/screens/CreateUser';
 import ProyectsLists from './components/screens/ProyectsLists';
 import { setUserActualProject } from './services/usuarios';
-import { VistaProyecto } from './components/screens/VistaProyecto';
-
 
 export default function App() {
   const $ = useStyles();
@@ -51,32 +47,59 @@ export default function App() {
   };
 
   const userSideBarOptions = [
-    { text: 'Proyectos', icon: <Home />, path: '/' },
-    { text: 'Datos generales', icon: <Receipt />, path: '/proyectos' },
+    { text: 'Proyectos', icon: <Home />, path: '/', canBeDisabled: false },
+    {
+      text: 'Datos generales',
+      icon: <Receipt />,
+      path: '/proyectos',
+      canBeDisabled: true,
+    },
     {
       text: 'Presupuesto',
       icon: <LocalAtm />,
       path: '/proyectos/presupuestos',
+      canBeDisabled: true,
     },
     {
       text: 'Proveedores',
       icon: <AssignmentInd />,
       path: '/proyectos/proveedores',
+      canBeDisabled: false,
     },
-    { text: 'Compras', icon: <ShoppingCart />, path: '/proyectos/compras' },
-    { text: 'Normativas I+D', icon: <Info />, path: '/proyectos/normativas' },
-    { text: 'Soporte', icon: <Help />, path: '/' },
+    {
+      text: 'Compras',
+      icon: <ShoppingCart />,
+      path: '/proyectos/compras',
+      canBeDisabled: true,
+    },
+    {
+      text: 'Normativas I+D',
+      icon: <Info />,
+      path: '/proyectos/normativas',
+      canBeDisabled: false,
+    },
+    { text: 'Soporte', icon: <Help />, path: '/', canBeDisabled: false },
   ];
 
   const adminSideBarOptions = [
-    { text: 'Proyectos', icon: <LibraryBooks />, path: '/admin/proyects' },
+    {
+      text: 'Proyectos',
+      icon: <LibraryBooks />,
+      path: '/admin/proyects',
+      canBeDisabled: false,
+    },
     {
       text: 'Cargar proyecto',
       icon: <NoteAdd />,
       path: '/admin/createProyect',
+      canBeDisabled: false,
     },
-    { text: 'Cargar usuario', icon: <PersonAdd />, path: '/admin/createUser' },
-    { text: 'Solicitudes de Compra', icon: <StoreIcon />, path: '/admin/solicitudCompra' }
+    {
+      text: 'Cargar usuario',
+      icon: <PersonAdd />,
+      path: '/admin/createUser',
+      canBeDisabled: false,
+    },
   ];
 
   useEffect(() => {
@@ -136,34 +159,12 @@ export default function App() {
                   <div className={$.content}>
                     <Switch>
                       <Route path="/login" component={Login} />
-                      <Route path="/admin/createProyect" component={CreateProyect} />
+                      <Route
+                        path="/admin/createProyect"
+                        component={CreateProyect}
+                      />
                       <Route path="/admin/createUser" component={CreateUser} />
-                      <Route path="/admin/proyects"   
-                       exact
-                       render={(props) => (
-                        <ProyectsLists
-                        ProyectsLists
-                          handleSetProyect={handleSetProyect}
-                          {...props}  
-                           />
-                          )}
-                       />
-                      <Route path="/admin/proyectView"  
-                      exact
-                      component={() => (
-                        <VistaProyecto
-                          idProyecto={idProyecto}
-                          setIdProyect={setIdProyecto}
-                        />
-                      )}
-                    />
-                    <Route
-                      path="/error"
-                      exact
-                      component={Error404}
-                    />
                       <Route path="/admin/proyects" component={ProyectsLists} />
-                      <Route path="/admin/solicitudCompra" component ={SolicitudCompra} />
                     </Switch>
                   </div>
                 </div>
@@ -173,7 +174,10 @@ export default function App() {
         ) : (
           <Container maxWidth="xl" className={$.root}>
             <Router>
-              <NavBar sideBarOptions={userSideBarOptions} user={userName} />
+              <NavBar
+                sideBarOptions={userSideBarOptions}
+                proyectoActual={proyectoActual}
+              />
               <div className={$.container}>
                 <Header
                   setLoggedIn={setLoggedIn}
@@ -237,11 +241,6 @@ export default function App() {
                       path="/proyectos/normativas"
                       exact
                       component={Normativas}
-                    />
-                    <Route
-                      path="/error"
-                      exact
-                      component={Error404}
                     />
                   </Switch>
                 </div>

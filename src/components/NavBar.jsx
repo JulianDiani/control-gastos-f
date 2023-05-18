@@ -8,9 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import { Box, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-export default function NavBar({ sideBarOptions }) {
+export default function NavBar({ sideBarOptions, proyectoActual }) {
   const $ = useStyles();
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -27,7 +27,7 @@ export default function NavBar({ sideBarOptions }) {
           />
         </Box>
         <List className={$.list}>
-          {sideBarOptions.map(({ text, icon, path }, index) => (
+          {sideBarOptions.map(({ text, icon, path, canBeDisabled }, index) => (
             <ListItem
               selected={selectedIndex === index}
               onClick={(event) => handleListItemClick(event, index)}
@@ -37,6 +37,7 @@ export default function NavBar({ sideBarOptions }) {
               key={text}
               component={Link}
               to={path}
+              disabled={!proyectoActual && canBeDisabled}
             >
               {icon}
               <ListItemText primary={text} sx={{ ml: 2 }} />
