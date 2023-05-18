@@ -215,7 +215,7 @@ export default function PopUpCompras({
       numeroCompra: 80,
       proveedor: proveedor,
       monto: monto,
-      estado: 'Comprado',
+      estado: 'Pendiente',
       factura: 'factura-054',
       nombre: nombre,
       idProyecto: idProyecto,
