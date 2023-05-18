@@ -94,7 +94,6 @@ const useStyles = makeStyles(() => ({
     display: ' flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingRight: '1vw',
   },
   greenBar: {
     display: 'flex',
@@ -105,7 +104,6 @@ const useStyles = makeStyles(() => ({
     height: '4.5rem',
     width: '100%',
     alignItems: 'center',
-    paddingLeft: '1.5vw',
     color: '#fafafa',
     fontSize: '2vh',
   },
