@@ -1,14 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Box } from '@material-ui/core';
+import { Grid, Box} from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -44,16 +42,28 @@ const ComprasModal = () => {
 
   return (
     <div>
-      <Button 
-        color="primary"
-        onClick={handleOpenAprobado}
-        ><CheckCircleOutlineIcon />
-      </Button>
-      <Button 
-        color="secondary"
-        onClick={handleOpenRechazado}
-        ><HighlightOffIcon />
-      </Button>
+      <Grid container spacing={12}>
+          <Box item 
+          mx="auto"
+          >
+            <Button 
+            variant="contained"
+            color="primary"
+            onClick={handleOpenAprobado}
+            >Aprobar
+            </Button>
+          </Box>
+          <Box item 
+          mx="auto"
+          >
+            <Button 
+              variant="contained"
+              color="secondary"
+              onClick={handleOpenRechazado}
+              >Rechazar
+            </Button>
+          </Box>
+      </Grid>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

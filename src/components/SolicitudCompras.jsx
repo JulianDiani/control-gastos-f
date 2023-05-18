@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -16,58 +16,86 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(factura, id, proyecto, rubro, subRubro, remanente, monto, estado) {
-  return { factura, id, proyecto, rubro, subRubro, remanente, monto, estado };
+function createData(factura, id, proyecto, fecha, nombre, rubro, subRubro, proveedor, remanente, monto, estado) {
+  return { factura, id, proyecto, fecha, nombre, rubro, subRubro, proveedor, remanente, monto, estado };
 }
 
-const rows = [
-  createData(1, 1, 'Proyecto Tec', 'Equipamiento', 'PC y Notebooks', 1000000, 110000.00, 'Pendiente'),
-  createData(2, 2, 'Proyecto Universidad', 'Insumos', 'Hojas', 10000, 500, 'Pendiente'),
-  createData(20, 3, 'Proyecto UNAHUR', 'Equipamiento', 'Impresora', 100000, 70000, 'Pendiente'),
-  createData(80, 4, 'Proyecto Innovación', 'Insumos', 'Comida', 10000, 5000, 'Pendiente'),
-];
+const rows = createData( 1, "fac-00001", 'Proyecto Tec', '2023-05-12', 'Lenovo 45', 'Equipamiento', 'PC y Notebooks', 'Garbarino', 1000000, 110000.00, 'Pendiente');
 
 const SolicitudCompra = () => {
   const classes = useStyles();
+
+  const StyledTableHead = withStyles(() => ({
+    root: {
+        '&:nth-of-type(odd)': {
+            background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)',
+        },
+    },
+  }))(TableHead);
+
+  const StyledTableContainer = withStyles(() => ({
+    root: {
+        maxWidth: '70vw',
+        marginBottom: 20
+    },
+  }))(TableContainer);
 
   return (
     <div>
         <h1>Solicitud de compra</h1>
         <div>
-            <TableContainer component={Paper}>
+            <StyledTableContainer component={Paper} maxWidht=''>
             <Table className={classes.table} aria-label="simple table">
-                <TableHead>
+                <StyledTableHead>
                 <TableRow>
-                    <TableCell>Factura</TableCell>
-                    <TableCell align="right">ID</TableCell>
-                    <TableCell align="right">Proyecto</TableCell>
-                    <TableCell align="right">Rubro</TableCell>
-                    <TableCell align="right">Subrubro</TableCell>
-                    <TableCell align="right">Remanente</TableCell>
-                    <TableCell align="right">Monto</TableCell>
-                    <TableCell align="right">Estado</TableCell>
-                    <TableCell align="right"></TableCell>
+                    <TableCell colSpan={12} align='center'>{rows.proyecto}</TableCell>
                 </TableRow>
-                </TableHead>
+                </StyledTableHead>
+                <TableRow>
+                  <TableCell>Número de compra:</TableCell>
+                  <TableCell>{rows.id}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Factura:</TableCell>
+                  <TableCell>{rows.factura}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Fecha:</TableCell>
+                  <TableCell>{rows.fecha}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Nombre de la compra:</TableCell>
+                  <TableCell>{rows.nombre}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Rubro:</TableCell>
+                  <TableCell>{rows.rubro}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Subrubro</TableCell>
+                  <TableCell>{rows.subRubro}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Proveedor:</TableCell>
+                  <TableCell>{rows.proveedor}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Monto:</TableCell>
+                  <TableCell>{rows.monto}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Remanente:</TableCell>
+                  <TableCell>{rows.remanente}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Estado:</TableCell>
+                  <TableCell>{rows.estado}</TableCell>
+                </TableRow>
                 <TableBody>
-                {rows.map((row) => (
-                    <TableRow key={row.name}>
-                    <TableCell>{row.factura}</TableCell>
-                    <TableCell align="right">{row.id}</TableCell>
-                    <TableCell align="right">{row.proyecto}</TableCell>
-                    <TableCell align="right">{row.rubro}</TableCell>
-                    <TableCell align="right">{row.subRubro}</TableCell>
-                    <TableCell align="right">{row.remanente}</TableCell>
-                    <TableCell align="right">{row.monto}</TableCell>
-                    <TableCell align="right">{row.estado}</TableCell>
-                    <TableCell align="right">
-                        <ComprasModal />
-                    </TableCell>
-                    </TableRow>
-                ))}
                 </TableBody>
             </Table>
-            </TableContainer>
+            </StyledTableContainer>
+            <ComprasModal />
         </div>
     </div>
   );
