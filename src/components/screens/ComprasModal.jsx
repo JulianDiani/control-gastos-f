@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  buttons: {
+    margin: 20
+  }
 }));
 
 const ComprasModal = () => {
@@ -42,7 +45,7 @@ const ComprasModal = () => {
 
   return (
     <div>
-      <Grid container spacing={12}>
+      <Grid container spacing={12} className={classes.buttons}>
           <Box item 
           mx="auto"
           >
