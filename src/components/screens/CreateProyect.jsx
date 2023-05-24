@@ -24,6 +24,8 @@ import { validateField } from '../../utils/validaciones';
 import * as moment from 'moment';
 //import axios from 'axios';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { getUsuarios } from '../../services/usuarios';
+import { getAllConvocatorias } from '../../services/convocatorias';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -239,26 +241,38 @@ const CreateProyect = () => {
     console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);
   };
 
-
-  //Convocatorias prueba
+  //Convocatorias fetch
   const [convocatorias, setConvocatorias] = useState([null]);
-
   useEffect(() => {
-    fetch('http://localhost:3001/api/convocatorias/')
-      .then(response => response.json())
-      .then(response => {
-        //console.log(response);
-        //console.log(typeof response.data[0].nombre);
-        //console.log(response.data[0].nombre);
-        //onst lista = response.data.map(elem => elem.nombre);
-        //console.log(lista);
-        setConvocatorias(response);
-
-      })
-
+    async function fetchConvocatorias() {
+      try {
+        const convocatorias = await getAllConvocatorias();
+        const json = await convocatorias;
+        setConvocatorias(json);
+      } catch (error) {
+        console.log("error en el fetch de convocatorias" + error);
+      }
+    }
+    fetchConvocatorias();
   }, []);
+
+  //Usuarios fetch
+  const [usuarios, setUsuarios] = useState([null]);
+  useEffect(() => {
+    async function fetchUsuarios() {
+      try {
+        const usuarios = await getUsuarios();
+        const json = await usuarios.data;
+        setUsuarios(json);
+      } catch (error) {
+        console.log("error en el fetch de usuarios" + error);
+      }
+    }
+    fetchUsuarios();
+  }, []);
+
   //const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
-  const usuarios = [{ nombre: 'julian' }, { nombre: 'galo' }, { nombre: 'pedroza' }, { nombre: 'mafia' }, { nombre: 'mariano' }, { nombre: 'Emir' }]
+  //const usuarios = [{ nombre: 'julian' }, { nombre: 'galo' }, { nombre: 'pedroza' }, { nombre: 'mafia' }, { nombre: 'mariano' }, { nombre: 'Emir' }]
   return (
     <div>
       <h1>Crear proyecto</h1>
