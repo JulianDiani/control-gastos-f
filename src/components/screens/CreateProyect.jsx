@@ -110,6 +110,7 @@ const CreateProyect = () => {
   const [errorNumeroProyecto, setErrorNumeroProyecto] = useState(false);
   const [añoValue, setAñoValue] = useState(); //Fix to datapicker - se meustra un año menos que el valor que tiene el state
   const [hasError, setHasError] = useState(false);
+  const [convocatoria, setConvocatoria] = useState([]);// en convocatoria guardo la convocatoria seleccionada en el combo.
   //Campos obligatorios
   const canSubmit =
     titulo &&
@@ -125,7 +126,8 @@ const CreateProyect = () => {
     numeroExpediente &&
     numeroResolucion &&
     director &&
-    codirector;
+    codirector &&
+    convocatoria;
   const timer = useRef();
 
   useEffect(() => {
@@ -385,9 +387,14 @@ const CreateProyect = () => {
                       className={classes.field}
                       options={convocatorias}
                       getOptionLabel={(option) => option.nombre}
+                      onChange={(event, newValue) => {
+                        event = newValue ? newValue : null
+                        setConvocatoria(event);
+                      }}
 
                       renderInput={(params) => <TextField {...params} label="Convocatoria" variant="outlined" />}
                     />
+                    {console.log(convocatoria)/*para volar en el futuro*/}
                   </Grid>
                 </MuiPickersUtilsProvider>
               </Grid>
@@ -481,6 +488,10 @@ const CreateProyect = () => {
                     getOptionLabel={(option) => option.nombre}
                     defaultValue={[]}
                     filterSelectedOptions
+                    onChange={(event, newValue) => {
+                      event = newValue ? newValue : null
+                      setUsuario(event);
+                    }}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -489,6 +500,7 @@ const CreateProyect = () => {
                       />
                     )}
                   />
+                  {console.log(usuario.map((user) => user))/*para volar en el futuro*/}
                 </Grid>
               </Grid>
             </div>
