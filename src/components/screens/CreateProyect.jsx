@@ -2,15 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Box,
   Button,
   Divider,
   FormControl,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
-  Container,
   Grid,
 } from '@material-ui/core';
 import { createProyecto } from '../../services/proyectos';
@@ -26,6 +21,7 @@ import * as moment from 'moment';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { getUsuarios } from '../../services/usuarios';
 import { getAllConvocatorias } from '../../services/convocatorias';
+import Rubro from '../dashboards/Rubro.jsx';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -94,7 +90,8 @@ const CreateProyect = () => {
   const [año, setAño] = useState(null);
   const [unidadAcademica, setUnidadAcademica] = useState(null);
   const [areaTematica, setAreaTematica] = useState(null);
-  const [subsidio, setSubsidio] = useState(null);
+  const [subsidio, setSubsidio] = useState([]);
+  const [subsidios, setSubsidios] = useState([]);// aca se guardan los el id y el monto de los subsidios ingresados por el usuario.
   const [fechaInicio, setFechaInicio] = useState(null);
   const [fechaFin, setFechaFin] = useState(null);
   const [numeroExpediente, setNumeroExpediente] = useState(null);
@@ -111,6 +108,7 @@ const CreateProyect = () => {
   const [añoValue, setAñoValue] = useState(); //Fix to datapicker - se meustra un año menos que el valor que tiene el state
   const [hasError, setHasError] = useState(false);
   const [convocatoria, setConvocatoria] = useState([]);// en convocatoria guardo la convocatoria seleccionada en el combo.
+
   //Campos obligatorios
   const canSubmit =
     titulo &&
@@ -273,9 +271,54 @@ const CreateProyect = () => {
     fetchUsuarios();
   }, []);
 
+  // codigo rubros
+  const rubros = [// hacer el fetch de rubros y volar este array
+    { id: 1, nombre: "Insumos" },
+    { id: 2, nombre: "Bibliografia" },
+    { id: 3, nombre: "Gastos de publicación" },
+    { id: 4, nombre: "Viajes y viáticos" },
+    { id: 5, nombre: "Equipamiento" },
+    { id: 6, nombre: "Servicios tecnicos" },
+    { id: 7, nombre: "Gastos de administracion" },
+    { id: 8, nombre: "Gastos de difusion" },
+  ];
+
+
+  //actualiza el estado de subsidios
+  const handleSubsidio = (newSubsidio) => {
+    const index = subsidios.findIndex((item) => item.id === newSubsidio.id);
+    if (subsidios[index]) {
+      const newSubsidioss = [...subsidios];
+      newSubsidioss[index] = newSubsidio;
+      setSubsidios(newSubsidioss);
+    } else {
+      setSubsidios([...subsidios, newSubsidio]);
+    }
+  };
+
+  console.log(subsidios); // para volarlo
+
+
+
+  //Rubros fetch
+  //const [rubros, setRubros] = useState([]);
+  //useEffect(() => {
+  //  async function fetchRubros() {
+  //    try {
+  //      const rubros = await getRubros();
+  //      const json = await rubros.data;
+  //      setRubros(json);
+  //    } catch (error) {
+  //      console.log("error en el fetch de rubros" + error);
+  //    }
+  //  }
+  //  fetchRubros();
+  //}, []);
+  //
   //const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
   //const usuarios = [{ nombre: 'julian' }, { nombre: 'galo' }, { nombre: 'pedroza' }, { nombre: 'mafia' }, { nombre: 'mariano' }, { nombre: 'Emir' }]
   return (
+
     <div>
       <h1>Crear proyecto</h1>
       <div>
@@ -325,7 +368,6 @@ const CreateProyect = () => {
                 variant="outlined"
                 className={classes.field}
               />
-
               <TextField
                 id="outlined-name"
                 label="Área temática"
@@ -336,15 +378,17 @@ const CreateProyect = () => {
                 className={classes.field}
               />
 
-              <TextField
-                id="outlined-name"
-                label="Subsidio"
-                value={subsidio}
-                type="text"
-                onChange={(e) => handleChange(e, setSubsidio)}
-                variant="outlined"
-                className={classes.field}
-              />
+              <Grid container spacing={1}>
+                {rubros.map((rubro) => (
+                  <Rubro
+                    key={rubro.id}
+                    rubro={rubro}
+                    handleSubsidio={handleSubsidio}
+                    className={classes.field}
+                  />
+                ))}
+              </Grid>
+
               <Divider />
             </div >
             <div className={classes.root}>
@@ -529,8 +573,10 @@ const CreateProyect = () => {
         }
       </div >
     </div >
+
   );
 };
 //LOKO
 export default CreateProyect;
 //PANA
+//QUE TE MUEVAS
