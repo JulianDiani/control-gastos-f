@@ -12,12 +12,16 @@ import {
   Select,
   Tooltip,
 } from '@material-ui/core';
-import { postCompra, getGastosPorRubro } from '../services/compras.js';
-import { getPresupuesto, getRubros } from '../services/presupuestos.js';
+import { postCompra, getGastosPorRubro, getTotalxSubsidio } from '../services/compras.js';
+import { getPresupuesto, getRubros, listadetodos } from '../services/presupuestos.js';
 import { validateField, validateMonto } from '../utils/validaciones';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { GetApp, KeyboardArrowDown } from '@material-ui/icons';
-import { postProveedor,getAllProveedores } from '../services/proveedores.js';
+import { postProveedor, getAllProveedores } from '../services/proveedores.js';
+
+// funciones GET de subsidiosAsignados
+import { getSubsidioXProyectoXRubro } from '../services/subsidiosasignados.js'
+
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -121,12 +125,15 @@ export default function PopUpCompras({
   const $ = useStyles();
 
   const [rubro, setRubro] = useState('');
+
   const [subrubro, setSubrubro] = useState(null);
   const [fecha, setFecha] = useState(null);
   const [proveedor, setProveedor] = useState('');
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
+
   const [disponibleRubro, setDisponibleRubro] = useState(0);
+
   const [newProveedor, setNewProveedor] = useState(null);
   const [proveedores, setProveedores] = useState([]);
   //Errors in fields
@@ -148,6 +155,8 @@ export default function PopUpCompras({
   const [errorEmailNewProveedor, setErrorEmailNewProveedor] = useState(null);
   //Validate form to send
   const availableMoneyForRubro = disponibleRubro > 0;
+  //const availableMoneyForRubro = true;
+
   const canSubmit =
     rubro &&
     subrubro &&
@@ -157,35 +166,59 @@ export default function PopUpCompras({
     availableMoneyForRubro &&
     !errorMonto;
   const canAddProveedor =
-    newProveedorRubro &&
+    //newProveedorRubro &&
     newProveedorNombre &&
     newProveedorCuit &&
     newProveedorTelefono;
 
   //Consts
-  const rubros = getRubros();
+  //const rubros = getRubros();
+  //Rubros fetch
+  const [rubros, setRubros] = useState([]);
+  useEffect(() => {
+    async function fetchRubros() {
+      try {
+        const rubros = await listadetodos();
+        const rubrosJson = await rubros;
+        setRubros(rubrosJson);
+        console.log(rubrosJson);
+      } catch (error) {
+        console.log("error en el fetch de Rubros : " + error);
+      }
+    }
+    fetchRubros();
+  }, []);
 
   useEffect(() => {
-    async function getProveedores(){
+    async function getProveedores() {
       const provedoresResponse = await getAllProveedores();
-      
+
       setProveedores(provedoresResponse.data);
     }
     getProveedores();
     const id = sessionStorage.getItem('idProyecto');
     setIdProyecto(id);
   }, []);
-  
+
   //UseEffect when changing "rubros"
   useEffect(() => {
     async function fetchGastos() {
-      const gastos = await getGastosPorRubro(rubro, idProyecto);
-      const presupuesto = await getPresupuesto();
-      
+      //consulta con la API de subsidios, mediante el idProyecto (hardcoderado con 1)
+      // y el id del rubro seleccionado, y devuelve el subsidioAsignado.
+      const subsidioAsignado = await getSubsidioXProyectoXRubro(1, rubro);
+      console.log("subsidio tiene un monto : " + subsidioAsignado.montoAsignado);
+
+      // Con el subsidioAsignado, consulta en la API de compras, todas
+      // las que tengan este idSubsidio
+      const totalComprasSubsidio = await getTotalxSubsidio(subsidioAsignado.id);
+      console.log("el total de compras del subsidio es : " + totalComprasSubsidio);
+      console.log("subsidio - compras : " + (subsidioAsignado.montoAsignado - totalComprasSubsidio));
+      console.log("subsidio: " + JSON.stringify(subsidioAsignado.Rubro.nombre));
+
       const dineroDisponible = calcularDineroDisponiblePorRubro(
-        presupuesto,
-        gastos.totalGastado,
-        rubro
+        subsidioAsignado.montoAsignado,
+        totalComprasSubsidio,
+        JSON.stringify(subsidioAsignado.Rubro.nombre)
       );
 
       setDisponibleRubro(dineroDisponible);
@@ -193,16 +226,17 @@ export default function PopUpCompras({
     try {
       fetchGastos();
     } catch (err) {
-      console.log('[PopUpCompras Component] ERROR:' + err.message);
+      console.log('[PopUpCompras Component] ERROR: ' + err.message);
     }
   }, [rubro]);
 
   const calcularDineroDisponiblePorRubro = (
     presupuestoTotal,
     gastosRubro,
-    rubro
+    nombreRubro
   ) => {
-    return rubro ? presupuestoTotal[rubro.toLowerCase()] - gastosRubro : 0;
+    //return nombreRubro ? presupuestoTotal[nombreRubro.toLowerCase()] - gastosRubro : 0;
+    return nombreRubro ? parseInt(presupuestoTotal) - parseInt(gastosRubro) : 0;
   };
 
   //POST DATA TO BACKEND
@@ -257,6 +291,7 @@ export default function PopUpCompras({
     setState(value);
   };
 
+  // handlers rubros
   const RubroSelected = () => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -291,9 +326,9 @@ export default function PopUpCompras({
             value={rubro}
             onChange={(e) => handleChange(e)}
           >
-            {rubros.map((r, idx) => (
-              <MenuItem value={r} key={idx}>
-                {r}
+            {rubros.map((elementoRubro, idx) => (
+              <MenuItem value={elementoRubro.id} key={idx}>
+                {elementoRubro.nombre}
               </MenuItem>
             ))}
           </Select>
@@ -437,6 +472,7 @@ export default function PopUpCompras({
               }
               error={errorEmailNewProveedor}
             />
+            {/* 
             <span className={$.label}>Rubro</span>
             <Autocomplete
               id="rubro"
@@ -450,6 +486,8 @@ export default function PopUpCompras({
                 handleNewProveedor(value, setNewProveedorRubro)
               }
             />
+            */}
+
             <Button onClick={sendDataNewProveedor} disabled={!canAddProveedor}>
               Agregar proveedor
             </Button>
