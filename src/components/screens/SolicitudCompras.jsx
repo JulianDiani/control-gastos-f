@@ -7,8 +7,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { formatDate, formatPrice } from '../../utils/validaciones';
 
-import ComprasModal from './screens/ComprasModal';
+import ComprasModal from './ComprasModal';
 
 const useStyles = makeStyles({
   table: {
@@ -61,7 +62,7 @@ const SolicitudCompra = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell>Fecha:</TableCell>
-                  <TableCell>{rows.fecha}</TableCell>
+                  <TableCell>{formatDate(rows.fecha)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Nombre de la compra:</TableCell>
@@ -81,11 +82,11 @@ const SolicitudCompra = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell>Monto:</TableCell>
-                  <TableCell>{rows.monto}</TableCell>
+                  <TableCell>{formatPrice(rows.monto)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Remanente:</TableCell>
-                  <TableCell>{rows.remanente}</TableCell>
+                  <TableCell>{formatPrice(rows.remanente)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Estado:</TableCell>

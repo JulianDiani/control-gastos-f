@@ -22,6 +22,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { getProyecto } from '../services/proyectos';
+import { formatDate } from '../utils/validaciones';
 
 const StyledTableCell = withStyles(() => ({
   body: {
@@ -156,7 +157,7 @@ export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
                   {proyecto.director}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyecto.fechaInicio.substr(0, 10)}
+                  {formatDate(proyecto.fechaInicio)}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {circularProgressWithValue(
@@ -210,7 +211,7 @@ export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
                   {proyectosEnHistoria.director}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyectosEnHistoria.fechaInicio}
+                  {formatDate(proyectosEnHistoria.fechaInicio)}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {circularProgressWithValue(100)}

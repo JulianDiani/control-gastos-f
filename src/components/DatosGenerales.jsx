@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import { getProyectoById } from '../services/proyectos.js';
 import Alert from '@material-ui/lab/Alert';
-import { formatPrice } from '../utils/validaciones';
+import { formatPrice, formatDate, formatYear } from '../utils/validaciones';
 
 export const DatosGenerales = ({ idProyecto }) => {
   const $ = useStyles();
@@ -69,7 +69,7 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Año de convocatoria: ' + proyecto.año.substr(0, 4)}
+            primary={'Año de convocatoria: ' + formatYear(proyecto.año)}
             sx={{ ml: 2 }}
           />
         </ListItem>
@@ -93,13 +93,13 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Fecha Inicio: ' + proyecto.fechaInicio.substr(0, 10)}
+            primary={'Fecha Inicio: ' + formatDate(proyecto.fechaInicio)}
             sx={{ ml: 2 }}
           />
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Fecha Fin: ' + proyecto.fechaFin.substr(0, 10)}
+            primary={'Fecha Fin: ' + formatDate(proyecto.fechaFin)}
             sx={{ ml: 2 }}
           />
         </ListItem>

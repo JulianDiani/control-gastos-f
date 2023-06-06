@@ -24,7 +24,7 @@ import { Error404 } from "./components/ErrorGenerico"
 import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
 import { Proveedores } from './components/Proveedores';
-import SolicitudCompra from './components/SolicitudCompras';
+import SolicitudCompra from './components/screens/SolicitudCompras';
 import Login from './components/Login';
 import { useEffect, useState } from 'react';
 import CreateProyect from './components/screens/CreateProyect';
