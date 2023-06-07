@@ -12,16 +12,23 @@ import {
   Select,
   Tooltip,
 } from '@material-ui/core';
-import { postCompra, getGastosPorRubro, getTotalxSubsidio } from '../services/compras.js';
-import { getPresupuesto, getRubros, listadetodos } from '../services/presupuestos.js';
+import {
+  postCompra,
+  getGastosPorRubro,
+  getTotalxSubsidio,
+} from '../services/compras.js';
+import {
+  getPresupuesto,
+  getRubros,
+  listadetodos,
+} from '../services/presupuestos.js';
 import { validateField, validateMonto } from '../utils/validaciones';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { GetApp, KeyboardArrowDown } from '@material-ui/icons';
 import { postProveedor, getAllProveedores } from '../services/proveedores.js';
 
 // funciones GET de subsidiosAsignados
-import { getSubsidioXProyectoXRubro } from '../services/subsidiosasignados.js'
-
+import { getSubsidioXProyectoXRubro } from '../services/subsidiosasignados.js';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -159,7 +166,7 @@ export default function PopUpCompras({
 
   const canSubmit =
     rubro &&
-    subrubro &&
+    // subrubro &&
     monto &&
     fecha &&
     proveedor &&
@@ -167,9 +174,7 @@ export default function PopUpCompras({
     !errorMonto;
   const canAddProveedor =
     //newProveedorRubro &&
-    newProveedorNombre &&
-    newProveedorCuit &&
-    newProveedorTelefono;
+    newProveedorNombre && newProveedorCuit && newProveedorTelefono;
 
   //Consts
   //const rubros = getRubros();
@@ -183,7 +188,7 @@ export default function PopUpCompras({
         setRubros(rubrosJson);
         console.log(rubrosJson);
       } catch (error) {
-        console.log("error en el fetch de Rubros : " + error);
+        console.log('error en el fetch de Rubros : ' + error);
       }
     }
     fetchRubros();
@@ -206,14 +211,21 @@ export default function PopUpCompras({
       //consulta con la API de subsidios, mediante el idProyecto (hardcoderado con 1)
       // y el id del rubro seleccionado, y devuelve el subsidioAsignado.
       const subsidioAsignado = await getSubsidioXProyectoXRubro(1, rubro);
-      console.log("subsidio tiene un monto : " + subsidioAsignado.montoAsignado);
+      console.log(
+        'subsidio tiene un monto : ' + subsidioAsignado.montoAsignado
+      );
 
       // Con el subsidioAsignado, consulta en la API de compras, todas
       // las que tengan este idSubsidio
       const totalComprasSubsidio = await getTotalxSubsidio(subsidioAsignado.id);
-      console.log("el total de compras del subsidio es : " + totalComprasSubsidio);
-      console.log("subsidio - compras : " + (subsidioAsignado.montoAsignado - totalComprasSubsidio));
-      console.log("subsidio: " + JSON.stringify(subsidioAsignado.Rubro.nombre));
+      console.log(
+        'el total de compras del subsidio es : ' + totalComprasSubsidio
+      );
+      console.log(
+        'subsidio - compras : ' +
+          (subsidioAsignado.montoAsignado - totalComprasSubsidio)
+      );
+      console.log('subsidio: ' + JSON.stringify(subsidioAsignado.Rubro.nombre));
 
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         subsidioAsignado.montoAsignado,
@@ -355,7 +367,9 @@ export default function PopUpCompras({
           />
         </div>
         <Typography>
-          {availableMoneyForRubro ? `Cuentas con $${disponibleRubro} para este rubro` : `No cuentas con dinero disponible para este rubro`}
+          {availableMoneyForRubro
+            ? `Cuentas con $${disponibleRubro} para este rubro`
+            : `No cuentas con dinero disponible para este rubro`}
         </Typography>
         <br />
         <Divider class={$.divider} />
