@@ -20,16 +20,17 @@ export async function getAllCompras() {
 }
 
 export async function getComprasByProyecto(idProyecto) {
-  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}/getComprasByProyect`;
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}/getComprasByProyecto/${idProyecto}`;
   const response = await fetch(endpoint, {
-    method: 'POST',
+    //method: 'POST',
+    method: 'GET',
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ idProyecto: idProyecto }),
+    //body: JSON.stringify({ idProyecto: idProyecto }),
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
   return response.json();
