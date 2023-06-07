@@ -19,7 +19,6 @@ import {
   LocalAtm,
   Receipt,
 } from '@material-ui/icons';
-import StoreIcon from '@material-ui/icons/Store';
 import { Error404 } from "./components/ErrorGenerico"
 import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
@@ -102,7 +101,6 @@ export default function App() {
       path: '/admin/createUser',
       canBeDisabled: false,
     },
-    { text: 'Solicitudes de Compra', icon: <StoreIcon />, path: '/admin/solicitudCompra' },
   ];
 
   useEffect(() => {
@@ -198,7 +196,6 @@ export default function App() {
                         component={Error404}
                       />
                       <Route path="/admin/proyects" component={ProyectsLists} />
-                      <Route path="/admin/solicitudCompra" component={SolicitudCompra} />
                     </Switch>
                   </div>
                 </div>
