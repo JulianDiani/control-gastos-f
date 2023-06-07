@@ -7,6 +7,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
+import { putCompra } from '../../services/compras';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ComprasModal = () => {
+const ComprasModal = ( {idCompra} ) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [aprobado, setAprobado] = React.useState(true);
@@ -42,6 +43,12 @@ const ComprasModal = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  function cambiarEstado(nuevoEstado) {
+    const bodyEstado = {estado: nuevoEstado};
+    const res = putCompra(idCompra, bodyEstado);
+    console.log(res)
+  }
 
   return (
     <div>
@@ -84,11 +91,22 @@ const ComprasModal = () => {
             <h4>¿Está seguro que desea {aprobado ? 'APROBAR' : 'RECHAZAR'} la compra?</h4>
             <Grid container spacing={12}>
                 <Box item 
-                mx="auto"
-                ><Button><CheckIcon color="primary"/></Button></Box>
+                mx="auto">
+                  <Button
+                    onClick={() => {
+                      cambiarEstado(aprobado ? "Aprobado" : "Rechazado")
+                      handleClose()
+                    }}>
+                    <CheckIcon color="primary"/>
+                  </Button>
+                </Box>
                 <Box item 
-                mx="auto"
-                ><Button><ClearIcon color="secondary"/></Button></Box>
+                mx="auto">
+                  <Button
+                    onClick={handleClose}>
+                      <ClearIcon color="secondary"/>
+                  </Button>
+                </Box>
             </Grid>
           </div>
         </Fade>

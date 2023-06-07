@@ -10,18 +10,15 @@ import Paper from '@material-ui/core/Paper';
 import { formatDate, formatPrice } from '../../utils/validaciones';
 
 import ComprasModal from './ComprasModal';
+import { useEffect } from 'react';
+import { getCompraByID } from '../../services/compras';
+import { useState } from 'react';
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
 });
-
-function createData(factura, id, proyecto, fecha, nombre, rubro, subRubro, proveedor, remanente, monto, estado) {
-  return { factura, id, proyecto, fecha, nombre, rubro, subRubro, proveedor, remanente, monto, estado };
-}
-
-const rows = createData( 1, "fac-00001", 'Proyecto Tec', '2023-05-12', 'Lenovo 45', 'Equipamiento', 'PC y Notebooks', 'Garbarino', 1000000, 110000.00, 'Pendiente');
 
 const SolicitudCompra = () => {
   const classes = useStyles();
@@ -41,6 +38,24 @@ const SolicitudCompra = () => {
     },
   }))(TableContainer);
 
+  const [compra, setCompra] = useState([]);
+  const [changeCompra, setChangeCompra] = useState(true);
+
+  useEffect(() => {        //getCompraByID(id);
+    async function fetchCompra() {
+        try {
+            const id = sessionStorage.getItem('idCompra');
+            const unaCompra = await getCompraByID(id);
+            setCompra(unaCompra[0]);
+        } catch (err) {
+            console.log('ERROR FETCH API [compras]: ' + err);
+        }
+    }
+    if (changeCompra) {fetchCompra();}
+    console.log(compra);
+    setChangeCompra(false)
+  }, [compra]);
+
   return (
     <div>
         <h1>Solicitud de compra</h1>
@@ -49,54 +64,52 @@ const SolicitudCompra = () => {
             <Table className={classes.table} aria-label="simple table">
                 <StyledTableHead>
                 <TableRow>
-                    <TableCell colSpan={12} align='center'>{rows.proyecto}</TableCell>
+                    <TableCell colSpan={12} align='center'>{sessionStorage.getItem('tituloProyecto')}</TableCell>
                 </TableRow>
                 </StyledTableHead>
                 <TableRow>
                   <TableCell>Número de compra:</TableCell>
-                  <TableCell>{rows.id}</TableCell>
+                  <TableCell>{compra.id}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Factura:</TableCell>
-                  <TableCell>{rows.factura}</TableCell>
+                  <TableCell>{compra.factura}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Fecha:</TableCell>
-                  <TableCell>{formatDate(rows.fecha)}</TableCell>
+                  <TableCell>{formatDate(compra.fecha)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Nombre de la compra:</TableCell>
-                  <TableCell>{rows.nombre}</TableCell>
+                  <TableCell>{compra.nombre}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Rubro:</TableCell>
-                  <TableCell>{rows.rubro}</TableCell>
+                  <TableCell>{compra.rubro}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Subrubro</TableCell>
-                  <TableCell>{rows.subRubro}</TableCell>
+                  <TableCell>{compra.subrubro}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Proveedor:</TableCell>
-                  <TableCell>{rows.proveedor}</TableCell>
+                  <TableCell>{compra.proveedor}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Monto:</TableCell>
-                  <TableCell>{formatPrice(rows.monto)}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Remanente:</TableCell>
-                  <TableCell>{formatPrice(rows.remanente)}</TableCell>
+                  <TableCell>{formatPrice(compra.monto)}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Estado:</TableCell>
-                  <TableCell>{rows.estado}</TableCell>
+                  <TableCell>{compra.estado}</TableCell>
                 </TableRow>
                 <TableBody>
                 </TableBody>
             </Table>
             </StyledTableContainer>
-            <ComprasModal />
+            <ComprasModal 
+              idCompra={sessionStorage.getItem('idCompra')}
+            />
         </div>
     </div>
   );

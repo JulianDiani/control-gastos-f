@@ -39,6 +39,7 @@ export const VistaProyecto = ({ idProyecto }) => {
     const [newCompra, setNewCompra] = useState(true);
     const handleSelectCompras = (id) => {
         sessionStorage.setItem('idCompra', id);
+        sessionStorage.setItem('tituloProyecto', proyecto.titulo)
         //setIdProyecto(id);
       };
     //const handleOpen = () => {
@@ -140,7 +141,7 @@ export const VistaProyecto = ({ idProyecto }) => {
                             Año de Convocatoria
                         </StyledTableCell>
                         <StyledTableCell align="left" className={$.textColor}>
-                            UInidad Academica
+                            Uniidad Academica
                         </StyledTableCell>
                         <StyledTableCell align="left" className={$.textColor}>
                             Area
@@ -232,7 +233,7 @@ export const VistaProyecto = ({ idProyecto }) => {
                     scope="row"
                     onClick={() => handleSelectCompras(compras.id)}
                     component={Link}
-                    to={'/admin/proyectView'}//edit cuando se cree la vista de compra singular 
+                    to={'/admin/proyectView/compra'}//edit cuando se cree la vista de compra singular 
                             >
                    {compras.factura}
                       </StyledTableCell>
@@ -266,7 +267,6 @@ export const VistaProyecto = ({ idProyecto }) => {
                         <DatosList />
                     </CardContent>
 
-
                 </div>
             </>
         );
@@ -282,8 +282,6 @@ export const VistaProyecto = ({ idProyecto }) => {
                         <DatosList1 />
                     </CardContent>
                   
-
-
                 </div>
             </>
         );

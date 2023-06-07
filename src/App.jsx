@@ -24,7 +24,6 @@ import { Error404 } from "./components/ErrorGenerico"
 import { Presupuestos } from './components/Presupuestos';
 import { Compras } from './components/Compras';
 import { Proveedores } from './components/Proveedores';
-import SolicitudCompra from './components/screens/SolicitudCompras';
 import Login from './components/Login';
 import { useEffect, useState } from 'react';
 import CreateProyect from './components/screens/CreateProyect';
@@ -32,6 +31,7 @@ import CreateUser from './components/screens/CreateUser';
 import ProyectsLists from './components/screens/ProyectsLists';
 import { setUserActualProject } from './services/usuarios';
 import { VistaProyecto } from './components/screens/VistaProyecto';
+import SolicitudCompra from './components/screens/SolicitudCompras';
 export default function App() {
   const $ = useStyles();
   const [loggedIn, setLoggedIn] = useState();
@@ -184,6 +184,12 @@ export default function App() {
                             idProyecto={idProyecto}
                             setIdProyect={setIdProyecto}
                           />
+                        )}
+                      />
+                      <Route path="/admin/proyectView/compra"
+                        exact
+                        component={() => (
+                          <SolicitudCompra/>
                         )}
                       />
                       <Route
