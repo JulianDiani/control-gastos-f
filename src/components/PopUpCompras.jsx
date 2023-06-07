@@ -211,21 +211,14 @@ export default function PopUpCompras({
       //consulta con la API de subsidios, mediante el idProyecto (hardcoderado con 1)
       // y el id del rubro seleccionado, y devuelve el subsidioAsignado.
       const subsidioAsignado = await getSubsidioXProyectoXRubro(1, rubro);
-      console.log(
-        'subsidio tiene un monto : ' + subsidioAsignado.montoAsignado
-      );
+      //console.log("subsidio tiene un monto : " + subsidioAsignado.montoAsignado);
 
       // Con el subsidioAsignado, consulta en la API de compras, todas
       // las que tengan este idSubsidio
       const totalComprasSubsidio = await getTotalxSubsidio(subsidioAsignado.id);
-      console.log(
-        'el total de compras del subsidio es : ' + totalComprasSubsidio
-      );
-      console.log(
-        'subsidio - compras : ' +
-          (subsidioAsignado.montoAsignado - totalComprasSubsidio)
-      );
-      console.log('subsidio: ' + JSON.stringify(subsidioAsignado.Rubro.nombre));
+      //console.log("el total de compras del subsidio es : " + totalComprasSubsidio);
+      //console.log("subsidio - compras : " + (subsidioAsignado.montoAsignado - totalComprasSubsidio));
+      //console.log("subsidio: " + JSON.stringify(subsidioAsignado.Rubro.nombre));
 
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         subsidioAsignado.montoAsignado,
