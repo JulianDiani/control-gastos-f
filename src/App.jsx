@@ -235,7 +235,6 @@ export default function App() {
                       component={() => (
                         <DatosGenerales
                           idProyecto={idProyecto}
-                          setIdProyect={setIdProyecto}
                         />
                       )}
                     />
@@ -245,7 +244,6 @@ export default function App() {
                       component={() => (
                         <Presupuestos
                           idProyecto={idProyecto}
-                          setIdProyecto={setIdProyecto}
                         />
                       )}
                     />
@@ -254,7 +252,6 @@ export default function App() {
                       component={() => (
                         <Compras
                           idProyecto={idProyecto}
-                          setIdProyecto={setIdProyecto}
                         />
                       )}
                     />

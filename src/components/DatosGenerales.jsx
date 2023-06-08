@@ -150,18 +150,18 @@ export const DatosGenerales = ({ idProyecto }) => {
 
 const useStyles = makeStyles({
   root: {
+    width: '100%',
     height: '100%',
     display: 'flex',
+    flexDirection: 'column',
   },
   card: {
-    width: '50%',
     margin: '1rem',
-    maxHeight: '45rem',
     borderTop: '1rem solid #5AA123',
     borderRadius: '17px 17px 0 0',
   },
   divider: {
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
   item: {
     display: 'flex',
@@ -170,20 +170,16 @@ const useStyles = makeStyles({
     fontWeight: 'bolder',
   },
   parrafo: {
-    padding: '3rem',
+    padding: '1rem',
     fontSize: '16px',
     textAlign: 'justify',
   },
   title: {
     fontWeight: 'bold',
-    marginLeft: '3rem',
+    marginLeft: '1rem',
   },
   dropDown: {
     marginRight: '1rem',
     width: '10rem',
-  },
-  menuItem: {
-    marginTop: '46rem',
-    marginLeft: '30rem',
   },
 });
