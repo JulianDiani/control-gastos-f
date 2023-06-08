@@ -76,9 +76,6 @@ export const Proveedores = () => {
             <StyledTableHead>
               <StyledTableCell className={$.textColor}>Nombre</StyledTableCell>
               <StyledTableCell align="left" className={$.textColor}>
-                Rubro
-              </StyledTableCell>
-              <StyledTableCell align="left" className={$.textColor}>
                 Teléfono
               </StyledTableCell>
               <StyledTableCell align="left" className={$.textColor}>
@@ -93,9 +90,6 @@ export const Proveedores = () => {
                 <StyledTableRow key={proveedores.id}>
                   <StyledTableCell scope="row">
                     {proveedores.nombre}
-                  </StyledTableCell>
-                  <StyledTableCell align="left">
-                    {proveedores.rubro}
                   </StyledTableCell>
                   <StyledTableCell align="left">
                     {proveedores.telefono}

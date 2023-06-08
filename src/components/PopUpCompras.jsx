@@ -24,7 +24,8 @@ import {
 } from '../services/presupuestos.js';
 import { validateField, validateMonto } from '../utils/validaciones';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { GetApp, KeyboardArrowDown } from '@material-ui/icons';
+// import { GetApp, KeyboardArrowDown } from '@material-ui/icons';
+import AddIcon from '@material-ui/icons/Add';
 import { postProveedor, getAllProveedores } from '../services/proveedores.js';
 
 // funciones GET de subsidiosAsignados
@@ -69,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '1.5rem',
   },
   multiLineInput: {
-    backgroundColor: '#fafafa',
+    backgroundColor: '#EAEDED',
     borderRadius: '5px',
     width: '90%',
   },
@@ -86,12 +87,22 @@ const useStyles = makeStyles((theme) => ({
       color: '#62B5F6',
     },
   },
+  addIcon: {
+    //marginBlock: 'auto',
+    //margin: '1rem',
+    marginTop: '1.5rem',
+    marginLeft: '0.5rem',
+    '&:hover': {
+      color: '#62B5F6',
+    },
+  },
   buttonList: {
     display: 'block',
   },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
+    marginLeft: 0,
   },
   subrubro: {
     marginTop: '1.25rem',
@@ -133,11 +144,12 @@ export default function PopUpCompras({
 
   const [rubro, setRubro] = useState('');
 
-  const [subrubro, setSubrubro] = useState(null);
+  // const [subrubro, setSubrubro] = useState(null);
   const [fecha, setFecha] = useState(null);
   const [proveedor, setProveedor] = useState('');
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
+  const [nroFactura, setNroFactura] = useState(null);
 
   const [disponibleRubro, setDisponibleRubro] = useState(0);
 
@@ -145,7 +157,7 @@ export default function PopUpCompras({
   const [proveedores, setProveedores] = useState([]);
   //Errors in fields
   const [errorMonto, setErrorMonto] = useState(false);
-  const [errorSubrubro, setErrorSubrubro] = useState(false);
+  // const [errorSubrubro, setErrorSubrubro] = useState(false);
   const [errorNombreNewProveedor, setErrorNombreNewProveedor] = useState(null);
   const [errorCuitNewProveedor, setErrorCuitNewProveedor] = useState(null);
   const [errorTelefonoNewProveedor, setErrorTelefonoNewProveedor] = useState(
@@ -153,7 +165,7 @@ export default function PopUpCompras({
   );
 
   //New proveedor fields
-  const [newProveedorRubro, setNewProveedorRubro] = useState(null);
+  // const [newProveedorRubro, setNewProveedorRubro] = useState(null);
   const [newProveedorNombre, setNewProveedorNombre] = useState(null);
   const [newProveedorCuit, setNewProveedorCuit] = useState(null);
   const [newProveedorTelefono, setNewProveedorTelefono] = useState(null);
@@ -166,7 +178,7 @@ export default function PopUpCompras({
 
   const canSubmit =
     rubro &&
-    // subrubro &&
+    nroFactura &&
     monto &&
     fecha &&
     proveedor &&
@@ -203,7 +215,7 @@ export default function PopUpCompras({
     getProveedores();
     const id = sessionStorage.getItem('idProyecto');
     setIdProyecto(id);
-  }, []);
+  }, [newProveedor]);
 
   //UseEffect when changing "rubros"
   useEffect(() => {
@@ -250,7 +262,7 @@ export default function PopUpCompras({
     const data = {
       fecha: fecha,
       rubro: rubro,
-      subrubro: subrubro,
+      // subrubro: subrubro,
       numeroCompra: 80,
       proveedor: proveedor,
       monto: monto,
@@ -269,7 +281,6 @@ export default function PopUpCompras({
       cuit: newProveedorCuit,
       nombre: newProveedorNombre,
       telefono: newProveedorTelefono,
-      rubro: newProveedorRubro,
       mail: newProveedorEmail,
     };
     const responseBack = await postProveedor(data);
@@ -349,7 +360,7 @@ export default function PopUpCompras({
         <Divider />
         <div className={$.inputs}>
           <RubroSelected />
-          <TextField
+          {/* <TextField
             label="Subrubro"
             onBlur={(e) =>
               validateField('string', e.target.value, setErrorSubrubro)
@@ -357,7 +368,7 @@ export default function PopUpCompras({
             onChange={(e) => submitHandle(setSubrubro, e.target.value)}
             className={$.subrubro}
             error={errorSubrubro}
-          />
+          /> */}
         </div>
         <Typography>
           {availableMoneyForRubro
@@ -384,7 +395,14 @@ export default function PopUpCompras({
               }
               error={errorMonto}
             />
-            <GetApp className={$.uploadIcon} />
+            {/* <GetApp className={$.uploadIcon} /> */}
+          </div>
+          <div className={$.cargarFactura}>
+            <TextField
+              label="Nro. Factura"
+              onChange={(e) => submitHandle(setNroFactura, e.target.value)}
+              error={''}
+            />
           </div>
         </div>
         <div className={$.descripcion}>
@@ -410,10 +428,7 @@ export default function PopUpCompras({
             onChange={(e, value) => submitHandle(setProveedor, value?.nombre)}
           />
           <Tooltip title="Agregar proveedor">
-            <KeyboardArrowDown
-              className={$.uploadIcon}
-              onClick={handleAddProveedor}
-            />
+            <AddIcon className={$.addIcon} onClick={handleAddProveedor} />
           </Tooltip>
         </div>
         {/* Form para cargar nuevo proveedor */}
