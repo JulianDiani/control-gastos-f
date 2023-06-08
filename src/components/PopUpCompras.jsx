@@ -146,7 +146,7 @@ export default function PopUpCompras({
 
   // const [subrubro, setSubrubro] = useState(null);
   const [fecha, setFecha] = useState(null);
-  const [proveedor, setProveedor] = useState('');
+  const [idproveedor, setProveedor] = useState('');
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
   const [nroFactura, setNroFactura] = useState(null);
@@ -176,12 +176,17 @@ export default function PopUpCompras({
   const availableMoneyForRubro = disponibleRubro > 0;
   //const availableMoneyForRubro = true;
 
+  //subsidio: es el subsidioasignado que sale del Proyecto en el cual se esta 
+  //actualmente (idProyecto) y el rubro, que se selecciono (idRubro).
+  const [subsidio, setSubsidio] = useState(null);
+
+
   const canSubmit =
     rubro &&
     nroFactura &&
     monto &&
     fecha &&
-    proveedor &&
+    idproveedor &&
     availableMoneyForRubro &&
     !errorMonto;
   const canAddProveedor =
@@ -237,7 +242,7 @@ export default function PopUpCompras({
         totalComprasSubsidio,
         JSON.stringify(subsidioAsignado.Rubro.nombre)
       );
-
+      setSubsidio(subsidioAsignado);
       setDisponibleRubro(dineroDisponible);
     }
     try {
@@ -261,15 +266,17 @@ export default function PopUpCompras({
     state(false);
     const data = {
       fecha: fecha,
-      rubro: rubro,
+      //rubro: rubro,
       // subrubro: subrubro,
-      numeroCompra: 80,
-      proveedor: proveedor,
+      //numeroCompra: 80,
+      //proveedor: proveedor,
       monto: monto,
       estado: 'Comprado',
-      factura: 'factura-054',
-      nombre: nombre,
-      idProyecto: idProyecto,
+      factura: nroFactura,
+      nombre: nombre, //esto seria una descripcion
+      //idProyecto: null,
+      idsubsidio: subsidio.id,
+      idproveedor: idproveedor
     };
     const res = await postCompra(data);
     stateNewCompra(true);
@@ -425,7 +432,7 @@ export default function PopUpCompras({
             renderInput={(params) => (
               <TextField {...params} label="Proveedores" />
             )}
-            onChange={(e, value) => submitHandle(setProveedor, value?.nombre)}
+            onChange={(e, value) => submitHandle(setProveedor, value?.id)} // idproveedor para la compra
           />
           <Tooltip title="Agregar proveedor">
             <AddIcon className={$.addIcon} onClick={handleAddProveedor} />
@@ -437,7 +444,7 @@ export default function PopUpCompras({
             <span className={$.label}>Nombre completo</span>
             <TextField
               className={$.inputForm}
-              placeholder="Ingrese el Nombre completo"
+              placeholder="Empresa S.A."
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorNombre)
               }
@@ -453,7 +460,7 @@ export default function PopUpCompras({
             <span className={$.label}>Teléfono</span>
             <TextField
               className={$.inputForm}
-              placeholder="Ingrese el número de teléfono"
+              placeholder="11 12345678"
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorTelefono)
               }
@@ -469,7 +476,7 @@ export default function PopUpCompras({
             <span className={$.label}>Cuit</span>
             <TextField
               className={$.inputForm}
-              placeholder="Ingrese el CUIT"
+              placeholder="30-12345679-0"
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorCuit)
               }
@@ -481,7 +488,7 @@ export default function PopUpCompras({
             <span className={$.label}>Email</span>
             <TextField
               className={$.inputForm}
-              placeholder="Ingrese el correo"
+              placeholder="direcion@empresa.com.ar"
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorEmail)
               }

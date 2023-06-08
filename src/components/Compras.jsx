@@ -125,7 +125,7 @@ export const Compras = ({ setIdProyecto }) => {
                       {compra.factura}
                     </StyledTableCell>
                     <StyledTableCell align="left">
-                      {compra.proveedor}
+                      {compra.Proveedore.nombre}
                     </StyledTableCell>
                     <StyledTableCell align="left">
                       {compra.SubsidiosAsignado.Rubro.nombre}
