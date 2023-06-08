@@ -13,26 +13,54 @@ import CardMontos from './dashboards/CardMontos';
 import Tabla from './dashboards/Tabla';
 import Grid from '@material-ui/core/Grid';
 import { calculateTotalExpenses } from '../utils/presupuestos';
+import { getProyectoById } from '../services/proyectos.js';
 
-export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
+export const Presupuestos = ({ idProyecto }) => {
   const $ = useStyles();
 
+  const [proyecto, setProyecto] = useState(null);
   const [presupuesto, setPresupuesto] = useState(null);
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
-  //const idProyecto = sessionStorage.getItem("idProyecto");
+
+
+  useEffect(() => {
+    let isMounted = true;
+    async function fetchProyectos() {
+      if (idProyecto)
+        try {
+          const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
+          if (isMounted) {
+            setProyecto(proyecto[0]);
+            console.log(parseInt(proyecto[0].subsidio))
+
+          }
+        } catch (err) {
+          console.log('[DatosGenerales Component] ERROR : ' + err);
+        }
+      else {
+        return window.history.back();
+      }
+    }
+    fetchProyectos();
+    return () => {
+      isMounted = false;
+    };
+  }, [idProyecto]);
 
   useEffect(() => {
     async function fetchPrespuesto() {
       try {
-        const id = sessionStorage.getItem('proyectoActualId');
-        setIdProyecto(id);
         const presupuesto = await getPresupuesto();
+        console.log(presupuesto)
         const compras = await getComprasByProyecto(idProyecto);
+        console.log(compras)
         const gastos = calculateTotalExpenses(compras);
+        console.log(gastos)
         setTotalGastos(gastos);
         setComprasRealizadas(comprasRealizadas);
         setPresupuesto(presupuesto);
+
       } catch (err) {
         console.log('ERROR USE EFFECT : ' + err);
         //ToDo: Manejo de errores
@@ -52,14 +80,13 @@ export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
           <Grid
             container
             direction="column"
-            justifyContent="center"
+            justify="center"
             alignItems="center"
           >
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
-              alignItems="flex"
+              justify="space-between"
               className={$.cardContent}
             >
               <CardMontos
