@@ -69,7 +69,13 @@ export const Compras = ({ setIdProyecto }) => {
     async function fetchCompra() {
       try {
         const compras = await getComprasByProyecto(1); // se Hardcodea(idProyecto);
-        setCompras(compras);
+        setCompras(
+          compras.sort(function (a, b) {
+            var textA = a.fecha;
+            var textB = b.fecha;
+            return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+          })
+        );
       } catch (err) {
         console.log('ERROR FETCH API [compras]: ' + err);
       }
