@@ -1,11 +1,14 @@
 import { Doughnut } from 'react-chartjs-2';
 import React from 'react';
+import { montoDisponible, nivelDeEjecucion } from '../../utils/presupuestos'
+import { makeStyles } from '@material-ui/core/styles';
 
+export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupuesto }) {
 
-export default function TortaPrincipal({presupuesto }) {
-  
   const totalDisponible = presupuesto; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
-  
+  const monto = montoDisponible(totalPresupuesto, totalGastos)
+  const ejecucion = nivelDeEjecucion(totalPresupuesto, totalGastos);
+  const $ = useStyles();
   const datosAConsumir = (({
     insumos,
     bibliografia,
@@ -14,6 +17,7 @@ export default function TortaPrincipal({presupuesto }) {
     equipamiento,
     tecnico,
     administracion,
+
   }) => ({
     insumos,
     bibliografia,
@@ -21,13 +25,15 @@ export default function TortaPrincipal({presupuesto }) {
     viaticos,
     equipamiento,
     tecnico,
-    administracion, 
-  }))(totalDisponible);
+    administracion,
+
+  }))(totalDisponible, monto, ejecucion);
 
   const graficoTorta = (
-    <Doughnut
+
+    <Doughnut className={$.graficoTor}
       data={{
-        labels: Object.keys(datosAConsumir).map(key =>{
+        labels: Object.keys(datosAConsumir).map(key => {
           return key;
         }),
         datasets: [
@@ -62,5 +68,18 @@ export default function TortaPrincipal({presupuesto }) {
   );
 
   return <>{graficoTorta}</>;
+
 }
 
+const useStyles = makeStyles({
+  graficoTor: {
+    display: 'inline-flex',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+
+
+
+
+  },
+
+});

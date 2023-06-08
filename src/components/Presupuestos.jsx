@@ -10,57 +10,29 @@ import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './dashboards/TortaPrincipal';
 import CardMontos from './dashboards/CardMontos';
-import Tabla from './dashboards/Tabla';
+
 import Grid from '@material-ui/core/Grid';
 import { calculateTotalExpenses } from '../utils/presupuestos';
-import { getProyectoById } from '../services/proyectos.js';
 
-export const Presupuestos = ({ idProyecto }) => {
+export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
   const $ = useStyles();
 
-  const [proyecto, setProyecto] = useState(null);
   const [presupuesto, setPresupuesto] = useState(null);
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
-
-
-  useEffect(() => {
-    let isMounted = true;
-    async function fetchProyectos() {
-      if (idProyecto)
-        try {
-          const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
-          if (isMounted) {
-            setProyecto(proyecto[0]);
-            console.log(parseInt(proyecto[0].subsidio))
-
-          }
-        } catch (err) {
-          console.log('[DatosGenerales Component] ERROR : ' + err);
-        }
-      else {
-        return window.history.back();
-      }
-    }
-    fetchProyectos();
-    return () => {
-      isMounted = false;
-    };
-  }, [idProyecto]);
+  //const idProyecto = sessionStorage.getItem("idProyecto");
 
   useEffect(() => {
     async function fetchPrespuesto() {
       try {
+        const id = sessionStorage.getItem('idProyecto');
+        setIdProyecto(id);
         const presupuesto = await getPresupuesto();
-        console.log(presupuesto)
         const compras = await getComprasByProyecto(idProyecto);
-        console.log(compras)
         const gastos = calculateTotalExpenses(compras);
-        console.log(gastos)
         setTotalGastos(gastos);
         setComprasRealizadas(comprasRealizadas);
         setPresupuesto(presupuesto);
-
       } catch (err) {
         console.log('ERROR USE EFFECT : ' + err);
         //ToDo: Manejo de errores
@@ -80,13 +52,14 @@ export const Presupuestos = ({ idProyecto }) => {
           <Grid
             container
             direction="column"
-            justify="center"
+            justifyContent="center"
             alignItems="center"
           >
             <Grid
               container
               direction="row"
-              justify="space-between"
+              justifyContent="space-between"
+              alignItems="flex"
               className={$.cardContent}
             >
               <CardMontos
@@ -99,12 +72,14 @@ export const Presupuestos = ({ idProyecto }) => {
                 <CardContent>
                   <TortaPrincipal
                     presupuesto={presupuesto}
+                    totalPresupuesto={presupuesto.total}
+                    totalGastos={totalGastos}
                     className={$.torta}
                   />
                 </CardContent>
               </Card>
             </Grid>
-            <Tabla presupuesto={presupuesto} />
+
           </Grid>
         </div>
       </>
@@ -113,7 +88,7 @@ export const Presupuestos = ({ idProyecto }) => {
 
   return (
     <>
-      <h1>Presupuesto</h1>
+      <h1 className={$.title}>Presupuesto</h1>
       <div className={$.root}>
         <Divider className={$.divider} />
         {presupuesto ? rendering() : loadingRendering()}
@@ -126,14 +101,17 @@ export const Presupuestos = ({ idProyecto }) => {
 const useStyles = makeStyles({
   root: {
     height: '100%',
+    display: 'flex',
+    marginLeft: '1vw',
     marginBottom: '2rem',
   },
   card: {
+    width: '25vw',
+    marginLeft: '15vw',
     marginBottom: '1rem',
   },
   cardContent: {
     marginBottom: '2rem',
-    justifyContent: 'space-between',
   },
   divider: {
     marginBottom: '1rem',
@@ -141,4 +119,8 @@ const useStyles = makeStyles({
   item: {
     display: 'flex',
   },
+  title: {
+    marginLeft: '2.5vw',
+  },
+
 });
