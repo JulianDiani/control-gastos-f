@@ -63,7 +63,7 @@ export const Proveedores = () => {
       }
     }
     fetchProveedores();
-  }, []);
+  }, [open]);
 
   const loadingRendering = () => {
     return <Alert severity="info">Cargando...</Alert>;
