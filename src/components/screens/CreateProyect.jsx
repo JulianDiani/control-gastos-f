@@ -185,13 +185,15 @@ const CreateProyect = () => {
     setUnidadAcademica('');
     setAreaTematica('');
     setSubsidio('');
+    setSubsidios([]);
     setFechaInicio('');
     setFechaFin('');
     setNumeroExpediente('');
     setNumeroResolucion('');
     setDirector('');
     setCodirector('');
-    setUsuario('');
+    setUsuario([]);
+    setConvocatoria([]);
   };
   const submitForm = async () => {
     const proyecto = {
