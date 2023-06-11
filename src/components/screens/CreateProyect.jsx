@@ -79,6 +79,18 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  textfieldClass: {
+    margin: '0.5rem',
+    minWidth: '11rem',
+    display: 'flex',
+    '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+      display: 'none',
+    },
+    '& input[type=number]': {
+      MozAppearance: 'textfield',
+    },
+  },
+
 }));
 
 const CreateProyect = () => {
@@ -386,7 +398,7 @@ const CreateProyect = () => {
                     key={rubro.id}
                     rubro={rubro}
                     handleSubsidio={handleSubsidio}
-                    className={classes.field}
+                    className={classes.textfieldClass}
                   />
                 ))}
               </Grid>

@@ -24,5 +24,5 @@ luego correr el comando git merge "rama-origen" "rama-destino"
 git merge "rama-origen" "rama-destino" # Fusiona dos ramas
 despues git add . y git commit -m "mensaje"
 para commitear el merge
-y despues git push
+y despues git push origin HEAD:Dev
 ```
