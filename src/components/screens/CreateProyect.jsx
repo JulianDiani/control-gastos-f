@@ -21,6 +21,7 @@ import * as moment from 'moment';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { getUsuarios } from '../../services/usuarios';
 import { getAllConvocatorias } from '../../services/convocatorias';
+import { getAllRubros } from '../../services/rubros';
 import Rubro from '../dashboards/Rubro.jsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -274,16 +275,16 @@ const CreateProyect = () => {
   }, []);
 
   // codigo rubros
-  const rubros = [// hacer el fetch de rubros y volar este array
-    { id: 1, nombre: "Insumos" },
-    { id: 2, nombre: "Bibliografia" },
-    { id: 3, nombre: "Gastos de publicación" },
-    { id: 4, nombre: "Viajes y viáticos" },
-    { id: 5, nombre: "Equipamiento" },
-    { id: 6, nombre: "Servicios tecnicos" },
-    { id: 7, nombre: "Gastos de administracion" },
-    { id: 8, nombre: "Gastos de difusion" },
-  ];
+  //const rubros = [// hacer el fetch de rubros y volar este array
+  //  { id: 1, nombre: "Insumos" },
+  //  { id: 2, nombre: "Bibliografia" },
+  //  { id: 3, nombre: "Gastos de publicación" },
+  //  { id: 4, nombre: "Viajes y viáticos" },
+  //  { id: 5, nombre: "Equipamiento" },
+  //  { id: 6, nombre: "Servicios tecnicos" },
+  //  { id: 7, nombre: "Gastos de administracion" },
+  //  { id: 8, nombre: "Gastos de difusion" },
+  //];
 
 
   //actualiza el estado de subsidios
@@ -303,19 +304,20 @@ const CreateProyect = () => {
 
 
   //Rubros fetch
-  //const [rubros, setRubros] = useState([]);
-  //useEffect(() => {
-  //  async function fetchRubros() {
-  //    try {
-  //      const rubros = await getRubros();
-  //      const json = await rubros.data;
-  //      setRubros(json);
-  //    } catch (error) {
-  //      console.log("error en el fetch de rubros" + error);
-  //    }
-  //  }
-  //  fetchRubros();
-  //}, []);
+  const [rubros, setRubros] = useState([]);
+  useEffect(() => {
+    async function fetchRubros() {
+      try {
+        const rubros = await getAllRubros();
+        const json = await rubros.data;
+        setRubros(json);
+      } catch (error) {
+        console.log("error en el fetch de rubros" + error);
+      }
+    }
+    fetchRubros();
+  }, []);
+  console.log(rubros);
   //
   //const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
   //const usuarios = [{ nombre: 'julian' }, { nombre: 'galo' }, { nombre: 'pedroza' }, { nombre: 'mafia' }, { nombre: 'mariano' }, { nombre: 'Emir' }]
