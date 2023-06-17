@@ -80,6 +80,18 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  textfieldClass: {
+    margin: '0.5rem',
+    minWidth: '11rem',
+    display: 'flex',
+    '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+      display: 'none',
+    },
+    '& input[type=number]': {
+      MozAppearance: 'textfield',
+    },
+  },
+
 }));
 
 const CreateProyect = () => {
@@ -202,10 +214,10 @@ const CreateProyect = () => {
       tipo,
       organismo,
       lineaFinanciamiento,
-      año,
+      año: moment().format(),// fecha del dia de hoy
       unidadAcademica,
       areaTematica,
-      subsidio,
+      subsidio: subsidios[0].monto,
       fechaInicio,
       fechaFin,
       numeroExpediente,
@@ -213,27 +225,29 @@ const CreateProyect = () => {
       numeroProyecto,
       director,
       codirector,
-      usuario,
+      usuario: usuario[0].usuario,
     };
+
     //DATA TO TEST SUBMIT.
-    // const proyecto = {
-    // titulo:"titulo",
-    // tipo:"tipo",
-    // organismo:"organismo",
-    // lineaFinanciamiento:"unahur",
-    // año:"2021/06/01",
-    // unidadAcademica:"unidadAcademica,",
-    // areaTematica:"areaTematica",
-    // subsidio:5777666,
-    // fechaInicio:"2021/06/01",
-    // fechaFin:"2022/06/01",
-    // numeroExpediente:1234,
-    // numeroResolucion: 82171,
-    // director:"Pedroza 3",
-    // codirector:"Mafia 3",
-    // usuario :"galosalerno",
-    // }
+    //const proyecto = {
+    //titulo,
+    //tipo: "tipo",
+    //organismo: "organismo",
+    //lineaFinanciamiento: "unahur",
+    //año: "2021/06/01",
+    //unidadAcademica: "unidadAcademica,",
+    //areaTematica: "areaTematica",
+    //subsidio: 5777666,
+    //fechaInicio: "2021/06/01",
+    //fechaFin: "2022/06/01",
+    //numeroExpediente: 1234,
+    //numeroResolucion: 82171,
+    //director: "Pedroza 3",
+    //codirector: "Mafia 3",
+    //usuario: "galosalerno",
+    //};
     const objectValidate = Object.values(proyecto);
+    console.log(objectValidate);
     if (objectValidate.some((value) => !value)) {
       setHasError(true);
       return;
@@ -388,7 +402,7 @@ const CreateProyect = () => {
                     key={rubro.id}
                     rubro={rubro}
                     handleSubsidio={handleSubsidio}
-                    className={classes.field}
+                    className={classes.textfieldClass}
                   />
                 ))}
               </Grid>

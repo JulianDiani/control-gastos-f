@@ -24,5 +24,23 @@ luego correr el comando git merge "rama-origen" "rama-destino"
 git merge "rama-origen" "rama-destino" # Fusiona dos ramas
 despues git add . y git commit -m "mensaje"
 para commitear el merge
-y despues git push
+y despues git push origin HEAD:Dev
+```
+
+### Sacar las flechitas de los campos de numeros
+
+```
+se agrega el estilo en el useStyle:
+
+textfieldClass: {
+    margin: '0.5rem',
+    minWidth: '11rem',
+    display: 'flex',
+    '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+      display: 'none',
+    },
+    '& input[type=number]': {
+      MozAppearance: 'textfield',
+    },
+  },
 ```
