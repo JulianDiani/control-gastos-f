@@ -213,10 +213,10 @@ const CreateProyect = () => {
       tipo,
       organismo,
       lineaFinanciamiento,
-      año,
+      año: moment().format(),// fecha del dia de hoy
       unidadAcademica,
       areaTematica,
-      subsidio,
+      subsidio: subsidios[0].monto,
       fechaInicio,
       fechaFin,
       numeroExpediente,
@@ -224,27 +224,29 @@ const CreateProyect = () => {
       numeroProyecto,
       director,
       codirector,
-      usuario,
+      usuario: usuario[0].usuario,
     };
+
     //DATA TO TEST SUBMIT.
-    // const proyecto = {
-    // titulo:"titulo",
-    // tipo:"tipo",
-    // organismo:"organismo",
-    // lineaFinanciamiento:"unahur",
-    // año:"2021/06/01",
-    // unidadAcademica:"unidadAcademica,",
-    // areaTematica:"areaTematica",
-    // subsidio:5777666,
-    // fechaInicio:"2021/06/01",
-    // fechaFin:"2022/06/01",
-    // numeroExpediente:1234,
-    // numeroResolucion: 82171,
-    // director:"Pedroza 3",
-    // codirector:"Mafia 3",
-    // usuario :"galosalerno",
-    // }
+    //const proyecto = {
+    //titulo,
+    //tipo: "tipo",
+    //organismo: "organismo",
+    //lineaFinanciamiento: "unahur",
+    //año: "2021/06/01",
+    //unidadAcademica: "unidadAcademica,",
+    //areaTematica: "areaTematica",
+    //subsidio: 5777666,
+    //fechaInicio: "2021/06/01",
+    //fechaFin: "2022/06/01",
+    //numeroExpediente: 1234,
+    //numeroResolucion: 82171,
+    //director: "Pedroza 3",
+    //codirector: "Mafia 3",
+    //usuario: "galosalerno",
+    //};
     const objectValidate = Object.values(proyecto);
+    console.log(objectValidate);
     if (objectValidate.some((value) => !value)) {
       setHasError(true);
       return;
@@ -294,7 +296,6 @@ const CreateProyect = () => {
     { id: 5, nombre: "Equipamiento" },
     { id: 6, nombre: "Servicios tecnicos" },
     { id: 7, nombre: "Gastos de administracion" },
-    { id: 8, nombre: "Gastos de difusion" },
   ];
 
 
