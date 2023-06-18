@@ -100,11 +100,11 @@ const CreateProyect = () => {
   const [tipo, setTipo] = useState(null);
   const [organismo, setOrganismo] = useState(null);
   const [lineaFinanciamiento, setLineaFinanciamiento] = useState(null);
-  const [año, setAño] = useState(null);
+  //const [año, setAño] = useState(null); vuela
   const [unidadAcademica, setUnidadAcademica] = useState(null);
   const [areaTematica, setAreaTematica] = useState(null);
-  const [subsidio, setSubsidio] = useState([]);
-  const [subsidios, setSubsidios] = useState([]);// aca se guardan los el id y el monto de los subsidios ingresados por el usuario.
+  //const [subsidio, setSubsidio] = useState([]); vuela
+  const [subsidios, setSubsidios] = useState([]);// aca se guardan los el id y el monto de los subsidios por rubros.
   const [fechaInicio, setFechaInicio] = useState(null);
   const [fechaFin, setFechaFin] = useState(null);
   const [numeroExpediente, setNumeroExpediente] = useState(null);
@@ -120,7 +120,7 @@ const CreateProyect = () => {
   const [errorNumeroProyecto, setErrorNumeroProyecto] = useState(false);
   const [añoValue, setAñoValue] = useState(); //Fix to datapicker - se meustra un año menos que el valor que tiene el state
   const [hasError, setHasError] = useState(false);
-  const [convocatoria, setConvocatoria] = useState([]);// en convocatoria guardo la convocatoria seleccionada en el combo.
+  const [convocatoria, setConvocatoria] = useState(null);// en convocatoria guardo la convocatoria seleccionada en el combo.
 
   //Campos obligatorios
   const canSubmit =
@@ -128,16 +128,18 @@ const CreateProyect = () => {
     tipo &&
     organismo &&
     lineaFinanciamiento &&
-    año &&
+    //año && vuela
     unidadAcademica &&
     areaTematica &&
-    subsidio &&
+    //subsidio && vuela
     fechaInicio &&
     fechaFin &&
     numeroExpediente &&
     numeroResolucion &&
     director &&
     codirector &&
+    usuario &&
+    subsidios &&
     convocatoria;
   const timer = useRef();
 
@@ -185,7 +187,7 @@ const CreateProyect = () => {
       setDate(year);
       setAñoValue(yearToValue);
     } else {
-      const date = moment(event).format('YYYY-MM-DD');
+      const date = moment(event).add(1, 'days').format('YYYY-MM-DD');
       setDate(date);
     }
   };
@@ -194,19 +196,20 @@ const CreateProyect = () => {
     setTipo('');
     setOrganismo('');
     setLineaFinanciamiento('');
-    setAño('');
+    //setAño(''); vuela
     setUnidadAcademica('');
     setAreaTematica('');
-    setSubsidio('');
+    //setSubsidio(''); vuela
     setSubsidios([]);
-    setFechaInicio('');
-    setFechaFin('');
+    setFechaInicio(null);
+    setFechaFin(null);
     setNumeroExpediente('');
     setNumeroResolucion('');
+    setNumeroProyecto('');
     setDirector('');
     setCodirector('');
     setUsuario([]);
-    setConvocatoria([]);
+    setConvocatoria(null);
   };
   const submitForm = async () => {
     const proyecto = {
@@ -214,10 +217,10 @@ const CreateProyect = () => {
       tipo,
       organismo,
       lineaFinanciamiento,
-      año: moment().format(),// fecha del dia de hoy
+      //año: moment().format(),// fecha del dia de hoy
       unidadAcademica,
       areaTematica,
-      subsidio: subsidios[0].monto,
+      //subsidio: subsidios[0].monto, vuela subsidios
       fechaInicio,
       fechaFin,
       numeroExpediente,
@@ -225,7 +228,10 @@ const CreateProyect = () => {
       numeroProyecto,
       director,
       codirector,
-      usuario: usuario[0].usuario,
+      //usuario: usuario[0].usuario, vuela usuario
+      convocatoria,
+      usuario,
+      subsidios,
     };
 
     //DATA TO TEST SUBMIT.
@@ -256,6 +262,7 @@ const CreateProyect = () => {
     setHasChanges(true);
     clearStates();
     console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);
+    console.log(proyecto);
   };
 
   //Convocatorias fetch
@@ -264,8 +271,8 @@ const CreateProyect = () => {
     async function fetchConvocatorias() {
       try {
         const convocatorias = await getAllConvocatorias();
-        const json = await convocatorias;
-        setConvocatorias(json);
+        //const json = await convocatorias; vuela
+        setConvocatorias(convocatorias);
       } catch (error) {
         console.log("error en el fetch de convocatorias" + error);
       }
@@ -287,19 +294,6 @@ const CreateProyect = () => {
     }
     fetchUsuarios();
   }, []);
-
-  // codigo rubros
-  //const rubros = [// hacer el fetch de rubros y volar este array
-  //  { id: 1, nombre: "Insumos" },
-  //  { id: 2, nombre: "Bibliografia" },
-  //  { id: 3, nombre: "Gastos de publicación" },
-  //  { id: 4, nombre: "Viajes y viáticos" },
-  //  { id: 5, nombre: "Equipamiento" },
-  //  { id: 6, nombre: "Servicios tecnicos" },
-  //  { id: 7, nombre: "Gastos de administracion" },
-  //  { id: 8, nombre: "Gastos de difusion" },
-  //];
-
 
   //actualiza el estado de subsidios
   const handleSubsidio = (newSubsidio) => {
@@ -418,7 +412,7 @@ const CreateProyect = () => {
                       variant="outlined"
                       id="date-picker-dialog"
                       label="Fecha inicio"
-                      format="MM/dd/yyyy"
+                      format="dd/MM/yyyy"
                       minDate={moment()}
                       value={fechaInicio}
                       onChange={(e) => handlePicker(e, setFechaInicio)}
@@ -434,7 +428,7 @@ const CreateProyect = () => {
                       minwidth="30%"
                       id="date-picker-dialog"
                       label="Fecha fin"
-                      format="MM/dd/yyyy"
+                      format="dd/MM/yyyy"
                       minDate={moment().add(6, 'month')} //6 meses es el minimo de duracion de un proyecto
                       value={fechaFin}
                       onChange={(e) => handlePicker(e, setFechaFin)}
