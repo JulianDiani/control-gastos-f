@@ -5,7 +5,7 @@
 ```
 git branch -M dev # Cambia el nombre de la rama actual a dev
 git remote add origin # Agrega el repositorio remoto
-git push -u origin dev # Sube los cambios al repositorio remoto
+git push -u origin dev # publica los cambios al repositorio remoto
 git pull origin dev # Descarga los cambios del repositorio remoto
 git branch -d dev # Elimina la rama dev
 git branch --nombreRama # Crea una rama
