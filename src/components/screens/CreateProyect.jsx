@@ -253,7 +253,7 @@ const CreateProyect = () => {
     //usuario: "galosalerno",
     //};
     const objectValidate = Object.values(proyecto);
-    console.log(objectValidate);
+    //console.log(objectValidate);
     if (objectValidate.some((value) => !value)) {
       setHasError(true);
       return;
@@ -262,7 +262,7 @@ const CreateProyect = () => {
     setHasChanges(true);
     clearStates();
     console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);
-    console.log(proyecto);
+    //console.log(proyecto);
   };
 
   //Convocatorias fetch
@@ -307,7 +307,7 @@ const CreateProyect = () => {
     }
   };
 
-  console.log(subsidios); // para volarlo
+  //console.log(subsidios); // para volarlo
 
 
 
@@ -325,7 +325,7 @@ const CreateProyect = () => {
     }
     fetchRubros();
   }, []);
-  console.log(rubros);
+  //console.log(rubros);
   //
   //const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
   //const usuarios = [{ nombre: 'julian' }, { nombre: 'galo' }, { nombre: 'pedroza' }, { nombre: 'mafia' }, { nombre: 'mariano' }, { nombre: 'Emir' }]
