@@ -336,7 +336,10 @@ const CreateProyect = () => {
       <div>
         <Paper className={classes.formContainer}>
           <h2>Cargar datos</h2>
+
           <div className={classes.grid}>
+            <h3> Informacion general</h3>
+            <Divider />
             <div className={classes.grid}>
               <TextField
                 id="outlined-name"
@@ -389,6 +392,9 @@ const CreateProyect = () => {
                 variant="outlined"
                 className={classes.field}
               />
+              <Divider />
+              <h3>Subsidio destinado por rubro</h3>
+              <Divider />
 
               <Grid container spacing={1}>
                 {rubros.map((rubro) => (
@@ -400,7 +406,8 @@ const CreateProyect = () => {
                   />
                 ))}
               </Grid>
-
+              <Divider />
+              <h3>Convocatoria</h3>
               <Divider />
             </div >
             <div className={classes.root}>
@@ -454,6 +461,8 @@ const CreateProyect = () => {
                   </Grid>
                 </MuiPickersUtilsProvider>
               </Grid>
+              <Divider />
+              <h3>Identificadores</h3>
               <Divider />
             </div>
             <div className={classes.root}>
@@ -514,6 +523,8 @@ const CreateProyect = () => {
               </Grid>
             </div>
             <Divider />
+            <h3>Responsables</h3>
+            <Divider />
             <TextField
               id="outlined-name"
               label="Director"
@@ -572,7 +583,8 @@ const CreateProyect = () => {
           </Button>
         </Paper>
         {
-          loadedProject && (
+          loadedProject &&
+          (
             <Alert className={classes.loading}>Proyecto cargado con exito</Alert>
           )
         }
