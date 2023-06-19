@@ -40,16 +40,16 @@ const StyledTableHead = withStyles(() => ({
 const ProyectsList = () => {
   const $ = useStyles();
 
-  const [proyects,setProyects] = useState([]);
+  const [proyects, setProyects] = useState([]);
 
-  useEffect( () => {
-    async function getProyects(){
-        const proyectos = await getProyectsForAdmin();
-
-        setProyects(proyectos);
+  useEffect(() => {
+    async function getProyects() {
+      const proyectos = await getProyectsForAdmin();
+      console.log(proyectos);
+      setProyects(proyectos);
     }
     getProyects();
-  },[]) //only de first render
+  }, []); //only de first render
 
   return (
     <>
