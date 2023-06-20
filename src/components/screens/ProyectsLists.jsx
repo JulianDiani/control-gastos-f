@@ -10,6 +10,16 @@ import {
 } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { getProyectsForAdmin } from '../../services/proyectos';
+import Collapse from '@material-ui/core/Collapse';
+
+// Collaps imports
+import IconButton from '@material-ui/core/IconButton';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Box from '@material-ui/core/Box';
+import TableHead from '@material-ui/core/TableHead';
+import Typography from '@material-ui/core/Typography';
+//
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -37,10 +47,138 @@ const StyledTableHead = withStyles(() => ({
   },
 }))(TableRow);
 
+const useRowStyles = makeStyles({
+  root: {
+    '& > *': {
+      borderBottom: 'unset',
+    },
+  },
+});
+
+function Row(props) {
+  const { row, presupuestoTotal, presupuestoGastado } = props;
+  const [open, setOpen] = React.useState(false);
+  const classes = useRowStyles();
+
+  return (
+    <React.Fragment>
+      <TableRow className={classes.root}>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row.titulo}
+        </TableCell>
+        <TableCell align="center">{row.director}</TableCell>
+        <TableCell align="center">{row.fechaInicio.slice(0, -14)}</TableCell>
+        <TableCell align="center">{row.convocatoria}</TableCell>
+        <TableCell align="center">{presupuestoTotal}</TableCell>
+        <TableCell align="center">{presupuestoGastado}</TableCell>
+        <TableCell align="center">
+          {presupuestoTotal - presupuestoGastado}
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box margin={1}>
+              <Typography variant="h6" gutterBottom component="div">
+                Información general
+              </Typography>
+              <Table size="small" aria-label="info">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center">Tipo</TableCell>
+                    <TableCell align="center">Organismo</TableCell>
+                    <TableCell align="center">
+                      Linea de financiamiento
+                    </TableCell>
+                    <TableCell align="center">Unidad académica</TableCell>
+                    <TableCell align="center">Área temática</TableCell>
+                    <TableCell align="center">Fecha fin</TableCell>
+                    <TableCell align="center">N° expediente</TableCell>
+                    <TableCell align="center">N° resolución</TableCell>
+                    <TableCell align="center">N° proyecto</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="center">{row.tipo}</TableCell>
+                    <TableCell align="center">{row.organismo}</TableCell>
+                    <TableCell align="center">
+                      {row.lineaFinanciamiento}
+                    </TableCell>
+                    <TableCell align="center">{row.unidadAcademica}</TableCell>
+                    <TableCell align="center">{row.areaTematica}</TableCell>
+                    <TableCell align="center">
+                      {row.fechaFin.slice(0, -14)}
+                    </TableCell>
+                    <TableCell align="center">{row.numeroExpediente}</TableCell>
+                    <TableCell align="center">{row.numeroResolucion}</TableCell>
+                    <TableCell align="center">{row.numeroProyecto}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+              <br />
+
+              <Table size="small" aria-label="info">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center">Codirector</TableCell>
+                    {row.SubsidiosAsignados.map((sub) => (
+                      <TableCell align="center" key={sub.id}>
+                        {sub.Rubro.nombre}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="center">{row.codirector}</TableCell>
+                    {row.SubsidiosAsignados.map((sub) => (
+                      <TableCell align="center" key={sub.id}>
+                        {sub.montoAsignado}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
+}
+
 const ProyectsList = () => {
   const $ = useStyles();
 
   const [proyects, setProyects] = useState([]);
+
+  const presupuestoTotal = (proyect) => {
+    let suma = 0;
+    proyect.SubsidiosAsignados.forEach((subsidio) => {
+      suma += subsidio.montoAsignado;
+    });
+    return suma;
+  };
+
+  const presupuestoGastado = (proyect) => {
+    let suma = 0;
+    proyect.SubsidiosAsignados.forEach((subsidio) => {
+      subsidio.Compras.forEach((compra) => {
+        suma += compra.monto;
+      });
+    });
+    return parseInt(suma);
+  };
 
   useEffect(() => {
     async function getProyects() {
@@ -57,6 +195,7 @@ const ProyectsList = () => {
       <TableContainer className={$.container} component={Paper}>
         <Table aria-label="customized table">
           <StyledTableHead>
+            <StyledTableCell />
             <StyledTableCell className={$.textColor}>Proyecto</StyledTableCell>
             <StyledTableCell align="center" className={$.textColor}>
               Director
@@ -64,20 +203,27 @@ const ProyectsList = () => {
             <StyledTableCell align="center" className={$.textColor}>
               Fecha de Inicio
             </StyledTableCell>
+            <StyledTableCell align="center" className={$.textColor}>
+              Convocatoria
+            </StyledTableCell>
+            <StyledTableCell align="center" className={$.textColor}>
+              Presupuesto total
+            </StyledTableCell>
+            <StyledTableCell align="center" className={$.textColor}>
+              Gastado
+            </StyledTableCell>
+            <StyledTableCell align="center" className={$.textColor}>
+              Remanente
+            </StyledTableCell>
           </StyledTableHead>
           <TableBody>
-            {proyects.map((proyecto) => (
-              <StyledTableRow key={proyecto.id}>
-                <StyledTableCell scope="row" to={'/proyectos'}>
-                  {proyecto.titulo}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {proyecto.director}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {proyecto.fechaInicio}
-                </StyledTableCell>
-              </StyledTableRow>
+            {proyects.map((row) => (
+              <Row
+                key={row.id}
+                row={row}
+                presupuestoTotal={presupuestoTotal(row)}
+                presupuestoGastado={presupuestoGastado(row)}
+              />
             ))}
           </TableBody>
         </Table>
