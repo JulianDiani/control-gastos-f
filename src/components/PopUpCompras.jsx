@@ -228,14 +228,10 @@ export default function PopUpCompras({
       //consulta con la API de subsidios, mediante el idProyecto (hardcoderado con 1)
       // y el id del rubro seleccionado, y devuelve el subsidioAsignado.
       const subsidioAsignado = await getSubsidioXProyectoXRubro(1, rubro);
-      //console.log("subsidio tiene un monto : " + subsidioAsignado.montoAsignado);
 
       // Con el subsidioAsignado, consulta en la API de compras, todas
       // las que tengan este idSubsidio
       const totalComprasSubsidio = await getTotalxSubsidio(subsidioAsignado.id);
-      //console.log("el total de compras del subsidio es : " + totalComprasSubsidio);
-      //console.log("subsidio - compras : " + (subsidioAsignado.montoAsignado - totalComprasSubsidio));
-      //console.log("subsidio: " + JSON.stringify(subsidioAsignado.Rubro.nombre));
 
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         subsidioAsignado.montoAsignado,
@@ -257,7 +253,7 @@ export default function PopUpCompras({
     gastosRubro,
     nombreRubro
   ) => {
-    //return nombreRubro ? presupuestoTotal[nombreRubro.toLowerCase()] - gastosRubro : 0;
+
     return nombreRubro ? parseInt(presupuestoTotal) - parseInt(gastosRubro) : 0;
   };
 
@@ -363,8 +359,8 @@ export default function PopUpCompras({
   return (
     <>
       <div className={$.modal}>
-        <h2>Realizar Pedido de Compra</h2>
-        <Divider />
+        <h2>Ingreso para pedido de compras</h2>
+        <Divider class={$.divider} />
         <div className={$.inputs}>
           <RubroSelected />
           {/* <TextField
@@ -383,7 +379,11 @@ export default function PopUpCompras({
             : `No cuentas con dinero disponible para este rubro`}
         </Typography>
         <br />
-        <Divider class={$.divider} />
+        <Divider />
+
+        <br />
+        <Typography variant="h6">Datos de la compra</Typography>
+        <br />
         <div className={$.secondRow}>
           <TextField
             label="Fecha"
@@ -395,7 +395,8 @@ export default function PopUpCompras({
           />
           <div className={$.cargarFactura}>
             <TextField
-              label="Monto"
+              label="Monto factura"
+              style={{ width: 300 }}
               onChange={(e) => submitHandle(setMonto, e.target.value)}
               onBlur={(e) =>
                 validateMonto(disponibleRubro, e.target.value, setErrorMonto)
@@ -406,17 +407,22 @@ export default function PopUpCompras({
           </div>
           <div className={$.cargarFactura}>
             <TextField
-              label="Nro. Factura"
+              label="Nro. factura"
+              style={{ width: 300 }}
               onChange={(e) => submitHandle(setNroFactura, e.target.value)}
               error={''}
             />
           </div>
         </div>
+        <br />
+        <br />
+        <Divider />
+
         <div className={$.descripcion}>
-          <Typography variant="h5">Descripción</Typography>
+          <Typography variant="h6">Descripción</Typography>
           <br />
           <TextField
-            label="La compra cuenta con los siguientes objetos/servicios"
+            label="Enumeracion de items / servicios, comprados"
             multiline
             rows={6}
             className={$.multiLineInput}
@@ -441,10 +447,11 @@ export default function PopUpCompras({
         {/* Form para cargar nuevo proveedor */}
         {newProveedor && (
           <div className={$.proveedorForm}>
-            <span className={$.label}>Nombre completo</span>
+
             <TextField
               className={$.inputForm}
-              placeholder="Empresa S.A."
+              label="Nombre: Empresa S.A."
+              style={{ width: 300 }}
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorNombre)
               }
@@ -457,10 +464,11 @@ export default function PopUpCompras({
               }
               error={errorNombreNewProveedor}
             />
-            <span className={$.label}>Teléfono</span>
+
             <TextField
               className={$.inputForm}
-              placeholder="11 12345678"
+              label="Telefono: 1112345678"
+              style={{ width: 300 }}
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorTelefono)
               }
@@ -473,10 +481,11 @@ export default function PopUpCompras({
               }
               error={errorTelefonoNewProveedor}
             />
-            <span className={$.label}>Cuit</span>
+
             <TextField
               className={$.inputForm}
-              placeholder="30-12345679-0"
+              label="CUIT: 30-12345679-0"
+              style={{ width: 300 }}
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorCuit)
               }
@@ -485,10 +494,11 @@ export default function PopUpCompras({
               }
               error={errorCuitNewProveedor}
             />
-            <span className={$.label}>Email</span>
+
             <TextField
               className={$.inputForm}
-              placeholder="direcion@empresa.com.ar"
+              label="E-mail: mail@empresa.com.ar"
+              style={{ width: 300 }}
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorEmail)
               }
