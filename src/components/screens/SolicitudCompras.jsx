@@ -38,6 +38,17 @@ const SolicitudCompra = () => {
     },
   }))(TableContainer);
 
+  const StyledState = withStyles(() => ({
+    root: {
+      backgroundColor: props => props.backgroundColor,
+      borderRadius: 40,
+      color: 'white',
+      padding: '6px 15px',
+      textAlign: 'center',
+      maxWidth: '100px'
+    }
+  }))(TableContainer);
+
   const [compra, setCompra] = useState([]);
   const [changeCompra, setChangeCompra] = useState(true);
 
@@ -54,7 +65,7 @@ const SolicitudCompra = () => {
     if (changeCompra) {fetchCompra();}
     console.log(compra);
     setChangeCompra(false)
-  }, [compra]);
+  }, [changeCompra]);
 
   return (
     <div>
@@ -101,15 +112,21 @@ const SolicitudCompra = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell>Estado:</TableCell>
-                  <TableCell>{compra.estado}</TableCell>
+                  <TableCell>
+                    <StyledState 
+                    backgroundColor=
+                      {compra.estado==='Pendiente' ? '#ffab00'
+                      : compra.estado==='Aprobado' ? '#009673' 
+                      : '#f50057'}>{compra.estado}</StyledState></TableCell>
                 </TableRow>
                 <TableBody>
                 </TableBody>
             </Table>
             </StyledTableContainer>
-            <ComprasModal 
+            {compra.estado==='Pendiente' ? <ComprasModal 
               idCompra={sessionStorage.getItem('idCompra')}
-            />
+              changeCompra={setChangeCompra}
+            /> : <></>}
         </div>
     </div>
   );
