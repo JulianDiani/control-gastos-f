@@ -77,7 +77,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="center">{row.director}</TableCell>
         <TableCell align="center">{row.fechaInicio.slice(0, -14)}</TableCell>
-        <TableCell align="center">{row.Convocatoria.nombre}</TableCell>
+        <TableCell align="center">{row.convocatoria}</TableCell>
         <TableCell align="center">{presupuestoTotal}</TableCell>
         <TableCell align="center">{presupuestoGastado}</TableCell>
         <TableCell align="center">
@@ -85,7 +85,14 @@ function Row(props) {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
+        <TableCell
+          style={{
+            paddingBottom: 0,
+            paddingTop: 0,
+            backgroundColor: '#FBFBFB',
+          }}
+          colSpan={8}
+        >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom component="div">
@@ -105,6 +112,7 @@ function Row(props) {
                     <TableCell align="center">N° expediente</TableCell>
                     <TableCell align="center">N° resolución</TableCell>
                     <TableCell align="center">N° proyecto</TableCell>
+                    <TableCell align="center">Codirector</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -122,17 +130,24 @@ function Row(props) {
                     <TableCell align="center">{row.numeroExpediente}</TableCell>
                     <TableCell align="center">{row.numeroResolucion}</TableCell>
                     <TableCell align="center">{row.numeroProyecto}</TableCell>
+                    <TableCell align="center">{row.codirector}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
               <br />
-
+              <Typography variant="h6" component="div">
+                Presupuesto
+              </Typography>
               <Table size="small" aria-label="info">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center">Codirector</TableCell>
                     {row.SubsidiosAsignados.map((sub) => (
-                      <TableCell align="center" key={sub.id}>
+                      <TableCell
+                        align="center"
+                        size="small"
+                        key={sub.id}
+                        style={{ maxWidth: '200px' }}
+                      >
                         {sub.Rubro.nombre}
                       </TableCell>
                     ))}
@@ -140,7 +155,6 @@ function Row(props) {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell align="center">{row.codirector}</TableCell>
                     {row.SubsidiosAsignados.map((sub) => (
                       <TableCell align="center" key={sub.id}>
                         {sub.montoAsignado}
