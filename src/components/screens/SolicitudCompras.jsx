@@ -52,19 +52,23 @@ const SolicitudCompra = () => {
   const [compra, setCompra] = useState([]);
   const [changeCompra, setChangeCompra] = useState(true);
 
-  useEffect(() => {        //getCompraByID(id);
-    async function fetchCompra() {
-        try {
-            const id = sessionStorage.getItem('idCompra');
-            const unaCompra = await getCompraByID(id);
-            setCompra(unaCompra[0]);
-        } catch (err) {
-            console.log('ERROR FETCH API [compras]: ' + err);
-        }
+  async function fetchCompra() {
+    try {
+        const id = sessionStorage.getItem('idCompra');
+        const unaCompra = await getCompraByID(id);
+        setCompra(unaCompra[0]);
+    } catch (err) {
+        console.log('ERROR FETCH API [compras]: ' + err);
     }
-    if (changeCompra) {fetchCompra();}
-    console.log(compra);
-    setChangeCompra(false)
+  }
+
+  useEffect(() => {
+    if(changeCompra) {
+      fetchCompra();
+      setChangeCompra(null);
+    } else {
+      console.log("Not changed");
+    }
   }, [changeCompra]);
 
   return (

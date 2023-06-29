@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const ComprasModal = ( {idCompra, changeCompra} ) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [aprobado, setAprobado] = React.useState(true);
+  const [aprobado, setAprobado] = React.useState(null);
 
   const handleOpenAprobado = () => {
     setAprobado(true);
@@ -47,7 +47,9 @@ const ComprasModal = ( {idCompra, changeCompra} ) => {
   async function cambiarEstado(nuevoEstado) {
     const bodyEstado = {estado: nuevoEstado};
     const res = await putCompra(idCompra, bodyEstado);
-    console.log(res)
+    if(res) {
+      changeCompra(true);
+    }
   }
 
   return (
@@ -95,7 +97,6 @@ const ComprasModal = ( {idCompra, changeCompra} ) => {
                   <Button
                     onClick={() => {
                       cambiarEstado(aprobado ? "Aprobado" : "Rechazado");
-                      changeCompra(true);
                       handleClose();
                     }}>
                     <CheckIcon color="primary"/>
