@@ -188,7 +188,7 @@ const ProyectsList = () => {
     let suma = 0;
     proyect.SubsidiosAsignados.forEach((subsidio) => {
       subsidio.Compras.forEach((compra) => {
-        suma += compra.monto;
+        suma += parseInt(compra.monto);
       });
     });
     return parseInt(suma);
