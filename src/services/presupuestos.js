@@ -16,7 +16,7 @@ export function getRubros() {
 
 export async function listadetodos() {
   //const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}`;
-  const url = 'http://localhost:3001/api/rubros/listadetodos';
+  const url = 'http://localhost:3001/api/rubros/getRubros';
   const response = await fetch(url, {
     method: 'GET',
     mode: 'cors', // no-cors, *cors, same-origin
