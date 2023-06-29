@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Button,
-  Divider,
-  FormControl,
-  Paper,
-  Grid,
-} from '@material-ui/core';
+import { Button, Divider, FormControl, Paper, Grid } from '@material-ui/core';
 import { createProyecto } from '../../services/proyectos';
 import Alert from '@material-ui/lab/Alert';
 import {
@@ -91,7 +85,6 @@ const useStyles = makeStyles((theme) => ({
       MozAppearance: 'textfield',
     },
   },
-
 }));
 
 const CreateProyect = () => {
@@ -104,7 +97,7 @@ const CreateProyect = () => {
   const [unidadAcademica, setUnidadAcademica] = useState(null);
   const [areaTematica, setAreaTematica] = useState(null);
   //const [subsidio, setSubsidio] = useState([]); vuela
-  const [subsidios, setSubsidios] = useState([]);// aca se guardan los el id y el monto de los subsidios por rubros.
+  const [subsidios, setSubsidios] = useState([]); // aca se guardan los el id y el monto de los subsidios por rubros.
   const [fechaInicio, setFechaInicio] = useState(null);
   const [fechaFin, setFechaFin] = useState(null);
   const [numeroExpediente, setNumeroExpediente] = useState(null);
@@ -120,7 +113,7 @@ const CreateProyect = () => {
   const [errorNumeroProyecto, setErrorNumeroProyecto] = useState(false);
   const [añoValue, setAñoValue] = useState(); //Fix to datapicker - se meustra un año menos que el valor que tiene el state
   const [hasError, setHasError] = useState(false);
-  const [convocatoria, setConvocatoria] = useState(null);// en convocatoria guardo la convocatoria seleccionada en el combo.
+  const [convocatoria, setConvocatoria] = useState(null); // en convocatoria guardo la convocatoria seleccionada en el combo.
 
   //Campos obligatorios
   const canSubmit =
@@ -274,7 +267,7 @@ const CreateProyect = () => {
         //const json = await convocatorias; vuela
         setConvocatorias(convocatorias);
       } catch (error) {
-        console.log("error en el fetch de convocatorias" + error);
+        console.log('error en el fetch de convocatorias' + error);
       }
     }
     fetchConvocatorias();
@@ -289,7 +282,7 @@ const CreateProyect = () => {
         const json = await usuarios.data;
         setUsuarios(json);
       } catch (error) {
-        console.log("error en el fetch de usuarios" + error);
+        console.log('error en el fetch de usuarios' + error);
       }
     }
     fetchUsuarios();
@@ -309,8 +302,6 @@ const CreateProyect = () => {
 
   //console.log(subsidios); // para volarlo
 
-
-
   //Rubros fetch
   const [rubros, setRubros] = useState([]);
   useEffect(() => {
@@ -320,7 +311,7 @@ const CreateProyect = () => {
         const json = await rubros.data;
         setRubros(json);
       } catch (error) {
-        console.log("error en el fetch de rubros" + error);
+        console.log('error en el fetch de rubros' + error);
       }
     }
     fetchRubros();
@@ -330,7 +321,6 @@ const CreateProyect = () => {
   //const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
   //const usuarios = [{ nombre: 'julian' }, { nombre: 'galo' }, { nombre: 'pedroza' }, { nombre: 'mafia' }, { nombre: 'mariano' }, { nombre: 'Emir' }]
   return (
-
     <div>
       <h1>Crear proyecto</h1>
       <div>
@@ -409,7 +399,7 @@ const CreateProyect = () => {
               <Divider />
               <h3>Convocatoria</h3>
               <Divider />
-            </div >
+            </div>
             <div className={classes.root}>
               <Grid container spacing={1}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -451,13 +441,18 @@ const CreateProyect = () => {
                       options={convocatorias}
                       getOptionLabel={(option) => option.nombre}
                       onChange={(event, newValue) => {
-                        event = newValue ? newValue : null
+                        event = newValue ? newValue : null;
                         setConvocatoria(event);
                       }}
-
-                      renderInput={(params) => <TextField {...params} label="Convocatoria" variant="outlined" />}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Convocatoria"
+                          variant="outlined"
+                        />
+                      )}
                     />
-                    {console.log(convocatoria)/*para volar en el futuro*/}
+                    {console.log(convocatoria) /*para volar en el futuro*/}
                   </Grid>
                 </MuiPickersUtilsProvider>
               </Grid>
@@ -511,7 +506,11 @@ const CreateProyect = () => {
                     label="Número proyecto"
                     value={numeroProyecto}
                     onBlur={(e) =>
-                      validateField('int', e.target.value, setErrorNumeroProyecto)
+                      validateField(
+                        'int',
+                        e.target.value,
+                        setErrorNumeroProyecto
+                      )
                     }
                     type="text"
                     onChange={(e) => handleChange(e, setNumeroProyecto)}
@@ -546,7 +545,6 @@ const CreateProyect = () => {
             <div className={classes.root}>
               <Grid container spacing={1}>
                 <Grid item xs>
-
                   <Autocomplete
                     className={classes.field}
                     multiple
@@ -556,7 +554,7 @@ const CreateProyect = () => {
                     defaultValue={[]}
                     filterSelectedOptions
                     onChange={(event, newValue) => {
-                      event = newValue ? newValue : null
+                      event = newValue ? newValue : null;
                       setUsuario(event);
                     }}
                     renderInput={(params) => (
@@ -567,7 +565,11 @@ const CreateProyect = () => {
                       />
                     )}
                   />
-                  {console.log(usuario.map((user) => user))/*para volar en el futuro*/}
+                  {
+                    console.log(
+                      usuario.map((user) => user)
+                    ) /*para volar en el futuro*/
+                  }
                 </Grid>
               </Grid>
             </div>
@@ -582,25 +584,16 @@ const CreateProyect = () => {
             Cargar proyecto
           </Button>
         </Paper>
-        {
-          loadedProject &&
-          (
-            <Alert className={classes.loading}>Proyecto cargado con exito</Alert>
-          )
-        }
-        {
-          hasError && (
-            <Alert severity="error" className={classes.error}>
-              Hubo un problema al procesar su solicitud
-            </Alert>
-          )
-        }
-      </div >
-    </div >
-
+        {loadedProject && (
+          <Alert className={classes.loading}>Proyecto cargado con exito</Alert>
+        )}
+        {hasError && (
+          <Alert severity="error" className={classes.error}>
+            Hubo un problema al procesar su solicitud
+          </Alert>
+        )}
+      </div>
+    </div>
   );
 };
-//LOKO
 export default CreateProyect;
-//PANA
-//QUE TE MUEVAS
