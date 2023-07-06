@@ -54,10 +54,16 @@ export const Proveedores = () => {
 
   useEffect(() => {
     async function fetchProveedores() {
-      const getFunction = getAllProveedores;
+
       try {
-        const proveedores = await getFunction();
-        setProveedores(proveedores);
+        const proveedores = await getAllProveedores();
+        setProveedores(
+          proveedores.data.sort(function (a, b) {
+            var nombA = a.nombre;
+            var nombB = b.nombre;
+            return (nombA < nombB) ? -1 : (nombA > nombB) ? 1 : 0;
+          })
+        );
       } catch (err) {
         console.log('ERROR FETCH API [proveedores]: ' + err);
       }
@@ -86,7 +92,7 @@ export const Proveedores = () => {
               </StyledTableCell>
             </StyledTableHead>
             <TableBody>
-              {proveedores.data.map((proveedores) => (
+              {proveedores.map((proveedores) => (
                 <StyledTableRow key={proveedores.id}>
                   <StyledTableCell scope="row">
                     {proveedores.nombre}
