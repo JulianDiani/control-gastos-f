@@ -93,10 +93,8 @@ const CreateProyect = () => {
   const [tipo, setTipo] = useState(null);
   const [organismo, setOrganismo] = useState(null);
   const [lineaFinanciamiento, setLineaFinanciamiento] = useState(null);
-  //const [año, setAño] = useState(null); vuela
   const [unidadAcademica, setUnidadAcademica] = useState(null);
   const [areaTematica, setAreaTematica] = useState(null);
-  //const [subsidio, setSubsidio] = useState([]); vuela
   const [subsidios, setSubsidios] = useState([]); // aca se guardan los el id y el monto de los subsidios por rubros.
   const [fechaInicio, setFechaInicio] = useState(null);
   const [fechaFin, setFechaFin] = useState(null);
@@ -121,10 +119,8 @@ const CreateProyect = () => {
     tipo &&
     organismo &&
     lineaFinanciamiento &&
-    //año && vuela
     unidadAcademica &&
     areaTematica &&
-    //subsidio && vuela
     fechaInicio &&
     fechaFin &&
     numeroExpediente &&
@@ -191,10 +187,8 @@ const CreateProyect = () => {
     setTipo('');
     setOrganismo('');
     setLineaFinanciamiento('');
-    //setAño(''); vuela
     setUnidadAcademica('');
     setAreaTematica('');
-    //setSubsidio(''); vuela
     setSubsidios([]);
     setFechaInicio(null);
     setFechaFin(null);
@@ -212,10 +206,8 @@ const CreateProyect = () => {
       tipo,
       organismo,
       lineaFinanciamiento,
-      //año: moment().format(),// fecha del dia de hoy
       unidadAcademica,
       areaTematica,
-      //subsidio: subsidios[0].monto, vuela subsidios
       fechaInicio,
       fechaFin,
       numeroExpediente,
@@ -223,30 +215,11 @@ const CreateProyect = () => {
       numeroProyecto,
       director,
       codirector,
-      //usuario: usuario[0].usuario, vuela usuario
       convocatoria,
       usuario,
       subsidios,
     };
 
-    //DATA TO TEST SUBMIT.
-    //const proyecto = {
-    //titulo,
-    //tipo: "tipo",
-    //organismo: "organismo",
-    //lineaFinanciamiento: "unahur",
-    //año: "2021/06/01",
-    //unidadAcademica: "unidadAcademica,",
-    //areaTematica: "areaTematica",
-    //subsidio: 5777666,
-    //fechaInicio: "2021/06/01",
-    //fechaFin: "2022/06/01",
-    //numeroExpediente: 1234,
-    //numeroResolucion: 82171,
-    //director: "Pedroza 3",
-    //codirector: "Mafia 3",
-    //usuario: "galosalerno",
-    //};
     const objectValidate = Object.values(proyecto);
     if (objectValidate.some((value) => !value)) {
       setHasError(true);
@@ -254,9 +227,8 @@ const CreateProyect = () => {
     } //Checkear que no haya ningun null
     const response = await createProyecto(proyecto);
     setHasChanges(true);
-    //clearStates();
+    clearStates();
     console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);
-    //console.log(proyecto);
   };
 
   //Convocatorias fetch
@@ -265,7 +237,6 @@ const CreateProyect = () => {
     async function fetchConvocatorias() {
       try {
         const convocatorias = await getAllConvocatorias();
-        //const json = await convocatorias; vuela
         setConvocatorias(convocatorias);
       } catch (error) {
         console.log('error en el fetch de convocatorias' + error);
@@ -301,8 +272,6 @@ const CreateProyect = () => {
     }
   };
 
-  //console.log(subsidios); // para volarlo
-
   //Rubros fetch
   const [rubros, setRubros] = useState([]);
   useEffect(() => {
@@ -323,9 +292,7 @@ const CreateProyect = () => {
     const newCamposErrors = [...camposErrors];
     newCamposErrors[index] = { id, error, message };
     setCamposErrors(newCamposErrors);
-
   };
-
 
   const [camposErrors, setCamposErrors] = useState([
     { id: 'titulo', error: false, message: '' },
@@ -341,10 +308,6 @@ const CreateProyect = () => {
     { id: 'subsidios', error: false }
   ]);
 
-  //console.log(rubros);
-  //
-  //const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
-  //const usuarios = [{ nombre: 'julian' }, { nombre: 'galo' }, { nombre: 'pedroza' }, { nombre: 'mafia' }, { nombre: 'mariano' }, { nombre: 'Emir' }]
   return (
     <div>
       <h1>Crear proyecto</h1>
@@ -538,7 +501,6 @@ const CreateProyect = () => {
                         />
                       )}
                     />
-                    {console.log(convocatoria) /*para volar en el futuro*/}
                   </Grid>
                 </MuiPickersUtilsProvider>
               </Grid>
@@ -669,11 +631,6 @@ const CreateProyect = () => {
                       />
                     )}
                   />
-                  {
-                    console.log(
-                      usuario.map((user) => user)
-                    ) /*para volar en el futuro*/
-                  }
                 </Grid>
               </Grid>
             </div>
