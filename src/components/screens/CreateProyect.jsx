@@ -9,7 +9,7 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { validateField } from '../../utils/validaciones';
+import { validateField, valiString } from '../../utils/validaciones';
 import * as moment from 'moment';
 //import axios from 'axios';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -105,7 +105,7 @@ const CreateProyect = () => {
   const [numeroProyecto, setNumeroProyecto] = useState(null);
   const [director, setDirector] = useState(null);
   const [codirector, setCodirector] = useState(null);
-  const [usuario, setUsuario] = useState([]);
+  const [usuario, setUsuario] = useState([]);// acas e guardan los usuarios responsables del proyecto.
   const [hasChanges, setHasChanges] = useState(false);
   const [loadedProject, setLoadedProject] = useState(false);
   const [errorNumeroExpediente, setErrorNumeroExpediente] = useState(false);
@@ -116,7 +116,7 @@ const CreateProyect = () => {
   const [convocatoria, setConvocatoria] = useState(null); // en convocatoria guardo la convocatoria seleccionada en el combo.
 
   //Campos obligatorios
-  const canSubmit =
+  const canSubmit = () =>
     titulo &&
     tipo &&
     organismo &&
@@ -129,11 +129,13 @@ const CreateProyect = () => {
     fechaFin &&
     numeroExpediente &&
     numeroResolucion &&
+    numeroProyecto &&
     director &&
     codirector &&
-    usuario &&
-    subsidios &&
+    usuario[0] &&
+    subsidios[0] &&
     convocatoria;
+
   const timer = useRef();
 
   useEffect(() => {
@@ -246,14 +248,13 @@ const CreateProyect = () => {
     //usuario: "galosalerno",
     //};
     const objectValidate = Object.values(proyecto);
-    //console.log(objectValidate);
     if (objectValidate.some((value) => !value)) {
       setHasError(true);
       return;
     } //Checkear que no haya ningun null
     const response = await createProyecto(proyecto);
     setHasChanges(true);
-    clearStates();
+    //clearStates();
     console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);
     //console.log(proyecto);
   };
@@ -316,6 +317,30 @@ const CreateProyect = () => {
     }
     fetchRubros();
   }, []);
+
+  const handleCamposErrors = (id, error, message = '') => {
+    const index = camposErrors.findIndex((item) => item.id === id);
+    const newCamposErrors = [...camposErrors];
+    newCamposErrors[index] = { id, error, message };
+    setCamposErrors(newCamposErrors);
+
+  };
+
+
+  const [camposErrors, setCamposErrors] = useState([
+    { id: 'titulo', error: false, message: '' },
+    { id: 'tipo', error: false },
+    { id: 'organismo', error: false },
+    { id: 'lineaFinanciamiento', error: false },
+    { id: 'unidadAcademica', error: false },
+    { id: 'areaTematica', error: false },
+    { id: 'director', error: false },
+    { id: 'codirector', error: false },
+    { id: 'convocatoria', error: false },
+    { id: 'usuario', error: false },
+    { id: 'subsidios', error: false }
+  ]);
+
   //console.log(rubros);
   //
   //const convocatoria = ['UNAHUR 1', 'UNAHUR 2', 'UNAHUR 3', 'UNAHUR 4'];
@@ -335,52 +360,113 @@ const CreateProyect = () => {
                 id="outlined-name"
                 label="Título"
                 value={titulo}
-                onChange={(e) => handleChange(e, setTitulo)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setTitulo) : setTitulo(null);
+                  handleCamposErrors(
+                    'titulo',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
+
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[0].error}
+                helperText={camposErrors[0].message}
+                type="text"
+
               />
-              <TextField
+              < TextField
                 id="outlined-name"
                 label="Tipo"
                 value={tipo}
-                onChange={(e) => handleChange(e, setTipo)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setTipo) : setTipo(null);
+                  handleCamposErrors(
+                    'tipo',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+
+                }}
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[1].error}
+                helperText={camposErrors[1].message}
+                type="text"
               />
               <TextField
                 id="outlined-name"
                 label="Organismo"
                 value={organismo}
-                onChange={(e) => handleChange(e, setOrganismo)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setOrganismo) : setOrganismo(null);
+                  handleCamposErrors(
+                    'organismo',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[2].error}
+                helperText={camposErrors[2].message}
+                type="text"
               />
               <TextField
                 id="outlined-name"
                 label="Línea de financiamiento"
                 value={lineaFinanciamiento}
-                type="text"
-                onChange={(e) => handleChange(e, setLineaFinanciamiento)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setLineaFinanciamiento) : setLineaFinanciamiento(null);
+                  handleCamposErrors(
+                    'lineaFinanciamiento',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[3].error}
+                helperText={camposErrors[3].message}
+                type="text"
               />
               <TextField
                 id="outlined-name"
                 label="Unidad académica"
                 value={unidadAcademica}
-                type="text"
-                onChange={(e) => handleChange(e, setUnidadAcademica)}
+
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setUnidadAcademica) : setUnidadAcademica(null);
+                  handleCamposErrors(
+                    'unidadAcademica',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[4].error}
+                helperText={camposErrors[4].message}
+                type="text"
               />
               <TextField
                 id="outlined-name"
                 label="Área temática"
                 value={areaTematica}
-                type="text"
-                onChange={(e) => handleChange(e, setAreaTematica)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setAreaTematica) : setAreaTematica(null);
+                  handleCamposErrors(
+                    'areaTematica',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[5].error}
+                helperText={camposErrors[5].message}
+                type="text"
               />
               <Divider />
               <h3>Subsidio destinado por rubro</h3>
@@ -528,19 +614,37 @@ const CreateProyect = () => {
               id="outlined-name"
               label="Director"
               value={director}
-              type="text"
-              onChange={(e) => handleChange(e, setDirector)}
+              onChange={(e) => {
+                valiString(e.target.value) ? handleChange(e, setDirector) : setDirector(null);
+                handleCamposErrors(
+                  'director',
+                  !valiString(e.target.value),
+                  !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                );
+              }}
               variant="outlined"
               className={classes.field}
+              error={camposErrors[6].error}
+              helperText={camposErrors[6].message}
+              type="text"
             />
             <TextField
               id="outlined-name"
               label="Codirector"
               value={codirector}
-              type="text"
-              onChange={(e) => handleChange(e, setCodirector)}
+              onChange={(e) => {
+                valiString(e.target.value) ? handleChange(e, setCodirector) : setCodirector(null);
+                handleCamposErrors(
+                  'codirector',
+                  !valiString(e.target.value),
+                  !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                );
+              }}
               variant="outlined"
               className={classes.field}
+              error={camposErrors[7].error}
+              helperText={camposErrors[7].message}
+              type="text"
             />
             <div className={classes.root}>
               <Grid container spacing={1}>
@@ -579,7 +683,7 @@ const CreateProyect = () => {
             color="primary"
             variant="contained"
             className={classes.submitButton}
-            disable={!canSubmit}
+            disabled={!canSubmit()}
           >
             Cargar proyecto
           </Button>
