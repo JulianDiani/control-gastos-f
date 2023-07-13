@@ -11,7 +11,13 @@ const Rubro = (props) => {
         id={props.rubro.id}
         label={props.rubro.nombre}
         type="number"
-        onBlur={(event) => { props.handleSubsidio({ id: event.target.id, monto: event.target.value }) }}
+        onBlur={(event) => {
+          props.handleSubsidio(
+            {
+              id: event.target.id,
+              monto: event.target.value !== '' ? event.target.value : "0"
+            })
+        }}
         variant="outlined"
         className={props.className}
       />

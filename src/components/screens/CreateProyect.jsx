@@ -280,6 +280,7 @@ const CreateProyect = () => {
         const rubros = await getAllRubros();
         const json = await rubros.data;
         setRubros(json);
+        setSubsidios(json.map((rubro) => ({ id: rubro.id.toString(), monto: "0" })));//setea todos los rubros en 0
       } catch (error) {
         console.log('error en el fetch de rubros' + error);
       }
@@ -522,11 +523,12 @@ const CreateProyect = () => {
                         setErrorNumeroExpediente
                       )
                     }
-                    type="text"
+                    type="number"
                     onChange={(e) => handleChange(e, setNumeroExpediente)}
                     variant="outlined"
-                    className={classes.field}
+                    className={classes.textfieldClass}
                     error={errorNumeroExpediente}
+                    helperText={errorNumeroExpediente ? 'Solo números' : ''}
                   />
                 </Grid>
                 <Grid item xs>
@@ -541,11 +543,12 @@ const CreateProyect = () => {
                         setErrorNumeroResolucion
                       )
                     }
-                    type="text"
+                    type="number"
                     onChange={(e) => handleChange(e, setNumeroResolucion)}
                     variant="outlined"
-                    className={classes.field}
+                    className={classes.textfieldClass}
                     error={errorNumeroResolucion}
+                    helperText={errorNumeroResolucion ? 'Solo números' : ''}
                   />
                 </Grid>
                 <Grid item xs>
@@ -560,11 +563,12 @@ const CreateProyect = () => {
                         setErrorNumeroProyecto
                       )
                     }
-                    type="text"
+                    type="number"
                     onChange={(e) => handleChange(e, setNumeroProyecto)}
                     variant="outlined"
-                    className={classes.field}
+                    className={classes.textfieldClass}
                     error={errorNumeroProyecto}
+                    helperText={errorNumeroProyecto ? 'Solo números' : ''}
                   />
                 </Grid>
               </Grid>
