@@ -20,7 +20,6 @@ const Rubro = (props) => {
         }}
         variant="outlined"
         className={props.className}
-        //defaultValue={"0"}
         error={props.rubro.error}
         helperText={props.rubro.message}
       />

@@ -447,7 +447,7 @@ const CreateProyect = () => {
                     className={classes.textfieldClass}
                   />
 
-                ))}{console.log(subsidios)}
+                ))}
               </Grid>
               <Divider />
               <h3>Convocatoria</h3>
