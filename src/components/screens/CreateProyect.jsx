@@ -273,13 +273,13 @@ const CreateProyect = () => {
   };
 
   //Rubros fetch
-  const [rubros, setRubros] = useState([]);
+  //const [rubros, setRubros] = useState([]);
   useEffect(() => {
     async function fetchRubros() {
       try {
         const rubros = await getAllRubros();
         const json = await rubros.data;
-        setRubros(json);
+        //setRubros(json);
         setSubsidios(json.map((rubro) => ({ id: rubro.id.toString(), nombre: rubro.nombre, monto: "0", error: false, message: "" })));//setea todos los rubros en 0
       } catch (error) {
         console.log('error en el fetch de rubros' + error);
