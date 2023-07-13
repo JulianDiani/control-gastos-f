@@ -129,7 +129,7 @@ const CreateProyect = () => {
     director &&
     codirector &&
     usuario[0] &&
-    subsidios[0] &&
+    !subsidios.map(s => s.error).some(e => e === true) &&
     convocatoria;
 
   const timer = useRef();
@@ -280,7 +280,7 @@ const CreateProyect = () => {
         const rubros = await getAllRubros();
         const json = await rubros.data;
         setRubros(json);
-        setSubsidios(json.map((rubro) => ({ id: rubro.id.toString(), monto: "0" })));//setea todos los rubros en 0
+        setSubsidios(json.map((rubro) => ({ id: rubro.id.toString(), nombre: rubro.nombre, monto: "0", error: false, message: "" })));//setea todos los rubros en 0
       } catch (error) {
         console.log('error en el fetch de rubros' + error);
       }
@@ -296,7 +296,7 @@ const CreateProyect = () => {
   };
 
   const [camposErrors, setCamposErrors] = useState([
-    { id: 'titulo', error: false, message: '' },
+    { id: 'titulo', error: false },
     { id: 'tipo', error: false },
     { id: 'organismo', error: false },
     { id: 'lineaFinanciamiento', error: false },
@@ -437,14 +437,17 @@ const CreateProyect = () => {
               <Divider />
 
               <Grid container spacing={1}>
-                {rubros.map((rubro) => (
+                {subsidios.map((rubro) => (
                   <Rubro
                     key={rubro.id}
                     rubro={rubro}
                     handleSubsidio={handleSubsidio}
+                    error={rubro.error}
+                    helperText={rubro.message}
                     className={classes.textfieldClass}
                   />
-                ))}
+
+                ))}{console.log(subsidios)}
               </Grid>
               <Divider />
               <h3>Convocatoria</h3>
