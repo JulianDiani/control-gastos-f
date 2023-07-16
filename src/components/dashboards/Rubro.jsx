@@ -15,7 +15,8 @@ const Rubro = (props) => {
               id: event.target.id,
               monto: event.target.value !== '' ? event.target.value : "0",
               error: event.target.value === '' ? true : false,
-              message: event.target.value === '' ? "solo números" : ""
+              message: event.target.value === '' ? "solo números" : "",
+              nombre: props.rubro.nombre
             })
         }}
         variant="outlined"

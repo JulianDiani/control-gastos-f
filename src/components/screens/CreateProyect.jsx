@@ -442,8 +442,8 @@ const CreateProyect = () => {
                     key={rubro.id}
                     rubro={rubro}
                     handleSubsidio={handleSubsidio}
-                    error={rubro.error}
-                    helperText={rubro.message}
+                    //error={rubro.error}
+                    //helperText={rubro.message}
                     className={classes.textfieldClass}
                   />
 
