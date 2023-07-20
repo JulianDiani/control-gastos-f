@@ -246,7 +246,7 @@ const CreateProyect = () => {
   }, []);
 
   //Usuarios fetch
-  const [usuarios, setUsuarios] = useState([null]);
+  const [usuarios, setUsuarios] = useState([]);
   useEffect(() => {
     async function fetchUsuarios() {
       try {
@@ -621,8 +621,8 @@ const CreateProyect = () => {
                   <Autocomplete
                     className={classes.field}
                     multiple
-                    id="tags-outlined"
-                    options={usuarios}
+                    id="usuarios-responsables"
+                    options={usuarios.filter((user) => user.rol === 'otro')}
                     getOptionLabel={(option) => option.nombre}
                     defaultValue={[]}
                     filterSelectedOptions
