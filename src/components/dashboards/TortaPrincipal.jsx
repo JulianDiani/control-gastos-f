@@ -10,22 +10,22 @@ export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupue
   const ejecucion = nivelDeEjecucion(totalPresupuesto, totalGastos);
   const $ = useStyles();
   const datosAConsumir = (({
-    insumos,
-    bibliografia,
-    publicaciones,
-    viaticos,
-    equipamiento,
-    tecnico,
-    administracion,
+    Insumos,
+    Bibliografia,
+    Publicaciones,
+    Viaticos,
+    Equipamiento,
+    Tecnico,
+    Administracion,
 
   }) => ({
-    insumos,
-    bibliografia,
-    publicaciones,
-    viaticos,
-    equipamiento,
-    tecnico,
-    administracion,
+    Insumos,
+    Bibliografia,
+    Publicaciones,
+    Viaticos,
+    Equipamiento,
+    Tecnico,
+    Administracion,
 
   }))(totalDisponible, monto, ejecucion);
 
@@ -49,13 +49,13 @@ export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupue
               '#e28956',
             ],
             data: [
-              totalDisponible.insumos,
-              totalDisponible.publicaciones,
-              totalDisponible.bibliografia,
-              totalDisponible.viaticos,
-              totalDisponible.equipamiento,
-              totalDisponible.tecnico,
-              totalDisponible.administracion,
+              totalDisponible.Insumos,
+              totalDisponible.Publicaciones,
+              totalDisponible.Bibliografia,
+              totalDisponible.Viaticos,
+              totalDisponible.Equipamiento,
+              totalDisponible.Tecnico,
+              totalDisponible.Administracion,
             ],
           },
         ],
@@ -73,13 +73,7 @@ export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupue
 
 const useStyles = makeStyles({
   graficoTor: {
-    display: 'inline-flex',
-    alignContent: 'center',
-    justifyContent: 'space-between',
-
-
-
-
+    width: '25rem !important',
+    height: 'auto !important'
   },
-
 });

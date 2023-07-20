@@ -1,8 +1,6 @@
 import React from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import { getPresupuesto } from '../services/presupuestos.js';
 import { getAllGastosPorRubro, getComprasByProyecto } from '../services/compras.js';
@@ -10,6 +8,7 @@ import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './dashboards/TortaPrincipal';
 import CardMontos from './dashboards/CardMontos';
+import Tabla from './dashboards/Tabla';
 
 import Grid from '@material-ui/core/Grid';
 import { calculateTotalExpenses, combinarPresupuestoYRubros } from '../utils/presupuestos';
@@ -21,8 +20,6 @@ export const Presupuestos = ({ idProyecto }) => {
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
   const [gastosPorRubro, setGastosPorRubro] = useState(null);
-
-  console.log(gastosPorRubro)
 
   useEffect(() => {
     let isMounted = true;
@@ -69,7 +66,7 @@ export const Presupuestos = ({ idProyecto }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
+              justifyContent="space-evenly"
               className={$.cardContent}
             >
               <CardMontos
@@ -78,18 +75,16 @@ export const Presupuestos = ({ idProyecto }) => {
                 totalPresupuesto={presupuesto.total}
                 totalGastos={totalGastos}
               />
-              <Card className={$.card}>
-                <CardContent>
-                  <TortaPrincipal
-                    presupuesto={presupuesto}
-                    totalPresupuesto={presupuesto.total}
-                    totalGastos={totalGastos}
-                    className={$.torta}
-                  />
-                </CardContent>
-              </Card>
+              <div>
+                <TortaPrincipal
+                  presupuesto={presupuesto}
+                  totalPresupuesto={presupuesto.total}
+                  totalGastos={totalGastos}
+                  className={$.torta}
+                />
+              </div>
             </Grid>
-
+            {gastosPorRubro && <Tabla gastos={gastosPorRubro} />}
           </Grid>
         </div>
       </>
@@ -111,9 +106,8 @@ export const Presupuestos = ({ idProyecto }) => {
 const useStyles = makeStyles({
   root: {
     height: '100%',
+    width: '100%',
     display: 'flex',
-    marginLeft: '1vw',
-    marginBottom: '2rem',
   },
   card: {
     width: '25vw',
@@ -132,6 +126,9 @@ const useStyles = makeStyles({
   title: {
     marginLeft: '2.5vw',
   },
-
+  torta: {
+    width: '100%',
+    height: '100%'
+  }
 });
 //hola

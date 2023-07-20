@@ -18,7 +18,7 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
 
 
   return (
-    <div className={$.textContainer}>
+    <div className={$.cardsContainer}>
       <Card className={$.root}>
         <CardContent className={$.content}>
           <Typography
@@ -26,7 +26,7 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
             component="h2"
             className={$.typography}
           >
-            <LocalAtm className={$.prepTotal} />Presupuesto total:
+            <LocalAtm className={$.prepTotal} /> Presupuesto total:
           </Typography>
           <span
             variant="h5"
@@ -37,14 +37,14 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
         </CardContent>
       </Card >
       <Card className={$.root1}>
-        <CardContent>
+        <CardContent className={$.content}>
           <Typography
             variant="h5"
             component="h2"
             className={$.typography}
           >
 
-            <LocalAtm className={$.prepTotal} />Monto disponible:
+            <LocalAtm className={$.prepTotal} /> Monto disponible:
           </Typography>
           <span
             variant="h5"
@@ -55,7 +55,7 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
         </CardContent>
       </Card >
       <Card className={$.root2}>
-        <CardContent>
+        <CardContent className={$.content}>
           <Typography
             variant="body2"
             component="p"
@@ -80,59 +80,58 @@ export default function CardMontos({ totalGastos, totalPresupuesto }) {
 
 const useStyles = makeStyles({
   root: {
-    display: 'inline-flex',
+    display: 'flex',
     alignContent: 'center',
     justifyContent: 'space-between',
-    marginBottom: '1.5rem',
     margin: '0.5rem',
     background: '#06d6a0',
     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
     borderRadius: '8px',
-
-
   },
   root1: {
-    display: 'inline-flex',
+    display: 'flex',
     alignContent: 'center',
     justifyContent: 'space-between',
-    marginBottom: '1.5rem',
+    alignItems: 'center',
     margin: '0.5rem',
     background: '#ef476f',
     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
     borderRadius: '8px',
-
-
   },
   root2: {
-    display: 'inline-flex',
+    display: 'flex',
     alignContent: 'center',
     justifyContent: 'space-between',
-    marginBottom: '1.5rem',
     margin: '0.5rem',
     background: '#118ab2',
     boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
     borderRadius: '8px',
-
-
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   typography: {
     fontFamily: 'Cabin',
     fontWeight: 'bold',
     fontSize: '1.5rem',
-    marginBottom: '1rem',
     color: '#ffffff',
-
   },
   prepTotal: {
-    fontSize: '1rem',
+    fontSize: '1.5rem',
     color: '#ffffff',
+    verticalAlign: "text-bottom"
 
   },
   nivelEjec: {
-
-    fontSize: '1rem',
+    fontSize: '1.5rem',
     color: '#ffffff',
+    verticalAlign: "text-bottom"
   },
-
+  cardsContainer: {
+    display: "flex",
+    flexDirection: "column",
+  }
 
 });
