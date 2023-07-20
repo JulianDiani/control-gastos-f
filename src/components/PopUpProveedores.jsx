@@ -55,7 +55,7 @@ export default function PopUpProveedores(props) {
         <Divider />
         <div className={$.inputs}>
           <TextField
-            label="Nombre completo"
+            label="Nombre: Empresa S.A."
             className={$.textField}
             onChange={(e) => submitHandle(setNombre, e.target.value)}
             onBlur={(e) =>
@@ -64,7 +64,7 @@ export default function PopUpProveedores(props) {
             error={errorNombre}
           />
           <TextField
-            label="Teléfono"
+            label="Teléfono: 1112345678 "
             className={$.textField}
             onChange={(e) => submitHandle(setTelefono, e.target.value)}
             onBlur={(e) =>
@@ -73,14 +73,14 @@ export default function PopUpProveedores(props) {
             error={errorTelefono}
           />
           <TextField
-            label="CUIT"
+            label="CUIT: 12-12345678-1"
             className={$.textField}
             onChange={(e) => submitHandle(setCuit, e.target.value)}
             onBlur={(e) => validateField('cuit', e.target.value, setErrorCuit)}
             error={errorCuit}
           />
           <TextField
-            label="E-mail"
+            label="E-mail: mail@empresa.com.ar"
             className={$.textField}
             onChange={(e) => submitHandle(setMail, e.target.value)}
             onBlur={(e) =>

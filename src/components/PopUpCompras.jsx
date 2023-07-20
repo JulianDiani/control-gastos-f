@@ -490,7 +490,7 @@ export default function PopUpCompras({
 
             <TextField
               className={$.inputForm}
-              label="CUIT: 30-12345679-0"
+              label="CUIT: 12-12345678-1"
               style={{ width: 300 }}
               onChange={(e) =>
                 handleNewProveedor(e.target.value, setNewProveedorCuit)
