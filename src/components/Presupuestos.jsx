@@ -1,44 +1,40 @@
 import React from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import { getPresupuesto } from '../services/presupuestos.js';
-import { getComprasByProyecto } from '../services/compras.js';
+import { getAllGastosPorRubro, getComprasByProyecto } from '../services/compras.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './dashboards/TortaPrincipal';
 import CardMontos from './dashboards/CardMontos';
-import { getProyectoById } from '../services/proyectos.js';
+import Tabla from './dashboards/Tabla';
 
 import Grid from '@material-ui/core/Grid';
-import { calculateTotalExpenses } from '../utils/presupuestos';
+import { calculateTotalExpenses, combinarPresupuestoYRubros } from '../utils/presupuestos';
 
 export const Presupuestos = ({ idProyecto }) => {
   const $ = useStyles();
 
-  const [proyecto, setProyecto] = useState(null);
   const [presupuesto, setPresupuesto] = useState(null);
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
-
-  console.log(proyecto)
+  const [gastosPorRubro, setGastosPorRubro] = useState(null);
 
   useEffect(() => {
     let isMounted = true;
     async function fetchProyectos() {
       if (idProyecto)
         try {
-          const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
           const presupuesto = await getPresupuesto();
           const compras = await getComprasByProyecto(idProyecto);
           const gastos = calculateTotalExpenses(compras);
+          const gastosPorRubro = await getAllGastosPorRubro(idProyecto)
           if (isMounted) {
-            setProyecto(proyecto[0]);
             setTotalGastos(gastos);
             setComprasRealizadas(comprasRealizadas);
             setPresupuesto(presupuesto);
+            setGastosPorRubro(combinarPresupuestoYRubros(presupuesto, gastosPorRubro))
           }
         } catch (err) {
           console.log('[DatosGenerales Component] ERROR : ' + err);
@@ -59,6 +55,7 @@ export const Presupuestos = ({ idProyecto }) => {
   const rendering = () => {
     return (
       <>
+
         <div className={$.root}>
           <Grid
             container
@@ -69,7 +66,7 @@ export const Presupuestos = ({ idProyecto }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
+              justifyContent="space-evenly"
               className={$.cardContent}
             >
               <CardMontos
@@ -78,18 +75,16 @@ export const Presupuestos = ({ idProyecto }) => {
                 totalPresupuesto={presupuesto.total}
                 totalGastos={totalGastos}
               />
-              <Card className={$.card}>
-                <CardContent>
-                  <TortaPrincipal
-                    presupuesto={presupuesto}
-                    totalPresupuesto={presupuesto.total}
-                    totalGastos={totalGastos}
-                    className={$.torta}
-                  />
-                </CardContent>
-              </Card>
+              <div>
+                <TortaPrincipal
+                  presupuesto={presupuesto}
+                  totalPresupuesto={presupuesto.total}
+                  totalGastos={totalGastos}
+                  className={$.torta}
+                />
+              </div>
             </Grid>
-
+            {gastosPorRubro && <Tabla gastos={gastosPorRubro} />}
           </Grid>
         </div>
       </>
@@ -111,9 +106,8 @@ export const Presupuestos = ({ idProyecto }) => {
 const useStyles = makeStyles({
   root: {
     height: '100%',
+    width: '100%',
     display: 'flex',
-    marginLeft: '1vw',
-    marginBottom: '2rem',
   },
   card: {
     width: '25vw',
@@ -132,6 +126,9 @@ const useStyles = makeStyles({
   title: {
     marginLeft: '2.5vw',
   },
-
+  torta: {
+    width: '100%',
+    height: '100%'
+  }
 });
 //hola
