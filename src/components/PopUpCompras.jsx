@@ -215,7 +215,13 @@ export default function PopUpCompras({
     async function getProveedores() {
       const provedoresResponse = await getAllProveedores();
 
-      setProveedores(provedoresResponse.data);
+      setProveedores(provedoresResponse.data.sort(function (a, b) {
+        var nombA = a.nombre;
+        var nombB = b.nombre;
+        return (nombA < nombB) ? -1 : (nombA > nombB) ? 1 : 0;
+
+      })
+      );
     }
     getProveedores();
     const id = sessionStorage.getItem('idProyecto');
@@ -281,9 +287,9 @@ export default function PopUpCompras({
 
   const sendDataNewProveedor = async () => {
     const data = {
-      cuit: newProveedorCuit,
       nombre: newProveedorNombre,
       telefono: newProveedorTelefono,
+      cuit: newProveedorCuit,
       mail: newProveedorEmail,
     };
     const responseBack = await postProveedor(data);
