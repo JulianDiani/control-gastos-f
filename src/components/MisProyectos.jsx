@@ -108,7 +108,7 @@ export const MisProyectos = ({ userName, setIdProyecto }) => {
   };
   return (
     <>
-      <h2>Proyectos en curso</h2>
+      <h1 className={$.background}>Proyectos en curso</h1>
       <TableContainer className={$.container} component={Paper}>
         <Table aria-label="customized table">
           <StyledTableHead>
@@ -207,5 +207,8 @@ const useStyles = makeStyles({
   },
   tableCellContent: {
     maxWidth: '10vw',
+  },
+  background: {
+    backgroundColor: 'white',
   },
 });

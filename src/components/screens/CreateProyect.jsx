@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Divider, Paper } from '@material-ui/core';
+import { Button, Divider, FormControl, Paper, Grid } from '@material-ui/core';
 import { createProyecto } from '../../services/proyectos';
 import Alert from '@material-ui/lab/Alert';
 import {
@@ -9,9 +9,16 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { validateField } from '../../utils/validaciones';
+import { validateField, valiString } from '../../utils/validaciones';
 import * as moment from 'moment';
-const useStyles = makeStyles(() => ({
+//import axios from 'axios';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { getUsuarios } from '../../services/usuarios';
+import { getAllConvocatorias } from '../../services/convocatorias';
+import { getAllRubros } from '../../services/rubros';
+import Rubro from '../dashboards/Rubro.jsx';
+
+const useStyles = makeStyles((theme) => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -22,9 +29,12 @@ const useStyles = makeStyles(() => ({
     margin: 'auto',
     borderTop: '1rem solid #5AA123',
     borderRadius: '17px 17px 0 0',
+    minWidth: '17rem',
   },
   field: {
     margin: '0.5rem',
+    minWidth: '11rem',
+    display: 'flex',
   },
   submitButton: {
     margin: '0.5rem',
@@ -52,6 +62,29 @@ const useStyles = makeStyles(() => ({
     margin: '1rem',
     width: '97%',
   },
+  width30: {
+    width: '30%',
+    margin: '0.5rem',
+  },
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  textfieldClass: {
+    margin: '0.5rem',
+    minWidth: '11rem',
+    display: 'flex',
+    '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+      display: 'none',
+    },
+    '& input[type=number]': {
+      MozAppearance: 'textfield',
+    },
+  },
 }));
 
 const CreateProyect = () => {
@@ -60,10 +93,9 @@ const CreateProyect = () => {
   const [tipo, setTipo] = useState(null);
   const [organismo, setOrganismo] = useState(null);
   const [lineaFinanciamiento, setLineaFinanciamiento] = useState(null);
-  const [año, setAño] = useState(null);
   const [unidadAcademica, setUnidadAcademica] = useState(null);
   const [areaTematica, setAreaTematica] = useState(null);
-  const [subsidio, setSubsidio] = useState(null);
+  const [subsidios, setSubsidios] = useState([]); // aca se guardan los el id y el monto de los subsidios por rubros.
   const [fechaInicio, setFechaInicio] = useState(null);
   const [fechaFin, setFechaFin] = useState(null);
   const [numeroExpediente, setNumeroExpediente] = useState(null);
@@ -71,7 +103,7 @@ const CreateProyect = () => {
   const [numeroProyecto, setNumeroProyecto] = useState(null);
   const [director, setDirector] = useState(null);
   const [codirector, setCodirector] = useState(null);
-  const [usuario, setUsuario] = useState([]);
+  const [usuario, setUsuario] = useState([]);// acas e guardan los usuarios responsables del proyecto.
   const [hasChanges, setHasChanges] = useState(false);
   const [loadedProject, setLoadedProject] = useState(false);
   const [errorNumeroExpediente, setErrorNumeroExpediente] = useState(false);
@@ -79,22 +111,27 @@ const CreateProyect = () => {
   const [errorNumeroProyecto, setErrorNumeroProyecto] = useState(false);
   const [añoValue, setAñoValue] = useState(); //Fix to datapicker - se meustra un año menos que el valor que tiene el state
   const [hasError, setHasError] = useState(false);
+  const [convocatoria, setConvocatoria] = useState(null); // en convocatoria guardo la convocatoria seleccionada en el combo.
+
   //Campos obligatorios
-  const canSubmit =
+  const canSubmit = () =>
     titulo &&
     tipo &&
     organismo &&
     lineaFinanciamiento &&
-    año &&
     unidadAcademica &&
     areaTematica &&
-    subsidio &&
     fechaInicio &&
     fechaFin &&
     numeroExpediente &&
     numeroResolucion &&
+    numeroProyecto &&
     director &&
-    codirector;
+    codirector &&
+    usuario[0] &&
+    !subsidios.map(s => s.error).some(e => e === true) &&
+    convocatoria;
+
   const timer = useRef();
 
   useEffect(() => {
@@ -104,7 +141,7 @@ const CreateProyect = () => {
       }, 2000);
       setLoadedProject(true);
     }
-    
+
     if (hasChanges) {
       setChanges();
       setHasChanges(false);
@@ -126,7 +163,6 @@ const CreateProyect = () => {
 
   //Handle events
   const handleChange = (event, setState, isAutocomplete = false) => {
-    
     if (isAutocomplete) {
       setState(event);
     } else {
@@ -138,11 +174,11 @@ const CreateProyect = () => {
     if (onlyYear) {
       const year = moment(event).format('YYYY');
       const yearToValue = moment(year);
-      
+
       setDate(year);
       setAñoValue(yearToValue);
     } else {
-      const date = moment(event).format('YYYY-MM-DD');
+      const date = moment(event).add(1, 'days').format('YYYY-MM-DD');
       setDate(date);
     }
   };
@@ -151,17 +187,18 @@ const CreateProyect = () => {
     setTipo('');
     setOrganismo('');
     setLineaFinanciamiento('');
-    setAño('');
     setUnidadAcademica('');
     setAreaTematica('');
-    setSubsidio('');
-    setFechaInicio('');
-    setFechaFin('');
+    setSubsidios([]);
+    setFechaInicio(null);
+    setFechaFin(null);
     setNumeroExpediente('');
     setNumeroResolucion('');
+    setNumeroProyecto('');
     setDirector('');
     setCodirector('');
-    setUsuario('');
+    setUsuario([]);
+    setConvocatoria(null);
   };
   const submitForm = async () => {
     const proyecto = {
@@ -169,10 +206,8 @@ const CreateProyect = () => {
       tipo,
       organismo,
       lineaFinanciamiento,
-      año,
       unidadAcademica,
       areaTematica,
-      subsidio,
       fechaInicio,
       fechaFin,
       numeroExpediente,
@@ -180,26 +215,11 @@ const CreateProyect = () => {
       numeroProyecto,
       director,
       codirector,
+      convocatoria,
       usuario,
+      subsidios,
     };
-    //DATA TO TEST SUBMIT.
-    // const proyecto = {
-    // titulo:"titulo",
-    // tipo:"tipo",
-    // organismo:"organismo",
-    // lineaFinanciamiento:"unahur",
-    // año:"2021/06/01",
-    // unidadAcademica:"unidadAcademica,",
-    // areaTematica:"areaTematica",
-    // subsidio:5777666,
-    // fechaInicio:"2021/06/01",
-    // fechaFin:"2022/06/01",
-    // numeroExpediente:1234,
-    // numeroResolucion: 82171,
-    // director:"Pedroza 3",
-    // codirector:"Mafia 3",
-    // usuario :"galosalerno",
-    // }
+
     const objectValidate = Object.values(proyecto);
     if (objectValidate.some((value) => !value)) {
       setHasError(true);
@@ -210,196 +230,416 @@ const CreateProyect = () => {
     clearStates();
     console.log(`Create-new-proyect-response: ${JSON.stringify(response)}`);
   };
+
+  //Convocatorias fetch
+  const [convocatorias, setConvocatorias] = useState([null]);
+  useEffect(() => {
+    async function fetchConvocatorias() {
+      try {
+        const convocatorias = await getAllConvocatorias();
+        setConvocatorias(convocatorias);
+      } catch (error) {
+        console.log('error en el fetch de convocatorias' + error);
+      }
+    }
+    fetchConvocatorias();
+  }, []);
+
+  //Usuarios fetch
+  const [usuarios, setUsuarios] = useState([]);
+  useEffect(() => {
+    async function fetchUsuarios() {
+      try {
+        const usuarios = await getUsuarios();
+        const json = await usuarios.data;
+        setUsuarios(json);
+      } catch (error) {
+        console.log('error en el fetch de usuarios' + error);
+      }
+    }
+    fetchUsuarios();
+  }, []);
+
+  //actualiza el estado de subsidios
+  const handleSubsidio = (newSubsidio) => {
+    const index = subsidios.findIndex((item) => item.id === newSubsidio.id);
+    if (subsidios[index]) {
+      const newSubsidioss = [...subsidios];
+      newSubsidioss[index] = newSubsidio;
+      setSubsidios(newSubsidioss);
+    } else {
+      setSubsidios([...subsidios, newSubsidio]);
+    }
+  };
+
+  //Rubros fetch
+  //const [rubros, setRubros] = useState([]);
+  useEffect(() => {
+    async function fetchRubros() {
+      try {
+        const rubros = await getAllRubros();
+        const json = await rubros.data;
+        //setRubros(json);
+        setSubsidios(json.map((rubro) => ({ id: rubro.id.toString(), nombre: rubro.nombre, monto: "0", error: false, message: "" })));//setea todos los rubros en 0
+      } catch (error) {
+        console.log('error en el fetch de rubros' + error);
+      }
+    }
+    fetchRubros();
+  }, []);
+
+  const handleCamposErrors = (id, error, message = '') => {
+    const index = camposErrors.findIndex((item) => item.id === id);
+    const newCamposErrors = [...camposErrors];
+    newCamposErrors[index] = { id, error, message };
+    setCamposErrors(newCamposErrors);
+  };
+
+  const [camposErrors, setCamposErrors] = useState([
+    { id: 'titulo', error: false },
+    { id: 'tipo', error: false },
+    { id: 'organismo', error: false },
+    { id: 'lineaFinanciamiento', error: false },
+    { id: 'unidadAcademica', error: false },
+    { id: 'areaTematica', error: false },
+    { id: 'director', error: false },
+    { id: 'codirector', error: false },
+    { id: 'convocatoria', error: false },
+    { id: 'usuario', error: false },
+    { id: 'subsidios', error: false }
+  ]);
+
   return (
     <div>
       <h1>Crear proyecto</h1>
       <div>
         <Paper className={classes.formContainer}>
           <h2>Cargar datos</h2>
-          <div>
+
+          <div className={classes.grid}>
+            <h3> Informacion general</h3>
+            <Divider />
             <div className={classes.grid}>
               <TextField
                 id="outlined-name"
                 label="Título"
                 value={titulo}
-                onChange={(e) => handleChange(e, setTitulo)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setTitulo) : setTitulo(null);
+                  handleCamposErrors(
+                    'titulo',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
+
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[0].error}
+                helperText={camposErrors[0].message}
+                type="text"
+
               />
-              <TextField
+              < TextField
                 id="outlined-name"
                 label="Tipo"
                 value={tipo}
-                onChange={(e) => handleChange(e, setTipo)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setTipo) : setTipo(null);
+                  handleCamposErrors(
+                    'tipo',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+
+                }}
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[1].error}
+                helperText={camposErrors[1].message}
+                type="text"
               />
               <TextField
                 id="outlined-name"
                 label="Organismo"
                 value={organismo}
-                onChange={(e) => handleChange(e, setOrganismo)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setOrganismo) : setOrganismo(null);
+                  handleCamposErrors(
+                    'organismo',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[2].error}
+                helperText={camposErrors[2].message}
+                type="text"
               />
               <TextField
                 id="outlined-name"
                 label="Línea de financiamiento"
                 value={lineaFinanciamiento}
-                type="text"
-                onChange={(e) => handleChange(e, setLineaFinanciamiento)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setLineaFinanciamiento) : setLineaFinanciamiento(null);
+                  handleCamposErrors(
+                    'lineaFinanciamiento',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[3].error}
+                helperText={camposErrors[3].message}
+                type="text"
               />
-            </div>
-            <div className={classes.grid}>
               <TextField
                 id="outlined-name"
                 label="Unidad académica"
                 value={unidadAcademica}
-                type="text"
-                onChange={(e) => handleChange(e, setUnidadAcademica)}
+
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setUnidadAcademica) : setUnidadAcademica(null);
+                  handleCamposErrors(
+                    'unidadAcademica',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
                 variant="outlined"
                 className={classes.field}
+                error={camposErrors[4].error}
+                helperText={camposErrors[4].message}
+                type="text"
               />
               <TextField
                 id="outlined-name"
                 label="Área temática"
                 value={areaTematica}
-                type="text"
-                onChange={(e) => handleChange(e, setAreaTematica)}
+                onChange={(e) => {
+                  valiString(e.target.value) ? handleChange(e, setAreaTematica) : setAreaTematica(null);
+                  handleCamposErrors(
+                    'areaTematica',
+                    !valiString(e.target.value),
+                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                  );
+                }}
                 variant="outlined"
                 className={classes.field}
-              />
-              <TextField
-                id="outlined-name"
-                label="Subsidio"
-                value={subsidio}
+                error={camposErrors[5].error}
+                helperText={camposErrors[5].message}
                 type="text"
-                onChange={(e) => handleChange(e, setSubsidio)}
-                variant="outlined"
-                className={classes.field}
               />
               <Divider />
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <div className={classes.flex}>
-                  <KeyboardDatePicker
-                    id="date-picker-dialog"
-                    label="Fecha inicio"
-                    format="MM/dd/yyyy"
-                    minDate={moment()}
-                    value={fechaInicio}
-                    onChange={(e) => handlePicker(e, setFechaInicio)}
-                    inputVariant="outlined"
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
-                  <KeyboardDatePicker
-                    id="date-picker-dialog"
-                    label="Fecha fin"
-                    format="MM/dd/yyyy"
-                    minDate={moment().add(6, 'month')} //6 meses es el minimo de duracion de un proyecto
-                    value={fechaFin}
-                    onChange={(e) => handlePicker(e, setFechaFin)}
-                    inputVariant="outlined"
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
-                  <KeyboardDatePicker
-                    // margin="normal"
-                    id="date-picker-dialog"
-                    label="Año"
-                    views={['year']}
-                    format="yyyy"
-                    minDate={moment()}
-                    value={añoValue}
-                    onChange={(e) => handlePicker(e, setAño, true)}
-                    inputVariant="outlined"
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
-                </div>
-              </MuiPickersUtilsProvider>
+              <h3>Subsidio destinado por rubro</h3>
               <Divider />
-              <div className={classes.flex}>
-                <TextField
-                  id="outlined-name"
-                  label="Número expediente"
-                  value={numeroExpediente}
-                  onBlur={(e) =>
-                    validateField(
-                      'int',
-                      e.target.value,
-                      setErrorNumeroExpediente
-                    )
-                  }
-                  type="text"
-                  onChange={(e) => handleChange(e, setNumeroExpediente)}
-                  variant="outlined"
-                  className={classes.field}
-                  error={errorNumeroExpediente}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="Número resolución"
-                  value={numeroResolucion}
-                  onBlur={(e) =>
-                    validateField(
-                      'int',
-                      e.target.value,
-                      setErrorNumeroResolucion
-                    )
-                  }
-                  type="text"
-                  onChange={(e) => handleChange(e, setNumeroResolucion)}
-                  variant="outlined"
-                  className={classes.field}
-                  error={errorNumeroResolucion}
-                />
-                <TextField
-                  id="outlined-name"
-                  label="Número proyecto"
-                  value={numeroProyecto}
-                  onBlur={(e) =>
-                    validateField('int', e.target.value, setErrorNumeroProyecto)
-                  }
-                  type="text"
-                  onChange={(e) => handleChange(e, setNumeroProyecto)}
-                  variant="outlined"
-                  className={classes.field}
-                  error={errorNumeroProyecto}
-                />
-              </div>
-              <TextField
-                id="outlined-name"
-                label="Director"
-                value={director}
-                type="text"
-                onChange={(e) => handleChange(e, setDirector)}
-                variant="outlined"
-                className={classes.field}
-              />
-              <TextField
-                id="outlined-name"
-                label="Codirector"
-                value={codirector}
-                type="text"
-                onChange={(e) => handleChange(e, setCodirector)}
-                variant="outlined"
-                className={classes.field}
-              />
-              <TextField
-                id="outlined-name"
-                label="Usuario responsable"
-                value={usuario}
-                type="text"
-                onChange={(e) => handleChange(e, setUsuario)}
-                variant="outlined"
-                className={classes.field}
-              />
+
+              <Grid container spacing={1}>
+                {subsidios.map((rubro) => (
+                  <Rubro
+                    key={rubro.id}
+                    rubro={rubro}
+                    handleSubsidio={handleSubsidio}
+                    //error={rubro.error}
+                    //helperText={rubro.message}
+                    className={classes.textfieldClass}
+                  />
+
+                ))}
+              </Grid>
+              <Divider />
+              <h3>Convocatoria</h3>
+              <Divider />
+            </div>
+            <div className={classes.root}>
+              <Grid container spacing={1}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <Grid item xs>
+                    <KeyboardDatePicker
+                      className={classes.field}
+                      variant="outlined"
+                      id="date-picker-dialog"
+                      label="Fecha inicio"
+                      format="dd/MM/yyyy"
+                      minDate={moment()}
+                      value={fechaInicio}
+                      onChange={(e) => handlePicker(e, setFechaInicio)}
+                      inputVariant="outlined"
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs>
+                    <KeyboardDatePicker
+                      className={classes.field}
+                      minwidth="30%"
+                      id="date-picker-dialog"
+                      label="Fecha fin"
+                      format="dd/MM/yyyy"
+                      minDate={moment().add(6, 'month')} //6 meses es el minimo de duracion de un proyecto
+                      value={fechaFin}
+                      onChange={(e) => handlePicker(e, setFechaFin)}
+                      inputVariant="outlined"
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs>
+                    <Autocomplete
+                      className={classes.field}
+                      options={convocatorias}
+                      getOptionLabel={(option) => option.nombre}
+                      onChange={(event, newValue) => {
+                        event = newValue ? newValue : null;
+                        setConvocatoria(event);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Convocatoria"
+                          variant="outlined"
+                        />
+                      )}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
+              </Grid>
+              <Divider />
+              <h3>Identificadores</h3>
+              <Divider />
+            </div>
+            <div className={classes.root}>
+              <Grid container spacing={1}>
+                <Grid item xs>
+                  <TextField
+                    id="outlined-name"
+                    label="Número expediente"
+                    value={numeroExpediente}
+                    onBlur={(e) =>
+                      validateField(
+                        'int',
+                        e.target.value,
+                        setErrorNumeroExpediente
+                      )
+                    }
+                    type="number"
+                    onChange={(e) => handleChange(e, setNumeroExpediente)}
+                    variant="outlined"
+                    className={classes.textfieldClass}
+                    error={errorNumeroExpediente}
+                    helperText={errorNumeroExpediente ? 'Solo números' : ''}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <TextField
+                    id="outlined-name"
+                    label="Número resolución"
+                    value={numeroResolucion}
+                    onBlur={(e) =>
+                      validateField(
+                        'int',
+                        e.target.value,
+                        setErrorNumeroResolucion
+                      )
+                    }
+                    type="number"
+                    onChange={(e) => handleChange(e, setNumeroResolucion)}
+                    variant="outlined"
+                    className={classes.textfieldClass}
+                    error={errorNumeroResolucion}
+                    helperText={errorNumeroResolucion ? 'Solo números' : ''}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <TextField
+                    id="outlined-name"
+                    label="Número proyecto"
+                    value={numeroProyecto}
+                    onBlur={(e) =>
+                      validateField(
+                        'int',
+                        e.target.value,
+                        setErrorNumeroProyecto
+                      )
+                    }
+                    type="number"
+                    onChange={(e) => handleChange(e, setNumeroProyecto)}
+                    variant="outlined"
+                    className={classes.textfieldClass}
+                    error={errorNumeroProyecto}
+                    helperText={errorNumeroProyecto ? 'Solo números' : ''}
+                  />
+                </Grid>
+              </Grid>
+            </div>
+            <Divider />
+            <h3>Responsables</h3>
+            <Divider />
+            <TextField
+              id="outlined-name"
+              label="Director"
+              value={director}
+              onChange={(e) => {
+                valiString(e.target.value) ? handleChange(e, setDirector) : setDirector(null);
+                handleCamposErrors(
+                  'director',
+                  !valiString(e.target.value),
+                  !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                );
+              }}
+              variant="outlined"
+              className={classes.field}
+              error={camposErrors[6].error}
+              helperText={camposErrors[6].message}
+              type="text"
+            />
+            <TextField
+              id="outlined-name"
+              label="Codirector"
+              value={codirector}
+              onChange={(e) => {
+                valiString(e.target.value) ? handleChange(e, setCodirector) : setCodirector(null);
+                handleCamposErrors(
+                  'codirector',
+                  !valiString(e.target.value),
+                  !valiString(e.target.value) ? 'solo alfanúmericos' : ''
+                );
+              }}
+              variant="outlined"
+              className={classes.field}
+              error={camposErrors[7].error}
+              helperText={camposErrors[7].message}
+              type="text"
+            />
+            <div className={classes.root}>
+              <Grid container spacing={1}>
+                <Grid item xs>
+                  <Autocomplete
+                    className={classes.field}
+                    multiple
+                    id="usuarios-responsables"
+                    options={usuarios.filter((user) => user.rol === 'otro')}
+                    getOptionLabel={(option) => option.nombre}
+                    defaultValue={[]}
+                    filterSelectedOptions
+                    onChange={(event, newValue) => {
+                      event = newValue ? newValue : null;
+                      setUsuario(event);
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Usuarios responsables"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
             </div>
           </div>
           <Button
@@ -407,7 +647,7 @@ const CreateProyect = () => {
             color="primary"
             variant="contained"
             className={classes.submitButton}
-            disable={!canSubmit}
+            disabled={!canSubmit()}
           >
             Cargar proyecto
           </Button>
@@ -424,5 +664,4 @@ const CreateProyect = () => {
     </div>
   );
 };
-
 export default CreateProyect;

@@ -1,4 +1,4 @@
-const regexString = new RegExp('^[a-zA-Z0-9_ ]*$');
+const regexString = new RegExp('^[a-zA-Z0-9_ ñÑ]*$');
 const regexInteger = new RegExp('^[0-9]+');
 // eslint-disable-next-line no-useless-escape
 const regexCuit = /^\d{2}\-\d{8}\-\d{1}$/;
@@ -32,4 +32,8 @@ export const formatPrice = (price) => {
   const format = new Intl.NumberFormat('de-DE').format(price);
 
   return `$${format}`;
+};
+
+export const valiString = (value) => {
+  return regexString.test(value);
 };

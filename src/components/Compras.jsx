@@ -46,11 +46,11 @@ export const Compras = ({ setIdProyecto }) => {
   const $ = useStyles();
 
   //States
-  const [compras, setCompras] = useState(null);
+  const [compras, setCompras] = useState([]); //(null);
   const [open, setOpen] = useState(false);
   const [newCompra, setNewCompra] = useState(true);
   const idProyecto = sessionStorage.getItem('idProyecto'); //TODO: PASAR A REDUX
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -68,8 +68,14 @@ export const Compras = ({ setIdProyecto }) => {
   useEffect(() => {
     async function fetchCompra() {
       try {
-        const compras = await getComprasByProyecto(idProyecto);
-        setCompras(compras);
+        const compras = await getComprasByProyecto(1); // se Hardcodea(idProyecto);
+        setCompras(
+          compras.sort(function (a, b) {
+            var textA = a.fecha;
+            var textB = b.fecha;
+            return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+          })
+        );
       } catch (err) {
         console.log('ERROR FETCH API [compras]: ' + err);
       }
@@ -95,21 +101,21 @@ export const Compras = ({ setIdProyecto }) => {
           <TableContainer className={$.container}>
             <Table aria-label="customized table">
               <StyledTableHead>
-                <StyledTableCell className={$.textColor}>Rubro</StyledTableCell>
-                <StyledTableCell align="left" className={$.textColor}>
-                  Subrubro
+                <StyledTableCell className={$.textColor}>
+                  Fecha
                 </StyledTableCell>
-                <StyledTableCell align="center" className={$.textColor}>
-                  Número de compra
+                <StyledTableCell align="left" className={$.textColor}>
+                  Nro Factura
                 </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
                   Proveedor
                 </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
-                  Estado
+                  Rubro
                 </StyledTableCell>
+
                 <StyledTableCell align="left" className={$.textColor}>
-                  Nro. factura
+                  Estado
                 </StyledTableCell>
                 <StyledTableCell align="right" className={$.textColor}>
                   Monto
@@ -119,22 +125,20 @@ export const Compras = ({ setIdProyecto }) => {
                 {compras.map((compra) => (
                   <StyledTableRow key={compra.id}>
                     <StyledTableCell scope="row">
-                      {compra.rubro}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">
-                      {compra.subrubro}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {compra.numeroCompra}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">
-                      {compra.proveedor}
-                    </StyledTableCell>
-                    <StyledTableCell align="left">
-                      {compra.estado}
+                      {new Date(compra.fecha).toLocaleDateString()}
                     </StyledTableCell>
                     <StyledTableCell align="left">
                       {compra.factura}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {compra.Proveedore.nombre}
+                    </StyledTableCell>
+                    <StyledTableCell align="left">
+                      {compra.SubsidiosAsignado.Rubro.nombre}
+                    </StyledTableCell>
+
+                    <StyledTableCell align="left">
+                      {compra.estado}
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {formatPrice(compra.monto)}
@@ -143,7 +147,7 @@ export const Compras = ({ setIdProyecto }) => {
                 ))}
               </TableBody>
               <TableBody>
-                {[0, 1, 2, 3, 4].map((key) => (
+                {[0, 1, 2, 3].map((key) => (
                   <StyledTableCell
                     key={key}
                     style={{ backgroundColor: '#E5E9F0' }}
