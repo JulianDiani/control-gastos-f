@@ -1,33 +1,39 @@
 import { Doughnut } from 'react-chartjs-2';
 import React from 'react';
+import { montoDisponible, nivelDeEjecucion } from '../../utils/presupuestos'
+import { makeStyles } from '@material-ui/core/styles';
 
+export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupuesto }) {
 
-export default function TortaPrincipal({presupuesto }) {
-  
   const totalDisponible = presupuesto; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
-  
+  const monto = montoDisponible(totalPresupuesto, totalGastos)
+  const ejecucion = nivelDeEjecucion(totalPresupuesto, totalGastos);
+  const $ = useStyles();
   const datosAConsumir = (({
-    insumos,
-    bibliografia,
-    publicaciones,
-    viaticos,
-    equipamiento,
-    tecnico,
-    administracion,
+    Insumos,
+    Bibliografia,
+    Publicaciones,
+    Viaticos,
+    Equipamiento,
+    Tecnico,
+    Administracion,
+
   }) => ({
-    insumos,
-    bibliografia,
-    publicaciones,
-    viaticos,
-    equipamiento,
-    tecnico,
-    administracion, 
-  }))(totalDisponible);
+    Insumos,
+    Bibliografia,
+    Publicaciones,
+    Viaticos,
+    Equipamiento,
+    Tecnico,
+    Administracion,
+
+  }))(totalDisponible, monto, ejecucion);
 
   const graficoTorta = (
-    <Doughnut
+
+    <Doughnut className={$.graficoTor}
       data={{
-        labels: Object.keys(datosAConsumir).map(key =>{
+        labels: Object.keys(datosAConsumir).map(key => {
           return key;
         }),
         datasets: [
@@ -43,13 +49,13 @@ export default function TortaPrincipal({presupuesto }) {
               '#e28956',
             ],
             data: [
-              totalDisponible.insumos,
-              totalDisponible.publicaciones,
-              totalDisponible.bibliografia,
-              totalDisponible.viaticos,
-              totalDisponible.equipamiento,
-              totalDisponible.tecnico,
-              totalDisponible.administracion,
+              totalDisponible.Insumos,
+              totalDisponible.Publicaciones,
+              totalDisponible.Bibliografia,
+              totalDisponible.Viaticos,
+              totalDisponible.Equipamiento,
+              totalDisponible.Tecnico,
+              totalDisponible.Administracion,
             ],
           },
         ],
@@ -62,5 +68,12 @@ export default function TortaPrincipal({presupuesto }) {
   );
 
   return <>{graficoTorta}</>;
+
 }
 
+const useStyles = makeStyles({
+  graficoTor: {
+    width: '25rem !important',
+    height: 'auto !important'
+  },
+});

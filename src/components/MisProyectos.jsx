@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { React, useEffect, useState } from 'react';
 import { Footer } from './Footer';
 import Table from '@material-ui/core/Table';
@@ -9,21 +8,23 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import { proyectosEnHistoria } from '../constants/constants';
-import { Link } from 'react-router-dom';
 import {
   calculateTotalExpenses,
   nivelDeEjecucion,
 } from '../utils/presupuestos';
 import { getPresupuesto } from '../services/presupuestos';
 import { getAllCompras } from '../services/compras';
-import { Box, CircularProgress, Typography } from '@material-ui/core';
+import {
+  Box,
+  CircularProgress,
+  Typography,
+  TableHead,
+  Button,
+} from '@material-ui/core';
 import { getProyecto } from '../services/proyectos';
+import { formatDate } from '../utils/validaciones';
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
+const StyledTableCell = withStyles(() => ({
   body: {
     fontSize: 14,
   },
@@ -31,27 +32,25 @@ const StyledTableCell = withStyles((theme) => ({
 
 const StyledTableRow = withStyles(() => ({
   root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: 'theme.palette.action.hover,',
-    },
+    backgroundColor: 'theme.palette.action.hover,',
   },
 }))(TableRow);
 
 const StyledTableHead = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
-      background: '#5AA123',
+      background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)',
     },
   },
-}))(TableRow);
+}))(TableHead);
 
 const StyledTableHeadTerminados = withStyles(() => ({
   root: {
     '&:nth-of-type(odd)': {
-      backgroundColor: '#DCDCDC',
+      background: '#DCDCDC',
     },
   },
-}))(TableRow);
+}))(TableHead);
 
 const circularProgressWithValue = (nivelEjecucion) => {
   return (
@@ -75,26 +74,37 @@ const circularProgressWithValue = (nivelEjecucion) => {
   );
 };
 
-export const MisProyectos = ({ userName, setIdProyecto }) => {
+export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
   const $ = useStyles();
   const [proyectosEnCurso, setProyectosEnCurso] = useState([]);
   const [compras, setCompras] = useState([]);
   const [presupuesto, setPresupuesto] = useState([]);
 
-  const handleSelectProyect = (id) => {
-    sessionStorage.setItem('idProyecto', id);
-    setIdProyecto(id);
+  const handleSelect = (id) => {
+    if (id === idProyecto) {
+      handleSetProyect(null);
+    } else {
+      handleSetProyect(id);
+    }
   };
+
   useEffect(() => {
-    async function getPorcentaje() {
+    let isMounted = true;
+    async function fetchData() {
       const proyectos = await getProyecto(userName);
       const comprasRealizadas = await getAllCompras();
       const presupuestoProyecto = await getPresupuesto();
-      setCompras(comprasRealizadas);
-      setProyectosEnCurso(proyectos);
-      setPresupuesto(presupuestoProyecto);
+      if (isMounted) {
+        setCompras(comprasRealizadas);
+        setProyectosEnCurso(proyectos);
+        setPresupuesto(presupuestoProyecto);
+      }
     }
-    getPorcentaje();
+    fetchData();
+    return () => {
+      isMounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const calcularNivelEjecucion = (proyectoId) => {
@@ -103,47 +113,68 @@ export const MisProyectos = ({ userName, setIdProyecto }) => {
     );
     const gastos = calculateTotalExpenses(comprasRealizadasEnproyecto);
     const totalPresupuesto = presupuesto.total;
-    const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos).split(',')[0]; //Truncamiento del porcentaje.
+    const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos); //Truncamiento del porcentaje.
     return ejecucion;
   };
+
   return (
     <>
       <h2>Proyectos en curso</h2>
       <TableContainer className={$.container} component={Paper}>
         <Table aria-label="customized table">
           <StyledTableHead>
-            <StyledTableCell className={$.textColor}>Proyecto</StyledTableCell>
-            <StyledTableCell align="center" className={$.textColor}>
-              Director
-            </StyledTableCell>
-            <StyledTableCell align="center" className={$.textColor}>
-              Fecha de Inicio
-            </StyledTableCell>
-            <StyledTableCell align="center" className={$.textColor}>
-              Porcentaje
-            </StyledTableCell>
+            <StyledTableRow>
+              <StyledTableCell className={$.textColor}>
+                Proyecto
+              </StyledTableCell>
+              <StyledTableCell align="center" className={$.textColor}>
+                Director
+              </StyledTableCell>
+              <StyledTableCell align="center" className={$.textColor}>
+                Fecha de Inicio
+              </StyledTableCell>
+              <StyledTableCell align="center" className={$.textColor}>
+                Porcentaje
+              </StyledTableCell>
+              <StyledTableCell align="center" className={$.textColor}>
+                Opciones
+              </StyledTableCell>
+            </StyledTableRow>
           </StyledTableHead>
           <TableBody>
             {proyectosEnCurso.map((proyecto) => (
-              <StyledTableRow key={proyecto.id}>
-                <StyledTableCell
-                  scope="row"
-                  onClick={() => handleSelectProyect(proyecto.id)}
-                  component={Link}
-                  to={'/proyectos'}
-                >
-                  {proyecto.titulo}
-                </StyledTableCell>
+              <StyledTableRow
+                key={proyecto.id}
+                className={
+                  idProyecto !== null &&
+                  proyecto.id.toString() === idProyecto.toString()
+                    ? $.selectedRow
+                    : ''
+                }
+              >
+                <StyledTableCell scope="row">{proyecto.titulo}</StyledTableCell>
                 <StyledTableCell align="center">
                   {proyecto.director}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyecto.fechaInicio}
+                  {formatDate(proyecto.fechaInicio)}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {circularProgressWithValue(
                     calcularNivelEjecucion(proyecto.id)
                   )}
+                </StyledTableCell>
+                <StyledTableCell>
+                  <Button
+                    variant="contained"
+                    className={$.button}
+                    onClick={() => handleSelect(proyecto.id)}
+                  >
+                    {idProyecto !== null &&
+                    proyecto.id.toString() === idProyecto.toString()
+                      ? 'Ignorar'
+                      : 'Investigar'}
+                  </Button>
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -155,18 +186,20 @@ export const MisProyectos = ({ userName, setIdProyecto }) => {
       <TableContainer className={$.container} component={Paper}>
         <Table aria-label="customized table">
           <StyledTableHeadTerminados>
-            <StyledTableCell className={$.textColorHistoric}>
-              Proyecto
-            </StyledTableCell>
-            <StyledTableCell align="center" className={$.textColorHistoric}>
-              Director
-            </StyledTableCell>
-            <StyledTableCell align="center" className={$.textColorHistoric}>
-              Fecha de Inicio
-            </StyledTableCell>
-            <StyledTableCell align="center" className={$.textColorHistoric}>
-              Porcentaje
-            </StyledTableCell>
+            <StyledTableRow>
+              <StyledTableCell className={$.textColorHistoric}>
+                Proyecto
+              </StyledTableCell>
+              <StyledTableCell align="center" className={$.textColorHistoric}>
+                Director
+              </StyledTableCell>
+              <StyledTableCell align="center" className={$.textColorHistoric}>
+                Fecha de Inicio
+              </StyledTableCell>
+              <StyledTableCell align="center" className={$.textColorHistoric}>
+                Porcentaje
+              </StyledTableCell>
+            </StyledTableRow>
           </StyledTableHeadTerminados>
           <TableBody>
             {proyectosEnHistoria.map((proyectosEnHistoria) => (
@@ -178,7 +211,7 @@ export const MisProyectos = ({ userName, setIdProyecto }) => {
                   {proyectosEnHistoria.director}
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyectosEnHistoria.fechaInicio}
+                  {formatDate(proyectosEnHistoria.fechaInicio)}
                 </StyledTableCell>
                 <StyledTableCell align="center">
                   {circularProgressWithValue(100)}
@@ -207,5 +240,13 @@ const useStyles = makeStyles({
   },
   tableCellContent: {
     maxWidth: '10vw',
+  },
+  button: {
+    height: '2rem',
+    margin: '0',
+    width: '100%',
+  },
+  selectedRow: {
+    background: 'antiquewhite',
   },
 });
