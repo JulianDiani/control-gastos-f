@@ -20,9 +20,8 @@ export async function getAllCompras() {
 }
 
 export async function getComprasByProyecto(idProyecto) {
-  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}/getComprasByProyecto/${idProyecto}`;
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}/getComprasByProyect/${idProyecto}`;
   const response = await fetch(endpoint, {
-    //method: 'POST',
     method: 'GET',
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -30,7 +29,6 @@ export async function getComprasByProyecto(idProyecto) {
     headers: {
       'Content-Type': 'application/json',
     },
-    //body: JSON.stringify({ idProyecto: idProyecto }),
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
   return response.json();
@@ -67,9 +65,40 @@ export async function getGastosPorRubro(rubro, idProyecto) {
   return response.json();
 }
 
-export async function getTotalxSubsidio(idSubsidio) {
-  const EXTRA_PATH = '/getTotalxSubsidio/';
-  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}${EXTRA_PATH}${idSubsidio}`;
+export async function getCompraByID(idCompra) {
+  const EXTRA_PATH = '/getCompraById';
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}${EXTRA_PATH}/${idCompra}`;
+  const response = await fetch(endpoint, {
+    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    referrerPolicy: 'no-referrer',
+  });
+  return response.json();
+}
+
+export async function putCompra(id, body) {
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}/${id}`;
+  const response = await fetch(endpoint, {
+    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+  return response;
+}
+
+export async function getAllGastosPorRubro(idProyecto) {
+  const EXTRA_PATH = '/getCompraTotal';
+  const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}${EXTRA_PATH}/${idProyecto}`;
   const response = await fetch(endpoint, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin

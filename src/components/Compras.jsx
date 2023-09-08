@@ -9,17 +9,13 @@ import { getComprasByProyecto } from '../services/compras.js';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Divider from '@material-ui/core/Divider';
-import { Button, Grid, Modal, Typography } from '@material-ui/core';
+import { Button, Grid, Modal, TableHead, Typography } from '@material-ui/core';
 import PopUpCompras from './PopUpCompras';
 import { Footer } from './Footer';
 import { formatPrice } from '../utils/validaciones';
 import BlockIcon from '@material-ui/icons/Block';
 
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
+const StyledTableCell = withStyles(() => ({
   body: {
     fontSize: 14,
   },
@@ -39,9 +35,9 @@ const StyledTableHead = withStyles(() => ({
       background: 'linear-gradient(to left , #9BC76D, #80B05C ,#5AA123)',
     },
   },
-}))(TableRow);
+}))(TableHead);
 
-export const Compras = ({ setIdProyecto }) => {
+export const Compras = ({ idProyecto }) => {
   //Styles
   const $ = useStyles();
 
@@ -49,16 +45,10 @@ export const Compras = ({ setIdProyecto }) => {
   const [compras, setCompras] = useState([]); //(null);
   const [open, setOpen] = useState(false);
   const [newCompra, setNewCompra] = useState(true);
-  const idProyecto = sessionStorage.getItem('idProyecto'); //TODO: PASAR A REDUX
 
   const handleOpen = () => {
     setOpen(true);
   };
-
-  useEffect(() => {
-    const id = sessionStorage.getItem('idProyecto');
-    setIdProyecto(id);
-  }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -101,6 +91,7 @@ export const Compras = ({ setIdProyecto }) => {
           <TableContainer className={$.container}>
             <Table aria-label="customized table">
               <StyledTableHead>
+                <StyledTableRow>
                 <StyledTableCell className={$.textColor}>
                   Fecha
                 </StyledTableCell>
@@ -120,6 +111,7 @@ export const Compras = ({ setIdProyecto }) => {
                 <StyledTableCell align="right" className={$.textColor}>
                   Monto
                 </StyledTableCell>
+                </StyledTableRow>
               </StyledTableHead>
               <TableBody>
                 {compras.map((compra) => (
@@ -147,7 +139,8 @@ export const Compras = ({ setIdProyecto }) => {
                 ))}
               </TableBody>
               <TableBody>
-                {[0, 1, 2, 3].map((key) => (
+              <StyledTableRow>
+                {[0, 1, 2, 3, 4].map((key) => (
                   <StyledTableCell
                     key={key}
                     style={{ backgroundColor: '#E5E9F0' }}
@@ -165,6 +158,7 @@ export const Compras = ({ setIdProyecto }) => {
                 >
                   {totalGastos()}
                 </StyledTableCell>
+                </StyledTableRow>
               </TableBody>
             </Table>
           </TableContainer>
@@ -191,7 +185,6 @@ export const Compras = ({ setIdProyecto }) => {
             state={setOpen}
             stateNewCompra={setNewCompra}
             idProyecto={idProyecto}
-            setIdProyecto={setIdProyecto}
           />
         </Modal>
       </Grid>

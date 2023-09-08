@@ -138,7 +138,6 @@ export default function PopUpCompras({
   state,
   idProyecto,
   stateNewCompra,
-  setIdProyecto,
 }) {
   const $ = useStyles();
 
@@ -226,8 +225,8 @@ export default function PopUpCompras({
     getProveedores();
     const id = sessionStorage.getItem('idProyecto');
     setIdProyecto(id);
-  }, [newProveedor]);
-
+  }, []);
+  
   //UseEffect when changing "rubros"
   useEffect(() => {
     async function fetchGastos() {
@@ -273,12 +272,10 @@ export default function PopUpCompras({
       //numeroCompra: 80,
       //proveedor: proveedor,
       monto: monto,
-      estado: 'Comprado',
-      factura: nroFactura,
-      nombre: nombre, //esto seria una descripcion
-      //idProyecto: null,
-      idsubsidio: subsidio.id,
-      idproveedor: idproveedor
+      estado: 'Pendiente',
+      factura: 'factura-054',
+      nombre: nombre,
+      idProyecto: idProyecto,
     };
     const res = await postCompra(data);
     stateNewCompra(true);
@@ -385,11 +382,7 @@ export default function PopUpCompras({
             : `No cuentas con dinero disponible para este rubro`}
         </Typography>
         <br />
-        <Divider />
-
-        <br />
-        <Typography variant="h6">Datos de la compra</Typography>
-        <br />
+        <Divider className={$.divider} />
         <div className={$.secondRow}>
           <TextField
             label="Fecha"
