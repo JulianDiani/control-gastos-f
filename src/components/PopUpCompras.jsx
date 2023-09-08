@@ -15,7 +15,7 @@ import {
 import {
   postCompra,
   getGastosPorRubro,
-  getTotalxSubsidio,
+  getAllCompras,
 } from '../services/compras.js';
 import {
   getPresupuesto,
@@ -224,7 +224,7 @@ export default function PopUpCompras({
     }
     getProveedores();
     const id = sessionStorage.getItem('idProyecto');
-    setIdProyecto(id);
+    idProyecto(id);
   }, []);
   
   //UseEffect when changing "rubros"
@@ -236,7 +236,7 @@ export default function PopUpCompras({
 
       // Con el subsidioAsignado, consulta en la API de compras, todas
       // las que tengan este idSubsidio
-      const totalComprasSubsidio = await getTotalxSubsidio(subsidioAsignado.id);
+      const totalComprasSubsidio = await getAllCompras(subsidioAsignado.id);
 
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         subsidioAsignado.montoAsignado,

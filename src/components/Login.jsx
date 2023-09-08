@@ -11,7 +11,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from 'react';
 import PasswordField from 'material-ui-password-field';
-import { getUser } from '../services/usuarios';
+import { getUsuarios } from '../services/usuarios';
 import { Messages } from '../constants/messages';
 import Alert from '@material-ui/lab/Alert';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
@@ -56,7 +56,7 @@ const Login = ({
 
   //set logedin true or false - @TODO use recoil.
   const sendLoginData = async () => {
-    const user = await getUser(userName);
+    const user = await getUsuarios(userName);
     const checked = checkedLogin(user);
     const proyectoActualId = user?.data?.proyectoActualId;
     const role = user?.data?.rol;

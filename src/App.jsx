@@ -6,7 +6,7 @@ import NavBar from './components/NavBar';
 import { DatosGenerales } from './components/DatosGenerales';
 import { MisProyectos } from './components/MisProyectos';
 import { Normativas } from './components/Normativas';
-import { getProyectoById } from './services/proyectos';
+import { getProyecto } from './services/proyectos';
 import {
   AssignmentInd,
   Help,
@@ -64,7 +64,7 @@ export default function App() {
      
       path: '/proyectos/presupuestos',
       canBeDisabled: true,
-   ,
+   
     },
     {
      
@@ -74,7 +74,7 @@ export default function App() {
      
       path: '/proyectos/proveedores',
       canBeDisabled: false,
-   ,
+   
     },
     {
       text: 'Compras',
@@ -106,7 +106,7 @@ export default function App() {
      
       path: '/admin/createProyect',
       canBeDisabled: false,
-   ,
+   
     },
     {
       text: 'Cargar usuario',
@@ -119,7 +119,7 @@ export default function App() {
   useEffect(() => {
     async function fetchProyecto() {
       try {
-        const proyecto = await getProyectoById(idProyecto);
+        const proyecto = await getProyecto(idProyecto);
         setProyectoActual(proyecto[0]);
       } catch (err) {
         console.log('ERROR FETCH API [proyecto]: ' + err);
