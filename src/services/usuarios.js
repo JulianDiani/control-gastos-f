@@ -1,3 +1,47 @@
+const mockUsuarios = {
+  data: [
+    {
+      edad: 23,
+      id: 1,
+      nombre: 'Ramiro',
+      usuario: 'admin',
+      contraseña: '123456',
+      fechaNacimiento: '1999-12-06',
+      apellido: 'Ambrosetti',
+      avatarUrl: 'http://www.laizquierdadiario.com/IMG/arton21559.jpg',
+      rol: 'admin',
+      createdAt: '2023-09-14T22:52:14.376Z',
+      updatedAt: '2023-09-14T22:52:14.376Z',
+    },
+    {
+      edad: 23,
+      id: 2,
+      nombre: 'Otro',
+      usuario: 'otro',
+      contraseña: '123456',
+      fechaNacimiento: '2000-05-02',
+      apellido: 'Usuario',
+      avatarUrl: 'http://www.laizquierdadiario.com/IMG/arton21559.jpg',
+      rol: 'otro',
+      createdAt: '2023-09-14T22:52:14.376Z',
+      updatedAt: '2023-09-14T22:52:14.376Z',
+    },
+    {
+      edad: 23,
+      id: 3,
+      nombre: 'Otro2',
+      usuario: 'otro2',
+      contraseña: '123456',
+      fechaNacimiento: '2000-05-02',
+      apellido: 'Usuario',
+      avatarUrl: 'http://www.laizquierdadiario.com/IMG/arton21559.jpg',
+      rol: 'otro',
+      createdAt: '2023-09-14T22:52:14.376Z',
+      updatedAt: '2023-09-14T22:52:14.376Z',
+    },
+  ],
+};
+
 export async function getUsuarios() {
   const url = 'http://localhost:3001/api/usuarios';
   const response = await fetch(url, {
