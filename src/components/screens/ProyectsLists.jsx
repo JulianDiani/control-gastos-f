@@ -50,6 +50,7 @@ const ProyectsList = () => {
   useEffect(() => {
     async function getProyects() {
       const proyectos = await getProyectsForAdmin();
+      console.log(proyectos)
 
       setProyects(proyectos);
     }
@@ -61,8 +62,7 @@ const ProyectsList = () => {
       <h1>Proyectos</h1>
       <TableContainer className={$.container} component={Paper}>
         <Table aria-label="customized table">
-          <StyledTableHead>
-            <StyledTableCell />
+          <StyledTableHead>            
             <StyledTableCell className={$.textColor}>Proyecto</StyledTableCell>
             <StyledTableCell align="center" className={$.textColor}>
               Director
@@ -75,7 +75,9 @@ const ProyectsList = () => {
             </StyledTableCell>
           </StyledTableHead>
           <TableBody>
+            
             {proyects.map((proyecto) => (
+              
               <StyledTableRow key={proyecto.id}>
                 <StyledTableCell
                   scope="row"
@@ -84,15 +86,23 @@ const ProyectsList = () => {
                   to={'/admin/proyectView'}//edit cuando se cree la vista de proyecto singular con compra
                 >
                   {proyecto.titulo}
+               
+                
+                  
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyecto.director}
+                {proyecto.director}
+                 
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {formatDate(proyecto.fechaInicio)}
+                {formatDate(proyecto.fechaInicio)}
+                 
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  {proyecto.Compras.length}
+                Cant compras
+                {
+                /* {proyecto.SubsidiosAsignados.Compras.id} */}
+                 
                 </StyledTableCell>
               </StyledTableRow>
             ))}
