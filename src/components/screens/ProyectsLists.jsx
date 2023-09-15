@@ -99,9 +99,8 @@ const ProyectsList = () => {
                  
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                Cant compras
-                {
-                /* {proyecto.SubsidiosAsignados.Compras.id} */}
+                
+                {proyecto.Compras.length} 
                  
                 </StyledTableCell>
               </StyledTableRow>
