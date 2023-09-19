@@ -237,7 +237,7 @@ export default function PopUpCompras({
 
       // Con el subsidioAsignado, consulta en la API de compras, todas
       // las que tengan este idSubsidio
-      const totalComprasSubsidio = await getTotalxSubsidio(subsidioAsignado.id);
+      const totalComprasSubsidio = "500"//await getTotalxSubsidio(subsidioAsignado.id);
 
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         subsidioAsignado.montoAsignado,
@@ -270,7 +270,7 @@ export default function PopUpCompras({
       fecha: fecha,
       //rubro: rubro,
       // subrubro: subrubro,
-      //numeroCompra: 80,
+      numeroCompra: 80,
       //proveedor: proveedor,
       monto: monto,
       estado: 'Comprado',

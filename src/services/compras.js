@@ -68,7 +68,7 @@ export async function getGastosPorRubro(rubro, idProyecto) {
 }
 
 export async function getTotalxSubsidio(idSubsidio) {
-  const EXTRA_PATH = '/getTotalxSubsidio/';
+  const EXTRA_PATH = '/getTotalxSubsidios/';
   const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}${EXTRA_PATH}${idSubsidio}`;
   const response = await fetch(endpoint, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
