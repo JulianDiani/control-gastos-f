@@ -57,6 +57,8 @@ const useRowStyles = makeStyles({
 
 function Row(props) {
   const { row, presupuestoTotal, presupuestoGastado } = props;
+  //console.log("Prop", props)
+  //console.log("Row", row)
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
 
@@ -77,7 +79,7 @@ function Row(props) {
         </TableCell>
         <TableCell align="center">{row.director}</TableCell>
         <TableCell align="center">{row.fechaInicio.slice(0, -14)}</TableCell>
-        <TableCell align="center">Nombre convocatoria</TableCell>
+        <TableCell align="center">{row.Convocatoria.nombre}</TableCell>
         <TableCell align="center">{presupuestoTotal}</TableCell>
         <TableCell align="center">{presupuestoGastado}</TableCell>
         <TableCell align="center">
