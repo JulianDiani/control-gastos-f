@@ -227,7 +227,7 @@ export default function App() {
                           MisProyectos
                           userName={userName}
                           handleSetProyect={handleSetProyect}
-                          idProyecto={idProyecto}
+                          idProyecto={idProyecto?idProyecto:null}
                           {...props}
                         />
                       )}
