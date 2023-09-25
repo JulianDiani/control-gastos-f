@@ -51,7 +51,7 @@ const SolicitudCompra = () => {
 
   const [compra, setCompra] = useState([]);
   const [changeCompra, setChangeCompra] = useState(true);
-
+  console.log("Compra",compra)
   async function fetchCompra() {
     try {
         const id = sessionStorage.getItem('idCompra');
@@ -108,7 +108,7 @@ const SolicitudCompra = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell>Proveedor:</TableCell>
-                  <TableCell>{compra.proveedor}</TableCell>
+                  <TableCell>{compra.idProveedor}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Monto:</TableCell>
