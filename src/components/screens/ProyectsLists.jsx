@@ -55,7 +55,7 @@ export const ProyectsList = () => {
     }
     getProyects();
   }, []) //only de first render
-  //TODO Donde esta el 5 harcodeado estaba //proyecto.Compras.length 
+  
   return (
     <>
       <h1>Proyectos</h1>
@@ -91,7 +91,7 @@ export const ProyectsList = () => {
                   {formatDate(proyecto.fechaInicio)}
                 </StyledTableCell>                
                 <StyledTableCell align="center">
-                  {5} 
+                  {proyecto.Compras.length} 
                 </StyledTableCell>
               </StyledTableRow>
             ))}

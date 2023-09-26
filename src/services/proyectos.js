@@ -2,7 +2,7 @@ import { presupuestoPrueba } from '../constants/constants';
 
 //SEPARAR LOS SERVICIOS DEL ADMIN Y LOS DEL INVESTIGADOR (ARMAR DOS DIRECTORIOS SEPARADOS UNO PARA CADA UNO DONDE TENGAN SUS COMPONENTES Y SERVICIOS)
 export async function getProyectsForAdmin() {
-  const url = 'http://localhost:3001/api/proyectos/allProyects';
+  const url = 'http://localhost:3001/api/proyectos/findAllConCompra';
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -16,6 +16,22 @@ export async function getProyectsForAdmin() {
   });
   return response.json();
 }
+// DELETE ERA LA QUE TENIA GRUPO 2
+//export async function getProyectsForAdmin() {
+//   const url = 'http://localhost:3001/api/proyectos/allProyects';
+//   const response = await fetch(url, {
+//     method: 'GET', // *GET, POST, PUT, DELETE, etc.
+//     mode: 'cors', // no-cors, *cors, same-origin
+//     cache: 'no-cache', // *default, no-cache, reload, force-cache
+//     credentials: 'same-origin', // include, *same-origin, omit
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     json: true,
+//     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-w
+//   });
+//   return response.json();
+// }
 
 export async function getProyecto(user) {
   const url = 'http://localhost:3001/api/proyectos';
@@ -36,9 +52,9 @@ export async function getProyecto(user) {
 }
 
 export async function getProyectoById(idProyecto) {
-  const url = 'http://localhost:3001/api/proyectos/findByName';
+  const url = `http://localhost:3001/api/proyectos/findByName/${idProyecto}`;
   const response = await fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'same-origin', // include, *same-origin, omit
@@ -46,12 +62,30 @@ export async function getProyectoById(idProyecto) {
       'Content-Type': 'application/json',
     },
     json: true,
-    body: JSON.stringify({ id: idProyecto }),
     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
   });
   //const proyecto = await response.json();
   return response.json();
 }
+
+// DELETED este tenia grupo 2
+// export async function getProyectoById(idProyecto) {
+//   const url = 'http://localhost:3001/api/proyectos/findByName';
+//   const response = await fetch(url, {
+//     method: 'POST', // *GET, POST, PUT, DELETE, etc.
+//     mode: 'cors', // no-cors, *cors, same-origin
+//     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+//     credentials: 'same-origin', // include, *same-origin, omit
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     json: true,
+//     body: JSON.stringify({ id: idProyecto }),
+//     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+//   });
+//   //const proyecto = await response.json();
+//   return response.json();
+// }
 
 export function getPresupuesto() {
   return Promise.resolve(presupuestoPrueba);
