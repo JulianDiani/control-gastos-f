@@ -41,7 +41,7 @@ const StyledTableHead = withStyles(() => ({
   },
 }))(TableRow);
 
-export const Compras = ({ setIdProyecto }) => {
+export const Compras = () => {
   //Styles
   const $ = useStyles();
 
@@ -54,11 +54,12 @@ export const Compras = ({ setIdProyecto }) => {
   const handleOpen = () => {
     setOpen(true);
   };
-
-  useEffect(() => {
-    const id = sessionStorage.getItem('idProyecto');
-    setIdProyecto(id);
-  }, []);
+  //DELETED Para borrar antes se pasaba por params setIdProyecto a este y al de PoP UP
+  //console.log(idProyecto)
+  // useEffect(() => {
+  //   const id = sessionStorage.getItem('idProyecto');
+  //   setIdProyecto(id);
+  // }, []);
 
   const handleClose = () => {
     setOpen(false);
@@ -68,7 +69,7 @@ export const Compras = ({ setIdProyecto }) => {
   useEffect(() => {
     async function fetchCompra() {
       try {
-        const compras = await getComprasByProyecto(1); // se Hardcodea(idProyecto);
+        const compras = await getComprasByProyecto(idProyecto); // se Hardcodea(idProyecto);
         setCompras(
           compras.sort(function (a, b) {
             var textA = a.fecha;
@@ -190,8 +191,7 @@ export const Compras = ({ setIdProyecto }) => {
           <PopUpCompras
             state={setOpen}
             stateNewCompra={setNewCompra}
-            idProyecto={idProyecto}
-            setIdProyecto={setIdProyecto}
+            
           />
         </Modal>
       </Grid>

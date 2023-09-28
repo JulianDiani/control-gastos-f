@@ -1,35 +1,75 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { React } from 'react';
+import { useState } from 'react';
 import List from '@material-ui/core/List';
 import logo from '../assets/logoUnahur.png';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core';
+import { Box, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
-export default function NavBar({ sideBarOptions }) {
+const useStyles = makeStyles(() => ({
+  navbar: {
+    width: '13rem',
+    height: '100%',
+    boxShadow: '10px 0 5px -5px grey',
+    float: 'left',
+  },
+  logo: {
+    width: '160px',
+    height: 'auto',
+  },
+  list: {
+    color: '#505050',
+  },
+  option: {
+    '&:hover': {
+      backgroundColor: '#9BC76D',
+      color: '#FAFAFA',
+    },
+  },
+  optionSelected: {
+    backgroundColor: '#5AA123 !important',
+    color: '#FAFAFA',
+  },
+  imageContainer: {
+    display: 'flex',
+    padding: '0.5rem',
+    justifyContent: 'center',
+  },
+}));
+
+
+export default function NavBar({ sideBarOptions, proyectoActual }) {
   const $ = useStyles();
-  
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
+
   return (
     <Grid>
       <div className={$.navbar}>
-        <Link to={'/'}>
+        <Box className={$.imageContainer} component={Link} to={'/'}>
           <img
             src={logo}
             className={$.logo}
             alt="Logo Universidad Nacional de Hurlingham"
           />
-        </Link>
+        </Box>
         <List className={$.list}>
-          {sideBarOptions.map(({ text, icon, path }, index) => (
+          {sideBarOptions.map(({ text, icon, path, canBeDisabled }, index) => (
             <ListItem
+              selected={selectedIndex === index}
+              onClick={(event) => handleListItemClick(event, index)}
               divider={index === sideBarOptions.length - 1 ? false : true}
-              className={$.option}
+              className={selectedIndex === index ? $.optionSelected : $.option}
               button={true}
               key={text}
               component={Link}
               to={path}
+              disabled={!proyectoActual && canBeDisabled}
             >
               {icon}
               <ListItemText primary={text} sx={{ ml: 2 }} />
@@ -41,24 +81,4 @@ export default function NavBar({ sideBarOptions }) {
   );
 }
 
-const useStyles = makeStyles(() => ({
-  navbar: {
-    width: '18vw',
-    height: '100%',
-    boxShadow: '10px 0 5px -5px grey',
-    float: 'left',
-  },
-  logo: {
-    height: '55px',
-    padding: '2%',
-  },
-  list: {
-    color: '#505050',
-  },
-  option: {
-    '&:hover': {
-      backgroundColor: '#62B5F6',
-      color: '#FAFAFA',
-    },
-  },
-}));
+

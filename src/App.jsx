@@ -254,7 +254,7 @@ export default function App() {
                       path="/proyectos/compras"
                       component={() => (
                         <Compras
-                          idProyecto={idProyecto}
+                        idProyecto={idProyecto}                        
                         />
                       )}
                     />

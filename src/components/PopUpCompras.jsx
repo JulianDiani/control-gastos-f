@@ -135,10 +135,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PopUpCompras({
-  state,
-  idProyecto,
-  stateNewCompra,
-  setIdProyecto,
+  state,  
+  stateNewCompra  
 }) {
   const $ = useStyles();
 
@@ -225,7 +223,7 @@ export default function PopUpCompras({
     }
     getProveedores();
     const id = sessionStorage.getItem('idProyecto');
-    setIdProyecto(id);
+    //setIdProyecto(id);
   }, [newProveedor]);
 
   //UseEffect when changing "rubros"

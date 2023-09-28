@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import { getProyectoById } from '../services/proyectos.js';
 import Alert from '@material-ui/lab/Alert';
-import { formatPrice } from '../utils/validaciones';
+import { formatPrice, formatDate, formatYear } from '../utils/validaciones';
 
 export const DatosGenerales = ({ idProyecto }) => {
   const $ = useStyles();
@@ -21,21 +21,25 @@ export const DatosGenerales = ({ idProyecto }) => {
   //const idProyecto = sessionStorage.getItem("idProyecto");
   //useEffect para traer la proyecto del proyecto de la api.
   useEffect(() => {
-    async function fetchUsuarios() {
-      try {
-        const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
-        setProyecto(proyecto[0]);
-      } catch (err) {
-        console.log('[DatosGenerales Component] ERROR : ' + err);
+    let isMounted = true;
+    async function fetchProyectos() {
+      if (idProyecto)
+        try {
+          const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
+          if (isMounted) {
+            setProyecto(proyecto[0]);
+          }
+        } catch (err) {
+          console.log('[DatosGenerales Component] ERROR : ' + err);
+        }
+      else {
+        return window.history.back();
       }
     }
-    if (idProyecto) {
-      fetchUsuarios();
-    } else {
-      window.location.replace(
-        'https://controlgastosdesubsidios-unahur.netlify.app/'
-      );
-    }
+    fetchProyectos();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const loadingRendering = () => {
@@ -65,7 +69,7 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Año de convocatoria: ' + proyecto.año}
+            primary={'Año de convocatoria: ' + formatYear(proyecto.año)}
             sx={{ ml: 2 }}
           />
         </ListItem>
@@ -89,13 +93,13 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Fecha Inicio: ' + proyecto.fechaInicio}
+            primary={'Fecha Inicio: ' + formatDate(proyecto.fechaInicio)}
             sx={{ ml: 2 }}
           />
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Fecha Fin: ' + proyecto.fechaFin}
+            primary={'Fecha Fin: ' + formatDate(proyecto.fechaFin)}
             sx={{ ml: 2 }}
           />
         </ListItem>
@@ -146,18 +150,18 @@ export const DatosGenerales = ({ idProyecto }) => {
 
 const useStyles = makeStyles({
   root: {
+    width: '100%',
     height: '100%',
     display: 'flex',
+    flexDirection: 'column',
   },
   card: {
-    width: '50%',
     margin: '1rem',
-    maxHeight: '45rem',
     borderTop: '1rem solid #5AA123',
     borderRadius: '17px 17px 0 0',
   },
   divider: {
-    marginBottom: '2rem',
+    marginBottom: '1rem',
   },
   item: {
     display: 'flex',
@@ -166,20 +170,16 @@ const useStyles = makeStyles({
     fontWeight: 'bolder',
   },
   parrafo: {
-    padding: '3rem',
+    padding: '1rem',
     fontSize: '16px',
     textAlign: 'justify',
   },
   title: {
     fontWeight: 'bold',
-    marginLeft: '3rem',
+    marginLeft: '1rem',
   },
   dropDown: {
     marginRight: '1rem',
     width: '10rem',
-  },
-  menuItem: {
-    marginTop: '46rem',
-    marginLeft: '30rem',
   },
 });
