@@ -3,8 +3,16 @@ import React from 'react';
 import { montoDisponible, nivelDeEjecucion } from '../../utils/presupuestos'
 import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles({
+  graficoTor: {
+    width: '25rem !important',
+    height: 'auto !important'
+  },
+});
 export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupuesto }) {
-
+  console.log("presupuesto",presupuesto)
+  console.log("presupuesto",totalGastos)
+  console.log("presupuesto",totalPresupuesto)
   const totalDisponible = presupuesto; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
   const monto = montoDisponible(totalPresupuesto, totalGastos)
   const ejecucion = nivelDeEjecucion(totalPresupuesto, totalGastos);
@@ -49,13 +57,13 @@ export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupue
               '#e28956',
             ],
             data: [
-              totalDisponible.Insumos,
-              totalDisponible.Publicaciones,
-              totalDisponible.Bibliografia,
-              totalDisponible.Viaticos,
-              totalDisponible.Equipamiento,
-              totalDisponible.Tecnico,
-              totalDisponible.Administracion,
+              totalDisponible.insumos,
+              totalDisponible.publicaciones,
+              totalDisponible.bibliografia,
+              totalDisponible.viaticos,
+              totalDisponible.equipamiento,
+              totalDisponible.tecnico,
+              totalDisponible.administracion,
             ],
           },
         ],
@@ -71,9 +79,3 @@ export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupue
 
 }
 
-const useStyles = makeStyles({
-  graficoTor: {
-    width: '25rem !important',
-    height: 'auto !important'
-  },
-});
