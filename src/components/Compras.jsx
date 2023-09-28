@@ -41,7 +41,7 @@ const StyledTableHead = withStyles(() => ({
   },
 }))(TableRow);
 
-export const Compras = () => {
+export const Compras = (idProyecto) => {
   //Styles
   const $ = useStyles();
 
@@ -49,7 +49,7 @@ export const Compras = () => {
   const [compras, setCompras] = useState([]); //(null);
   const [open, setOpen] = useState(false);
   const [newCompra, setNewCompra] = useState(true);
-  const idProyecto = sessionStorage.getItem('idProyecto'); //TODO: PASAR A REDUX
+  //const idProyecto = sessionStorage.getItem('idProyecto'); //TODO: PASAR A REDUX
 
   const handleOpen = () => {
     setOpen(true);
@@ -69,7 +69,9 @@ export const Compras = () => {
   useEffect(() => {
     async function fetchCompra() {
       try {
+        console.log("idProyecto", idProyecto)
         const compras = await getComprasByProyecto(idProyecto); // se Hardcodea(idProyecto);
+
         setCompras(
           compras.sort(function (a, b) {
             var textA = a.fecha;

@@ -1,46 +1,57 @@
 import React from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import { getPresupuesto } from '../services/presupuestos.js';
-import { getComprasByProyecto } from '../services/compras.js';
+import { getAllGastosPorRubro, getComprasByProyecto } from '../services/compras.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './dashboards/TortaPrincipal';
 import CardMontos from './dashboards/CardMontos';
 import Tabla from './dashboards/Tabla';
-import Grid from '@material-ui/core/Grid';
-import { calculateTotalExpenses } from '../utils/presupuestos';
 
-export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
+import Grid from '@material-ui/core/Grid';
+import { calculateTotalExpenses, combinarPresupuestoYRubros } from '../utils/presupuestos.js';
+
+export const Presupuestos = ({ idProyecto }) => {
   const $ = useStyles();
 
   const [presupuesto, setPresupuesto] = useState(null);
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
-  //const idProyecto = sessionStorage.getItem("idProyecto");
+  const [gastosPorRubro, setGastosPorRubro] = useState(null);
 
   useEffect(() => {
-    async function fetchPrespuesto() {
-      try {
-        const id = sessionStorage.getItem('idProyecto');
-        setIdProyecto(id);
-        const presupuesto = await getPresupuesto();
-        const compras = await getComprasByProyecto(idProyecto);
-        const gastos = calculateTotalExpenses(compras);
-        setTotalGastos(gastos);
-        setComprasRealizadas(comprasRealizadas);
-        setPresupuesto(presupuesto);
-      } catch (err) {
-        console.log('ERROR USE EFFECT : ' + err);
-        //ToDo: Manejo de errores
+    let isMounted = true;
+    async function fetchProyectos() {
+      if (idProyecto)
+        try {
+          const presupuesto = await getPresupuesto();
+          console.log(presupuesto)
+          const compras = await getComprasByProyecto(idProyecto);
+          console.log(compras)
+          const gastos = calculateTotalExpenses(compras);
+          console.log(gastos)
+          const gastosPorRubro = await getAllGastosPorRubro(idProyecto)
+          console.log(gastosPorRubro)
+          if (isMounted) {
+            setTotalGastos(gastos);
+            setComprasRealizadas(comprasRealizadas);
+            setPresupuesto(presupuesto);
+            setGastosPorRubro(combinarPresupuestoYRubros(presupuesto, gastosPorRubro))
+          }
+        } catch (err) {
+          console.log('[DatosGenerales Component] ERROR : ' + err);
+        }
+      else {
+        return window.history.back();
       }
     }
-    fetchPrespuesto();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fetchProyectos();
+    return () => {
+      isMounted = false;
+    };
+  }, [idProyecto, comprasRealizadas]);
 
   const loadingRendering = () => {
     return <Alert severity="info">Cargando...</Alert>;
@@ -48,6 +59,7 @@ export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
   const rendering = () => {
     return (
       <>
+
         <div className={$.root}>
           <Grid
             container
@@ -58,8 +70,7 @@ export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
             <Grid
               container
               direction="row"
-              justifyContent="space-between"
-              alignItems="flex"
+              justifyContent="space-evenly"
               className={$.cardContent}
             >
               <CardMontos
@@ -68,16 +79,16 @@ export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
                 totalPresupuesto={presupuesto.total}
                 totalGastos={totalGastos}
               />
-              <Card className={$.card}>
-                <CardContent>
-                  <TortaPrincipal
-                    presupuesto={presupuesto}
-                    className={$.torta}
-                  />
-                </CardContent>
-              </Card>
+              <div>
+                <TortaPrincipal
+                  presupuesto={presupuesto}
+                  totalPresupuesto={presupuesto.total}
+                  totalGastos={totalGastos}
+                  className={$.torta}
+                />
+              </div>
             </Grid>
-            <Tabla presupuesto={presupuesto} />
+            {gastosPorRubro && <Tabla gastos={gastosPorRubro} />}
           </Grid>
         </div>
       </>
@@ -86,7 +97,7 @@ export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
 
   return (
     <>
-      <h1>Presupuesto</h1>
+      <h1 className={$.title}>Presupuesto</h1>
       <div className={$.root}>
         <Divider className={$.divider} />
         {presupuesto ? rendering() : loadingRendering()}
@@ -99,9 +110,8 @@ export const Presupuestos = ({ idProyecto, setIdProyecto }) => {
 const useStyles = makeStyles({
   root: {
     height: '100%',
+    width: '100%',
     display: 'flex',
-    marginLeft: '1vw',
-    marginBottom: '2rem',
   },
   card: {
     width: '25vw',
@@ -117,4 +127,11 @@ const useStyles = makeStyles({
   item: {
     display: 'flex',
   },
+  title: {
+    marginLeft: '2.5vw',
+  },
+  torta: {
+    width: '100%',
+    height: '100%'
+  }
 });

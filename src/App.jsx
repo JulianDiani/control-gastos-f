@@ -36,7 +36,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState();
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
-  const [idProyecto, setIdProyecto] = useState();
+  const [idProyecto, setIdProyecto] = useState(null);
   const [rol, setRol] = useState();
   const [init, setInit] = useState(false);
   const [proyectoActual, setProyectoActual] = useState(null);
@@ -227,7 +227,7 @@ export default function App() {
                           MisProyectos
                           userName={userName}
                           handleSetProyect={handleSetProyect}
-                          idProyecto={idProyecto?idProyecto:null}
+                          idProyecto={idProyecto}
                           {...props}
                         />
                       )}

@@ -92,6 +92,7 @@ export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
     let isMounted = true;
     async function fetchData() {
       const proyectos = await getProyecto(userName);
+      console.log("Proyect for user: ",proyectos)
       const comprasRealizadas = await getAllCompras();
       const presupuestoProyecto = await getPresupuesto();
       if (isMounted) {
