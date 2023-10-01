@@ -91,6 +91,7 @@ const CreateProyect = () => {
   const classes = useStyles();
   const [titulo, setTitulo] = useState(null);
   const [tipo, setTipo] = useState(null);
+  const [año, setAño] = useState(null);
   const [organismo, setOrganismo] = useState(null);
   const [lineaFinanciamiento, setLineaFinanciamiento] = useState(null);
   const [unidadAcademica, setUnidadAcademica] = useState(null);
@@ -204,6 +205,7 @@ const CreateProyect = () => {
     const proyecto = {
       titulo,
       tipo,
+      año,
       organismo,
       lineaFinanciamiento,
       unidadAcademica,
@@ -488,6 +490,20 @@ const CreateProyect = () => {
                       }}
                     />
                   </Grid>
+                  <KeyboardDatePicker
+                    // margin="normal"
+                    id="date-picker-dialog"
+                    label="Año"
+                    views={['year']}
+                    format="yyyy"
+                    minDate={moment()}
+                    value={añoValue}
+                    onChange={(e) => handlePicker(e, setAño, true)}
+                    inputVariant="outlined"
+                    KeyboardButtonProps={{
+                      'aria-label': 'change date',
+                    }}
+                  />
                   <Grid item xs>
                     <Autocomplete
                       className={classes.field}
