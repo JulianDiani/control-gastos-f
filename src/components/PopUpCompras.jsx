@@ -14,9 +14,9 @@ import {
 } from '@material-ui/core';
 import {
   postCompra,
-  getGastosPorRubro,
-  getTotalxSubsidio,
+  getAllGastosPorRubro
 } from '../services/compras.js';
+
 import {
   getPresupuesto,
   getRubros,
@@ -136,7 +136,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PopUpCompras({
   state,  
-  stateNewCompra  
+  stateNewCompra,
+  idProyecto  
 }) {
   const $ = useStyles();
 
@@ -199,9 +200,9 @@ export default function PopUpCompras({
     async function fetchRubros() {
       try {
         const rubros = await listadetodos();
-        const rubrosJson = await rubros;
-        setRubros(rubrosJson);
-        console.log(rubrosJson);
+        //const rubrosJson = await rubros;
+        setRubros(rubros);
+        console.log("Rubros: ", rubros);
       } catch (error) {
         console.log('error en el fetch de Rubros : ' + error);
       }
@@ -222,7 +223,7 @@ export default function PopUpCompras({
       );
     }
     getProveedores();
-    const id = sessionStorage.getItem('idProyecto');
+    //const id = sessionStorage.getItem('idProyecto');
     //setIdProyecto(id);
   }, [newProveedor]);
 
@@ -231,17 +232,20 @@ export default function PopUpCompras({
     async function fetchGastos() {
       //consulta con la API de subsidios, mediante el idProyecto (hardcoderado con 1)
       // y el id del rubro seleccionado, y devuelve el subsidioAsignado.
-      const subsidioAsignado = await getSubsidioXProyectoXRubro(1, rubro);
-
+      const subsidioAsignado = await getSubsidioXProyectoXRubro(idProyecto, rubro);
+      //console.log("Sucidio asignado: ", subsidioAsignado);
       // Con el subsidioAsignado, consulta en la API de compras, todas
       // las que tengan este idSubsidio
-      const totalComprasSubsidio = "500"//await getTotalxSubsidio(subsidioAsignado.id);
-
+      const totalComprasSubsidio = await getAllGastosPorRubro(idProyecto)//filter(gastos => gastos.rubro == subsidioAsignado.Rubro.nombre)//await getAllGastosPorRubro(idProyecto)//"500"//await getTotalxSubsidio(subsidioAsignado.id);
+      const totalFilter = totalComprasSubsidio.filter(a => a.rubro == subsidioAsignado.Rubro.nombre)[0]
+      //console.log("TotalComprasXsub: " , totalComprasSubsidio)
+      //console.log("TotalFilter: " , totalFilter)
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         subsidioAsignado.montoAsignado,
-        totalComprasSubsidio,
+        totalFilter.gastosAprobados,
         JSON.stringify(subsidioAsignado.Rubro.nombre)
       );
+      console.log("dineroDisponible: " , dineroDisponible)
       setSubsidio(subsidioAsignado);
       setDisponibleRubro(dineroDisponible);
     }
@@ -257,7 +261,7 @@ export default function PopUpCompras({
     gastosRubro,
     nombreRubro
   ) => {
-
+    //console.log("presupuestoTotal", presupuestoTotal, "gastosRubro",gastosRubro, "nombreRubro" ,nombreRubro)
     return nombreRubro ? parseInt(presupuestoTotal) - parseInt(gastosRubro) : 0;
   };
 
@@ -266,8 +270,7 @@ export default function PopUpCompras({
     state(false);
     const data = {
       fecha: fecha,
-      //rubro: rubro,
-      // subrubro: subrubro,
+      // Aca el numero de compra habria que cambiarlo a que sea auto incremental y desde el back y por proyecto .
       numeroCompra: 80,
       //proveedor: proveedor,
       monto: monto,

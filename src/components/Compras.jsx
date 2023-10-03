@@ -70,7 +70,7 @@ export const Compras = (idProyecto) => {
     async function fetchCompra() {
       try {
         console.log("idProyecto", idProyecto)
-        const compras = await getComprasByProyecto(idProyecto); // se Hardcodea(idProyecto);
+        const compras = await getComprasByProyecto(idProyecto.idProyecto); // se Hardcodea(idProyecto);
 
         setCompras(
           compras.sort(function (a, b) {
@@ -193,6 +193,7 @@ export const Compras = (idProyecto) => {
           <PopUpCompras
             state={setOpen}
             stateNewCompra={setNewCompra}
+            idProyecto={idProyecto.idProyecto}
             
           />
         </Modal>
