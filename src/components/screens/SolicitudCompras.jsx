@@ -56,7 +56,10 @@ const SolicitudCompra = () => {
     try {
         const id = sessionStorage.getItem('idCompra');
         const unaCompra = await getCompraByID(id);
-        setCompra(unaCompra[0]);
+        console.log("unaCompra",unaCompra)
+        console.log("Compra",compra)
+        console.log("ID", id)
+        setCompra(unaCompra);
     } catch (err) {
         console.log('ERROR FETCH API [compras]: ' + err);
     }
@@ -100,7 +103,7 @@ const SolicitudCompra = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell>Rubro:</TableCell>
-                  <TableCell>{compra.rubro}</TableCell>
+                  <TableCell>{compra.SubsidiosAsignado.Rubro.nombre}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Subrubro</TableCell>
