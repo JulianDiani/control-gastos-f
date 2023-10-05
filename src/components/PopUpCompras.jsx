@@ -233,16 +233,22 @@ export default function PopUpCompras({
       //consulta con la API de subsidios, mediante el idProyecto (hardcoderado con 1)
       // y el id del rubro seleccionado, y devuelve el subsidioAsignado.
       const subsidioAsignado = await getSubsidioXProyectoXRubro(idProyecto, rubro);
+      console.log("RUBRO",rubro);
       //console.log("Sucidio asignado: ", subsidioAsignado);
       // Con el subsidioAsignado, consulta en la API de compras, todas
       // las que tengan este idSubsidio
-      const totalComprasSubsidio = await getAllGastosPorRubro(idProyecto)//filter(gastos => gastos.rubro == subsidioAsignado.Rubro.nombre)//await getAllGastosPorRubro(idProyecto)//"500"//await getTotalxSubsidio(subsidioAsignado.id);
-      const totalFilter = totalComprasSubsidio.filter(a => a.rubro == subsidioAsignado.Rubro.nombre)[0]
-      //console.log("TotalComprasXsub: " , totalComprasSubsidio)
+      const totalComprasSubsidio = await getAllGastosPorRubro(idProyecto)
+      console.log("ID PROYECTO",idProyecto);
+      console.log("TOTAL COMPRAS",totalComprasSubsidio);
+      //filter(gastos => gastos.rubro == subsidioAsignado.Rubro.nombre)//await getAllGastosPorRubro(idProyecto)//"500"//await getTotalxSubsidio(subsidioAsignado.id);
+      //const totalFilter = totalComprasSubsidio.length==0 ? 0 : totalComprasSubsidio.filter(a => a.rubro == subsidioAsignado.Rubro.nombre)[0].gastosAprobados
+      const totalFilter2 = totalComprasSubsidio.find(a => a.rubro == subsidioAsignado.Rubro.nombre)
+      const totalGastos = totalFilter2?totalFilter2.gastosAprobados : 0
+      console.log("TotalComprasXsub: " , totalComprasSubsidio)
       //console.log("TotalFilter: " , totalFilter)
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         subsidioAsignado.montoAsignado,
-        totalFilter.gastosAprobados,
+        totalGastos,
         JSON.stringify(subsidioAsignado.Rubro.nombre)
       );
       console.log("dineroDisponible: " , dineroDisponible)
