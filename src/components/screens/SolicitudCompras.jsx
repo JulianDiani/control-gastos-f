@@ -103,11 +103,11 @@ const SolicitudCompra = () => {
                 </TableRow>
                 <TableRow>
                   <TableCell>Rubro:</TableCell>
-                  <TableCell>{compra.SubsidiosAsignado.Rubro.nombre}</TableCell>
+                  <TableCell>{compra.SubsidiosAsignado && compra.SubsidiosAsignado.Rubro.nombre}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Subrubro</TableCell>
-                  <TableCell>{compra.subrubro}</TableCell>
+                  <TableCell>{compra.subRubro}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell>Proveedor:</TableCell>

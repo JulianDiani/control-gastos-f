@@ -143,7 +143,7 @@ export default function PopUpCompras({
 
   const [rubro, setRubro] = useState('');
 
-  // const [subrubro, setSubrubro] = useState(null);
+  const [subrubro, setSubrubro] = useState(null);
   const [fecha, setFecha] = useState(null);
   const [idproveedor, setProveedor] = useState('');
   const [monto, setMonto] = useState(0);
@@ -156,7 +156,7 @@ export default function PopUpCompras({
   const [proveedores, setProveedores] = useState([]);
   //Errors in fields
   const [errorMonto, setErrorMonto] = useState(false);
-  // const [errorSubrubro, setErrorSubrubro] = useState(false);
+   const [errorSubrubro, setErrorSubrubro] = useState(false);
   const [errorNombreNewProveedor, setErrorNombreNewProveedor] = useState(null);
   const [errorCuitNewProveedor, setErrorCuitNewProveedor] = useState(null);
   const [errorTelefonoNewProveedor, setErrorTelefonoNewProveedor] = useState(
@@ -164,7 +164,7 @@ export default function PopUpCompras({
   );
 
   //New proveedor fields
-  // const [newProveedorRubro, setNewProveedorRubro] = useState(null);
+   const [newProveedorRubro, setNewProveedorRubro] = useState(null);
   const [newProveedorNombre, setNewProveedorNombre] = useState(null);
   const [newProveedorCuit, setNewProveedorCuit] = useState(null);
   const [newProveedorTelefono, setNewProveedorTelefono] = useState(null);
@@ -284,6 +284,7 @@ export default function PopUpCompras({
       factura: nroFactura,
       nombre: nombre, //esto seria una descripcion
       //idProyecto: null,
+      subrubro: subrubro,
       idsubsidio: subsidio.id,
       idproveedor: idproveedor
     };
@@ -376,7 +377,7 @@ export default function PopUpCompras({
         <Divider class={$.divider} />
         <div className={$.inputs}>
           <RubroSelected />
-          {/* <TextField
+          <TextField
             label="Subrubro"
             onBlur={(e) =>
               validateField('string', e.target.value, setErrorSubrubro)
@@ -384,7 +385,7 @@ export default function PopUpCompras({
             onChange={(e) => submitHandle(setSubrubro, e.target.value)}
             className={$.subrubro}
             error={errorSubrubro}
-          /> */}
+          />
         </div>
         <Typography>
           {availableMoneyForRubro
