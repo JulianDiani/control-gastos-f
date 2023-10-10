@@ -12,8 +12,9 @@ import Divider from '@material-ui/core/Divider';
 import { Button, Grid, Modal, Typography } from '@material-ui/core';
 import PopUpCompras from './PopUpCompras';
 import { Footer } from './Footer';
-import { formatPrice } from '../utils/validaciones';
+import { formatPrice, formatDate } from '../utils/validaciones';
 import BlockIcon from '@material-ui/icons/Block';
+
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -71,7 +72,7 @@ export const Compras = (idProyecto) => {
       try {
         console.log("idProyecto", idProyecto)
         const compras = await getComprasByProyecto(idProyecto.idProyecto); // se Hardcodea(idProyecto);
-
+        console.log("Compras realizadas", compras)
         setCompras(
           compras.sort(function (a, b) {
             var textA = a.fecha;
@@ -128,7 +129,7 @@ export const Compras = (idProyecto) => {
                 {compras.map((compra) => (
                   <StyledTableRow key={compra.id}>
                     <StyledTableCell scope="row">
-                      {new Date(compra.fecha).toLocaleDateString()}
+                      {formatDate(compra.fecha)}
                     </StyledTableCell>
                     <StyledTableCell align="left">
                       {compra.factura}

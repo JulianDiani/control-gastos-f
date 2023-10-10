@@ -145,6 +145,7 @@ export default function PopUpCompras({
 
   const [subrubro, setSubrubro] = useState(null);
   const [fecha, setFecha] = useState(null);
+  console.log("Fecha: ", fecha)
   const [idproveedor, setProveedor] = useState('');
   const [monto, setMonto] = useState(0);
   const [nombre, setNombre] = useState('');
@@ -276,14 +277,10 @@ export default function PopUpCompras({
     state(false);
     const data = {
       fecha: fecha,
-      // Aca el numero de compra habria que cambiarlo a que sea auto incremental y desde el back y por proyecto .
-      numeroCompra: 80,
-      //proveedor: proveedor,
       monto: monto,
       estado: 'Pendiente',
       factura: nroFactura,
-      nombre: nombre, //esto seria una descripcion
-      //idProyecto: null,
+      nombre: nombre,
       subrubro: subrubro,
       idsubsidio: subsidio.id,
       idproveedor: idproveedor
