@@ -56,6 +56,7 @@ export const VistaProyecto = () => {
             try {
                 const id = sessionStorage.getItem('idProyecto');
                 const compras = await getComprasByProyecto(id);
+                console.log("compras:",compras)
                 setCompras(compras);
             } catch (err) {
                 console.log('ERROR FETCH API [compras]: ' + err);
@@ -70,6 +71,7 @@ export const VistaProyecto = () => {
                 const id = sessionStorage.getItem('idProyecto');
                 const proyecto = await getProyectoById(id); //Tiene que ser por ID la busqueda
                 setProyecto(proyecto[0]);
+                console.log("proyecto:",proyecto)
             } catch (err) {
                 console.log('[DatosGenerales Component] ERROR : ' + err);
             }
@@ -147,7 +149,7 @@ export const VistaProyecto = () => {
                             Area
                         </StyledTableCell>
                         <StyledTableCell align="left" className={$.textColor}>
-                            Subsidio
+                            Presupuesto Total
                         </StyledTableCell>
                         <StyledTableCell align="left" className={$.textColor}>
                             Fecha Inicio
@@ -247,7 +249,7 @@ export const VistaProyecto = () => {
                                         {compras.estado}
                                     </StyledTableCell>
                                     <StyledTableCell align="center">
-                                        {compras.rubro}
+                                        {compras.SubsidiosAsignado && compras.SubsidiosAsignado.Rubro.nombre}
                                     </StyledTableCell>
                                 </StyledTableRow>
                             ))}

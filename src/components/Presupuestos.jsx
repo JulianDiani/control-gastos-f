@@ -27,13 +27,13 @@ export const Presupuestos = ({ idProyecto }) => {
       if (idProyecto)
         try {
           const presupuesto = await getPresupuesto();
-          console.log(presupuesto)
+          console.log("presupuesto:",presupuesto)
           const compras = await getComprasByProyecto(idProyecto);
-          console.log(compras)
+          console.log("compras:",compras)
           const gastos = calculateTotalExpenses(compras);
-          console.log(gastos)
+          console.log("gastos:",gastos)
           const gastosPorRubro = await getAllGastosPorRubro(idProyecto)
-          console.log(gastosPorRubro)
+          console.log("gastos por rubro:",gastosPorRubro)
           if (isMounted) {
             setTotalGastos(gastos);
             setComprasRealizadas(comprasRealizadas);
