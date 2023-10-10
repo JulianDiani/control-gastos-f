@@ -276,6 +276,7 @@ export default function PopUpCompras({
   const submitForm = async () => {
     state(false);
     const data = {
+      proyecto : idProyecto,
       fecha: fecha,
       monto: monto,
       estado: 'Pendiente',
