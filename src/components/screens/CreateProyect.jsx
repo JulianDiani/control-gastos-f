@@ -490,8 +490,10 @@ const CreateProyect = () => {
                       }}
                     />
                   </Grid>
+                  <Grid item xs>
                   <KeyboardDatePicker
                     // margin="normal"
+                    className={classes.field}
                     id="date-picker-dialog"
                     label="Año"
                     views={['year']}
@@ -504,6 +506,8 @@ const CreateProyect = () => {
                       'aria-label': 'change date',
                     }}
                   />
+                  </Grid>
+                  
                   <Grid item xs>
                     <Autocomplete
                       className={classes.field}
