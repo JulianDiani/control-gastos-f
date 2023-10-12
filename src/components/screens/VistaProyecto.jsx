@@ -58,71 +58,65 @@ export const VistaProyecto = () => {
 
     //API Call
     
-    useEffect(()=>{
-        async function fetchPresupuesto(){  // REVISAR SI HAY UNA FORMA MAS LINDA PARA HACERLO,SEGURAMENTE LA HAYA.
-            try{
-                const id=sessionStorage.getItem('idProyecto')
-                const presupuesto= await getTotalSubsidio(id)
-                console.log(presupuesto);
-                setPresupuesto(presupuesto)
-            }catch(err){
-                console.log("ROMPI");
-            }
+    async function fetchPresupuesto(){  // REVISAR SI HAY UNA FORMA MAS LINDA PARA HACERLO,SEGURAMENTE LA HAYA.
+        try{
+            const id=sessionStorage.getItem('idProyecto')
+            const presupuesto= await getTotalSubsidio(id)
+            console.log(presupuesto);
+            setPresupuesto(presupuesto)
+        }catch(err){
+            console.log("Falló fetch presupuesto");
         }
-        fetchPresupuesto();
-    })
-    useEffect(()=>{
-        async function fetchUser(){ // REVISAR SI HAY UNA FORMA MAS LINDA PARA HACERLO,SEGURAMENTE LA HAYA.
-            try{
-                const id=sessionStorage.getItem('idProyecto');
-                const user=await getUserByProyect(id);
-                console.log("USER",user.data[0].idUsuario)
-                const usuarios=await getUsuarios()
-                const usuarioFinal=usuarios.data.filter(u=>u.id==user.data[0].idUsuario)
-                console.log("USUARIO FINAL",usuarioFinal);
-                setUsuarioProyecto(usuarioFinal[0].nombre)
-            }catch(err){
-                console.log("ROMPI")
-            }
+    }
+    
+    async function fetchUserLastName(){ // REVISAR SI HAY UNA FORMA MAS LINDA PARA HACERLO,SEGURAMENTE LA HAYA.
+        try{
+            const id=sessionStorage.getItem('idProyecto');
+            const user=await getUserByProyect(id);
+            const usuariosFinales=user.data.map(user=>user.apellidoUser
+                +' ').toString()
+            setUsuarioProyecto(usuariosFinales)
+        }catch(err){
+            console.log("Fallo fetchUser")
         }
-        fetchUser();
-    })
+    }
    
-    useEffect(() => {        //getComprasByProyecto(id);
-        async function fetchCompra() {
-            try {
-                const id = sessionStorage.getItem('idProyecto');
-                const compras = await getComprasByProyecto(id);
-                console.log("compras:",compras)
-                setCompras(compras);
-            } catch (err) {
-                console.log('ERROR FETCH API [compras]: ' + err);
-            }
+    async function fetchCompra() {
+        try {
+            const id = sessionStorage.getItem('idProyecto');
+            const compras = await getComprasByProyecto(id);
+            console.log("compras:",compras)
+            setCompras(compras);
+        } catch (err) {
+            console.log('ERROR FETCH API [compras]: ' + err);
         }
-        if (newCompra) fetchCompra();
-        setNewCompra(false);
-    }, [newCompra]);
+    }
+    async function fetchUsuarios() {
+        try {
+            const id = sessionStorage.getItem('idProyecto');
+            const proyecto = await getProyectoById(id); //Tiene que ser por ID la busqueda
+            setProyecto(proyecto[0]);
+            console.log("proyecto:",proyecto)
+        } catch (err) {
+            console.log('[DatosGenerales Component] ERROR : ' + err);
+        }
+    }
+        
     useEffect(() => {
-        async function fetchUsuarios() {
-            try {
-                const id = sessionStorage.getItem('idProyecto');
-                const proyecto = await getProyectoById(id); //Tiene que ser por ID la busqueda
-                setProyecto(proyecto[0]);
-                console.log("proyecto:",proyecto)
-            } catch (err) {
-                console.log('[DatosGenerales Component] ERROR : ' + err);
-            }
-        }
         const id = sessionStorage.getItem('idProyecto');
         if (id) {
             fetchUsuarios();
         } else {
             window.location.replace(
                 "/error"
-
             );
         }
-    }, []);
+        fetchPresupuesto(); 
+        fetchUserLastName();     //getComprasByProyecto(id);
+        if (newCompra) fetchCompra();
+        setNewCompra(false);
+    }, [newCompra]);
+
     const StyledTableCell = withStyles((theme) => ({
         head: {
             backgroundColor: theme.palette.common.black,
