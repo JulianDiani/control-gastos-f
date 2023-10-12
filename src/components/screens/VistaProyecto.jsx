@@ -7,7 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 //import PopUpCompras from './PopUpCompras';
 import { getComprasByProyecto } from '../../services/compras';
-import { getProyectoById } from '../../services/proyectos';
+import { getUser ,getUsuarios} from '../../services/usuarios';
+import { getProyectoById, getUserByProyect } from '../../services/proyectos';
 import { formatPrice, formatDate, formatYear } from '../../utils/validaciones';
 import {
 
@@ -28,7 +29,10 @@ export const VistaProyecto = () => {
 
 
     const [proyecto, setProyecto] = useState(null);
-    // const userName = sessionStorage.getItem("username");
+    const [usuarioProyecto,setUsuarioProyecto]=useState("")
+    const userName = sessionStorage.getItem("username");
+    console.log("USERNAME",userName);
+   
     //const idProyecto = sessionStorage.getItem("idProyecto");
     //useEffect para traer la proyecto del proyecto de la api.
     //Styles
@@ -51,6 +55,23 @@ export const VistaProyecto = () => {
     //};
 
     //API Call
+    useEffect(()=>{
+        async function fetchUser(){ // REVISAR SI HAY UNA FORMA MAS LINDA PARA HACERLO,SEGURAMENTE LA HAYA.
+            try{
+                const id=sessionStorage.getItem('idProyecto');
+                const user=await getUserByProyect(id);
+                console.log("USER",user.data[0].idUsuario)
+                const usuarios=await getUsuarios()
+                const usuarioFinal=usuarios.data.filter(u=>u.id==user.data[0].idUsuario)
+                console.log("USUARIO FINAL",usuarioFinal);
+                setUsuarioProyecto(usuarioFinal[0].nombre)
+            }catch(err){
+                console.log("ROMPI")
+            }
+        }
+        fetchUser();
+    })
+   
     useEffect(() => {        //getComprasByProyecto(id);
         async function fetchCompra() {
             try {
@@ -117,7 +138,8 @@ export const VistaProyecto = () => {
 
 
     const DatosList = () => {
-
+        console.log("PROYECTO",proyecto);
+        console.log("USUARIOPROYECTO",usuarioProyecto)
         return (
 
 
@@ -195,7 +217,7 @@ export const VistaProyecto = () => {
                                 {formatDate(proyecto.fechaFin)}
                             </StyledTableCell>
                             <StyledTableCell align="left">
-                                {proyecto.usuario}
+                                {usuarioProyecto}
                             </StyledTableCell>
                         </StyledTableRow>
                     </TableBody>
