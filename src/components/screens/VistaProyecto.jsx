@@ -6,10 +6,11 @@ import Alert from '@material-ui/lab/Alert';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 //import PopUpCompras from './PopUpCompras';
-import { getComprasByProyecto } from '../../services/compras';
+import { getComprasByProyecto, getTotalxSubsidio } from '../../services/compras';
 import { getUser ,getUsuarios} from '../../services/usuarios';
 import { getProyectoById, getUserByProyect } from '../../services/proyectos';
 import { formatPrice, formatDate, formatYear } from '../../utils/validaciones';
+import { getTotalSubsidio } from '../../services/subsidiosasignados';
 import {
 
     Table,
@@ -30,6 +31,7 @@ export const VistaProyecto = () => {
 
     const [proyecto, setProyecto] = useState(null);
     const [usuarioProyecto,setUsuarioProyecto]=useState("")
+    const [presupuesto,setPresupuesto]=useState(0)
     const userName = sessionStorage.getItem("username");
     console.log("USERNAME",userName);
    
@@ -55,6 +57,20 @@ export const VistaProyecto = () => {
     //};
 
     //API Call
+    
+    useEffect(()=>{
+        async function fetchPresupuesto(){  // REVISAR SI HAY UNA FORMA MAS LINDA PARA HACERLO,SEGURAMENTE LA HAYA.
+            try{
+                const id=sessionStorage.getItem('idProyecto')
+                const presupuesto= await getTotalSubsidio(id)
+                console.log(presupuesto);
+                setPresupuesto(presupuesto)
+            }catch(err){
+                console.log("ROMPI");
+            }
+        }
+        fetchPresupuesto();
+    })
     useEffect(()=>{
         async function fetchUser(){ // REVISAR SI HAY UNA FORMA MAS LINDA PARA HACERLO,SEGURAMENTE LA HAYA.
             try{
@@ -208,7 +224,7 @@ export const VistaProyecto = () => {
                                 {proyecto.areaTematica}
                             </StyledTableCell>
                             <StyledTableCell align="left">
-                                {formatPrice(proyecto.subsidio)}
+                                {formatPrice(presupuesto)}
                             </StyledTableCell>
                             <StyledTableCell align="left">
                                 {formatDate(proyecto.fechaInicio)}
