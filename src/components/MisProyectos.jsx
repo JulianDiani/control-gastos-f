@@ -13,7 +13,7 @@ import {
   nivelDeEjecucion,
 } from '../utils/presupuestos';
 import { getPresupuesto } from '../services/presupuestos';
-import { getAllCompras } from '../services/compras';
+import { getAllCompras, getComprasByProyecto } from '../services/compras';
 import {
   Box,
   CircularProgress,
@@ -93,7 +93,8 @@ export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
     async function fetchData() {
       const proyectos = await getProyecto(userName);
       console.log("Proyect for user: ",proyectos)
-      const comprasRealizadas = await getAllCompras();
+      //const comprasRealizadas = await getAllCompras();
+      const comprasRealizadas = await getComprasByProyecto(idProyecto)
       const presupuestoProyecto = await getPresupuesto();
       if (isMounted) {
         setCompras(comprasRealizadas);
@@ -109,10 +110,11 @@ export const MisProyectos = ({ userName, handleSetProyect, idProyecto }) => {
   }, []);
 
   const calcularNivelEjecucion = (proyectoId) => {
-    const comprasRealizadasEnproyecto = compras.filter(
-      (compra) => compra.idProyecto == proyectoId
-    );
-    const gastos = calculateTotalExpenses(comprasRealizadasEnproyecto);
+    // const comprasRealizadasEnproyecto = compras.filter(
+    //   (compra) => compra.idProyecto == proyectoId
+    // );
+    // const gastos = calculateTotalExpenses(comprasRealizadasEnproyecto);
+    const gastos = calculateTotalExpenses(compras);
     const totalPresupuesto = presupuesto.total;
     const ejecucion = nivelDeEjecucion(totalPresupuesto, gastos); //Truncamiento del porcentaje.
     return ejecucion;
