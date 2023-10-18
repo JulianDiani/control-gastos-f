@@ -42,7 +42,6 @@ export default function App() {
   const [proyectoActual, setProyectoActual] = useState(null);
 
   const handleSetProyect = async (id) => {
-    await setUserActualProject(userName, id);
     sessionStorage.setItem('proyectoActualId', id);
     setIdProyecto(id);
   };
