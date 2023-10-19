@@ -52,8 +52,8 @@ const CreateUser = () => {
   const [hasError, setHasError] = useState(false);
 
   const timer = useRef();
-  const canSubmit = name && lastName && username && password && birthDate && role;
-   
+  const canSubmit =
+    name && lastName && username && password && birthDate && role;
 
   useEffect(() => {
     function setChanges() {
@@ -196,7 +196,7 @@ const CreateUser = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="rol"
+                label="Rol"
                 variant="outlined"
                 className={classes.field}
               />

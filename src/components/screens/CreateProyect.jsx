@@ -104,7 +104,7 @@ const CreateProyect = () => {
   const [numeroProyecto, setNumeroProyecto] = useState(null);
   const [director, setDirector] = useState(null);
   const [codirector, setCodirector] = useState(null);
-  const [usuario, setUsuario] = useState([]);// acas e guardan los usuarios responsables del proyecto.
+  const [usuario, setUsuario] = useState([]); // acas e guardan los usuarios responsables del proyecto.
   const [hasChanges, setHasChanges] = useState(false);
   const [loadedProject, setLoadedProject] = useState(false);
   const [errorNumeroExpediente, setErrorNumeroExpediente] = useState(false);
@@ -130,7 +130,7 @@ const CreateProyect = () => {
     director &&
     codirector &&
     usuario[0] &&
-    !subsidios.map(s => s.error).some(e => e === true) &&
+    !subsidios.map((s) => s.error).some((e) => e === true) &&
     convocatoria;
 
   const timer = useRef();
@@ -282,7 +282,15 @@ const CreateProyect = () => {
         const rubros = await getAllRubros();
         const json = await rubros.data;
         //setRubros(json);
-        setSubsidios(json.map((rubro) => ({ id: rubro.id.toString(), nombre: rubro.nombre, monto: "0", error: false, message: "" })));//setea todos los rubros en 0
+        setSubsidios(
+          json.map((rubro) => ({
+            id: rubro.id.toString(),
+            nombre: rubro.nombre,
+            monto: '0',
+            error: false,
+            message: '',
+          }))
+        ); //setea todos los rubros en 0
       } catch (error) {
         console.log('error en el fetch de rubros' + error);
       }
@@ -308,7 +316,7 @@ const CreateProyect = () => {
     { id: 'codirector', error: false },
     { id: 'convocatoria', error: false },
     { id: 'usuario', error: false },
-    { id: 'subsidios', error: false }
+    { id: 'subsidios', error: false },
   ]);
 
   return (
@@ -319,7 +327,7 @@ const CreateProyect = () => {
           <h2>Cargar datos</h2>
 
           <div className={classes.grid}>
-            <h3> Informacion general</h3>
+            <h3> Información general</h3>
             <Divider />
             <div className={classes.grid}>
               <TextField
@@ -327,33 +335,34 @@ const CreateProyect = () => {
                 label="Título"
                 value={titulo}
                 onChange={(e) => {
-                  valiString(e.target.value) ? handleChange(e, setTitulo) : setTitulo(null);
+                  valiString(e.target.value)
+                    ? handleChange(e, setTitulo)
+                    : setTitulo(null);
                   handleCamposErrors(
                     'titulo',
                     !valiString(e.target.value),
                     !valiString(e.target.value) ? 'solo alfanúmericos' : ''
                   );
                 }}
-
                 variant="outlined"
                 className={classes.field}
                 error={camposErrors[0].error}
                 helperText={camposErrors[0].message}
                 type="text"
-
               />
-              < TextField
+              <TextField
                 id="outlined-name"
                 label="Tipo"
                 value={tipo}
                 onChange={(e) => {
-                  valiString(e.target.value) ? handleChange(e, setTipo) : setTipo(null);
+                  valiString(e.target.value)
+                    ? handleChange(e, setTipo)
+                    : setTipo(null);
                   handleCamposErrors(
                     'tipo',
                     !valiString(e.target.value),
                     !valiString(e.target.value) ? 'solo alfanúmericos' : ''
                   );
-
                 }}
                 variant="outlined"
                 className={classes.field}
@@ -366,7 +375,9 @@ const CreateProyect = () => {
                 label="Organismo"
                 value={organismo}
                 onChange={(e) => {
-                  valiString(e.target.value) ? handleChange(e, setOrganismo) : setOrganismo(null);
+                  valiString(e.target.value)
+                    ? handleChange(e, setOrganismo)
+                    : setOrganismo(null);
                   handleCamposErrors(
                     'organismo',
                     !valiString(e.target.value),
@@ -384,7 +395,9 @@ const CreateProyect = () => {
                 label="Línea de financiamiento"
                 value={lineaFinanciamiento}
                 onChange={(e) => {
-                  valiString(e.target.value) ? handleChange(e, setLineaFinanciamiento) : setLineaFinanciamiento(null);
+                  valiString(e.target.value)
+                    ? handleChange(e, setLineaFinanciamiento)
+                    : setLineaFinanciamiento(null);
                   handleCamposErrors(
                     'lineaFinanciamiento',
                     !valiString(e.target.value),
@@ -401,9 +414,10 @@ const CreateProyect = () => {
                 id="outlined-name"
                 label="Unidad académica"
                 value={unidadAcademica}
-
                 onChange={(e) => {
-                  valiString(e.target.value) ? handleChange(e, setUnidadAcademica) : setUnidadAcademica(null);
+                  valiString(e.target.value)
+                    ? handleChange(e, setUnidadAcademica)
+                    : setUnidadAcademica(null);
                   handleCamposErrors(
                     'unidadAcademica',
                     !valiString(e.target.value),
@@ -421,7 +435,9 @@ const CreateProyect = () => {
                 label="Área temática"
                 value={areaTematica}
                 onChange={(e) => {
-                  valiString(e.target.value) ? handleChange(e, setAreaTematica) : setAreaTematica(null);
+                  valiString(e.target.value)
+                    ? handleChange(e, setAreaTematica)
+                    : setAreaTematica(null);
                   handleCamposErrors(
                     'areaTematica',
                     !valiString(e.target.value),
@@ -448,7 +464,6 @@ const CreateProyect = () => {
                     //helperText={rubro.message}
                     className={classes.textfieldClass}
                   />
-
                 ))}
               </Grid>
               <Divider />
@@ -491,23 +506,23 @@ const CreateProyect = () => {
                     />
                   </Grid>
                   <Grid item xs>
-                  <KeyboardDatePicker
-                    // margin="normal"
-                    className={classes.field}
-                    id="date-picker-dialog"
-                    label="Año"
-                    views={['year']}
-                    format="yyyy"
-                    minDate={moment()}
-                    value={añoValue}
-                    onChange={(e) => handlePicker(e, setAño, true)}
-                    inputVariant="outlined"
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }}
-                  />
+                    <KeyboardDatePicker
+                      // margin="normal"
+                      className={classes.field}
+                      id="date-picker-dialog"
+                      label="Año"
+                      views={['year']}
+                      format="yyyy"
+                      minDate={moment()}
+                      value={añoValue}
+                      onChange={(e) => handlePicker(e, setAño, true)}
+                      inputVariant="outlined"
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
                   </Grid>
-                  
+
                   <Grid item xs>
                     <Autocomplete
                       className={classes.field}
@@ -604,7 +619,9 @@ const CreateProyect = () => {
               label="Director"
               value={director}
               onChange={(e) => {
-                valiString(e.target.value) ? handleChange(e, setDirector) : setDirector(null);
+                valiString(e.target.value)
+                  ? handleChange(e, setDirector)
+                  : setDirector(null);
                 handleCamposErrors(
                   'director',
                   !valiString(e.target.value),
@@ -622,7 +639,9 @@ const CreateProyect = () => {
               label="Codirector"
               value={codirector}
               onChange={(e) => {
-                valiString(e.target.value) ? handleChange(e, setCodirector) : setCodirector(null);
+                valiString(e.target.value)
+                  ? handleChange(e, setCodirector)
+                  : setCodirector(null);
                 handleCamposErrors(
                   'codirector',
                   !valiString(e.target.value),
