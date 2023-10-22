@@ -10,12 +10,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
 import { getProyectoById } from '../services/proyectos.js';
+import { getTotalSubsidio } from '../services/subsidiosasignados';
 import Alert from '@material-ui/lab/Alert';
 import { formatPrice, formatDate, formatYear } from '../utils/validaciones';
 
 export const DatosGenerales = ({ idProyecto }) => {
   const $ = useStyles();
-
+  const [subsidiosProyecto, setSubsidioProyecto] = useState([]);
   const [proyecto, setProyecto] = useState(null);
   // const userName = sessionStorage.getItem("username");
   //const idProyecto = sessionStorage.getItem("idProyecto");
@@ -26,6 +27,9 @@ export const DatosGenerales = ({ idProyecto }) => {
       if (idProyecto)
         try {
           const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
+          const subsidiosProyecto = await getTotalSubsidio(idProyecto);
+          setSubsidioProyecto(subsidiosProyecto)
+          console.log("Subsidios de los proyectos",subsidiosProyecto)
           if (isMounted) {
             setProyecto(proyecto[0]);
           }
@@ -87,7 +91,7 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Subsidio: ' + formatPrice(proyecto.subsidio)}
+            primary={'Subsidio Total: $' + subsidiosProyecto}
             sx={{ ml: 2 }}
           />
         </ListItem>
@@ -105,7 +109,7 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Usuario: ' + proyecto.usuario}
+            primary={'Usuario: ' + proyecto.director}
             sx={{ ml: 2 }}
           />
         </ListItem>
