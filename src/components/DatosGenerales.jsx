@@ -13,14 +13,29 @@ import { getProyectoById } from '../services/proyectos.js';
 import { getTotalSubsidio } from '../services/subsidiosasignados';
 import Alert from '@material-ui/lab/Alert';
 import { formatPrice, formatDate, formatYear } from '../utils/validaciones';
+import {getConvocatoriaById} from '../services/convocatorias';
 
 export const DatosGenerales = ({ idProyecto }) => {
   const $ = useStyles();
   const [subsidiosProyecto, setSubsidioProyecto] = useState([]);
   const [proyecto, setProyecto] = useState(null);
+  const [convocatoria, setConvocatoria] = useState(null);
   // const userName = sessionStorage.getItem("username");
   //const idProyecto = sessionStorage.getItem("idProyecto");
   //useEffect para traer la proyecto del proyecto de la api.
+  async function fetchConvocatorias(id) {
+    try {
+      const proyecto = await getProyectoById(id); //Tiene que ser por ID la busqueda
+      const idConvocatoria = proyecto[0].idConvocatoria;
+      const convocatoria = await getConvocatoriaById(idConvocatoria);
+      console.log("Convocatoria", convocatoria.nombre)
+      setConvocatoria(convocatoria.nombre)
+      
+    } catch (err) {
+      console.log('[DatosGenerales Component] ERROR : ' + err);
+    }
+  }
+
   useEffect(() => {
     let isMounted = true;
     async function fetchProyectos() {
@@ -29,6 +44,7 @@ export const DatosGenerales = ({ idProyecto }) => {
           const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
           const subsidiosProyecto = await getTotalSubsidio(idProyecto);
           setSubsidioProyecto(subsidiosProyecto)
+          fetchConvocatorias(idProyecto)
           console.log("Subsidios de los proyectos",subsidiosProyecto)
           if (isMounted) {
             setProyecto(proyecto[0]);
@@ -73,7 +89,7 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Año de convocatoria: ' + formatYear(proyecto.año)}
+            primary={'Convocatoria: ' + convocatoria}
             sx={{ ml: 2 }}
           />
         </ListItem>

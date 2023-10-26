@@ -205,7 +205,6 @@ const CreateProyect = () => {
     const proyecto = {
       titulo,
       tipo,
-      año,
       organismo,
       lineaFinanciamiento,
       unidadAcademica,
@@ -499,23 +498,6 @@ const CreateProyect = () => {
                       minDate={moment().add(6, 'month')} //6 meses es el minimo de duracion de un proyecto
                       value={fechaFin}
                       onChange={(e) => handlePicker(e, setFechaFin)}
-                      inputVariant="outlined"
-                      KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs>
-                    <KeyboardDatePicker
-                      // margin="normal"
-                      className={classes.field}
-                      id="date-picker-dialog"
-                      label="Año"
-                      views={['year']}
-                      format="yyyy"
-                      minDate={moment()}
-                      value={añoValue}
-                      onChange={(e) => handlePicker(e, setAño, true)}
                       inputVariant="outlined"
                       KeyboardButtonProps={{
                         'aria-label': 'change date',

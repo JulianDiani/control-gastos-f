@@ -25,12 +25,15 @@ import {
 //import { id } from 'date-fns/locale';
 //import { Compras } from './Compras';
 import { Link } from 'react-router-dom';
+import {getConvocatoriaById} from '../../services/convocatorias';
 
 export const VistaProyecto = () => {
   const [proyecto, setProyecto] = useState(null);
   const [usuarioProyecto, setUsuarioProyecto] = useState('');
   const [presupuesto, setPresupuesto] = useState(0);
+  const [convocatoria, setConvocatoria] = useState(null);
   const userName = sessionStorage.getItem('username');
+
   console.log('USERNAME', userName);
 
   //const idProyecto = sessionStorage.getItem("idProyecto");
@@ -103,6 +106,20 @@ export const VistaProyecto = () => {
     }
   }
 
+  async function fetchConvocatorias() {
+    try {
+      const id = sessionStorage.getItem('idProyecto');
+      const proyecto = await getProyectoById(id); //Tiene que ser por ID la busqueda
+      const idConvocatoria = proyecto[0].idConvocatoria;
+      const convocatoria = await getConvocatoriaById(idConvocatoria);
+      console.log("Convocatoria", convocatoria)
+      setConvocatoria(convocatoria)
+      
+    } catch (err) {
+      console.log('[DatosGenerales Component] ERROR : ' + err);
+    }
+  }
+
   useEffect(() => {
     const id = sessionStorage.getItem('idProyecto');
     if (id) {
@@ -112,6 +129,7 @@ export const VistaProyecto = () => {
     }
     fetchPresupuesto();
     fetchUserLastName(); //getComprasByProyecto(id);
+    fetchConvocatorias();
     if (newCompra) fetchCompra();
     setNewCompra(false);
   }, [newCompra]);
@@ -165,7 +183,7 @@ export const VistaProyecto = () => {
               Línea de Financiamiento
             </StyledTableCell>
             <StyledTableCell align="center" className={$.textColor}>
-              Año de Convocatoria
+              Convocatoria
             </StyledTableCell>
             <StyledTableCell align="center" className={$.textColor}>
               Unidad Académica
@@ -197,7 +215,7 @@ export const VistaProyecto = () => {
                 {proyecto.lineaFinanciamiento}
               </StyledTableCell>
               <StyledTableCell align="center">
-                {formatYear(proyecto.año)}
+                {convocatoria && convocatoria.nombre}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {proyecto.unidadAcademica}
