@@ -148,6 +148,7 @@ export default function PopUpCompras({
   console.log("Fecha: ", fecha)
   const [idproveedor, setProveedor] = useState('');
   const [monto, setMonto] = useState(0);
+  const [cae,setCae]=useState()
   const [nombre, setNombre] = useState('');
   const [nroFactura, setNroFactura] = useState(null);
 
@@ -184,6 +185,7 @@ export default function PopUpCompras({
   const canSubmit =
     rubro &&
     nroFactura &&
+    cae &&
     monto &&
     fecha &&
     idproveedor &&
@@ -284,7 +286,8 @@ export default function PopUpCompras({
       nombre: nombre,
       subrubro: subrubro,
       idsubsidio: subsidio.id,
-      idproveedor: idproveedor
+      idproveedor: idproveedor,
+      cae: cae
     };
     const res = await postCompra(data);
     stateNewCompra(true);
@@ -422,6 +425,14 @@ export default function PopUpCompras({
               label="Nro. factura"
               style={{ width: 300 }}
               onChange={(e) => submitHandle(setNroFactura, e.target.value)}
+              error={''}
+            />
+          </div>
+          <div className={$.cargarFactura}>
+            <TextField
+              label="Nro.Cae"
+              style={{ width: 300 }}
+              onChange={(e) => submitHandle(setCae, e.target.value)}
               error={''}
             />
           </div>
