@@ -47,6 +47,15 @@ export default function PopUpProveedores(props) {
   const handleClose = () => {
     props.state(false);
   };
+  const validateCUIT = (cuit) => {
+    const regex =/^([0-9]{11}|[0-9]{2}-[0-9]{8}-[0-9]{1})$/
+    const esValido = regex.test("20-20304050-1");
+    
+
+console.log("PRUEBA REGEX",esValido); // true
+    return regex.test(cuit);
+  };
+  
 
   return (
     <>
@@ -73,12 +82,16 @@ export default function PopUpProveedores(props) {
             error={errorTelefono}
           />
           <TextField
-            label="CUIT: 12-12345678-1"
+            label="CUIT: 20-21245678-3"
             className={$.textField}
             onChange={(e) => submitHandle(setCuit, e.target.value)}
-            onBlur={(e) => validateField('cuit', e.target.value, setErrorCuit)}
+            onBlur={(e) => {
+              const isValid = validateCUIT(e.target.value);
+              setErrorCuit(!isValid);
+            }}
             error={errorCuit}
-          />
+            inputProps={{ maxLength: 13 }}
+/>
           <TextField
             label="E-mail: mail@empresa.com.ar"
             className={$.textField}
