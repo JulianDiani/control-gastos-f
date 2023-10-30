@@ -12,10 +12,7 @@ import {
   Select,
   Tooltip,
 } from '@material-ui/core';
-import {
-  postCompra,
-  getAllGastosPorRubro
-} from '../services/compras.js';
+import { postCompra, getAllGastosPorRubro } from '../services/compras.js';
 
 import {
   getPresupuesto,
@@ -134,21 +131,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PopUpCompras({
-  state,  
-  stateNewCompra,
-  idProyecto  
-}) {
+export default function PopUpCompras({ state, stateNewCompra, idProyecto }) {
   const $ = useStyles();
 
   const [rubro, setRubro] = useState('');
 
   const [subrubro, setSubrubro] = useState(null);
   const [fecha, setFecha] = useState(null);
-  console.log("Fecha: ", fecha)
+  console.log('Fecha: ', fecha);
   const [idproveedor, setProveedor] = useState('');
   const [monto, setMonto] = useState(0);
-  const [cae,setCae]=useState()
+  const [cae, setCae] = useState();
   const [nombre, setNombre] = useState('');
   const [nroFactura, setNroFactura] = useState(null);
 
@@ -158,7 +151,7 @@ export default function PopUpCompras({
   const [proveedores, setProveedores] = useState([]);
   //Errors in fields
   const [errorMonto, setErrorMonto] = useState(false);
-   const [errorSubrubro, setErrorSubrubro] = useState(false);
+  const [errorSubrubro, setErrorSubrubro] = useState(false);
   const [errorNombreNewProveedor, setErrorNombreNewProveedor] = useState(null);
   const [errorCuitNewProveedor, setErrorCuitNewProveedor] = useState(null);
   const [errorTelefonoNewProveedor, setErrorTelefonoNewProveedor] = useState(
@@ -166,7 +159,7 @@ export default function PopUpCompras({
   );
 
   //New proveedor fields
-   const [newProveedorRubro, setNewProveedorRubro] = useState(null);
+  const [newProveedorRubro, setNewProveedorRubro] = useState(null);
   const [newProveedorNombre, setNewProveedorNombre] = useState(null);
   const [newProveedorCuit, setNewProveedorCuit] = useState(null);
   const [newProveedorTelefono, setNewProveedorTelefono] = useState(null);
@@ -177,10 +170,9 @@ export default function PopUpCompras({
   const availableMoneyForRubro = disponibleRubro > 0;
   //const availableMoneyForRubro = true;
 
-  //subsidio: es el subsidioasignado que sale del Proyecto en el cual se esta 
+  //subsidio: es el subsidioasignado que sale del Proyecto en el cual se esta
   //actualmente (idProyecto) y el rubro, que se selecciono (idRubro).
   const [subsidio, setSubsidio] = useState(null);
-
 
   const canSubmit =
     rubro &&
@@ -190,6 +182,7 @@ export default function PopUpCompras({
     fecha &&
     idproveedor &&
     availableMoneyForRubro &&
+    nombre &&
     !errorMonto;
   const canAddProveedor =
     //newProveedorRubro &&
@@ -205,7 +198,7 @@ export default function PopUpCompras({
         const rubros = await listadetodos();
         //const rubrosJson = await rubros;
         setRubros(rubros);
-        console.log("Rubros: ", rubros);
+        console.log('Rubros: ', rubros);
       } catch (error) {
         console.log('error en el fetch de Rubros : ' + error);
       }
@@ -217,12 +210,12 @@ export default function PopUpCompras({
     async function getProveedores() {
       const provedoresResponse = await getAllProveedores();
 
-      setProveedores(provedoresResponse.data.sort(function (a, b) {
-        var nombA = a.nombre;
-        var nombB = b.nombre;
-        return (nombA < nombB) ? -1 : (nombA > nombB) ? 1 : 0;
-
-      })
+      setProveedores(
+        provedoresResponse.data.sort(function (a, b) {
+          var nombA = a.nombre;
+          var nombB = b.nombre;
+          return nombA < nombB ? -1 : nombA > nombB ? 1 : 0;
+        })
       );
     }
     getProveedores();
@@ -235,26 +228,31 @@ export default function PopUpCompras({
     async function fetchGastos() {
       //consulta con la API de subsidios, mediante el idProyecto (hardcoderado con 1)
       // y el id del rubro seleccionado, y devuelve el subsidioAsignado.
-      const subsidioAsignado = await getSubsidioXProyectoXRubro(idProyecto, rubro);
-      console.log("RUBRO",rubro);
+      const subsidioAsignado = await getSubsidioXProyectoXRubro(
+        idProyecto,
+        rubro
+      );
+      console.log('RUBRO', rubro);
       //console.log("Sucidio asignado: ", subsidioAsignado);
       // Con el subsidioAsignado, consulta en la API de compras, todas
       // las que tengan este idSubsidio
-      const totalComprasSubsidio = await getAllGastosPorRubro(idProyecto)
-      console.log("ID PROYECTO",idProyecto);
-      console.log("TOTAL COMPRAS",totalComprasSubsidio);
+      const totalComprasSubsidio = await getAllGastosPorRubro(idProyecto);
+      console.log('ID PROYECTO', idProyecto);
+      console.log('TOTAL COMPRAS', totalComprasSubsidio);
       //filter(gastos => gastos.rubro == subsidioAsignado.Rubro.nombre)//await getAllGastosPorRubro(idProyecto)//"500"//await getTotalxSubsidio(subsidioAsignado.id);
       //const totalFilter = totalComprasSubsidio.length==0 ? 0 : totalComprasSubsidio.filter(a => a.rubro == subsidioAsignado.Rubro.nombre)[0].gastosAprobados
-      const totalFilter2 = totalComprasSubsidio.find(a => a.rubro == subsidioAsignado.Rubro.nombre)
-      const totalGastos = totalFilter2?totalFilter2.gastosAprobados : 0
-      console.log("TotalComprasXsub: " , totalComprasSubsidio)
+      const totalFilter2 = totalComprasSubsidio.find(
+        (a) => a.rubro == subsidioAsignado.Rubro.nombre
+      );
+      const totalGastos = totalFilter2 ? totalFilter2.gastosAprobados : 0;
+      console.log('TotalComprasXsub: ', totalComprasSubsidio);
       //console.log("TotalFilter: " , totalFilter)
       const dineroDisponible = calcularDineroDisponiblePorRubro(
         subsidioAsignado.montoAsignado,
         totalGastos,
         JSON.stringify(subsidioAsignado.Rubro.nombre)
       );
-      console.log("dineroDisponible: " , dineroDisponible)
+      console.log('dineroDisponible: ', dineroDisponible);
       setSubsidio(subsidioAsignado);
       setDisponibleRubro(dineroDisponible);
     }
@@ -278,7 +276,7 @@ export default function PopUpCompras({
   const submitForm = async () => {
     state(false);
     const data = {
-      proyecto : idProyecto,
+      proyecto: idProyecto,
       fecha: fecha,
       monto: monto,
       estado: 'Pendiente',
@@ -287,7 +285,7 @@ export default function PopUpCompras({
       subrubro: subrubro,
       idsubsidio: subsidio.id,
       idproveedor: idproveedor,
-      cae: cae
+      cae: cae,
     };
     const res = await postCompra(data);
     stateNewCompra(true);
@@ -450,6 +448,7 @@ export default function PopUpCompras({
             rows={6}
             className={$.multiLineInput}
             onChange={(e) => submitHandle(setNombre, e.target.value)}
+            error={''}
           />
         </div>
         <div className={$.proveedor}>
@@ -470,7 +469,6 @@ export default function PopUpCompras({
         {/* Form para cargar nuevo proveedor */}
         {newProveedor && (
           <div className={$.proveedorForm}>
-
             <TextField
               className={$.inputForm}
               label="Nombre: Empresa S.A."
