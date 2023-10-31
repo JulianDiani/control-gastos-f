@@ -433,7 +433,7 @@ export default function PopUpCompras({ state, stateNewCompra, idProyecto }) {
           </div>
           <div className={$.cargarFactura}>
             <TextField
-              label="Nro. factura"
+              label="Nro. Factura"
               style={{ width: 300 }}
               variant="outlined"
               inputVariant="outlined"
@@ -443,7 +443,7 @@ export default function PopUpCompras({ state, stateNewCompra, idProyecto }) {
           </div>
           <div className={$.cargarFactura}>
             <TextField
-              label="Nro.CAE"
+              label="Nro. CAE"
               style={{ width: 300 }}
               variant="outlined"
               inputVariant="outlined"
