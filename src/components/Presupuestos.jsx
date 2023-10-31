@@ -2,8 +2,9 @@ import React from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-import { getPresupuesto } from '../services/presupuestos.js';
+import { getPresupuesto,getPresupuesto2 } from '../services/presupuestos.js';
 import { getAllGastosPorRubro, getComprasByProyecto } from '../services/compras.js';
+import {getSubsidios} from '../services/subsidiosasignados.js'
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './dashboards/TortaPrincipal';
@@ -17,9 +18,11 @@ export const Presupuestos = ({ idProyecto }) => {
   const $ = useStyles();
 
   const [presupuesto, setPresupuesto] = useState(null);
+  const [presupuestoBack,setPresupuestoBack]=useState(null)
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
   const [gastosPorRubro, setGastosPorRubro] = useState(null);
+  const [subsidiosBack,setSubsidiosBack]=useState(null)
 
   useEffect(() => {
     let isMounted = true;
@@ -28,16 +31,23 @@ export const Presupuestos = ({ idProyecto }) => {
         try {
           const presupuesto = await getPresupuesto();
           console.log("presupuesto:",presupuesto)
+          const presupuesto2=await getPresupuesto2(idProyecto);
           const compras = await getComprasByProyecto(idProyecto);
           console.log("compras:",compras)
           const gastos = calculateTotalExpenses(compras);
           console.log("gastos:",gastos)
           const gastosPorRubro = await getAllGastosPorRubro(idProyecto)
           console.log("gastos por rubro:",gastosPorRubro)
+          // const subsidios=await getSubsidios(idProyecto);
+          // console.log("SUBSIDIOS",subsidios);
+          
+          
           if (isMounted) {
             setTotalGastos(gastos);
             setComprasRealizadas(comprasRealizadas);
             setPresupuesto(presupuesto);
+            setPresupuestoBack(presupuesto2);
+            //setSubsidiosBack(subsidios)
             setGastosPorRubro(combinarPresupuestoYRubros(presupuesto, gastosPorRubro))
           }
         } catch (err) {
@@ -76,13 +86,13 @@ export const Presupuestos = ({ idProyecto }) => {
               <CardMontos
                 item
                 xl={6}
-                totalPresupuesto={presupuesto.total}
+                totalPresupuesto={presupuestoBack}
                 totalGastos={totalGastos}
               />
               <div>
                 <TortaPrincipal
                   presupuesto={presupuesto}
-                  totalPresupuesto={presupuesto.total}
+                  totalPresupuesto={presupuestoBack}
                   totalGastos={totalGastos}
                   className={$.torta}
                 />
