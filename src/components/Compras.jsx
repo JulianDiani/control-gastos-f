@@ -15,7 +15,6 @@ import { Footer } from './Footer';
 import { formatPrice, formatDate } from '../utils/validaciones';
 import BlockIcon from '@material-ui/icons/Block';
 
-
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -70,14 +69,14 @@ export const Compras = (idProyecto) => {
   useEffect(() => {
     async function fetchCompra() {
       try {
-        console.log("idProyecto", idProyecto)
+        console.log('idProyecto', idProyecto);
         const compras = await getComprasByProyecto(idProyecto.idProyecto); // se Hardcodea(idProyecto);
-        console.log("Compras realizadas", compras)
+        console.log('Compras realizadas', compras);
         setCompras(
           compras.sort(function (a, b) {
             var textA = a.fecha;
             var textB = b.fecha;
-            return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+            return textA > textB ? -1 : textA < textB ? 1 : 0;
           })
         );
       } catch (err) {
@@ -105,11 +104,12 @@ export const Compras = (idProyecto) => {
           <TableContainer className={$.container}>
             <Table aria-label="customized table">
               <StyledTableHead>
-                <StyledTableCell className={$.textColor}>
-                  Fecha
+                <StyledTableCell className={$.textColor}>Fecha</StyledTableCell>
+                <StyledTableCell align="left" className={$.textColor}>
+                  Nro. Factura
                 </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
-                  Nro Factura
+                  Nro. CAE
                 </StyledTableCell>
                 <StyledTableCell align="left" className={$.textColor}>
                   Proveedor
@@ -134,6 +134,7 @@ export const Compras = (idProyecto) => {
                     <StyledTableCell align="left">
                       {compra.factura}
                     </StyledTableCell>
+                    <StyledTableCell align="left">{compra.cae}</StyledTableCell>
                     <StyledTableCell align="left">
                       {compra.Proveedore.nombre}
                     </StyledTableCell>
@@ -195,7 +196,6 @@ export const Compras = (idProyecto) => {
             state={setOpen}
             stateNewCompra={setNewCompra}
             idProyecto={idProyecto.idProyecto}
-            
           />
         </Modal>
       </Grid>
