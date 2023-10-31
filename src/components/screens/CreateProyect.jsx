@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Divider, FormControl, Paper, Grid } from '@material-ui/core';
+import {
+  Button,
+  Divider,
+  FormControl,
+  Paper,
+  Grid,
+  MenuItem,
+} from '@material-ui/core';
 import { createProyecto } from '../../services/proyectos';
 import Alert from '@material-ui/lab/Alert';
 import {
@@ -364,12 +371,23 @@ const CreateProyect = () => {
                     !valiString(e.target.value) ? 'solo alfanúmericos' : ''
                   );
                 }}
+                select
                 variant="outlined"
                 className={classes.field}
                 error={camposErrors[1].error}
                 helperText={camposErrors[1].message}
                 type="text"
-              />
+              >
+                <MenuItem key={1} value="tipo 1">
+                  Tipo 1
+                </MenuItem>
+                <MenuItem key={2} value="tipo 2">
+                  Tipo 2
+                </MenuItem>
+                <MenuItem key={3} value="tipo 3">
+                  Tipo 3
+                </MenuItem>
+              </TextField>
               <TextField
                 id="outlined-name"
                 label="Organismo"
@@ -384,12 +402,23 @@ const CreateProyect = () => {
                     !valiString(e.target.value) ? 'solo alfanúmericos' : ''
                   );
                 }}
+                select
                 variant="outlined"
                 className={classes.field}
                 error={camposErrors[2].error}
                 helperText={camposErrors[2].message}
                 type="text"
-              />
+              >
+                <MenuItem key={1} value="Organismo 1">
+                  Organismo 1
+                </MenuItem>
+                <MenuItem key={2} value="Organismo 2">
+                  Organismo 2
+                </MenuItem>
+                <MenuItem key={3} value="Organismo 3">
+                  Organismo 3
+                </MenuItem>
+              </TextField>
               <TextField
                 id="outlined-name"
                 label="Línea de financiamiento"
@@ -424,12 +453,23 @@ const CreateProyect = () => {
                     !valiString(e.target.value) ? 'solo alfanúmericos' : ''
                   );
                 }}
+                select
                 variant="outlined"
                 className={classes.field}
                 error={camposErrors[4].error}
                 helperText={camposErrors[4].message}
                 type="text"
-              />
+              >
+                <MenuItem key={1} value="Unidad academica 1">
+                  Unidad academica 1
+                </MenuItem>
+                <MenuItem key={2} value="Unidad academica 2">
+                  Unidad academica 2
+                </MenuItem>
+                <MenuItem key={3} value="Unidad academica 3">
+                  Unidad academica 3
+                </MenuItem>
+              </TextField>
               <TextField
                 id="outlined-name"
                 label="Área temática"
