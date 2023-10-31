@@ -17,6 +17,7 @@ import { getUsuarios } from '../../services/usuarios';
 import { getAllConvocatorias } from '../../services/convocatorias';
 import { getAllRubros } from '../../services/rubros';
 import Rubro from '../dashboards/Rubro.jsx';
+import esLocale from 'date-fns/locale/es';
 
 const useStyles = makeStyles((theme) => ({
   formContainer: {
@@ -471,7 +472,7 @@ const CreateProyect = () => {
             </div>
             <div className={classes.root}>
               <Grid container spacing={1}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
                   <Grid item xs>
                     <KeyboardDatePicker
                       className={classes.field}
