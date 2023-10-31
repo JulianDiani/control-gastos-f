@@ -28,6 +28,11 @@ import { postProveedor, getAllProveedores } from '../services/proveedores.js';
 // funciones GET de subsidiosAsignados
 import { getSubsidioXProyectoXRubro } from '../services/subsidiosasignados.js';
 
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import esLocale from 'date-fns/locale/es';
+import { DatePicker } from '@material-ui/pickers';
+
 const useStyles = makeStyles((theme) => ({
   modal: {
     position: 'absolute',
@@ -398,16 +403,24 @@ export default function PopUpCompras({ state, stateNewCompra, idProyecto }) {
         <Typography variant="h6">Datos de la compra</Typography>
         <br />
         <div className={$.secondRow}>
-          <TextField
-            label="Fecha"
-            onChange={(e) => submitHandle(setFecha, e.target.value)}
-            type="date"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+          <MuiPickersUtilsProvider utils={DateFnsUtils} locale={esLocale}>
+            <DatePicker
+              variant="outlined"
+              id="date-picker-dialog"
+              label="Fecha"
+              format="dd/MM/yyyy"
+              value={fecha}
+              onChange={(e) => submitHandle(setFecha, e)}
+              inputVariant="outlined"
+              KeyboardButtonProps={{
+                'aria-label': 'cambiar fecha',
+              }}
+            />
+          </MuiPickersUtilsProvider>
           <div className={$.cargarFactura}>
             <TextField
+              variant="outlined"
+              inputVariant="outlined"
               label="Monto factura"
               style={{ width: 300 }}
               onChange={(e) => submitHandle(setMonto, e.target.value)}
@@ -422,34 +435,22 @@ export default function PopUpCompras({ state, stateNewCompra, idProyecto }) {
             <TextField
               label="Nro. factura"
               style={{ width: 300 }}
+              variant="outlined"
+              inputVariant="outlined"
               onChange={(e) => submitHandle(setNroFactura, e.target.value)}
               error={''}
             />
           </div>
           <div className={$.cargarFactura}>
             <TextField
-              label="Nro.Cae"
+              label="Nro.CAE"
               style={{ width: 300 }}
+              variant="outlined"
+              inputVariant="outlined"
               onChange={(e) => submitHandle(setCae, e.target.value)}
               error={''}
             />
           </div>
-        </div>
-        <br />
-        <br />
-        <Divider />
-
-        <div className={$.descripcion}>
-          <Typography variant="h6">Descripción</Typography>
-          <br />
-          <TextField
-            label="Enumeracion de items / servicios, comprados"
-            multiline
-            rows={6}
-            className={$.multiLineInput}
-            onChange={(e) => submitHandle(setNombre, e.target.value)}
-            error={''}
-          />
         </div>
         <div className={$.proveedor}>
           <Autocomplete
@@ -458,7 +459,12 @@ export default function PopUpCompras({ state, stateNewCompra, idProyecto }) {
             getOptionLabel={(option) => option.nombre}
             style={{ width: 300 }}
             renderInput={(params) => (
-              <TextField {...params} label="Proveedores" />
+              <TextField
+                variant="outlined"
+                inputVariant="outlined"
+                {...params}
+                label="Proveedores"
+              />
             )}
             onChange={(e, value) => submitHandle(setProveedor, value?.id)} // idproveedor para la compra
           />
@@ -553,6 +559,23 @@ export default function PopUpCompras({ state, stateNewCompra, idProyecto }) {
             </Button>
           </div>
         )}
+        <br />
+        <br />
+        <Divider />
+
+        <div className={$.descripcion}>
+          <Typography variant="h6">Descripción</Typography>
+          <br />
+          <TextField
+            label="Enumeracion de items / servicios, comprados"
+            multiline
+            rows={6}
+            className={$.multiLineInput}
+            onChange={(e) => submitHandle(setNombre, e.target.value)}
+            error={''}
+          />
+        </div>
+
         <div className={$.button}>
           <Button color="primary" className={$.botones} onClick={handleClose}>
             Cancelar
