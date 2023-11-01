@@ -10,33 +10,26 @@ const useStyles = makeStyles({
   },
 });
 export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupuesto }) {
-  console.log("presupuesto",presupuesto)
-  console.log("presupuesto",totalGastos)
-  console.log("presupuesto",totalPresupuesto)
   const totalDisponible = presupuesto; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
   const monto = montoDisponible(totalPresupuesto, totalGastos)
   const ejecucion = nivelDeEjecucion(totalPresupuesto, totalGastos);
   const $ = useStyles();
   const datosAConsumir = (({
-    Insumos,
-    Bibliografia,
-    Publicaciones,
-    Viaticos,
+    Bibliografía,
     Equipamiento,
-    Tecnico,
-    Administracion,
-
+    Publicación,
+    Insumos,
+    Administración,
+    Viajes
   }) => ({
-    Insumos,
-    Bibliografia,
-    Publicaciones,
-    Viaticos,
+    Bibliografía,
     Equipamiento,
-    Tecnico,
-    Administracion,
+    Publicación,
+    Insumos,
+    Administración,
+    Viajes
 
-  }))(totalDisponible, monto, ejecucion);
-
+  })) (totalDisponible, monto, ejecucion);
   const graficoTorta = (
 
     <Doughnut className={$.graficoTor}
@@ -57,13 +50,12 @@ export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupue
               '#e28956',
             ],
             data: [
-              totalDisponible.insumos,
-              totalDisponible.publicaciones,
-              totalDisponible.bibliografia,
-              totalDisponible.viaticos,
-              totalDisponible.equipamiento,
-              totalDisponible.tecnico,
-              totalDisponible.administracion,
+              totalDisponible.Bibliografía,
+              totalDisponible.Equipamiento,
+              totalDisponible['Gastos de Publicación'],
+              totalDisponible.Insumos,
+              totalDisponible['Servicios Técnicos y Gastos de Administración'],
+              totalDisponible['Viajes y Viáticos'],
             ],
           },
         ],

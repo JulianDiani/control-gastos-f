@@ -18,7 +18,7 @@ export const Presupuestos = ({ idProyecto }) => {
   const $ = useStyles();
 
   const [presupuesto, setPresupuesto] = useState(null);
-  const [presupuestoBack,setPresupuestoBack]=useState(null)
+  const [presupuestoTotal,setPresupuestoTotal]=useState(null)
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
   const [gastosPorRubro, setGastosPorRubro] = useState(null);
@@ -29,26 +29,26 @@ export const Presupuestos = ({ idProyecto }) => {
     async function fetchProyectos() {
       if (idProyecto)
         try {
-          const presupuesto = await getPresupuesto();
-          console.log("presupuesto:",presupuesto)
-          const presupuesto2=await getPresupuesto2(idProyecto);
+          const presupuestoTotal =await getPresupuesto2(idProyecto); 
           const compras = await getComprasByProyecto(idProyecto);
-          console.log("compras:",compras)
           const gastos = calculateTotalExpenses(compras);
-          console.log("gastos:",gastos)
           const gastosPorRubro = await getAllGastosPorRubro(idProyecto)
-          console.log("gastos por rubro:",gastosPorRubro)
-          // const subsidios=await getSubsidios(idProyecto);
-          // console.log("SUBSIDIOS",subsidios);
-          
-          
+          const subsidios=await getSubsidios(idProyecto);
+          const presupuestoAuxiliar = {}
+          subsidios.map( subsidio => {
+            presupuestoAuxiliar[subsidio.rubroNombre] = subsidio.montoAsignado
+          })
+          presupuestoAuxiliar['tipo']= "Total Presupuesto"
+          presupuestoAuxiliar['total']= presupuestoTotal
+          presupuestoAuxiliar['fechaInicio']= "18/09/2021"
+          presupuestoAuxiliar['fechaFin']= "18/09/2022"
+
           if (isMounted) {
             setTotalGastos(gastos);
             setComprasRealizadas(comprasRealizadas);
-            setPresupuesto(presupuesto);
-            setPresupuestoBack(presupuesto2);
-            //setSubsidiosBack(subsidios)
-            setGastosPorRubro(combinarPresupuestoYRubros(presupuesto, gastosPorRubro))
+            setPresupuesto(presupuestoAuxiliar);
+            setPresupuestoTotal(presupuestoTotal);
+            setGastosPorRubro(combinarPresupuestoYRubros(presupuestoAuxiliar, gastosPorRubro))
           }
         } catch (err) {
           console.log('[DatosGenerales Component] ERROR : ' + err);
@@ -86,13 +86,13 @@ export const Presupuestos = ({ idProyecto }) => {
               <CardMontos
                 item
                 xl={6}
-                totalPresupuesto={presupuestoBack}
+                totalPresupuesto={presupuestoTotal}
                 totalGastos={totalGastos}
               />
               <div>
                 <TortaPrincipal
                   presupuesto={presupuesto}
-                  totalPresupuesto={presupuestoBack}
+                  totalPresupuesto={presupuestoTotal}
                   totalGastos={totalGastos}
                   className={$.torta}
                 />
