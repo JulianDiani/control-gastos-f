@@ -13,7 +13,7 @@ import { getProyectoById } from '../services/proyectos.js';
 import { getTotalSubsidio } from '../services/subsidiosasignados';
 import Alert from '@material-ui/lab/Alert';
 import { formatPrice, formatDate, formatYear } from '../utils/validaciones';
-import {getConvocatoriaById} from '../services/convocatorias';
+import { getConvocatoriaById } from '../services/convocatorias';
 
 export const DatosGenerales = ({ idProyecto }) => {
   const $ = useStyles();
@@ -28,9 +28,8 @@ export const DatosGenerales = ({ idProyecto }) => {
       const proyecto = await getProyectoById(id); //Tiene que ser por ID la busqueda
       const idConvocatoria = proyecto[0].idConvocatoria;
       const convocatoria = await getConvocatoriaById(idConvocatoria);
-      console.log("Convocatoria", convocatoria.nombre)
-      setConvocatoria(convocatoria.nombre)
-      
+      console.log('Convocatoria', convocatoria.nombre);
+      setConvocatoria(convocatoria.nombre);
     } catch (err) {
       console.log('[DatosGenerales Component] ERROR : ' + err);
     }
@@ -43,9 +42,9 @@ export const DatosGenerales = ({ idProyecto }) => {
         try {
           const proyecto = await getProyectoById(idProyecto); //Tiene que ser por ID la busqueda
           const subsidiosProyecto = await getTotalSubsidio(idProyecto);
-          setSubsidioProyecto(subsidiosProyecto)
-          fetchConvocatorias(idProyecto)
-          console.log("Subsidios de los proyectos",subsidiosProyecto)
+          setSubsidioProyecto(subsidiosProyecto);
+          fetchConvocatorias(idProyecto);
+          console.log('Subsidios de los proyectos', subsidiosProyecto);
           if (isMounted) {
             setProyecto(proyecto[0]);
           }
@@ -95,7 +94,7 @@ export const DatosGenerales = ({ idProyecto }) => {
         </ListItem>
         <ListItem>
           <ListItemText
-            primary={'Unidad Académica: ' + proyecto.unidadAcademica}
+            primary={'Agrupamiento de I+D: ' + proyecto.unidadAcademica}
             sx={{ ml: 2 }}
           />
         </ListItem>

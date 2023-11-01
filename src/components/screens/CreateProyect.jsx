@@ -365,30 +365,22 @@ const CreateProyect = () => {
                 label="Tipo"
                 value={tipo}
                 onChange={(e) => {
-                  valiString(e.target.value)
-                    ? handleChange(e, setTipo)
-                    : setTipo(null);
-                  handleCamposErrors(
-                    'tipo',
-                    !valiString(e.target.value),
-                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
-                  );
+                  handleChange(e, setTipo);
                 }}
                 select
                 variant="outlined"
                 className={classes.field}
                 error={camposErrors[1].error}
                 helperText={camposErrors[1].message}
-                type="text"
               >
-                <MenuItem key={1} value="tipo 1">
-                  Tipo 1
+                <MenuItem key={1} value="Investigación básica">
+                  Investigación básica
                 </MenuItem>
-                <MenuItem key={2} value="tipo 2">
-                  Tipo 2
+                <MenuItem key={2} value="Investigación aplicada">
+                  Investigación aplicada
                 </MenuItem>
-                <MenuItem key={3} value="tipo 3">
-                  Tipo 3
+                <MenuItem key={3} value="Desarrollo experimental">
+                  Desarrollo experimental
                 </MenuItem>
               </TextField>
               <TextField
@@ -396,14 +388,7 @@ const CreateProyect = () => {
                 label="Organismo"
                 value={organismo}
                 onChange={(e) => {
-                  valiString(e.target.value)
-                    ? handleChange(e, setOrganismo)
-                    : setOrganismo(null);
-                  handleCamposErrors(
-                    'organismo',
-                    !valiString(e.target.value),
-                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
-                  );
+                  handleChange(e, setOrganismo);
                 }}
                 select
                 variant="outlined"
@@ -412,14 +397,53 @@ const CreateProyect = () => {
                 helperText={camposErrors[2].message}
                 type="text"
               >
-                <MenuItem key={1} value="Organismo 1">
-                  Organismo 1
+                <MenuItem key={1} value="UNAHUR">
+                  Universidad Nacional de Hurlingham (UNAHUR)
                 </MenuItem>
-                <MenuItem key={2} value="Organismo 2">
-                  Organismo 2
+                <MenuItem key={2} value="Agencia I+D+i">
+                  Agencia Nacional de Promoción de la Investigación, el
+                  Desarrollo Tecnológico y la Innovación (Agencia I+D+i)
                 </MenuItem>
-                <MenuItem key={3} value="Organismo 3">
-                  Organismo 3
+                <MenuItem key={3} value="CONICET">
+                  Consejo Nacional de Investigaciones Científicas y Técnicas
+                  (CONICET)
+                </MenuItem>
+                <MenuItem
+                  key={4}
+                  value="Comisión de Investigaciones Científicas"
+                >
+                  Comisión de Investigaciones Científicas (CIC)
+                </MenuItem>
+                <MenuItem key={5} value="MinCyT">
+                  Ministerio de Ciencia, Tecnología e Innovación (MinCyT)
+                </MenuItem>
+                <MenuItem
+                  key={6}
+                  value="Gobierno de la Provincia de Buenos Aires"
+                >
+                  Gobierno de la Provincia de Buenos Aires (PBA)
+                </MenuItem>
+                <MenuItem
+                  key={7}
+                  value="Secretaría de Políticas Universitarias"
+                >
+                  Secretaría de Políticas Universitarias (SPU)
+                </MenuItem>
+                <MenuItem key={8} value="Ministerio de Educación">
+                  Ministerio de Educación (ME)
+                </MenuItem>
+                <MenuItem key={9} value="CONUSUR">
+                  Colaboratorio Universitario de Ciencias, Artes, Tecnología,
+                  Innovación y Saberes del Sur (CONUSUR)
+                </MenuItem>
+                <MenuItem key={10} value="MinSal">
+                  Ministerio de Salud (MinSal)
+                </MenuItem>
+                <MenuItem key={11} value="COFECyT">
+                  Consejo Federal de Ciencia, Tecnología e Innovación (COFECyT)
+                </MenuItem>
+                <MenuItem key={12} value="INET">
+                  Instituto Nacional de Educación Tecnológica (INET)
                 </MenuItem>
               </TextField>
               <TextField
@@ -444,17 +468,10 @@ const CreateProyect = () => {
               />
               <TextField
                 id="outlined-name"
-                label="Unidad académica"
+                label="Agrupamiento de I+D"
                 value={unidadAcademica}
                 onChange={(e) => {
-                  valiString(e.target.value)
-                    ? handleChange(e, setUnidadAcademica)
-                    : setUnidadAcademica(null);
-                  handleCamposErrors(
-                    'unidadAcademica',
-                    !valiString(e.target.value),
-                    !valiString(e.target.value) ? 'solo alfanúmericos' : ''
-                  );
+                  handleChange(e, setUnidadAcademica);
                 }}
                 select
                 variant="outlined"
@@ -463,14 +480,66 @@ const CreateProyect = () => {
                 helperText={camposErrors[4].message}
                 type="text"
               >
-                <MenuItem key={1} value="Unidad academica 1">
-                  Unidad academica 1
+                <MenuItem key={1} value="Instituto de Educación">
+                  Instituto de Educación
                 </MenuItem>
-                <MenuItem key={2} value="Unidad academica 2">
-                  Unidad academica 2
+                <MenuItem key={2} value="Instituto de Salud Comunitaria">
+                  Instituto de Salud Comunitaria
                 </MenuItem>
-                <MenuItem key={3} value="Unidad academica 3">
-                  Unidad academica 3
+                <MenuItem key={3} value="Instituto de Biotecnología">
+                  Instituto de Biotecnología
+                </MenuItem>
+                <MenuItem key={4} value="Instituto de Tecnología e Ingeniería">
+                  Instituto de Tecnología e Ingeniería
+                </MenuItem>
+                <MenuItem key={5} value="LANSAB">
+                  Laboratorio de Nanosistemas de Aplicación Biotecnológica
+                  (LANSAB)
+                </MenuItem>
+                <MenuItem key={6} value="LAByM">
+                  Laboratorio de Aplicaciones Biotecnológicas y Microbiología
+                  (LAByM)
+                </MenuItem>
+                <MenuItem key={7} value="LAVIMO">
+                  Laboratorio de Virología Molecular (LAVIMO)
+                </MenuItem>
+                <MenuItem key={8} value="GIDEL">
+                  Grupo de Investigación y Desarrollo en Lingüística (GIDEL)
+                </MenuItem>
+                <MenuItem
+                  key={9}
+                  value="Grupo de Investigación y Desarrollo en Geometría y Álgebra Computacional "
+                >
+                  Grupo de Investigación y Desarrollo en Geometría y Álgebra
+                  Computacional
+                </MenuItem>
+                <MenuItem
+                  key={10}
+                  value="Programa de Investigación y Desarrollo en Transición Energética"
+                >
+                  Programa de Investigación y Desarrollo en Transición
+                  Energética
+                </MenuItem>
+                <MenuItem
+                  key={11}
+                  value="Programa de Investigación y Desarrollo en Una Salud Comunitaria"
+                >
+                  Programa de Investigación y Desarrollo en Una Salud
+                  Comunitaria
+                </MenuItem>
+                <MenuItem
+                  key={12}
+                  value="Programa de Investigación y Desarrollo en Nuevos Alimentos y Seguridad Alimentaria"
+                >
+                  Programa de Investigación y Desarrollo en Nuevos Alimentos y
+                  Seguridad Alimentaria
+                </MenuItem>
+                <MenuItem
+                  key={13}
+                  value="Programa de Investigación y Desarrollo en Literatura, Arte y Cultura"
+                >
+                  Programa de Investigación y Desarrollo en Literatura, Arte y
+                  Cultura
                 </MenuItem>
               </TextField>
               <TextField

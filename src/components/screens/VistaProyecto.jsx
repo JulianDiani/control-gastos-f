@@ -185,7 +185,7 @@ export const VistaProyecto = () => {
               Convocatoria
             </StyledTableCell>
             <StyledTableCell align="center" className={$.textColor}>
-              Unidad Académica
+              Agrupamiento de I+D
             </StyledTableCell>
             <StyledTableCell align="center" className={$.textColor}>
               Área
@@ -350,6 +350,8 @@ const useStyles = makeStyles({
   container: {
     display: 'flex',
     width: '100%',
+    padding: '0',
+    margin: '0',
   },
   card: {
     width: '100%',
