@@ -17,7 +17,6 @@ const calculateTotalExpenses = (compras) => {
 };
 
 const combinarPresupuestoYRubros = (presupuesto, gastos) => {
-  console.log(presupuesto, gastos);
   const presupuestoArray = Object.entries(presupuesto)
     .map(([clave, valor]) => {
       if (
@@ -54,7 +53,6 @@ const combinarPresupuestoYRubros = (presupuesto, gastos) => {
 
     return itemOriginal;
   });
-  console.warn(resultado);
   return resultado;
 };
 
