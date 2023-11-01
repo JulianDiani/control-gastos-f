@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   formContainer: {
     display: 'flex',
     flexDirection: 'column',
-    width: '60%',
+    width: '70%',
     boxShadow: '0 5px 10px -2px #333',
     backgroundColor: '#fafafa',
     padding: '0 1rem 1rem 1rem',
@@ -500,6 +500,7 @@ const CreateProyect = () => {
                     key={rubro.id}
                     rubro={rubro}
                     handleSubsidio={handleSubsidio}
+                    item
                     //error={rubro.error}
                     //helperText={rubro.message}
                     className={classes.textfieldClass}
