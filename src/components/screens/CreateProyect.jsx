@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '30rem',
     marginTop: '3rem',
   },
+  h3: {
+    marginLeft: '10px',
+  },
   error: {
     width: '25rem',
     marginLeft: '30rem',
@@ -331,10 +334,10 @@ const CreateProyect = () => {
       <h1>Crear proyecto</h1>
       <div>
         <Paper className={classes.formContainer}>
-          <h2>Cargar datos</h2>
+          <h2 className={classes.h3}>Cargar datos</h2>
 
           <div className={classes.grid}>
-            <h3> Información general</h3>
+            <h3 className={classes.h3}> Información general</h3>
             <Divider />
             <div className={classes.grid}>
               <TextField
@@ -491,10 +494,9 @@ const CreateProyect = () => {
                 type="text"
               />
               <Divider />
-              <h3>Subsidio destinado por rubro</h3>
-              <Divider />
+              <h3 className={classes.h3}>Subsidio destinado por rubro</h3>
 
-              <Grid container spacing={1}>
+              <Grid container>
                 {subsidios.map((rubro) => (
                   <Rubro
                     key={rubro.id}
@@ -508,8 +510,7 @@ const CreateProyect = () => {
                 ))}
               </Grid>
               <Divider />
-              <h3>Convocatoria</h3>
-              <Divider />
+              <h3 className={classes.h3}>Convocatoria</h3>
             </div>
             <div className={classes.root}>
               <Grid container spacing={1}>
@@ -568,8 +569,7 @@ const CreateProyect = () => {
                 </MuiPickersUtilsProvider>
               </Grid>
               <Divider />
-              <h3>Identificadores</h3>
-              <Divider />
+              <h3 className={classes.h3}>Identificadores</h3>
             </div>
             <div className={classes.root}>
               <Grid container spacing={1}>
@@ -636,8 +636,7 @@ const CreateProyect = () => {
               </Grid>
             </div>
             <Divider />
-            <h3>Responsables</h3>
-            <Divider />
+            <h3 className={classes.h3}>Responsables</h3>
             <TextField
               id="outlined-name"
               label="Director"
