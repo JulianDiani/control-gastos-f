@@ -2,9 +2,12 @@ import React from 'react';
 import { Footer } from './Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-import { getPresupuesto,getPresupuesto2 } from '../services/presupuestos.js';
-import { getAllGastosPorRubro, getComprasByProyecto } from '../services/compras.js';
-import {getSubsidios} from '../services/subsidiosasignados.js'
+import { getPresupuesto, getPresupuesto2 } from '../services/presupuestos.js';
+import {
+  getAllGastosPorRubro,
+  getComprasByProyecto,
+} from '../services/compras.js';
+import { getSubsidios } from '../services/subsidiosasignados.js';
 import { useState, useEffect } from 'react';
 import Alert from '@material-ui/lab/Alert';
 import TortaPrincipal from './dashboards/TortaPrincipal';
@@ -12,43 +15,48 @@ import CardMontos from './dashboards/CardMontos';
 import Tabla from './dashboards/Tabla';
 
 import Grid from '@material-ui/core/Grid';
-import { calculateTotalExpenses, combinarPresupuestoYRubros } from '../utils/presupuestos.js';
+import {
+  calculateTotalExpenses,
+  combinarPresupuestoYRubros,
+} from '../utils/presupuestos.js';
 
 export const Presupuestos = ({ idProyecto }) => {
   const $ = useStyles();
 
   const [presupuesto, setPresupuesto] = useState(null);
-  const [presupuestoTotal,setPresupuestoTotal]=useState(null)
+  const [presupuestoTotal, setPresupuestoTotal] = useState(null);
   const [comprasRealizadas, setComprasRealizadas] = useState(null);
   const [totalGastos, setTotalGastos] = useState(null);
   const [gastosPorRubro, setGastosPorRubro] = useState(null);
-  const [subsidiosBack,setSubsidiosBack]=useState(null)
+  const [subsidiosBack, setSubsidiosBack] = useState(null);
 
   useEffect(() => {
     let isMounted = true;
     async function fetchProyectos() {
       if (idProyecto)
         try {
-          const presupuestoTotal =await getPresupuesto2(idProyecto); 
+          const presupuestoTotal = await getPresupuesto2(idProyecto);
           const compras = await getComprasByProyecto(idProyecto);
           const gastos = calculateTotalExpenses(compras);
-          const gastosPorRubro = await getAllGastosPorRubro(idProyecto)
-          const subsidios=await getSubsidios(idProyecto);
-          const presupuestoAuxiliar = {}
-          subsidios.map( subsidio => {
-            presupuestoAuxiliar[subsidio.rubroNombre] = subsidio.montoAsignado
-          })
-          presupuestoAuxiliar['tipo']= "Total Presupuesto"
-          presupuestoAuxiliar['total']= presupuestoTotal
-          presupuestoAuxiliar['fechaInicio']= "18/09/2021"
-          presupuestoAuxiliar['fechaFin']= "18/09/2022"
+          const gastosPorRubro = await getAllGastosPorRubro(idProyecto);
+          const subsidios = await getSubsidios(idProyecto);
+          const presupuestoAuxiliar = {};
+          subsidios.map((subsidio) => {
+            presupuestoAuxiliar[subsidio.rubroNombre] = subsidio.montoAsignado;
+          });
+          presupuestoAuxiliar['tipo'] = 'Total Presupuesto';
+          presupuestoAuxiliar['total'] = presupuestoTotal;
+          presupuestoAuxiliar['fechaInicio'] = '18/09/2021';
+          presupuestoAuxiliar['fechaFin'] = '18/09/2022';
 
           if (isMounted) {
             setTotalGastos(gastos);
             setComprasRealizadas(comprasRealizadas);
             setPresupuesto(presupuestoAuxiliar);
             setPresupuestoTotal(presupuestoTotal);
-            setGastosPorRubro(combinarPresupuestoYRubros(presupuestoAuxiliar, gastosPorRubro))
+            setGastosPorRubro(
+              combinarPresupuestoYRubros(presupuestoAuxiliar, gastosPorRubro)
+            );
           }
         } catch (err) {
           console.log('[DatosGenerales Component] ERROR : ' + err);
@@ -69,7 +77,6 @@ export const Presupuestos = ({ idProyecto }) => {
   const rendering = () => {
     return (
       <>
-
         <div className={$.root}>
           <Grid
             container
@@ -77,27 +84,29 @@ export const Presupuestos = ({ idProyecto }) => {
             justifyContent="center"
             alignItems="center"
           >
-            <Grid
-              container
-              direction="row"
-              justifyContent="space-evenly"
-              className={$.cardContent}
-            >
+            <div>
               <CardMontos
                 item
                 xl={6}
                 totalPresupuesto={presupuestoTotal}
                 totalGastos={totalGastos}
               />
-              <div>
-                <TortaPrincipal
-                  presupuesto={presupuesto}
-                  totalPresupuesto={presupuestoTotal}
-                  totalGastos={totalGastos}
-                  className={$.torta}
-                />
-              </div>
-            </Grid>
+            </div>
+            <div>
+              <TortaPrincipal
+                presupuesto={presupuesto}
+                totalPresupuesto={presupuestoTotal}
+                totalGastos={totalGastos}
+                className={$.torta}
+              />
+            </div>
+
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-evenly"
+              className={$.cardContent}
+            ></Grid>
             {gastosPorRubro && <Tabla gastos={gastosPorRubro} />}
           </Grid>
         </div>
@@ -138,10 +147,11 @@ const useStyles = makeStyles({
     display: 'flex',
   },
   title: {
-    marginLeft: '2.5vw',
+    marginLeft: '0.5vw',
+    textAlign: 'center',
   },
   torta: {
     width: '100%',
-    height: '100%'
-  }
+    height: '100%',
+  },
 });

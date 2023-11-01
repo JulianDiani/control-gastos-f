@@ -8,7 +8,6 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -27,7 +26,13 @@ const StyledTableHead = withStyles(() => ({
 export default function Tabla({ gastos }) {
   const classes = useStyles();
 
-  const TableTitles = ["Rubro", "Presupuesto", "Aprobados", "Pendientes", "Remanente"]
+  const TableTitles = [
+    'Rubro',
+    'Presupuesto',
+    'Aprobados',
+    'Pendientes',
+    'Remanente',
+  ];
 
   return (
     <>
@@ -40,7 +45,11 @@ export default function Tabla({ gastos }) {
                   <TableCell
                     key={index}
                     align="center"
-                    style={{ minWidth: 100, background: "inherit", color: "white" }}
+                    style={{
+                      minWidth: 100,
+                      background: 'inherit',
+                      color: 'white',
+                    }}
                   >
                     {title}
                   </TableCell>
@@ -49,39 +58,40 @@ export default function Tabla({ gastos }) {
             </StyledTableHead>
             <TableBody>
               {gastos.map((gasto, index) => (
-                <TableRow key={index} align="center"
-                >
-                  <TableCell
-                    align="center"
-                    style={{ minWidth: 100 }}
-                  >
+                <TableRow key={index} align="center">
+                  <TableCell align="center" style={{ minWidth: 100 }}>
                     {gasto.rubro}
                   </TableCell>
-                  <TableCell
-                    align="center"
-                    style={{ minWidth: 100 }}
-                  >
-                    {gasto.presupuesto.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 })}
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    {gasto.presupuesto.toLocaleString('es-AR', {
+                      style: 'currency',
+                      currency: 'ARS',
+                      minimumFractionDigits: 0,
+                    })}
                   </TableCell>
-                  <TableCell
-                    align="center"
-                    style={{ minWidth: 100 }}
-                  >
-                    {gasto.gastosAprobados.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 })}
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    {gasto.gastosAprobados.toLocaleString('es-AR', {
+                      style: 'currency',
+                      currency: 'ARS',
+                      minimumFractionDigits: 0,
+                    })}
                   </TableCell>
-                  <TableCell
-                    align="center"
-                    style={{ minWidth: 100 }}
-                  >
-                    {gasto.gastosPendientes.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 })}
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    {gasto.gastosPendientes.toLocaleString('es-AR', {
+                      style: 'currency',
+                      currency: 'ARS',
+                      minimumFractionDigits: 0,
+                    })}
                   </TableCell>
-                  <TableCell
-                    align="center"
-                    style={{ minWidth: 100 }}
-                  >
-                    {gasto.remanente.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 })}
+                  <TableCell align="center" style={{ minWidth: 100 }}>
+                    {gasto.remanente.toLocaleString('es-AR', {
+                      style: 'currency',
+                      currency: 'ARS',
+                      minimumFractionDigits: 0,
+                    })}
                   </TableCell>
-                </TableRow>))}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

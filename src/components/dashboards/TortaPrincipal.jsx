@@ -1,17 +1,21 @@
-import { Doughnut } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 import React from 'react';
-import { montoDisponible, nivelDeEjecucion } from '../../utils/presupuestos'
+import { montoDisponible, nivelDeEjecucion } from '../../utils/presupuestos';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   graficoTor: {
     width: '25rem !important',
-    height: 'auto !important'
+    height: 'auto !important',
   },
 });
-export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupuesto }) {
+export default function TortaPrincipal({
+  presupuesto,
+  totalGastos,
+  totalPresupuesto,
+}) {
   const totalDisponible = presupuesto; //ToDo - Ver si esta bien tener en una misma prop el presupuesto total y las reformulaciones.
-  const monto = montoDisponible(totalPresupuesto, totalGastos)
+  const monto = montoDisponible(totalPresupuesto, totalGastos);
   const ejecucion = nivelDeEjecucion(totalPresupuesto, totalGastos);
   const $ = useStyles();
   const datosAConsumir = (({
@@ -20,33 +24,32 @@ export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupue
     Publicación,
     Insumos,
     Administración,
-    Viajes
+    Viajes,
   }) => ({
     Bibliografía,
     Equipamiento,
     Publicación,
     Insumos,
     Administración,
-    Viajes
-
-  })) (totalDisponible, monto, ejecucion);
+    Viajes,
+  }))(totalDisponible, monto, ejecucion);
   const graficoTorta = (
-
-    <Doughnut className={$.graficoTor}
+    <Pie
+      className={$.graficoTor}
       data={{
-        labels: Object.keys(datosAConsumir).map(key => {
+        labels: Object.keys(datosAConsumir).map((key) => {
           return key;
         }),
         datasets: [
           {
             label: 'Presupuesto',
             backgroundColor: [
-              '#56e2cf',
-              '#cf56e2',
-              '#56aee2',
-              '#e2cf56',
-              '#e25668',
-              '#8a56e2',
+              '#f2626b',
+              '#feba4f',
+              '#ffea7f',
+              '#89e077',
+              '#83c3ff',
+              '#c381fd',
               '#e28956',
             ],
             data: [
@@ -68,6 +71,4 @@ export default function TortaPrincipal({ presupuesto, totalGastos, totalPresupue
   );
 
   return <>{graficoTorta}</>;
-
 }
-
