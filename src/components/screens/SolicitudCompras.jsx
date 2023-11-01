@@ -62,7 +62,7 @@ const SolicitudCompra = () => {
       console.log('Compra', compra);
       console.log('ID', id);
       setCompra(unaCompra);
-      const proveedor = await getProveedorById(unaCompra.idProveedor);
+      const proveedor = await getProveedorById(unaCompra.idProv);
       setProveedor(proveedor.nombre);
     } catch (err) {
       console.log('ERROR FETCH API [compras]: ' + err);

@@ -25,7 +25,7 @@ import {
 //import { id } from 'date-fns/locale';
 //import { Compras } from './Compras';
 import { Link } from 'react-router-dom';
-import {getConvocatoriaById} from '../../services/convocatorias';
+import { getConvocatoriaById } from '../../services/convocatorias';
 
 export const VistaProyecto = () => {
   const [proyecto, setProyecto] = useState(null);
@@ -112,9 +112,8 @@ export const VistaProyecto = () => {
       const proyecto = await getProyectoById(id); //Tiene que ser por ID la busqueda
       const idConvocatoria = proyecto[0].idConvocatoria;
       const convocatoria = await getConvocatoriaById(idConvocatoria);
-      console.log("Convocatoria", convocatoria)
-      setConvocatoria(convocatoria)
-      
+      console.log('Convocatoria', convocatoria);
+      setConvocatoria(convocatoria);
     } catch (err) {
       console.log('[DatosGenerales Component] ERROR : ' + err);
     }
@@ -251,16 +250,17 @@ export const VistaProyecto = () => {
               <StyledTableCell className={$.textColor}>
                 N* Factura
               </StyledTableCell>
-              <StyledTableCell align="center" className={$.textColor}>
+              <StyledTableCell className={$.textColor}>Fecha</StyledTableCell>
+              <StyledTableCell align="left" className={$.textColor}>
                 Nombre
               </StyledTableCell>
-              <StyledTableCell align="center" className={$.textColor}>
+              <StyledTableCell align="left" className={$.textColor}>
                 Monto
               </StyledTableCell>
-              <StyledTableCell align="center" className={$.textColor}>
+              <StyledTableCell align="left" className={$.textColor}>
                 Estado
               </StyledTableCell>
-              <StyledTableCell align="center" className={$.textColor}>
+              <StyledTableCell align="left" className={$.textColor}>
                 Rubro
               </StyledTableCell>
             </StyledTableHead>
@@ -275,16 +275,19 @@ export const VistaProyecto = () => {
                   >
                     {compras.factura}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell align="left">
+                    {compras.fecha}
+                  </StyledTableCell>
+                  <StyledTableCell align="left">
                     {compras.nombre}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell align="left">
                     {formatPrice(compras.monto)}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell align="left">
                     {compras.estado}
                   </StyledTableCell>
-                  <StyledTableCell align="center">
+                  <StyledTableCell align="left">
                     {compras.SubsidiosAsignado &&
                       compras.SubsidiosAsignado.Rubro.nombre}
                   </StyledTableCell>
