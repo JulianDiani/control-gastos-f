@@ -2,7 +2,7 @@ import { presupuestoPrueba } from '../constants/constants';
 
 //SEPARAR LOS SERVICIOS DEL ADMIN Y LOS DEL INVESTIGADOR (ARMAR DOS DIRECTORIOS SEPARADOS UNO PARA CADA UNO DONDE TENGAN SUS COMPONENTES Y SERVICIOS)
 export async function getProyectsForAdmin() {
-  const url = 'http://localhost:3001/api/proyectos/findAllConCompra';
+  const url = 'http://viaduct.proxy.rlwy.net:53692/api/proyectos/findAllConCompra';
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -18,7 +18,7 @@ export async function getProyectsForAdmin() {
 }
 
 export async function getProyecto(username) {
-  const url = `http://localhost:3001/api/proyectos/${username}`;
+  const url = `http://viaduct.proxy.rlwy.net:53692/api/proyectos/${username}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -35,7 +35,7 @@ export async function getProyecto(username) {
 }
 
 export async function getProyectoById(idProyecto) {
-  const url = `http://localhost:3001/api/proyectos/findByName/${idProyecto}`;
+  const url = `http://viaduct.proxy.rlwy.net:53692/api/proyectos/findByName/${idProyecto}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -56,7 +56,7 @@ export function getPresupuesto() {
 }
 
 export async function createProyecto(body) {
-  const url = 'http://localhost:3001/api/proyectos/create';
+  const url = 'http://viaduct.proxy.rlwy.net:53692/api/proyectos/create';
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
