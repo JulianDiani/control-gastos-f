@@ -6,9 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import RCS217_21 from '../assets/Normativas/RCS 217_21 Definición agrupamientos investigación.pdf';
 import RCS339_21 from '../assets/Normativas/RCS 339_21 Filiación institucional.pdf';
-import RCS062_19 from '../assets/Normativas/RCS. 062_19 Estatuto del Comité Universitario de Bioética de la Universidad Nacional de Hurlingham.pdf';
-import RCS021_18 from '../assets/Normativas/Reglamento Becas de Investigación RCS Nro. 021 18-04-2018.pdf';
-import RCS087_17 from '../assets/Normativas/Reglamento de Investigación RCS. Nro. 087 20-12-2017.pdf';
+import RCS101_23 from '../assets/Normativas/RCS.-101-14-06-23-Reglamento-del-Comite-Universitario-de-Bioetica-EXP.-106-19.pdf';
+import RCS100_23 from '../assets/Normativas/RCS.-100-14-06-23-Reglamento-de-Proyectos-y-Programas-de-Investigacion-y-Desarrollo-EXP.-490-23.pdf';
+import RCS135_23 from '../assets/Normativas/RCS.-135-12-07-2023-Reglamento-de-Becas-de-Formacion-en-ID-EXP.-035-18.pdf';
 
 export const Normativas = () => {
   const $ = useStyles();
@@ -26,7 +26,11 @@ export const Normativas = () => {
             correspondientes a los proyectos de investigación y desarrollo.
             <ul>
               <li>
-                <b>RCS 217_21 Definición agrupamientos investigación</b>
+                <b>
+                  RCS N° 217/21 Reglamento de Definición, Creación y evaluación
+                  de Agrupamientos de Investigación y Desarrollo, Transferencia
+                  e Innovación(SIN ACTUALIZAR)
+                </b>
                 <IconButton
                   color="primary"
                   href={RCS217_21}
@@ -36,7 +40,10 @@ export const Normativas = () => {
                 </IconButton>
               </li>
               <li>
-                <b>RCS 339_21 Filiación institucional</b>
+                <b>
+                  RCS N° 339/21 Modificación a la RCS.Nro. 61/19 Filiación
+                  Institucional(SIN ACTUALIZAR)
+                </b>
                 <IconButton
                   color="primary"
                   href={RCS339_21}
@@ -47,33 +54,35 @@ export const Normativas = () => {
               </li>
               <li>
                 <b>
-                  RCS 062_19 Estatuto del Comité Universitario de Bioética de la
-                  Universidad Nacional de Hurlingham
+                  RCS. 101/23 Reglamento del Comité Universitario de Bioética
                 </b>
                 <IconButton
                   color="primary"
-                  href={RCS062_19}
-                  download="RCS062_19"
+                  href={RCS101_23}
+                  download="RCS101_23"
                 >
                   <GetAppIcon />
                 </IconButton>
               </li>
               <li>
-                <b>RCS 021_18 Reglamento Becas de Investigación</b>
+                <b>
+                  RCS. 100/23 Reglamento de Proyectos y Programas de
+                  Investigación y Desarrollo
+                </b>
                 <IconButton
                   color="primary"
-                  href={RCS021_18}
-                  download="RCS021_18"
+                  href={RCS100_23}
+                  download="RCS100_23"
                 >
                   <GetAppIcon />
                 </IconButton>
               </li>
               <li>
-                <b>RCS 087_17 Reglamento de Investigación</b>
+                <b>RCS. 135/23 Reglamento de Becas de Formación en I+D</b>
                 <IconButton
                   color="primary"
-                  href={RCS087_17}
-                  download="RCS087_17"
+                  href={RCS135_23}
+                  download="RCS135_23"
                 >
                   <GetAppIcon />
                 </IconButton>
