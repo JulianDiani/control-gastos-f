@@ -1,5 +1,5 @@
 export async function getUsuarios() {
-  const url = 'http://viaduct.proxy.rlwy.net:53692/api/usuarios';
+  const url = 'http://localhost:3001/api/usuarios';
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // *no-cors, *cors, same-origin
@@ -14,7 +14,7 @@ export async function getUsuarios() {
 }
 
 export async function getUser(user) {
-  const url = `http://viaduct.proxy.rlwy.net:53692/api/usuarios/searchUser/${user}`;
+  const url = `http://localhost:3001/api/usuarios/searchUser/${user}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // *no-cors, *cors, same-origin
@@ -29,7 +29,7 @@ export async function getUser(user) {
 }
 // DELETE este tenia grupo 2
 // export async function getUser(user) {
-//   const url = 'http://viaduct.proxy.rlwy.net:53692/api/usuarios/searchUser';
+//   const url = 'http://localhost:3001/api/usuarios/searchUser';
 //   const response = await fetch(url, {
 //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
 //     mode: 'cors', // *no-cors, *cors, same-origin
@@ -47,7 +47,7 @@ export async function getUser(user) {
 // }
 
 export async function createUser(user) {
-  const url = 'http://viaduct.proxy.rlwy.net:53692/api/usuarios/newUser';
+  const url = 'http://localhost:3001/api/usuarios/newUser';
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // *no-cors, *cors, same-origin
@@ -63,7 +63,7 @@ export async function createUser(user) {
 }
 
 export async function setUserActualProject(usuario, projectId) {
-  const url = 'http://viaduct.proxy.rlwy.net:53692/api/usuarios/setUserProject';
+  const url = 'http://localhost:3001/api/usuarios/setUserProject';
   const response = await fetch(url, {
     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // *no-cors, *cors, same-origin

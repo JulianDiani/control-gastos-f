@@ -1,5 +1,5 @@
 export async function getAllProveedores() {
-  const url = 'http://viaduct.proxy.rlwy.net:53692/api/proveedores';
+  const url = 'http://localhost:3001/api/proveedores';
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -14,7 +14,7 @@ export async function getAllProveedores() {
 }
 
 export async function postProveedor(body) {
-  const url = 'http://viaduct.proxy.rlwy.net:53692/api/proveedores';
+  const url = 'http://localhost:3001/api/proveedores';
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -30,7 +30,7 @@ export async function postProveedor(body) {
 }
 
 export async function getProveedorById(idProyecto) {
-  const url = `http://viaduct.proxy.rlwy.net:53692/api/proveedores/${idProyecto}`;
+  const url = `http://localhost:3001/api/proveedores/${idProyecto}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
