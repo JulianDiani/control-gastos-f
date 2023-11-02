@@ -15,7 +15,7 @@ export function getRubros() {
 }
 export async function getPresupuesto2(idProyecto) {
   //const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}`;
-  const url = `http://localhost:3001/api/subsidiosAsignados/getTotalSubsidios/${idProyecto}`;
+  const url = `http://viaduct.proxy.rlwy.net:53692/api/subsidiosAsignados/getTotalSubsidios/${idProyecto}`;
   const response = await fetch(url, {
     method: 'GET',
     mode: 'cors', // no-cors, *cors, same-origin
@@ -31,7 +31,7 @@ export async function getPresupuesto2(idProyecto) {
 
 export async function listadetodos() {
   //const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}`;
-  const url = 'http://localhost:3001/api/rubros/getRubros';
+  const url = 'http://viaduct.proxy.rlwy.net:53692/api/rubros/getRubros';
   const response = await fetch(url, {
     method: 'GET',
     mode: 'cors', // no-cors, *cors, same-origin

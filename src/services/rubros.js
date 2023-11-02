@@ -1,5 +1,5 @@
 export async function getAllRubros() {
-  const url = 'http://localhost:3001/api/rubros/getAllRubros';
+  const url = 'http://viaduct.proxy.rlwy.net:53692/api/rubros/getAllRubros';
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
