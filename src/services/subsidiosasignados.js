@@ -4,7 +4,7 @@ const SERVICES_CONFIG = {
   path: '/api/subsidiosAsignados',
 };
 export async function getTotalSubsidio(idProyecto) {
-  const url = `http://viaduct.proxy.rlwy.net:53692/api/subsidiosAsignados/getTotalSubsidios/${idProyecto}`;
+  const url = `https://viaduct.proxy.rlwy.net:53692/api/subsidiosAsignados/getTotalSubsidios/${idProyecto}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -20,7 +20,7 @@ export async function getTotalSubsidio(idProyecto) {
   return response.json();
 }
 export async function getSubsidios(idProyecto) {
-  const url = `http://viaduct.proxy.rlwy.net:53692/api/subsidiosAsignados/getSubsidios/${idProyecto}`;
+  const url = `https://viaduct.proxy.rlwy.net:53692/api/subsidiosAsignados/getSubsidios/${idProyecto}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
