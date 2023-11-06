@@ -2,7 +2,7 @@ import { presupuestoPrueba } from '../constants/constants';
 
 //SEPARAR LOS SERVICIOS DEL ADMIN Y LOS DEL INVESTIGADOR (ARMAR DOS DIRECTORIOS SEPARADOS UNO PARA CADA UNO DONDE TENGAN SUS COMPONENTES Y SERVICIOS)
 export async function getProyectsForAdmin() {
-  const url = 'roundhouse.proxy.rlwy.net:47249/api/proyectos/findAllConCompra';
+  const url = 'localhost:3001/api/proyectos/findAllConCompra';
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -18,7 +18,7 @@ export async function getProyectsForAdmin() {
 }
 // DELETE ERA LA QUE TENIA GRUPO 2
 //export async function getProyectsForAdmin() {
-//   const url = 'roundhouse.proxy.rlwy.net:47249/api/proyectos/allProyects';
+//   const url = 'localhost:3001/api/proyectos/allProyects';
 //   const response = await fetch(url, {
 //     method: 'GET', // *GET, POST, PUT, DELETE, etc.
 //     mode: 'cors', // no-cors, *cors, same-origin
@@ -34,7 +34,7 @@ export async function getProyectsForAdmin() {
 // }
 
 export async function getProyecto(username) {
-  const url = `roundhouse.proxy.rlwy.net:47249/api/proyectos/${username}`;
+  const url = `localhost:3001/api/proyectos/${username}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -52,7 +52,7 @@ export async function getProyecto(username) {
 
 // DELETED ERA LA QUE TENIA EL GRUPO 2
 // export async function getProyecto(user) {
-//   const url = 'roundhouse.proxy.rlwy.net:47249/api/proyectos';
+//   const url = 'localhost:3001/api/proyectos';
 //   const response = await fetch(url, {
 //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
 //     mode: 'cors', // no-cors, *cors, same-origin
@@ -69,7 +69,7 @@ export async function getProyecto(username) {
 //   return response.json();
 // }
 export async function getUserByProyect(idProyecto) {
-  const url = `roundhouse.proxy.rlwy.net:47249/api/usuariosproyectos/getUsuariosIdProyecto/${idProyecto}`;
+  const url = `localhost:3001/api/usuariosproyectos/getUsuariosIdProyecto/${idProyecto}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -86,7 +86,7 @@ export async function getUserByProyect(idProyecto) {
 }
 
 export async function getProyectoById(idProyecto) {
-  const url = `roundhouse.proxy.rlwy.net:47249/api/proyectos/findByName/${idProyecto}`;
+  const url = `localhost:3001/api/proyectos/findByName/${idProyecto}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -104,7 +104,7 @@ export async function getProyectoById(idProyecto) {
 
 // DELETED este tenia grupo 2
 // export async function getProyectoById(idProyecto) {
-//   const url = 'roundhouse.proxy.rlwy.net:47249/api/proyectos/findByName';
+//   const url = 'localhost:3001/api/proyectos/findByName';
 //   const response = await fetch(url, {
 //     method: 'POST', // *GET, POST, PUT, DELETE, etc.
 //     mode: 'cors', // no-cors, *cors, same-origin
@@ -126,7 +126,7 @@ export function getPresupuesto() {
 }
 
 export async function createProyecto(body) {
-  const url = 'roundhouse.proxy.rlwy.net:47249/api/proyectos/create';
+  const url = 'localhost:3001/api/proyectos/create';
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
