@@ -1,6 +1,6 @@
 const SERVICES_CONFIG = {
-  baseUrl: 'http://localhost',
-  port: ':3001',
+  baseUrl: 'https://controlback.onrender.com',
+  port: '',
   path: '/api/compras',
 };
 
