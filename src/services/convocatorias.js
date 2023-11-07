@@ -1,5 +1,5 @@
 export async function getAllConvocatorias() {
-  const url = 'http://localhost:3001/api/convocatorias';
+  const url = 'https://controlback.onrender.com/api/convocatorias';
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -14,7 +14,7 @@ export async function getAllConvocatorias() {
 }
 
 export async function getConvocatoriaById(idConvocatoria) {
-  const url = `http://localhost:3001/api/convocatorias/${idConvocatoria}`;
+  const url = `https://controlback.onrender.com/api/convocatorias/${idConvocatoria}`;
   const response = await fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -31,7 +31,7 @@ export async function getConvocatoriaById(idConvocatoria) {
   tambien se puede hacer asi: con metodos nativos de java script
   const [convocatorias, setConvocatorias] = useState([null]);
     useEffect(() => {
-      fetch('http://localhost:3001/api/convocatorias/')
+      fetch('https://controlback.onrender.com/api/convocatorias/')
         .then(response => response.json())
         .then(response => {
           //console.log(response);
@@ -45,7 +45,7 @@ export async function getConvocatoriaById(idConvocatoria) {
 */
 
 //export async function postProveedor(body) {
-//  const url = 'http://localhost:3001/api/proveedores';
+//  const url = 'https://controlback.onrender.com/api/proveedores';
 //  const response = await fetch(url, {
 //    method: 'POST', // *GET, POST, PUT, DELETE, etc.
 //    mode: 'cors', // no-cors, *cors, same-origin
